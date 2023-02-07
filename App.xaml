@@ -1,0 +1,26 @@
+﻿<Application x:Class="ProDocEstimate.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ProDocEstimate"
+             StartupUri="MainWindow.xaml">
+	<Application.Resources>
+
+		<!--Set menu direction to Left-to-Right here-->
+
+		<Style TargetType="Label" x:Name="MainTitle">
+			<Setter Property="FontSize" Value="64" />
+			<Setter Property="Foreground" Value="White" />
+			<Setter Property="Background" Value="red" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+		</Style>
+
+		<Style x:Key="TitleBorderStyle" TargetType="Border">
+			<Setter Property="BorderBrush" Value="White" />
+			<Setter Property="BorderThickness" Value="2" />
+			<Setter Property="CornerRadius" Value="13" />
+		</Style>
+
+	</Application.Resources>
+
+</Application>
