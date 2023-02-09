@@ -10,13 +10,27 @@ namespace ProDocEstimate
 		{ Application.Current.Shutdown(); }
 
 		private void mnuCustomers_Click(object sender, RoutedEventArgs e)
-		{ Customers customers = new Customers(); }
+		{ 
+			Window customers = new Customers();
+			customers.Owner = this;
+			customers.ShowDialog();
+		}
 
 		private void mnuQuotations_Click(object sender, RoutedEventArgs e)
-		{ Quotations quotations = new Quotations(); }
+		{ 
+//			Quotations quotations = new Quotations();
+			Window quotations = new Quotations();
+			quotations.Owner = this;
+			quotations.ShowDialog();
+		}
 
 		private void mnuItems_Click(object sender, RoutedEventArgs e)
-		{ Items items = new Items(); }
+		{
+//			Items items = new Items();
+			Window items = new Items();
+			items.Owner = this;
+			items.ShowDialog();
+		}
 
 	}
 }

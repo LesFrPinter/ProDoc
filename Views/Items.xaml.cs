@@ -5,6 +5,6 @@ namespace ProDocEstimate
 	public partial class Items : Window
 	{
 		public Items()
-		{ InitializeComponent(); this.ShowDialog(); }
+		{ InitializeComponent(); }
 	}
 }

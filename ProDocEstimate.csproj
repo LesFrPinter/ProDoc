@@ -7,4 +7,25 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\UserControls\**" />
+    <EmbeddedResource Remove="Views\UserControls\**" />
+    <None Remove="Views\UserControls\**" />
+    <Page Remove="Views\UserControls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\PDS-logo-lrg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\PDS-logo-lrg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+
 </Project>

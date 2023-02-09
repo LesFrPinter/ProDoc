@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="750" Width="1200">
 
-	<Grid Background="Beige">
+	<Grid Background="Beige" Margin="0,-3,0,3">
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="60" />
@@ -16,27 +16,25 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<Menu>
-			<MenuItem Header="File" Height="40">
-				<MenuItem x:Name="mnuFileExit" Header="Exit" Click="mnuFileExit_Click" />
+		<!--Set MenuDropAlignment to 0 in RegEdit-->
+
+		<Menu HorizontalContentAlignment="Left">
+			<MenuItem Header="_File" Height="40">
+				<MenuItem  FlowDirection="RightToLeft" x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" />
 			</MenuItem>
-			<MenuItem x:Name="mnuQuotations" Header="Quotations" Height="40" Click="mnuQuotations_Click" />
-			<MenuItem x:Name="mnuCustomers"  Header="Customers"  Height="40" Click="mnuCustomers_Click"  />
-			<MenuItem x:Name="mnuItems"      Header="Items"      Height="40" Click="mnuItems_Click"      />
+			<MenuItem x:Name="mnuQuotations" Header="_Quotations" Height="40" Click="mnuQuotations_Click" />
+			<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
+			<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />
 			<MenuItem Header="Print" Height="40" />
 		</Menu>
 
-		<Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" >
-			<Image.Effect>
-				<DropShadowEffect Direction="25" Color="#FFB6C2CB" ShadowDepth="7" BlurRadius="4" />
-			</Image.Effect>
-		</Image>
+		<Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
 
-			<Label Grid.Row="2" Content="Pro Doc Estimator" Padding="10" >
-				<Label.Effect>
-					<DropShadowEffect Direction="325" Color="black" ShadowDepth="12" BlurRadius="12" />
-				</Label.Effect>
-			</Label>
+		<Label Grid.Row="2" Content="Pro Doc Estimator" Padding="10" FontFamily="Comic Sans MS" >
+			<Label.Effect>
+				<DropShadowEffect Direction="325" Color="black" ShadowDepth="12" BlurRadius="12" />
+			</Label.Effect>
+		</Label>
 
 	</Grid>
 

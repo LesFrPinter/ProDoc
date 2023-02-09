@@ -21,6 +21,12 @@
 			<Setter Property="CornerRadius" Value="13" />
 		</Style>
 
+		<SolidColorBrush x:Key="AllForms">
+			<SolidColorBrush.Color>
+				<Color A="100" R="130" G="160" B="180"/>
+			</SolidColorBrush.Color>
+		</SolidColorBrush>
+
 	</Application.Resources>
 
 </Application>
