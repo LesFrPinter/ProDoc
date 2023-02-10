@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -7,6 +8,14 @@ namespace ProDocEstimate
 	public partial class Customers : Window, INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler? PropertyChanged;
+
+		public  DataTable Custs
+		{ get { return custs; }
+			set { custs = value; 
+						OnPropertyChanged(); }
+		}
+
+		public DataTable ?custs { get; private set; }
 
 		private bool notediting;
 		public bool NotEditing
@@ -21,14 +30,35 @@ namespace ProDocEstimate
 		public bool Editing
 		{ get { return editing; }
 			set { editing = value;
-						NotEditing = !editing;
-						OnPropertyChanged(); }
+				NotEditing = !editing;
+				OnPropertyChanged(); }
 		}
 
 		public Customers()
 		{ InitializeComponent();
 			this.DataContext = this;
 			this.Editing = false;
+			LoadCustData();
+		}
+
+		private void LoadCustData()
+		{
+
+			this.Custs = new DataTable("Custs");
+			this.Custs.Columns.Add("Customer");
+			this.Custs.Columns.Add("Address");
+			this.Custs.Columns.Add("City");
+			this.Custs.Columns.Add("State");
+			this.Custs.Columns.Add("ZIP");
+			this.Custs.Columns.Add("Phone");
+			this.Custs.Columns.Add("Contact");
+
+			this.Custs.Rows.Add("State of Alabama", "202 Main Street", "Mongomery", "AL", "20214", "(605) 761-1207", "George Raft");
+			this.Custs.Rows.Add("State of Alabama", "202 Main Street", "Mongomery", "AL", "20214", "(605) 761-4344", "Samatha Billart");
+			this.Custs.Rows.Add("State of Georgia", "114 Yale Avenue", "Dothan", "GA", "20214", "(706) 321-4033", "Sally");
+			this.Custs.Rows.Add("Chick Fillet", "1001 Fannin Street", "Houston", "TX", "77024", "(713) 667-4309", "Donald Shellman");
+
+			this.MyGrid.DataContext = this;
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,7 +68,8 @@ namespace ProDocEstimate
 
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
-			Editing = true; 
+			Editing = true;
+			txtCustomerName.Focus();
 		}
 
 		private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -51,24 +82,31 @@ namespace ProDocEstimate
 			Editing = false;
 		}
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string ?propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
 		{
-			var confirmResult = 
+			var confirmResult =
 				MessageBox.Show(
 					"Delete?",
 					"Confirm delete",
-					MessageBoxButton.YesNo,MessageBoxImage.Question);
+					MessageBoxButton.YesNo, MessageBoxImage.Question);
 			if (confirmResult == MessageBoxResult.OK) { } else { }
 		}
 
 		private void btnClear_Click(object sender, RoutedEventArgs e)
 		{
-			
+
 		}
+
+		private void btnClear2_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
 	}
+
 }

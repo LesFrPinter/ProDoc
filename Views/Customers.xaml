@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ProDocEstimate"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="Customers" Height="750" Width="1100">
+        Title="Customers" Height="1200" Width="1400">
 
 	<Window.Resources>
 		<Style TargetType="Button">
@@ -16,10 +16,10 @@
 		</Style>
 
 		<Style TargetType="Label">
-			<Setter Property="Foreground" Value="Black" />
+			<Setter Property="Foreground" Value="Green" />
 			<Setter Property="Background" Value="Transparent" />
 			<Setter Property="Padding" Value="3" />
-			<Setter Property="FontSize" Value="14" />
+			<Setter Property="FontSize" Value="18" />
 			<Setter Property="Margin" Value="0 0 10 0" />
 			<Setter Property="VerticalContentAlignment" Value="Center" />
 			<Setter Property="HorizontalAlignment" Value="Right" />
@@ -34,6 +34,26 @@
 			<Setter Property="Margin" Value="0 0 10 0" />
 			<Setter Property="VerticalContentAlignment" Value="Center" />
 			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Style.Triggers>
+				<Trigger Property="IsFocused" Value="True">
+					<Setter Property="Background" Value="Blue"/>
+					<Setter Property="Foreground" Value="White"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<Style TargetType="ComboBox">
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="FontFamily" Value="Courier New" />
+			<Setter Property="Margin" Value="0 0 10 0" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Style.Triggers>
+				<Trigger Property="IsFocused" Value="True">
+					<Setter Property="Background" Value="Blue"/>
+					<Setter Property="Foreground" Value="White"/>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 
 
@@ -47,7 +67,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<TabControl Grid.Row="2">
+		<TabControl Grid.Row="2" FontSize="24">
 
 			<TabItem Header="Details" >
 
@@ -55,6 +75,13 @@
 
 					<Grid.RowDefinitions>
 						<RowDefinition Height="2*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
@@ -103,23 +130,26 @@
 					<Label Grid.Row="1" Grid.Column="1" Content="Customer Name" HorizontalAlignment="Right" />
 					<Label Grid.Row="2" Grid.Column="1" Content="Address" HorizontalAlignment="Right" />
 					<Label Grid.Row="3" Grid.Column="1" Content="City, State, ZIP" HorizontalAlignment="Right" />
+					<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
+					<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Right" />
 
-					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,3,0,3" />
-					<TextBox x:Name="txtAddress"      Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,3,0,3" />
-					<TextBox x:Name="txtCity"         Grid.Row="3" Grid.Column="2" Width="170" Margin="0,3,0,3" />
-					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="70"  Margin="0,3,0,3" HorizontalAlignment="Left" Background="LightYellow" >
+					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="State of Alabama" Height="26" />
+					<TextBox x:Name="txtAddress"      Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="202 Main Street"  Height="26" />
+					<TextBox x:Name="txtCity"         Grid.Row="3" Grid.Column="2" Width="220" Margin="0,6,0,6" Text="Montgomery"  Height="26" />
+					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="70"  Margin="0,6,0,6" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="26"  >
 						<ComboBoxItem Content="AK" />
 						<ComboBoxItem Content="AL" />
 						<ComboBoxItem Content="AR" />
 					</ComboBox>
-					<TextBox x:Name="txtZIP"          Grid.Row="3" Grid.Column="3" Width="95" Margin="80 3 0 3" />
-
+					<TextBox x:Name="txtZIP"          Grid.Row="3" Grid.Column="3" Width="95" Margin="80 6 0 6" Text="20214"  Height="26" />
+					<TextBox x:Name="txtContact"      Grid.Row="4" Grid.Column="2" Width="125" Margin="0 6 0 6" Text="George Raft"  Height="26" />
+					<TextBox x:Name="txtPhone"        Grid.Row="4" Grid.Column="4" Width="135" Margin="40 6 0 6" Text="(605) 761-1207"  Height="26" />
 
 				</Grid>
 
 			</TabItem>
 
-			<TabItem Header="Search" >
+			<TabItem Header="Tabular search" >
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="40" />
@@ -134,25 +164,74 @@
 						<TextBox x:Name="txtSearchCustomer" Width="200" Margin="0 6 0 6" />
 						<Label Content="Contact: " Margin="20 6 0 6"  />
 						<TextBox x:Name="txtSearchContact" Width="200" Margin="10 6 0 6" />
-						<Button x:Name="btnApply" Content="Apply filter" Margin="290 6 10 6" Width="90" FontWeight="Bold" />
-						<Button x:Name="btnClear" Content="Clear filter" Margin="0 6 110 6" Width="90" FontWeight="Bold" Click="btnClear_Click" />
+						<Button x:Name="btnApply" Content="Apply filter" Margin="500 3 10 3" Width="90" FontWeight="Bold" FontSize="14" />
+						<Button x:Name="btnClear" Content="Clear filter" Margin="0 3 110 3" Width="90" FontWeight="Bold" Click="btnClear_Click" FontSize="14" />
 					</StackPanel>
 
-					<DataGrid Grid.Row="2" Background="LightCyan" AutoGenerateColumns="False" >
+					<DataGrid 
+					 x:Name="MyGrid"
+					 Grid.Row="2" 
+					 Background="LightCyan" 
+					 ColumnWidth="auto"
+					 ItemsSource="{Binding Custs.DefaultView}"
+					 IsSynchronizedWithCurrentItem="True"
+					 AutoGenerateColumns="False"  >
 						<DataGrid.Columns>
-							<DataGridTextColumn Header="Customer Name" Width="200" />
-							<DataGridTextColumn Header="Address" Width="200" />
-							<DataGridTextColumn Header="City" Width="120" />
-							<DataGridComboBoxColumn Header="State" Width="50" />
-							<DataGridTextColumn Header="ZIP" Width="75" />
-							<DataGridTextColumn Header="Phone" Width="120" />
-							<DataGridTextColumn Header="Contact" Width="130" />
-							<DataGridCheckBoxColumn Header="Credit Hold" Width="100" />
-							<DataGridTextColumn Header="Last Job" />
+							<DataGridTextColumn Header="Customer" Width="Auto" Binding="{Binding Path=Customer}" >
+							</DataGridTextColumn>
+							<DataGridTextColumn Header="Address" Width="Auto" Binding="{Binding Path=Address}" />
+							<DataGridTextColumn Header="City" Width="Auto" Binding="{Binding Path=City}" />
+							<DataGridComboBoxColumn Header="State" Width="50" TextBinding="{Binding Path=State}" />
+							<DataGridTextColumn Header="ZIP" Width="Auto" Binding="{Binding Path=ZIP}" />
+							<DataGridTextColumn Header="Phone" Width="Auto" Binding="{Binding Path=Phone}" />
+							<DataGridTextColumn Header="Contact" Width="Auto" Binding="{Binding Path=Contact}" />
+							<!--<DataGridCheckBoxColumn Header="Credit Hold" Width="100" />
+							<DataGridTextColumn Header="Last Job" />-->
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
 			</TabItem>
+
+			<TabItem Header="TreeView search" >
+				<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40" />
+					<RowDefinition Height="40" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Label Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" Margin="10 0 0 0" FontWeight="Bold" Foreground="Green" />
+
+					<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
+						<Label Content="Partial name: " />
+						<TextBox x:Name="txtSearchCustomer2" Width="200" Margin="0 6 0 6" />
+						<Label Content="Contact: " Margin="20 6 0 6"  />
+						<TextBox x:Name="txtSearchContact2" Width="200" Margin="10 6 0 6" />
+						<Button x:Name="btnApply2" Content="Apply filter" Margin="500 6 10 6" Width="90" FontWeight="Bold" FontSize="14" />
+						<Button x:Name="btnClear2" Content="Clear filter" Margin="0 6 110 6" Width="90" FontWeight="Bold" Click="btnClear2_Click" FontSize="14" />
+					</StackPanel>
+
+					<TreeView Grid.Row="2" Background="LightCyan" FontFamily="Courier New" FontSize="24" FontWeight="DemiBold" >
+						<TreeViewItem Header="Company: State of Alabama" IsExpanded="True" >
+							<TreeViewItem Header="Location  |  Montgomery, AL" IsExpanded="True" >
+								<TreeViewItem Header="  Contact: George Raft     | Phone: (208) 331-1221" />
+								<TreeViewItem Header="  Contact: Sam Billart     | Phone: (208) 331-2043" />
+							</TreeViewItem>
+							<TreeViewItem Header="Location  |  Dothan, GA" IsExpanded="True" >
+								<TreeViewItem Header="  Contact: Sally           | Phone: (706) 321-4033" />
+							</TreeViewItem>
+						</TreeViewItem>
+						<TreeViewItem Header="Company: Chick Fillet"  IsExpanded="True" >
+							<TreeViewItem Header="Location  |  Houston, TX" IsExpanded="True" >
+								<TreeViewItem Header="  Contact: Donald Shellman | Phone: (713) 667-4309" />
+							</TreeViewItem>
+							</TreeViewItem>
+				</TreeView>
+
+				</Grid>
+
+			</TabItem>
+
 		</TabControl>
 
 	</Grid>

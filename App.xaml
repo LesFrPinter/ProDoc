@@ -7,7 +7,11 @@
 
 		<!--Set menu direction to Left-to-Right here-->
 
-		<Style TargetType="Label" x:Name="MainTitle">
+		<Style TargetType="Label">
+			<Setter Property="FontSize" Value="32" />
+		</Style>
+
+		<Style TargetType="Label" x:Name="MainTitle" x:Key="MainTitle">
 			<Setter Property="FontSize" Value="64" />
 			<Setter Property="Foreground" Value="White" />
 			<Setter Property="Background" Value="red" />
