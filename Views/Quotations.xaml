@@ -72,8 +72,7 @@
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="55" />
-			<RowDefinition Height="371*" />
-			<RowDefinition Height="158*"/>
+			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
 		<Label 
@@ -83,7 +82,7 @@
 		 FontSize="24" 
 		 Padding="10"
 		 HorizontalAlignment="Left" 
-		 Margin="10,0,0,0" />
+		 Margin="10,0,0,0" Width="138" />
 
 		<TabControl Grid.Row="1" Grid.RowSpan="2"  Background="LightGray" >
 
@@ -254,7 +253,7 @@
 					<Label Grid.Row="5" Grid.Column="0" Content=" 5" Width="20" HorizontalAlignment="Left" />
 					<Label Grid.Row="6" Grid.Column="0" Content=" 6" Width="20" HorizontalAlignment="Left" />
 
-					<TextBox Grid.Row="1" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
+					<TextBox Grid.Row="1" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="{Binding Qty1,Mode=TwoWay,StringFormat=f2}"/>
 					<TextBox Grid.Row="2" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
 					<TextBox Grid.Row="3" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
 					<TextBox Grid.Row="4" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
@@ -270,12 +269,12 @@
 					<Label Grid.Row="5" Grid.Column="3" Content=" 14  Canary 11-5/8&quot; CFB" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
 					<Label Grid.Row="6" Grid.Column="3" Content=" 15  Pink 11-5/8&quot; CF" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
 
-					<TextBox Grid.Row="1" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="      .00" Grid.ColumnSpan="2" />
-					<TextBox Grid.Row="2" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="      .  " Grid.ColumnSpan="2" />
-					<TextBox Grid.Row="3" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="      .  " Grid.ColumnSpan="2" />
-					<TextBox Grid.Row="4" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="      .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
-					<TextBox Grid.Row="5" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="      .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
-					<TextBox Grid.Row="6" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="      .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
+					<TextBox Grid.Row="1" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .00" Grid.ColumnSpan="2" />
+					<TextBox Grid.Row="2" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" />
+					<TextBox Grid.Row="3" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" />
+					<TextBox Grid.Row="4" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
+					<TextBox Grid.Row="5" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
+					<TextBox Grid.Row="6" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
 
 					<xctk:IntegerUpDown Grid.Row="1" Grid.Column="6" x:Name="Spin1"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
 					<xctk:IntegerUpDown Grid.Row="2" Grid.Column="6" x:Name="Spin2"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
@@ -332,7 +331,7 @@
 					</ComboBox>
 
 				</Grid>
-			
+
 			</TabItem>
 
 			<TabItem Header="    Page 3    " FontSize="16"></TabItem>

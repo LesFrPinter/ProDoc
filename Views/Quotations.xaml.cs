@@ -17,6 +17,15 @@ namespace ProDocEstimate
 			set { customerName = value;/* OnPropertyChanged(""); */ }
 		}
 
+		private decimal qty1;
+
+		public decimal Qty1
+		{
+			get { return qty1; }
+			set { qty1 = value; /*OnPropertyChanged();*/ }
+		}
+
+
 		public Quotations() { InitializeComponent(); }
 
 		private void btnLookup_Click(object sender, RoutedEventArgs e)
