@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="Microsoft.NETCore.Targets.NETFramework" Version="4.6.0" />
   </ItemGroup>
 

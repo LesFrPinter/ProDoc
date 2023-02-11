@@ -9,6 +9,7 @@
         Title="Customers" Height="1200" Width="1400">
 
 	<Window.Resources>
+
 		<Style TargetType="Button">
 			<Setter Property="Foreground" Value="White" />
 			<Setter Property="Background" Value="Red" />
@@ -67,7 +68,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<TabControl Grid.Row="2" FontSize="24">
+		<TabControl x:Name="tabPage" Grid.Row="2" FontSize="24">
 
 			<TabItem Header="Details" >
 
@@ -118,13 +119,14 @@
 					 HorizontalAlignment="Left" 
 					 Margin="10,0,0,0" Grid.ColumnSpan="3" />
 
-					<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="3">
+					<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="5">
 						<Button Content="_Add" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click" Height="32" />
 						<Button Content="_Edit" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click_1" Height="32" />
 						<Button Content="_Save" Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_2" Height="32" />
 						<Button Content="_Cancel" Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_3"  Height="32" />
 						<Button x:Name="btnDelete" Content="_Delete" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" Height="32" />
 						<Button Content="_Find" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Height="32" />
+						<Button x:Name="cmdSelect" Click="cmdSelect_Click" Content="Se_lect" Padding="5" FontSize="18" Height="36" Margin="750 0 0 0" />
 					</StackPanel>
 
 					<Label Grid.Row="1" Grid.Column="1" Content="Customer Name" HorizontalAlignment="Right" />
@@ -192,7 +194,7 @@
 				</Grid>
 			</TabItem>
 
-			<TabItem Header="TreeView search" >
+			<TabItem x:Name="tabPageTreeView" Header="TreeView search" >
 				<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="40" />
@@ -211,8 +213,20 @@
 						<Button x:Name="btnClear2" Content="Clear filter" Margin="0 6 110 6" Width="90" FontWeight="Bold" Click="btnClear2_Click" FontSize="14" />
 					</StackPanel>
 
-					<TreeView Grid.Row="2" Background="LightCyan" FontFamily="Courier New" FontSize="24" FontWeight="DemiBold" >
-						<TreeViewItem Header="Company: State of Alabama" IsExpanded="True" >
+					<TreeView
+					 Grid.Row="2" 
+					 Background="LightCyan" 
+					 FontFamily="Courier New" 
+					 FontSize="24" 
+					 FontWeight="DemiBold" >
+
+						<TreeView.ItemContainerStyle>
+							<Style TargetType="{x:Type TreeViewItem}">
+								<EventSetter Event="MouseDoubleClick" Handler="cmdSelect_Click" />
+							</Style>
+						</TreeView.ItemContainerStyle>
+						
+								<TreeViewItem Header="Company: State of Alabama" IsExpanded="True" >
 							<TreeViewItem Header="Location  |  Montgomery, AL" IsExpanded="True" >
 								<TreeViewItem Header="  Contact: George Raft     | Phone: (208) 331-1221" />
 								<TreeViewItem Header="  Contact: Sam Billart     | Phone: (208) 331-2043" />
