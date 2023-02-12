@@ -46,5 +46,10 @@ namespace ProDocEstimate
 			MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
 			lookup.Close();			
 		}
-	}
+
+		private void btnBaseCharge_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("What is this for?", "Purpose unclear");
+        }
+    }
 }

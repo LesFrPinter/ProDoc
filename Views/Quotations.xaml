@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ProDocEstimate"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="Quotations" Height="700" Width="900">
+        Title="Quotations" Height="750" Width="900">
 
 	<Window.Resources>
 
@@ -17,12 +17,21 @@
 			<Setter Property="Background" Value="purple" />
 			<Setter Property="Margin" Value="5 2 2 2" />
 			<Setter Property="Padding" Value="5" />
+			
 			<Style.Triggers>
+
+				<Trigger Property="IsMouseDirectlyOver" Value="True">
+					<Setter Property="Background" Value="Red"/>
+					<Setter Property="Foreground" Value="White"/>
+				</Trigger>
+
 				<Trigger Property="IsMouseOver" Value="True">
 					<Setter Property="Background" Value="Red"/>
 					<Setter Property="Foreground" Value="White"/>
 				</Trigger>
+
 			</Style.Triggers>
+
 		</Style>
 
 		<Style TargetType="Label">
@@ -33,6 +42,17 @@
 			<Setter Property="Margin" Value="0 0 10 0" />
 			<Setter Property="VerticalContentAlignment" Value="Center" />
 			<Setter Property="HorizontalAlignment" Value="Right" />
+		</Style>
+
+		<Style x:Key="PageLabelStyle" TargetType="{x:Type Label}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Label}">
+						<Border Name="Border" Background="Purple" BorderBrush="#BFE3FE" BorderThickness="1" CornerRadius="7" Padding="3">
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 		</Style>
 
 		<Style TargetType="TextBox">
@@ -75,7 +95,8 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<Label 
+		<Border CornerRadius="10" BorderThickness="2" Background="Purple" Width="160" HorizontalAlignment="Left">
+			<Label 
 		 Content="Quotations" 
 		 Foreground="White"
 		 Background="purple"
@@ -83,6 +104,7 @@
 		 Padding="10"
 		 HorizontalAlignment="Left" 
 		 Margin="10,0,0,0" Width="138" />
+		</Border>
 
 		<TabControl Grid.Row="1" Grid.RowSpan="2"  Background="LightGray" >
 
@@ -121,6 +143,32 @@
 						<Button x:Name="btnNew"    Click="btnNew_Click">New</Button>
 						<Button x:Name="btnLookup" Click="btnLookup_Click">Lookup or copy</Button>
 					</StackPanel>
+
+					<Border 
+					Grid.Column="7"
+					 CornerRadius="10" 
+					 Grid.RowSpan="2"
+					 BorderThickness="2" 
+					 HorizontalAlignment="Right"
+					 Margin="0 0 10 0"
+					 Background="Purple" 
+					 Height="52"
+					 VerticalAlignment="Top"
+					 Width="100">
+						<Label 
+						Grid.RowSpan="2"
+						 FontSize="24" 
+						 Foreground="White"
+						 Background="Purple"
+						 Width="auto"
+						 Content="Base" 
+						 HorizontalAlignment="Center" 
+						 Padding="5" 
+						 Margin="10 0 0 0"
+						 Height="40" >
+						</Label>
+					</Border>
+
 
 					<Label Grid.Row="1" Content="Customer Name:" HorizontalAlignment="Right" />
 					<TextBox Grid.Row="1" Grid.Column="1" x:Name="txtCustomerName" Width="390" Grid.ColumnSpan="3" Text="{Binding CustomerName}" />
@@ -193,8 +241,8 @@
 						<ComboBoxItem Content="a spinner?" />
 					</ComboBox>
 
-					<Button Grid.Row="13"
-					 Grid.Column="3" Content="Base Charge" ToolTip="What is this?" />
+					<Button Grid.Row="13" x:Name="btnBaseCharge"
+					 Grid.Column="3" Content="Base Charge" ToolTip="What is this?" Click="btnBaseCharge_Click" />
 
 
 				</Grid>
@@ -206,6 +254,8 @@
 				<Grid>
 
 					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
@@ -238,94 +288,119 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<Label Content="            Qty" HorizontalAlignment="Left" />
-					<Label Content="Mult" Grid.Column="6" HorizontalAlignment="Center" />
+					<Border 
+					Grid.Column="7"
+					 CornerRadius="10" 
+					 Grid.RowSpan="2"
+					 BorderThickness="2" 
+					 HorizontalAlignment="Right"
+					 Margin="0 0 10 0"
+					 Background="Purple" 
+					 Height="52"
+					 VerticalAlignment="Top"
+					 Width="100">
+						<Label 
+						Grid.RowSpan="2"
+						 FontSize="24" 
+						 Foreground="White"
+						 Background="Purple"
+						 Width="auto"
+						 Content="Details" 
+						 HorizontalAlignment="Center" 
+						 Padding="5" 
+						 Margin="10 0 0 0"
+						 Height="40" >
+						</Label>
+					</Border>
+
+					<Label Grid.Row="1" Content="            Qty" HorizontalAlignment="Left" />
+					<Label Grid.Row="1" Content="Mult" Grid.Column="6" HorizontalAlignment="Center" />
 
 					<CheckBox 
-					 Grid.Row="0" Grid.Column="1" Width="60" VerticalAlignment="Center" FontSize="18"
+					 Grid.Row="1" Grid.Column="1" Width="60" VerticalAlignment="Center" FontSize="18"
 					 HorizontalAlignment="Left" Margin="3 0 0 0"
 					 Content="Exact " FlowDirection="RightToLeft" VerticalContentAlignment="center" />
 
-					<Label Grid.Row="1" Grid.Column="0" Content=" 1" Width="20" HorizontalAlignment="Left" />
-					<Label Grid.Row="2" Grid.Column="0" Content=" 2" Width="20" HorizontalAlignment="Left" />
-					<Label Grid.Row="3" Grid.Column="0" Content=" 3" Width="20" HorizontalAlignment="Left" />
-					<Label Grid.Row="4" Grid.Column="0" Content=" 4" Width="20" HorizontalAlignment="Left" />
-					<Label Grid.Row="5" Grid.Column="0" Content=" 5" Width="20" HorizontalAlignment="Left" />
-					<Label Grid.Row="6" Grid.Column="0" Content=" 6" Width="20" HorizontalAlignment="Left" />
+					<Label Grid.Row="2" Grid.Column="0" Content=" 1" Width="20" HorizontalAlignment="Left" />
+					<Label Grid.Row="3" Grid.Column="0" Content=" 2" Width="20" HorizontalAlignment="Left" />
+					<Label Grid.Row="4" Grid.Column="0" Content=" 3" Width="20" HorizontalAlignment="Left" />
+					<Label Grid.Row="5" Grid.Column="0" Content=" 4" Width="20" HorizontalAlignment="Left" />
+					<Label Grid.Row="6" Grid.Column="0" Content=" 5" Width="20" HorizontalAlignment="Left" />
+					<Label Grid.Row="7" Grid.Column="0" Content=" 6" Width="20" HorizontalAlignment="Left" />
 
-					<TextBox Grid.Row="1" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="{Binding Qty1,Mode=TwoWay,StringFormat=f2}"/>
-					<TextBox Grid.Row="2" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
+					<TextBox Grid.Row="2" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="{Binding Qty1,Mode=TwoWay,StringFormat=f2}"/>
 					<TextBox Grid.Row="3" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
 					<TextBox Grid.Row="4" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
 					<TextBox Grid.Row="5" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
 					<TextBox Grid.Row="6" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
+					<TextBox Grid.Row="7" Grid.Column="0" Margin="30 2 0 2" Width="60" Text="   .  " />
 
-					<Label Content="Seq #" Grid.Column="3" HorizontalAlignment="Left" />
+					<Label Grid.Row="1"  Content="Seq #" Grid.Column="3" HorizontalAlignment="Left" />
 
-					<Label Grid.Row="1" Grid.Column="3" Content=" 10  Base Charge" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-					<Label Grid.Row="2" Grid.Column="3" Content=" 11  Order Entry" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-					<Label Grid.Row="3" Grid.Column="3" Content=" 12  Pre-Press"   Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-					<Label Grid.Row="4" Grid.Column="3" Content=" 13  White 11-5/8&quot; CB" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-					<Label Grid.Row="5" Grid.Column="3" Content=" 14  Canary 11-5/8&quot; CFB" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-					<Label Grid.Row="6" Grid.Column="3" Content=" 15  Pink 11-5/8&quot; CF" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+					<Label Grid.Row="2" Grid.Column="3" Content=" 10  Base Charge" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+					<Label Grid.Row="3" Grid.Column="3" Content=" 11  Order Entry" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+					<Label Grid.Row="4" Grid.Column="3" Content=" 12  Pre-Press"   Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+					<Label Grid.Row="5" Grid.Column="3" Content=" 13  White 11-5/8&quot; CB" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+					<Label Grid.Row="6" Grid.Column="3" Content=" 14  Canary 11-5/8&quot; CFB" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+					<Label Grid.Row="7" Grid.Column="3" Content=" 15  Pink 11-5/8&quot; CF" Width="220" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
 
-					<TextBox Grid.Row="1" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .00" Grid.ColumnSpan="2" />
-					<TextBox Grid.Row="2" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" />
+					<TextBox Grid.Row="2" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .00" Grid.ColumnSpan="2" />
 					<TextBox Grid.Row="3" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" />
-					<TextBox Grid.Row="4" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
+					<TextBox Grid.Row="4" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" />
 					<TextBox Grid.Row="5" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
 					<TextBox Grid.Row="6" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
+					<TextBox Grid.Row="7" Grid.Column="5" Margin="3 2 0 2" Width="100" Text="       .  " Grid.ColumnSpan="2" ToolTip="Retrieve from last closed P/O" />
 
-					<xctk:IntegerUpDown Grid.Row="1" Grid.Column="6" x:Name="Spin1"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
-					<xctk:IntegerUpDown Grid.Row="2" Grid.Column="6" x:Name="Spin2"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
-					<xctk:IntegerUpDown Grid.Row="3" Grid.Column="6" x:Name="Spin3"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
-					<xctk:IntegerUpDown Grid.Row="4" Grid.Column="6" x:Name="Spin4"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
-					<xctk:IntegerUpDown Grid.Row="5" Grid.Column="6" x:Name="Spin5"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
-					<xctk:IntegerUpDown Grid.Row="6" Grid.Column="6" x:Name="Spin6"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
+					<xctk:IntegerUpDown Grid.Row="2" Grid.Column="6" x:Name="Spin1"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
+					<xctk:IntegerUpDown Grid.Row="3" Grid.Column="6" x:Name="Spin2"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
+					<xctk:IntegerUpDown Grid.Row="4" Grid.Column="6" x:Name="Spin3"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
+					<xctk:IntegerUpDown Grid.Row="5" Grid.Column="6" x:Name="Spin4"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
+					<xctk:IntegerUpDown Grid.Row="6" Grid.Column="6" x:Name="Spin5"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
+					<xctk:IntegerUpDown Grid.Row="7" Grid.Column="6" x:Name="Spin6"  Width="50" Minimum="1" Maximum="12" Margin="0 4 0 4" HorizontalAlignment="center" />
 
-					<Label Grid.Row="9" Grid.Column="2" Content="Lookup" Width="auto" HorizontalAlignment="Right" />
-					<Label Grid.Row="8" Grid.Column="3" Content="Paper"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="8" Grid.Column="4" Content="Color"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="8" Grid.Column="5" Content="Type"   Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="8" Grid.Column="6" Content="Basis"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="10" Grid.Column="2" Content="Lookup" Width="auto" HorizontalAlignment="Right" />
+					<Label Grid.Row="9" Grid.Column="3" Content="Paper"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="9" Grid.Column="4" Content="Color"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="9" Grid.Column="5" Content="Type"   Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="9" Grid.Column="6" Content="Basis"  Width="auto" HorizontalAlignment="Left" />
 
-					<TextBox Grid.Row="9" Grid.Column="3" Margin="3 2 0 2" Width="100"  />
-					<TextBox Grid.Row="9" Grid.Column="4" Margin="3 2 0 2" Width="100"  />
-					<TextBox Grid.Row="9" Grid.Column="5" Margin="3 2 0 2" Width="100"  />
-					<TextBox Grid.Row="9" Grid.Column="6" Margin="3 2 0 2" Width="100"  />
+					<TextBox Grid.Row="10" Grid.Column="3" Margin="3 2 0 2" Width="100"  />
+					<TextBox Grid.Row="10" Grid.Column="4" Margin="3 2 0 2" Width="100"  />
+					<TextBox Grid.Row="10" Grid.Column="5" Margin="3 2 0 2" Width="100"  />
+					<TextBox Grid.Row="10" Grid.Column="6" Margin="3 2 0 2" Width="100"  />
 
-					<Label Grid.Row="10" Grid.Column="4" Content="Features" FontWeight="Bold"  Width="auto" HorizontalAlignment="Center" />
-					<Label Grid.Row="10" Grid.Column="6" Content="Cartons" FontWeight="Bold"  Width="auto" HorizontalAlignment="Center" />
+					<Label Grid.Row="11" Grid.Column="4" Content="Features" FontWeight="Bold"  Width="auto" HorizontalAlignment="Center" />
+					<Label Grid.Row="11" Grid.Column="6" Content="Cartons" FontWeight="Bold"  Width="auto" HorizontalAlignment="Center" />
 
-					<Label Grid.Row="11" Grid.Column="2" Content="Ink color"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="12" Grid.Column="2" Content="Backer"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="13" Grid.Column="2" Content="Punching"   Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="14" Grid.Column="2" Content="CrossPerf"   Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="15" Grid.Column="2" Content="Booking"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="16" Grid.Column="2" Content="Fan a part"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="17" Grid.Column="2" Content="Shrink wrap"  Width="auto" HorizontalAlignment="Left" />
-					<Label Grid.Row="18" Grid.Column="2" Content="Padding"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="12" Grid.Column="2" Content="Ink color"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="13" Grid.Column="2" Content="Backer"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="14" Grid.Column="2" Content="Punching"   Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="15" Grid.Column="2" Content="CrossPerf"   Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="16" Grid.Column="2" Content="Booking"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="17" Grid.Column="2" Content="Fan a part"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="18" Grid.Column="2" Content="Shrink wrap"  Width="auto" HorizontalAlignment="Left" />
+					<Label Grid.Row="19" Grid.Column="2" Content="Padding"  Width="auto" HorizontalAlignment="Left" />
 
-					<xctk:IntegerUpDown Grid.Row="11" Grid.Column="3" x:Name="Spin11"  Width="50" Minimum="1" Maximum="12" Margin="8 4 0 4" HorizontalAlignment="Left" />
-					<Label Grid.Row="11" Grid.Column="3" Content="std"  Width="auto" HorizontalAlignment="Left" Margin="60 0 0 0" />
+					<xctk:IntegerUpDown Grid.Row="12" Grid.Column="3" x:Name="Spin11"  Width="50" Minimum="1" Maximum="12" Margin="8 4 0 4" HorizontalAlignment="Left" />
+					<Label Grid.Row="12" Grid.Column="3" Content="std"  Width="auto" HorizontalAlignment="Left" Margin="60 0 0 0" />
 
-					<xctk:IntegerUpDown Grid.Row="11" Grid.Column="4" x:Name="Spin12"  Width="50" Minimum="1" Maximum="12" Margin="2 4 0 4" HorizontalAlignment="Left" />
-					<Label Grid.Row="11" Grid.Column="4" Content="match"  Width="auto" HorizontalAlignment="Left" Margin="56 0 0 0" Grid.ColumnSpan="2" />
+					<xctk:IntegerUpDown Grid.Row="12" Grid.Column="4" x:Name="Spin12"  Width="50" Minimum="1" Maximum="12" Margin="2 4 0 4" HorizontalAlignment="Left" />
+					<Label Grid.Row="12" Grid.Column="4" Content="match"  Width="auto" HorizontalAlignment="Left" Margin="56 0 0 0" Grid.ColumnSpan="2" />
 
-					<xctk:IntegerUpDown Grid.Row="11" Grid.Column="5" x:Name="Spin13"  Width="50" Minimum="1" Maximum="12" Margin="2 4 0 4" HorizontalAlignment="Left" />
-					<Label Grid.Row="11" Grid.Column="5" Content="split"  Width="auto" HorizontalAlignment="Left" Margin="56 0 0 0" Grid.ColumnSpan="2" />
+					<xctk:IntegerUpDown Grid.Row="12" Grid.Column="5" x:Name="Spin13"  Width="50" Minimum="1" Maximum="12" Margin="2 4 0 4" HorizontalAlignment="Left" />
+					<Label Grid.Row="12" Grid.Column="5" Content="split"  Width="auto" HorizontalAlignment="Left" Margin="56 0 0 0" Grid.ColumnSpan="2" />
 
-					<xctk:IntegerUpDown Grid.Row="11" Grid.Column="6" x:Name="Spin14"  Width="50" Minimum="1" Maximum="12" Margin="2 4 0 4" HorizontalAlignment="Left" />
-					<Label Grid.Row="11" Grid.Column="6" Content="thermo"  Width="auto" HorizontalAlignment="Left" Margin="56 0 0 0" Grid.ColumnSpan="2" />
+					<xctk:IntegerUpDown Grid.Row="12" Grid.Column="6" x:Name="Spin14"  Width="50" Minimum="1" Maximum="12" Margin="2 4 0 4" HorizontalAlignment="Left" />
+					<Label Grid.Row="12" Grid.Column="6" Content="thermo"  Width="auto" HorizontalAlignment="Left" Margin="56 0 0 0" Grid.ColumnSpan="2" />
 
-					<xctk:IntegerUpDown Grid.Row="12" Grid.Column="3" x:Name="Spin15"  Width="60" Minimum="1" Maximum="12" Margin="8 4 0 4" HorizontalAlignment="Left" />
+					<xctk:IntegerUpDown Grid.Row="13" Grid.Column="3" x:Name="Spin15"  Width="60" Minimum="1" Maximum="12" Margin="8 4 0 4" HorizontalAlignment="Left" />
 
-					<ComboBox Grid.Row="13" Grid.Column="3" Margin="5 3 0 3" >
+					<ComboBox Grid.Row="14" Grid.Column="3" Margin="5 3 0 3" >
 						<ComboBoxItem Content="Punch" />
 						<ComboBoxItem Content="Drill" IsSelected="True" />
 					</ComboBox>
 
-					<ComboBox Grid.Row="14" Grid.Column="3" Margin="5 3 0 3" >
+					<ComboBox Grid.Row="15" Grid.Column="3" Margin="5 3 0 3" >
 						<ComboBoxItem Content="Full" IsSelected="True" />
 						<ComboBoxItem Content="Partial" />
 					</ComboBox>
@@ -334,7 +409,102 @@
 
 			</TabItem>
 
-			<TabItem Header="    Page 3    " FontSize="16"></TabItem>
+			<TabItem Header="    Page 3    " FontSize="16">
+
+				<Grid>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height=".7*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Border 
+					 CornerRadius="10" 
+					 Grid.Column="5"
+					 Grid.RowSpan="2"
+					 BorderThickness="2" 
+					 HorizontalAlignment="Right"
+					 Margin="0 0 10 0"
+					 Background="Purple" 
+					 Height="52"
+					 VerticalAlignment="Top"
+					 Width="120">
+						<Label 
+						Grid.RowSpan="5"
+						 FontSize="24" 
+						 Foreground="White"
+						 Background="Purple"
+						 Width="auto"
+						 Content="Pricing" 
+						 HorizontalAlignment="Center" 
+						 Padding="5" 
+						 Height="40" >
+						</Label>
+					</Border>
+
+					<Label Grid.Row="1" Grid.Column="1" Content="Qty" HorizontalAlignment="Left" Width="auto" Margin="35 0 0 0"  />
+					<xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="FinalQty1"  Width="80" Minimum="1" Maximum="12" Margin="10 4 0 4" HorizontalAlignment="Left" />
+
+					<Label Grid.Row="1" Grid.Column="1" Content="Cost/M" HorizontalAlignment="Left" Width="auto" Margin="135 0 0 0" Grid.ColumnSpan="2"  />
+					<TextBox Grid.Row="2" Grid.Column="1" x:Name="CPM"  Width="80" 
+					  Margin="130 4 0 4" HorizontalAlignment="Left" Grid.ColumnSpan="2" />
+
+					<Label Grid.Row="1" Grid.Column="2" Content="Markup" HorizontalAlignment="Left" Width="auto" Margin="70 0 0 0" Grid.ColumnSpan="2"  />
+					<TextBox Grid.Row="2" Grid.Column="2" x:Name="MarkupPct"  Width="60"  
+					  Margin="73 4 0 4" HorizontalAlignment="Left" Grid.ColumnSpan="2" />
+					<Label Grid.Row="2" Grid.Column="2" Content="%" Margin="0 0 20 0" HorizontalAlignment="Right" />
+
+					<Label Grid.Row="1" Grid.Column="3" Content="Price/M" HorizontalAlignment="Left" Width="auto" Margin="10 0 0 0" Grid.ColumnSpan="2"  />
+					<TextBox Grid.Row="2" Grid.Column="3" x:Name="CPM2"  Width="80" 
+					  Margin="10 4 0 4" HorizontalAlignment="Left" Grid.ColumnSpan="2" />
+
+					<Label Grid.Row="4" Grid.Column="2" Content="Interface tables" FontWeight="Bold" Width="auto" Margin="0 0 0 0" HorizontalAlignment="Center" />
+					<Line Grid.Row="4" X1="0" Y1="0" X2="1"  Y2="0" Grid.ColumnSpan="5" VerticalAlignment="Bottom"
+              Stroke="blue" StrokeThickness="1" Stretch="Uniform"></Line>
+
+					<Label   Grid.Row="5" Grid.Column="0" Content="Estimator:" Width="150" Margin="10 0 0 0" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="5" Grid.Column="1" x:Name ="Location2" Width="150" Margin="10 4 0 4" HorizontalAlignment="Left" />
+
+					<Label Grid.Row="6" Grid.Column="0" Content="Prospect:" Width="auto" Margin="10 0 0 0" HorizontalAlignment="Right" />
+
+					<TextBox Grid.Row="6" Grid.Column="1" x:Name ="Location3" Width="150" Margin="10 4 0 4" HorizontalAlignment="Left" />
+					<Label   Grid.Row="7" Grid.Column="1" Content="Location" Width="auto" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" />
+
+					<TextBox Grid.Row="6" Grid.Column="2" x:Name ="Contact" Width="150"  Margin="10 4 0 4" HorizontalAlignment="Left" />
+					<Label   Grid.Row="7" Grid.Column="2" Content="Name"    Width="auto" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" />
+
+					<TextBox Grid.Row="6" Grid.Column="3" x:Name ="Email"  Width="150"  Margin="10 4 0 4" HorizontalAlignment="Left" />
+					<Label   Grid.Row="7" Grid.Column="3" Content="Email"  Width="auto" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" />
+
+					<TextBox Grid.Row="6" Grid.Column="4" x:Name ="Phone"  Width="150"  Margin="10 4 0 4" HorizontalAlignment="Left" />
+					<Label   Grid.Row="7" Grid.Column="4" Content="Phone"  Width="auto" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" />
+
+
+				</Grid>
+
+			</TabItem>
 
 		</TabControl>
 
