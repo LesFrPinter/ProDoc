@@ -1,0 +1,212 @@
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="ProDocEstimate.Views.PV02"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="PV02" 
+        Height="750" Width="900">
+
+	<Window.Resources>
+
+		<Style TargetType="Label">
+			<Setter Property="FontSize" Value="16" />
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="Margin" Value="2 0 0 0" />
+			<Setter Property="Foreground" Value="Blue" />
+			<Setter Property="FontWeight" Value="Bold" />
+		</Style>
+
+	</Window.Resources>
+
+	<Grid Background="LightGray" >
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="110"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0" Grid.Column="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="4*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Label Grid.Column="0" Content="ESTIMATE: " HorizontalAlignment="Right" Margin="1" />
+
+			<Label Grid.Column="2" Content="Estimate Created" />
+			<Label Grid.Column="2" Grid.Row="1" Width="120" Height="24"
+			 Margin="0" Content="02/14/2023" FontFamily="Courier New" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+
+			<Label Grid.Row="1" Grid.Column="0" Content="CUSTOMER: " HorizontalAlignment="Right" Margin="1"  />
+
+			<Label Grid.Row="0" Grid.Column="1" Margin="0 0 0 0" 
+			 Content="065813 Continuous 3 Part 9 1/2 X 11 Carbonless"
+			 Foreground="Blue" FontWeight="Bold"
+			 FontSize="14"
+			 HorizontalAlignment="Left"/>
+			
+			<Label Grid.Row="1" Grid.Column="1" 
+			 Content="09301 2MARKET VISUALS (John)"
+			 Foreground="Blue" FontWeight="Bold"
+			 FontSize="14"
+			 HorizontalAlignment="Left"  />
+			
+		</Grid>
+
+		<Grid Grid.Row="1" Grid.Column="0">
+
+			<TabControl Background="LightGray" FontSize="18" >
+
+				<TabItem>
+					<TabItem.Header>
+						<AccessText Text="  _Base  " />
+					</TabItem.Header>
+
+					<Grid>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="32" />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="3*" />
+						</Grid.ColumnDefinitions>
+
+						<Label Content="Quantity" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="0" />
+
+						<Label Content="Price/M" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="1" />
+
+						<Label Content="Adjustment" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="2" />
+						<Label Content="Total" HorizontalAlignment="Left"
+						 Margin="70 0 0 0" Grid.Row="0" Grid.Column="3" />
+
+						<telerik:RadMaskedNumericInput Grid.Row="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<Label Content="$ 1320.00" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="1" Grid.Column="3" />
+
+						<telerik:RadMaskedNumericInput Grid.Row="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="2" Grid.Column="3" />
+
+						<telerik:RadMaskedNumericInput Grid.Row="3" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="3" Grid.Column="3 " />
+
+						<telerik:RadMaskedNumericInput Grid.Row="4" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="4" Grid.Column="3" />
+
+						<telerik:RadMaskedNumericInput Grid.Row="5" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="5" Grid.Column="3" />
+
+						<Grid Grid.Row="4" Grid.Column="4" Width="280" Height="400" HorizontalAlignment="Right"
+						 Grid.RowSpan="10" Grid.ColumnSpan="2" >
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="8*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+							<StackPanel Orientation="Horizontal">
+								<Button Content="Options" Margin="5 1 5 1"  />
+								<Button Content="Lots" Margin="5 1 5 1" />
+								<Button Content="Paper" Margin="5 1 5 1" />
+								<Button Content="Forces?" Margin="5 1 5 1" />
+							</StackPanel>
+							<TextBlock Grid.Row="1" TextWrapping="Wrap" Height="100" VerticalAlignment="Top" Grid.RowSpan="4">
+							Press 22 Web 22<LineBreak />
+							 22 inch press<LineBreak />
+							Collator: 311<LineBreak />
+							 11 inch collator<LineBreak />
+							SalesRep: 999
+							 House Account<LineBreak />
+							 COMMENTS EXIST
+							</TextBlock>
+						</Grid>
+
+						<DataGrid 
+						 x:Name="MyGrid"
+						 Grid.Row="7" Grid.RowSpan="10" Grid.ColumnSpan="5" Height="360" Width="600" HorizontalAlignment="Left"
+						 Background="LightCyan" 
+						 ItemsSource="{Binding Custs.DefaultView}"
+						 IsSynchronizedWithCurrentItem="True"
+						 AutoGenerateColumns="False"  >
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="SEQ" Width="65" Binding="{Binding Path=Customer}" >
+									</DataGridTextColumn>
+									<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Address}"  />
+									<DataGridTextColumn Header="FLAT" Width="100" Binding="{Binding Path=City}" />
+									<DataGridComboBoxColumn Header="RUN" Width="Auto" TextBinding="{Binding Path=State}" />
+								</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+
+
+				</TabItem>
+
+				<TabItem>
+					<TabItem.Header>
+						<AccessText Text="  Det_ail  " />
+					</TabItem.Header>
+				</TabItem>
+
+				<TabItem>
+					<TabItem.Header>
+						<AccessText Text="  Cost Su_mmary  " />
+					</TabItem.Header>
+				</TabItem>
+
+				<TabItem>
+					<TabItem.Header>
+						<AccessText Text="  Comme_nts  " />
+					</TabItem.Header>
+				</TabItem>
+
+				<TabItem>
+					<TabItem.Header>
+						<AccessText Text="  _Quote Text  " />
+					</TabItem.Header>
+				</TabItem>
+
+			</TabControl>
+
+		</Grid>
+
+	</Grid>
+
+</Window>

@@ -199,7 +199,6 @@
 			<Button Content="_Copy" Grid.Row="8" Height="26" Width="60"
 			Grid.Column="4" Background="Green" Foreground="White"/>
 
-
 		</Grid>
 
 	</Grid>
