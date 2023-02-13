@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace NewWpf1.View.UserControls
+namespace ProDocEstimate.Views.UserControls
 {
 	public partial class ClearableTextBox : UserControl
     {

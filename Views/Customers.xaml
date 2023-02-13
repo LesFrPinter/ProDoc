@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:ProDocEstimate"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="Customers" Height="1200" Width="1400">
+        Title="Customers" 
+				Height="750" Width="900">
 
 	<Window.Resources>
 
 		<Style TargetType="Button">
-			<Setter Property="Foreground" Value="White" />
-			<Setter Property="Background" Value="Red" />
+			<Setter Property="Foreground" Value="yellow" />
+			<Setter Property="Background" Value="blue" />
 			<Setter Property="Margin" Value="5 12 2 12" />
 		</Style>
 
@@ -75,20 +76,11 @@
 				<Grid Background="LightCyan">
 
 					<Grid.RowDefinitions>
-						<RowDefinition Height="2*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
+						<RowDefinition Height="60" />
+						<RowDefinition Height="35" />
+						<RowDefinition Height="35" />
+						<RowDefinition Height="35" />
+						<RowDefinition Height="35" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
@@ -102,11 +94,11 @@
 					</Grid.RowDefinitions>
 
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="150" />
+						<ColumnDefinition Width="150" />
+						<ColumnDefinition Width="150" />
+						<ColumnDefinition Width="150" />
+						<ColumnDefinition Width="150" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
@@ -135,17 +127,17 @@
 					<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
 					<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Right" />
 
-					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="State of Alabama" Height="26" />
+					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" Margin="0,6,0,5" Text="State of Alabama" Height="26" HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
 					<TextBox x:Name="txtAddress"      Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="202 Main Street"  Height="26" />
-					<TextBox x:Name="txtCity"         Grid.Row="3" Grid.Column="2" Width="220" Margin="0,6,0,6" Text="Montgomery"  Height="26" />
-					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="70"  Margin="0,6,0,6" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="26"  >
+					<TextBox x:Name="txtCity"         Grid.Row="3" Grid.Column="2" Width="170" Margin="0,6,0,6" Text="Montgomery"  Height="26"  Grid.ColumnSpan="2"  />
+					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="50"  Margin="25,6,0,6" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="24" Foreground="Black"  >
 						<ComboBoxItem Content="AK" />
 						<ComboBoxItem Content="AL" />
 						<ComboBoxItem Content="AR" />
 					</ComboBox>
-					<TextBox x:Name="txtZIP"          Grid.Row="3" Grid.Column="3" Width="95" Margin="80 6 0 6" Text="20214"  Height="26" />
-					<TextBox x:Name="txtContact"      Grid.Row="4" Grid.Column="2" Width="125" Margin="0 6 0 6" Text="George Raft"  Height="26" />
-					<TextBox x:Name="txtPhone"        Grid.Row="4" Grid.Column="4" Width="135" Margin="40 6 0 6" Text="(605) 761-1207"  Height="26" />
+					<TextBox x:Name="txtZIP"          Grid.Row="3" Grid.Column="3" Width="95" Margin="80 6 0 6" Text="20214"  Height="24"  Grid.ColumnSpan="2" />
+					<TextBox x:Name="txtContact"      Grid.Row="4" Grid.Column="2" Width="225" Margin="0 6 0 6" Text="George Raft"  Height="24"  Grid.ColumnSpan="2"  />
+					<TextBox x:Name="txtPhone"        Grid.Row="4" Grid.Column="4" Width="135" Margin="0 6 0 6" Text="(605) 761-1207"  Height="24"  Grid.ColumnSpan="2" />
 
 				</Grid>
 
@@ -196,13 +188,13 @@
 
 			<TabItem x:Name="tabPageTreeView" Header="TreeView search" >
 				<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="40" />
-					<RowDefinition Height="40" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="40" />
+						<RowDefinition Height="40" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
 
-				<Label Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" Margin="10 0 0 0" FontWeight="Bold" Foreground="Green" />
+					<Label Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" Margin="10 0 0 0" FontWeight="Bold" Foreground="Green" />
 
 					<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
 						<Label Content="Partial name: " />
@@ -225,8 +217,8 @@
 								<EventSetter Event="MouseDoubleClick" Handler="cmdSelect_Click" />
 							</Style>
 						</TreeView.ItemContainerStyle>
-						
-								<TreeViewItem Header="Company: State of Alabama" IsExpanded="True" >
+
+						<TreeViewItem Header="Company: State of Alabama" IsExpanded="True" >
 							<TreeViewItem Header="Location  |  Montgomery, AL" IsExpanded="True" >
 								<TreeViewItem Header="  Contact: George Raft     | Phone: (208) 331-1221" />
 								<TreeViewItem Header="  Contact: Sam Billart     | Phone: (208) 331-2043" />
@@ -239,8 +231,8 @@
 							<TreeViewItem Header="Location  |  Houston, TX" IsExpanded="True" >
 								<TreeViewItem Header="  Contact: Donald Shellman | Phone: (713) 667-4309" />
 							</TreeViewItem>
-							</TreeViewItem>
-				</TreeView>
+						</TreeViewItem>
+					</TreeView>
 
 				</Grid>
 
