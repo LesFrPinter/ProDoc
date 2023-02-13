@@ -8,6 +8,15 @@
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="750" Width="1200">
 
+	<Window.Resources>
+
+		<Style TargetType="MenuItem">
+			<Setter Property="FontSize" Value="18" />
+			<Setter Property="Foreground" Value="Blue" />
+		</Style>
+
+	</Window.Resources>
+
 	<Grid Background="Beige" Margin="0,-3,0,3">
 
 		<Grid.RowDefinitions>
@@ -26,6 +35,9 @@
 			<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
 			<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />
 			<MenuItem Header="Print" Height="40" />
+			<MenuItem Header="Current Screens" Height="40" >
+				<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
+			</MenuItem>
 		</Menu>
 
 		<Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />

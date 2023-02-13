@@ -165,7 +165,7 @@
 
 			<Label Grid.Row="4" Grid.Column="1" Margin="120 0 0 0" Content=" X " HorizontalAlignment="Left" />
 
-			<ComboBox Grid.Row="4" Grid.Column="1" Width="100" Height="26" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="165 0 0 0" >
+			<ComboBox Grid.Row="4" Grid.Column="1" Width="100" Height="26" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="160 0 0 0" >
 				<ComboBoxItem Content="Size 1" />
 				<ComboBoxItem Content="Size 2" />
 				<ComboBoxItem Content="Size 3" />

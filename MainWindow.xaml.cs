@@ -32,5 +32,11 @@ namespace ProDocEstimate
 			items.ShowDialog();
 		}
 
+		private void mnuPV01_Click(object sender, RoutedEventArgs e)
+		{
+			Window pv01 = new Views.PV01();
+			pv01.Owner = this;
+			pv01.ShowDialog();
+		}
 	}
 }
