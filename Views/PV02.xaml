@@ -20,6 +20,16 @@
 			<Setter Property="FontWeight" Value="Bold" />
 		</Style>
 
+		<Style TargetType="Button">
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="Margin" Value="2 0 0 0" />
+			<Setter Property="Foreground" Value="White" />
+			<Setter Property="Background" Value="Green" />
+			<Setter Property="Padding" Value="4 0 4 0" />
+		</Style>
+
 	</Window.Resources>
 
 	<Grid Background="LightGray" >
@@ -29,6 +39,11 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="3*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
 
 		<Grid Grid.Row="0" Grid.Column="0">
 			<Grid.RowDefinitions>
@@ -44,10 +59,6 @@
 
 			<Label Grid.Column="0" Content="ESTIMATE: " HorizontalAlignment="Right" Margin="1" />
 
-			<Label Grid.Column="2" Content="Estimate Created" />
-			<Label Grid.Column="2" Grid.Row="1" Width="120" Height="24"
-			 Margin="0" Content="02/14/2023" FontFamily="Courier New" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-
 			<Label Grid.Row="1" Grid.Column="0" Content="CUSTOMER: " HorizontalAlignment="Right" Margin="1"  />
 
 			<Label Grid.Row="0" Grid.Column="1" Margin="0 0 0 0" 
@@ -55,13 +66,13 @@
 			 Foreground="Blue" FontWeight="Bold"
 			 FontSize="14"
 			 HorizontalAlignment="Left"/>
-			
+
 			<Label Grid.Row="1" Grid.Column="1" 
 			 Content="09301 2MARKET VISUALS (John)"
 			 Foreground="Blue" FontWeight="Bold"
 			 FontSize="14"
 			 HorizontalAlignment="Left"  />
-			
+
 		</Grid>
 
 		<Grid Grid.Row="1" Grid.Column="0">
@@ -89,7 +100,6 @@
 							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="3*" />
 						</Grid.ColumnDefinitions>
 
 						<Label Content="Quantity" HorizontalAlignment="Left"
@@ -100,8 +110,8 @@
 
 						<Label Content="Adjustment" HorizontalAlignment="Left"
 						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="2" />
-						<Label Content="Total" HorizontalAlignment="Left"
-						 Margin="70 0 0 0" Grid.Row="0" Grid.Column="3" />
+						<Label Content="Total" HorizontalAlignment="Right"
+						  Grid.Row="0" Grid.Column="3" />
 
 						<telerik:RadMaskedNumericInput Grid.Row="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
 						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
@@ -133,31 +143,6 @@
 						<Label Content="" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="5" Grid.Column="3" />
 
-						<Grid Grid.Row="4" Grid.Column="4" Width="280" Height="400" HorizontalAlignment="Right"
-						 Grid.RowSpan="10" Grid.ColumnSpan="2" >
-							<Grid.RowDefinitions>
-								<RowDefinition Height="*" />
-								<RowDefinition Height="8*" />
-								<RowDefinition Height="*" />
-								<RowDefinition Height="*" />
-								<RowDefinition Height="*" />
-							</Grid.RowDefinitions>
-							<StackPanel Orientation="Horizontal">
-								<Button Content="Options" Margin="5 1 5 1"  />
-								<Button Content="Lots" Margin="5 1 5 1" />
-								<Button Content="Paper" Margin="5 1 5 1" />
-								<Button Content="Forces?" Margin="5 1 5 1" />
-							</StackPanel>
-							<TextBlock Grid.Row="1" TextWrapping="Wrap" Height="100" VerticalAlignment="Top" Grid.RowSpan="4">
-							Press 22 Web 22<LineBreak />
-							 22 inch press<LineBreak />
-							Collator: 311<LineBreak />
-							 11 inch collator<LineBreak />
-							SalesRep: 999
-							 House Account<LineBreak />
-							 COMMENTS EXIST
-							</TextBlock>
-						</Grid>
 
 						<DataGrid 
 						 x:Name="MyGrid"
@@ -166,13 +151,13 @@
 						 ItemsSource="{Binding Custs.DefaultView}"
 						 IsSynchronizedWithCurrentItem="True"
 						 AutoGenerateColumns="False"  >
-								<DataGrid.Columns>
-									<DataGridTextColumn Header="SEQ" Width="65" Binding="{Binding Path=Customer}" >
-									</DataGridTextColumn>
-									<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Address}"  />
-									<DataGridTextColumn Header="FLAT" Width="100" Binding="{Binding Path=City}" />
-									<DataGridComboBoxColumn Header="RUN" Width="Auto" TextBinding="{Binding Path=State}" />
-								</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="SEQ" Width="65" Binding="{Binding Path=Customer}" >
+								</DataGridTextColumn>
+								<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Address}"  />
+								<DataGridTextColumn Header="FLAT" Width="100" Binding="{Binding Path=City}" />
+								<DataGridComboBoxColumn Header="RUN" Width="Auto" TextBinding="{Binding Path=State}" />
+							</DataGrid.Columns>
 						</DataGrid>
 					</Grid>
 
@@ -205,6 +190,47 @@
 
 			</TabControl>
 
+		</Grid>
+
+		<StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
+			<Label Content="Estimate Created" />
+			<Label Grid.Row="1" Width="120" Height="24"
+			 Margin="0" Content="02/14/2023" FontFamily="Courier New" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+		</StackPanel>
+
+		<Grid Grid.Row="0" Grid.Column="1" Width="220" Height="400" HorizontalAlignment="Right" Margin="0 300 0 0"
+			 Grid.RowSpan="10" Grid.ColumnSpan="2" >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="8*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Button Content="Options" Margin="5"  />
+				<Button Content="Lots" Margin="5" />
+				<Button Content="Paper" Margin="5" />
+				<Button Content="Forces?" Margin="5" />
+			</StackPanel>
+			<TextBlock Grid.Row="1"
+			 TextWrapping="Wrap" Height="122" VerticalAlignment="Top" 
+			 Grid.RowSpan="2" Margin="10,5,0,0">
+				Press 22 Web 22<LineBreak />
+					22 inch press<LineBreak />
+				Collator: 311<LineBreak />
+					11 inch collator<LineBreak />
+				SalesRep: 999<LineBreak />
+					House Account<LineBreak />
+					COMMENTS EXIST
+			</TextBlock>
+			<Button Grid.Row="2" Content="Cartons" Width="100" Margin="4" />
+			<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Left" />
+			<ComboBox x:Name="cmbState"       Grid.Row="4" Width="150"  Margin="25,6,0,6" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="24" Foreground="Black"  >
+				<ComboBoxItem Content="Feature 1" />
+				<ComboBoxItem Content="Feature 2" />
+				<ComboBoxItem Content="Feature 3" />
+			</ComboBox>
 		</Grid>
 
 	</Grid>

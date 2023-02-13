@@ -37,6 +37,7 @@
 			<MenuItem Header="Print" Height="40" />
 			<MenuItem Header="Current Screens" Height="40" >
 				<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
+				<MenuItem x:Name="mnuPV02" Header="PV02" Height="40" Click="mnuPV02_Click" />
 			</MenuItem>
 		</Menu>
 
