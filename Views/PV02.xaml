@@ -31,8 +31,25 @@
 		</Style>
 
 		<Style x:Key="CellRightAlign">
-			<Setter Property="Control.HorizontalAlignment"
-            Value="Right" />
+			<Setter Property="Control.HorizontalAlignment" Value="Right" />
+			<Setter Property="Control.Margin" Value="0 0 5 0" />
+		</Style>
+
+		<Style x:Key="CellLeftAlign">
+			<Setter Property="Control.Margin" Value="5 0 0 0" />
+			<Setter Property="Control.HorizontalAlignment" Value="Left" />
+		</Style>
+
+		<Style x:Key="InputField" TargetType="telerik:RadMaskedNumericInput" >
+			<Setter Property="Control.Height" Value="30" />
+			<Setter Property="Control.Width"  Value="110" />
+			<Setter Property="Control.Margin" Value="10 0 0 0" />
+			<Style.Triggers>
+				<Trigger Property="IsKeyboardFocusWithin" Value="True">
+					<Setter Property="Control.Background" Value="Blue"/>
+					<Setter Property="Control.Foreground" Value="White"/>
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 
 	</Window.Resources>
@@ -127,37 +144,38 @@
 						<Label Content="Total" HorizontalAlignment="Right"
 						  Grid.Row="0" Grid.Column="3" />
 
-						<telerik:RadMaskedNumericInput Grid.Row="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="1" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
 						<Label Content="$ 1320.00" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="1" Grid.Column="3" />
 
-						<telerik:RadMaskedNumericInput Grid.Row="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
 						<Label Content="" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="2" Grid.Column="3" />
 
-						<telerik:RadMaskedNumericInput Grid.Row="3" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
 						<Label Content="" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="3" Grid.Column="3 " />
 
-						<telerik:RadMaskedNumericInput Grid.Row="4" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
 						<Label Content="" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="4" Grid.Column="3" />
 
-						<telerik:RadMaskedNumericInput Grid.Row="5" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="1" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
-						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="2" Height="30" Width="110" Mask="" Margin="10 0 0 0" />
+						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+						<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
 						<Label Content="" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="5" Grid.Column="3" />
 
 						<DataGrid 
+						 FontFamily="Courier New" FontSize="13"
 						 x:Name="MyGrid"
 						 Grid.Row="7" 
 						 Grid.RowSpan="10" 
@@ -172,9 +190,9 @@
 						 AutoGenerateColumns="False"  >
 							<DataGrid.Columns>
 								<DataGridTextColumn Header="SEQ"                 Width="65"  Binding="{Binding Path=Seq}"     ElementStyle="{StaticResource CellRightAlign}" />
-								<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Feature}" ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Feature}" ElementStyle="{StaticResource CellLeftAlign}" />
 								<DataGridTextColumn Header="FLAT"                Width="100" Binding="{Binding Path=Flat}"    ElementStyle="{StaticResource CellRightAlign}" />
-								<DataGridTextColumn Header="RUN"                 Width="100" Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="RUN"                 Width="85" Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
 							</DataGrid.Columns>
 						</DataGrid>
 					</Grid>
@@ -220,7 +238,7 @@
 			 Grid.RowSpan="10" Grid.ColumnSpan="2" >
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*" />
-				<RowDefinition Height="8*" />
+				<RowDefinition Height="10*" />
 				<RowDefinition Height="*" />
 				<RowDefinition Height="*" />
 				<RowDefinition Height="*" />
@@ -232,7 +250,8 @@
 				<Button Content="Forces?" Margin="5" />
 			</StackPanel>
 			<TextBlock Grid.Row="1"
-			 TextWrapping="Wrap" Height="122" VerticalAlignment="Top" 
+			 TextWrapping="Wrap" Height="122" FontSize="14"
+			 VerticalAlignment="Top" 
 			 Grid.RowSpan="2" Margin="10,5,0,0">
 				Press 22 Web 22<LineBreak />
 					22 inch press<LineBreak />
@@ -243,11 +262,11 @@
 					COMMENTS EXIST
 			</TextBlock>
 			<Button Grid.Row="2" Content="Cartons" Width="100" Margin="4" />
-			<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Left" />
-			<ComboBox x:Name="cmbState"       Grid.Row="4" Width="150"  Margin="25,6,0,6" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="24" Foreground="Black"  >
-				<ComboBoxItem Content="Feature 1" />
-				<ComboBoxItem Content="Feature 2" />
-				<ComboBoxItem Content="Feature 3" />
+			<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Center"  />
+			<ComboBox x:Name="cmbActionCode" Grid.Row="4" Width="150"  HorizontalAlignment="Center" Background="LightYellow" Height="24" Foreground="Black"  >
+				<ComboBoxItem Content="Action Code 1" IsSelected="True" />
+				<ComboBoxItem Content="Action Code 2" />
+				<ComboBoxItem Content="Action Code 3" />
 			</ComboBox>
 		</Grid>
 
