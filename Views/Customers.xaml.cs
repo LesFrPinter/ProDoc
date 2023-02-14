@@ -8,36 +8,21 @@ namespace ProDocEstimate
 {
 	public partial class Customers : Window, INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler? PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-		private bool newCustomer;
-		public bool NewCustomer
-		{
-			get { return newCustomer; }
-			set { newCustomer = value; OnPropertyChanged("NewCustomer"); }
-		}
-
-
-		private string selcust;
-		public string SelectedCustomer
-		{
-			get { return selcust; }
-			set { selcust = value; OnPropertyChanged(); }
-		}
-
-
+		private DataTable custs;
 		public  DataTable Custs
 		{ get { return custs; }
 			set { custs = value; OnPropertyChanged(); }
 		}
 
-		public DataTable ?custs { get; private set; }
+		//public DataTable? custs { get; private set; }
 
-		private bool notediting;
+		private bool notediting = true;
 		public bool NotEditing
 		{ get { return notediting; }
 			set
-			{ notediting = value; OnPropertyChanged();
+			{ notediting = value; OnPropertyChanged(nameof(NotEditing));
 			}
 		}
 
@@ -47,6 +32,20 @@ namespace ProDocEstimate
 			set { editing = value;
 				NotEditing = !editing;
 				OnPropertyChanged(); }
+		}
+
+		private bool newCustomer;
+		public bool NewCustomer
+		{
+			get { return newCustomer; }
+			set { newCustomer = value; OnPropertyChanged(nameof(NewCustomer)); }
+		}
+
+		private string selcust;
+		public string SelectedCustomer
+		{
+			get { return selcust; }
+			set { selcust = value; OnPropertyChanged(); }
 		}
 
 		public Customers()

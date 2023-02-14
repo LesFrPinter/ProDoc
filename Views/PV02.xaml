@@ -30,6 +30,11 @@
 			<Setter Property="Padding" Value="4 0 4 0" />
 		</Style>
 
+		<Style x:Key="CellRightAlign">
+			<Setter Property="Control.HorizontalAlignment"
+            Value="Right" />
+		</Style>
+
 	</Window.Resources>
 
 	<Grid Background="LightGray" >
@@ -75,9 +80,9 @@
 
 		</Grid>
 
-		<Grid Grid.Row="1" Grid.Column="0">
+		<Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
 
-			<TabControl Background="LightGray" FontSize="18" >
+			<TabControl Background="LightGray" FontSize="18" Grid.RowSpan="1" Margin="10 0 0 0" >
 
 				<TabItem>
 					<TabItem.Header>
@@ -93,6 +98,15 @@
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition Height="3*" />
 						</Grid.RowDefinitions>
 
 						<Grid.ColumnDefinitions>
@@ -143,20 +157,24 @@
 						<Label Content="" HorizontalAlignment="Right"
 						 Margin="10 0 0 0" Grid.Row="5" Grid.Column="3" />
 
-
 						<DataGrid 
 						 x:Name="MyGrid"
-						 Grid.Row="7" Grid.RowSpan="10" Grid.ColumnSpan="5" Height="360" Width="600" HorizontalAlignment="Left"
-						 Background="LightCyan" 
-						 ItemsSource="{Binding Custs.DefaultView}"
+						 Grid.Row="7" 
+						 Grid.RowSpan="10" 
+						 Grid.ColumnSpan="5" 
+						 Height="330" 
+						 Width="600"
+						 VerticalAlignment="Top"
+						 HorizontalAlignment="Left"
+						 Background="LightGray" 
+						 ItemsSource="{Binding Est.DefaultView}"
 						 IsSynchronizedWithCurrentItem="True"
 						 AutoGenerateColumns="False"  >
 							<DataGrid.Columns>
-								<DataGridTextColumn Header="SEQ" Width="65" Binding="{Binding Path=Customer}" >
-								</DataGridTextColumn>
-								<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Address}"  />
-								<DataGridTextColumn Header="FLAT" Width="100" Binding="{Binding Path=City}" />
-								<DataGridComboBoxColumn Header="RUN" Width="Auto" TextBinding="{Binding Path=State}" />
+								<DataGridTextColumn Header="SEQ"                 Width="65"  Binding="{Binding Path=Seq}"     ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Feature}" ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="FLAT"                Width="100" Binding="{Binding Path=Flat}"    ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="RUN"                 Width="100" Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
 							</DataGrid.Columns>
 						</DataGrid>
 					</Grid>
