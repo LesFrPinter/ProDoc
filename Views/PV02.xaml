@@ -250,7 +250,7 @@
 				<Button Content="Forces?" Margin="5" />
 			</StackPanel>
 			<TextBlock Grid.Row="1"
-			 TextWrapping="Wrap" Height="122" FontSize="14"
+			 TextWrapping="Wrap" Height="180" FontSize="14"
 			 VerticalAlignment="Top" 
 			 Grid.RowSpan="2" Margin="10,5,0,0">
 				Press 22 Web 22<LineBreak />
