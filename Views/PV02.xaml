@@ -42,7 +42,9 @@
 
 		<Style x:Key="InputField" TargetType="telerik:RadMaskedNumericInput" >
 			<Setter Property="Control.Height" Value="30" />
-			<Setter Property="Control.Width"  Value="110" />
+			<Setter Property="FontFamily"     Value="Courier New" />
+			<Setter Property="FontSize"       Value="14" />
+			<Setter Property="Control.Width"  Value="120" />
 			<Setter Property="Control.Margin" Value="10 0 0 0" />
 			<Style.Triggers>
 				<Trigger Property="IsKeyboardFocusWithin" Value="True">
@@ -63,11 +65,11 @@
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="3*" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
 		<Grid Grid.Row="0" Grid.Column="0">
+	
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="*"/>
@@ -106,6 +108,15 @@
 						<AccessText Text="  _Base  " />
 					</TabItem.Header>
 
+					<Label Content=" PV01 " FontSize="72" HorizontalAlignment="Center" />
+
+				</TabItem>
+
+				<TabItem>
+					<TabItem.Header>
+						<AccessText Text="  Det_ail  " />
+					</TabItem.Header>
+
 					<Grid>
 
 						<Grid.RowDefinitions>
@@ -130,7 +141,7 @@
 							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="2*" />
 						</Grid.ColumnDefinitions>
 
 						<Label Content="Quantity" HorizontalAlignment="Left"
@@ -141,14 +152,14 @@
 
 						<Label Content="Adjustment" HorizontalAlignment="Left"
 						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="2" />
-						<Label Content="Total" HorizontalAlignment="Right"
+						<Label Content="        Total" HorizontalAlignment="Left"
 						  Grid.Row="0" Grid.Column="3" />
+						<Label Content="$ 1320.00" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="1" Grid.Column="3" />
 
 						<telerik:RadMaskedNumericInput Grid.Row="1" Mask="" Style="{StaticResource InputField}" />
 						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
 						<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
-						<Label Content="$ 1320.00" HorizontalAlignment="Right"
-						 Margin="10 0 0 0" Grid.Row="1" Grid.Column="3" />
 
 						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
 						<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
@@ -179,8 +190,8 @@
 						 x:Name="MyGrid"
 						 Grid.Row="7" 
 						 Grid.RowSpan="10" 
-						 Grid.ColumnSpan="5" 
-						 Height="330" 
+						 Grid.ColumnSpan="4" 
+						 Height="350" 
 						 Width="600"
 						 VerticalAlignment="Top"
 						 HorizontalAlignment="Left"
@@ -192,18 +203,70 @@
 								<DataGridTextColumn Header="SEQ"                 Width="65"  Binding="{Binding Path=Seq}"     ElementStyle="{StaticResource CellRightAlign}" />
 								<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Feature}" ElementStyle="{StaticResource CellLeftAlign}" />
 								<DataGridTextColumn Header="FLAT"                Width="100" Binding="{Binding Path=Flat}"    ElementStyle="{StaticResource CellRightAlign}" />
-								<DataGridTextColumn Header="RUN"                 Width="85" Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="RUN"                 Width="85"  Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
 							</DataGrid.Columns>
 						</DataGrid>
+
+						<Grid Grid.Row="0" Grid.Column="2" Width="220" Height="400" 
+						 HorizontalAlignment="Right" VerticalAlignment="Top"
+						 Margin="0 180 0 0" Grid.RowSpan="15" Grid.ColumnSpan="2" >
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="7*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+							<StackPanel Grid.Row="0" Orientation="Horizontal">
+								<Button Content="Options" Margin="5"  />
+								<Button Content="Lots" Margin="5" />
+								<Button Content="Paper" Margin="5" />
+								<Button Content="Forces?" Margin="5" />
+							</StackPanel>
+							<TextBlock Grid.Row="1"
+							 TextWrapping="Wrap" Height="180" FontSize="14"
+							 VerticalAlignment="Top" 
+							 Grid.RowSpan="2" Margin="10,5,0,0">
+								Press 22 Web 22<LineBreak />
+								  22 inch press<LineBreak />
+								Collator: 311<LineBreak />
+									11 inch collator<LineBreak />
+								SalesRep: 999<LineBreak />
+									House Account<LineBreak />
+									COMMENTS EXIST
+							</TextBlock>
+
+							<Border CornerRadius="12" Grid.Row="2" >
+								<Button Content="Cartons" Width="100" Margin="4" Height="24" >
+								<Button.Effect>
+									<DropShadowEffect BlurRadius="10" Direction="225" Color="brown" />
+								</Button.Effect>
+									<Button.Resources>
+										<Style TargetType="Border">
+											<Setter Property="CornerRadius" Value="5"/>
+											<Style.Triggers>
+												<Trigger Property="IsMouseDirectlyOver" Value="True">
+													<Setter Property="Background" Value="Red" />
+												</Trigger>
+											</Style.Triggers>
+										</Style>
+									</Button.Resources>
+							</Button>
+							</Border>
+
+							<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Center"  />
+							<ComboBox x:Name="cmbActionCode" Grid.Row="4" Width="150"  
+							 HorizontalAlignment="Center" Background="LightYellow" Height="30" Foreground="Black"  >
+								<ComboBoxItem Content="Action Code 1" IsSelected="True" />
+								<ComboBoxItem Content="Action Code 2" />
+								<ComboBoxItem Content="Action Code 3" />
+							</ComboBox>
+
+						</Grid>
+
 					</Grid>
 
-
-				</TabItem>
-
-				<TabItem>
-					<TabItem.Header>
-						<AccessText Text="  Det_ail  " />
-					</TabItem.Header>
 				</TabItem>
 
 				<TabItem>
@@ -234,41 +297,7 @@
 			 Margin="0" Content="02/14/2023" FontFamily="Courier New" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
 		</StackPanel>
 
-		<Grid Grid.Row="0" Grid.Column="1" Width="220" Height="400" HorizontalAlignment="Right" Margin="0 300 0 0"
-			 Grid.RowSpan="10" Grid.ColumnSpan="2" >
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-				<RowDefinition Height="10*" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			<StackPanel Grid.Row="0" Orientation="Horizontal">
-				<Button Content="Options" Margin="5"  />
-				<Button Content="Lots" Margin="5" />
-				<Button Content="Paper" Margin="5" />
-				<Button Content="Forces?" Margin="5" />
-			</StackPanel>
-			<TextBlock Grid.Row="1"
-			 TextWrapping="Wrap" Height="180" FontSize="14"
-			 VerticalAlignment="Top" 
-			 Grid.RowSpan="2" Margin="10,5,0,0">
-				Press 22 Web 22<LineBreak />
-					22 inch press<LineBreak />
-				Collator: 311<LineBreak />
-					11 inch collator<LineBreak />
-				SalesRep: 999<LineBreak />
-					House Account<LineBreak />
-					COMMENTS EXIST
-			</TextBlock>
-			<Button Grid.Row="2" Content="Cartons" Width="100" Margin="4" />
-			<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Center"  />
-			<ComboBox x:Name="cmbActionCode" Grid.Row="4" Width="150"  HorizontalAlignment="Center" Background="LightYellow" Height="24" Foreground="Black"  >
-				<ComboBoxItem Content="Action Code 1" IsSelected="True" />
-				<ComboBoxItem Content="Action Code 2" />
-				<ComboBoxItem Content="Action Code 3" />
-			</ComboBox>
-		</Grid>
+	
 
 	</Grid>
 
