@@ -108,7 +108,7 @@
 						<AccessText Text="  _Base  " />
 					</TabItem.Header>
 
-					<Label Content=" PV01 " FontSize="72" HorizontalAlignment="Center" />
+					<Label Content=" PV01 goes here... " FontSize="48" HorizontalAlignment="Center" />
 
 				</TabItem>
 
@@ -273,6 +273,110 @@
 					<TabItem.Header>
 						<AccessText Text="  Cost Su_mmary  " />
 					</TabItem.Header>
+
+					<Grid>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="1.4*" />
+							<RowDefinition Height="4*" />
+							<RowDefinition Height="1.4*" />
+							<RowDefinition Height="5*" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Grid Grid.Row="0" Grid.Column="0" >
+							<Grid.RowDefinitions>
+								<RowDefinition Height="34" />
+								<RowDefinition Height="34" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="3*" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+
+							<Label Content="Price Per M" Grid.Row="0" Grid.Column="0" Margin="10 0 10 0" HorizontalAlignment="Right" />
+							<Label Content="Quantity" Grid.Row="1" Grid.Column="0" Margin="10 0 10 0" HorizontalAlignment="Right" />
+
+							<Label Content="134.86" Grid.Row="0" Grid.Column="1" Margin="10 0 10 0" HorizontalAlignment="Right" FontFamily="Courier New" />
+							<Label Content="10,000" Grid.Row="1" Grid.Column="1" Margin="10 0 10 0" HorizontalAlignment="Right" FontFamily="Courier New"  />
+
+							<Rectangle Fill="DarkGray" Grid.Column="2" />
+
+							<Label Grid.Column="2" Content="COST INFORMATION" Background="DarkGray" Foreground="Black" HorizontalAlignment="Center" />
+
+							<Label Content="Job Value" Grid.Row="0" Grid.Column="3" Margin="10 0 10 0" HorizontalAlignment="Right" />
+							<Label Content="Adj %" Grid.Row="1" Grid.Column="3"  Margin="10 0 10 0" HorizontalAlignment="Right" />
+
+							<Label Content="1348.60" Grid.Row="0" Grid.Column="4" Margin="10 0 10 0" HorizontalAlignment="Right" FontFamily="Courier New"  />
+							<Label Content="110.00" Grid.Row="1" Grid.Column="4" Margin="10 0 10 0" HorizontalAlignment="Right"  FontFamily="Courier New" />
+
+
+						</Grid>
+
+						<DataGrid x:Name="dgSummary" Grid.Row="1" AutoGenerateColumns="False"
+						 FontFamily="Courier New" FontSize="13">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="PAPER TO BE USED" Width="4*" Binding="{Binding Path=Paper}"     ElementStyle="{StaticResource CellLeftAlign}"  />
+								<DataGridTextColumn Header="LBS REQ"          Width="*"  Binding="{Binding Path=LbsReq}"    ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="WASTE %"          Width="*"  Binding="{Binding Path=WastePct}"  ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="COST/LB"          Width="*"  Binding="{Binding Path=CostPerLb}" ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="EXT COST"         Width="*"  Binding="{Binding Path=ExtCost}"   ElementStyle="{StaticResource CellRightAlign}" />
+							</DataGrid.Columns>
+						</DataGrid>
+
+						<Grid Grid.Row="2" >
+							<Grid.RowDefinitions>
+								<RowDefinition Height="32" />
+								<RowDefinition Height="32" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="3*" />
+								<ColumnDefinition Width="2*" />
+								<ColumnDefinition Width="3*" />
+								<ColumnDefinition Width="2*" />
+								<ColumnDefinition Width="3*" />
+								<ColumnDefinition Width="4*" />
+								<ColumnDefinition Width="3*" />
+							</Grid.ColumnDefinitions>
+
+							<Label Grid.Row="0" Grid.Column="0" Content="Total Cost:" />
+							<Label Grid.Row="1" Grid.Column="0" Content="Total Material:" />
+							<Label Grid.Row="0" Grid.Column="1" Content="663.70" FontFamily="Courier New"  />
+							<Label Grid.Row="1" Grid.Column="1" Content="484.50" FontFamily="Courier New" />
+
+							<Label Grid.Row="0" Grid.Column="2" Content="Total Sell:" />
+							<Label Grid.Row="1" Grid.Column="2" Content="Total Freight:" />
+							<Label Grid.Row="0" Grid.Column="3" Content="1348.60" FontFamily="Courier New"  />
+							<Label Grid.Row="1" Grid.Column="3" Content="" FontFamily="Courier New" />
+
+							<Label Grid.Row="0" Grid.Column="4" Content="Gross Profit:" />
+							<Label Grid.Row="1" Grid.Column="4" Content="Cost Per M:" />
+							<Label Grid.Row="0" Grid.Column="5" Content="684.90 (50.79%)" FontFamily="Courier New"  />
+							<Label Grid.Row="1" Grid.Column="5" Content="66.37          " FontFamily="Courier New" />
+
+							<Label Grid.Row="0" Grid.Column="6" Content="SELECT QTY" Background="DarkGray" HorizontalAlignment="Center" />
+							<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="6" Mask="" Style="{StaticResource InputField}" Value="10" />
+
+						</Grid>
+
+						<DataGrid x:Name="dgDetails" Grid.Row="3" AutoGenerateColumns="False"
+						 FontFamily="Courier New" FontSize="13" Width="750" HorizontalAlignment="Left">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="DEPARTMENT" Width="155" Binding="{Binding Path=Department}" ElementStyle="{StaticResource CellLeftAlign}" />
+								<DataGridTextColumn Header="SETUP TIME" Width="125"  Binding="{Binding Path=SetupTime}"  ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="SETUP COST" Width="125"  Binding="{Binding Path=SetupCost}"  ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="RUN TIME"   Width="125"  Binding="{Binding Path=RunTime}"    ElementStyle="{StaticResource CellRightAlign}" />
+								<DataGridTextColumn Header="RUN COST"   Width="2*"  Binding="{Binding Path=RunCost}"    ElementStyle="{StaticResource CellRightAlign}" />
+							</DataGrid.Columns>
+						</DataGrid>
+
+					</Grid>
+
 				</TabItem>
 
 				<TabItem>
