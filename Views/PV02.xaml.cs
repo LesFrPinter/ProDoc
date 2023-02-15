@@ -1,7 +1,6 @@
-﻿using System.Data;
+﻿using System.ComponentModel;
+using System.Data;
 using System.Windows;
-using System.ComponentModel;
-using System;
 
 namespace ProDocEstimate.Views
 {
@@ -93,5 +92,29 @@ namespace ProDocEstimate.Views
 			this.dgDetails.ItemsSource = OtherData.DefaultView;
 		}
 
+		private void mnuExit_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+    }
+
+		private void mnuDelete_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Really?", "Not actually working at this time", MessageBoxButton.YesNo, MessageBoxImage.Question);
+		}
+
+		private void mnuClear_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Really?", "Not actually working at this time", MessageBoxButton.YesNo, MessageBoxImage.Information);
+		}
+
+		private void mnuPrint_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Printing...", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+
+		private void mnuCopy_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Copy to where?", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Question);
+		}
 	}
 }

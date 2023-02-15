@@ -10,7 +10,7 @@
         Title="PV01" 
         Height="750" Width="900">
 
-	<Window.Resources>
+	<!--<Window.Resources>
 
 		<Style TargetType="Label">
 			<Setter Property="FontSize" Value="16" />
@@ -19,7 +19,7 @@
 			<Setter Property="Margin" Value="2" />
 		</Style>
 		
-	</Window.Resources>
+	</Window.Resources>-->
 
 	<Grid Background="LightGray" >
 

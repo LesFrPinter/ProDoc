@@ -1,4 +1,5 @@
-﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="ProDocEstimate.Views.PV02"
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  
+				x:Class="ProDocEstimate.Views.PV02"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +10,7 @@
         Title="PV02" 
         Height="750" Width="900">
 
-	<Window.Resources>
+	<!--<Window.Resources>
 
 		<Style TargetType="Label">
 			<Setter Property="FontSize" Value="16" />
@@ -54,7 +55,7 @@
 			</Style.Triggers>
 		</Style>
 
-	</Window.Resources>
+	</Window.Resources>-->
 
 	<Grid Background="LightGray" >
 
@@ -68,7 +69,7 @@
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
-		<Grid Grid.Row="0" Grid.Column="0">
+		<Grid Grid.Row="0" Grid.Column="0" Height="90">
 	
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
@@ -81,17 +82,30 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
-			<Label Grid.Column="0" Content="ESTIMATE: " HorizontalAlignment="Right" Margin="1" />
+			<StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.RowSpan="2" Height="90">
+				<Menu>
+					<MenuItem Header="E_xit"     x:Name="mnuExit"   Click="mnuExit_Click" />
+					<MenuItem Header="_Delete"   x:Name="mnuDelete" Click="mnuDelete_Click"/>
+					<MenuItem Header="_Clear"    x:Name="mnuClear"  Click="mnuClear_Click" />
+					<MenuItem Header="_Print"    x:Name="mnuPrint"  Click="mnuPrint_Click" />
+					<MenuItem Header="C_opy"     x:Name="mnuCopy"   Click="mnuCopy_Click"/>
+				</Menu>
+				<Label Content="Estimate Created " Grid.Row="1" Grid.Column="1" Padding="0" Margin="0" Height="24" Grid.RowSpan="2" />
+				<Label Grid.Row="2" Width="120" Height="24" Margin="0" Content="02/14/2023" FontFamily="Courier New" FontSize="16" 
+				 VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" />
+			</StackPanel>
 
-			<Label Grid.Row="1" Grid.Column="0" Content="CUSTOMER: " HorizontalAlignment="Right" Margin="1"  />
+			<Label Grid.Row="1" Grid.Column="0" Content="ESTIMATE: " HorizontalAlignment="Right" Margin="1" FontSize="16" Height="30" />
 
-			<Label Grid.Row="0" Grid.Column="1" Margin="0 0 0 0" 
+			<Label Grid.Row="2" Grid.Column="0" Content="CUSTOMER: " HorizontalAlignment="Right" Margin="1" FontSize="16" />
+
+			<Label Grid.Row="1" Grid.Column="1" Margin="0 0 0 0" 
 			 Content="065813 Continuous 3 Part 9 1/2 X 11 Carbonless"
 			 Foreground="Blue" FontWeight="Bold"
 			 FontSize="14"
 			 HorizontalAlignment="Left"/>
 
-			<Label Grid.Row="1" Grid.Column="1" 
+			<Label Grid.Row="2" Grid.Column="1" 
 			 Content="09301 2MARKET VISUALS (John)"
 			 Foreground="Blue" FontWeight="Bold"
 			 FontSize="14"
@@ -207,16 +221,16 @@
 							</DataGrid.Columns>
 						</DataGrid>
 
-						<Grid Grid.Row="0" Grid.Column="2" Width="220" Height="400" 
+						<Grid Grid.Row="0" Grid.Column="2" Width="220" Height="380" 
 						 HorizontalAlignment="Right" VerticalAlignment="Top"
 						 Margin="0 180 0 0" Grid.RowSpan="15" Grid.ColumnSpan="2" >
 
 							<Grid.RowDefinitions>
 								<RowDefinition Height="*" />
-								<RowDefinition Height="7*" />
-								<RowDefinition Height="*" />
-								<RowDefinition Height="*" />
-								<RowDefinition Height="*" />
+								<RowDefinition Height="4*" />
+								<RowDefinition Height=".8*" />
+								<RowDefinition Height=".8*" />
+								<RowDefinition Height=".8*" />
 							</Grid.RowDefinitions>
 							<StackPanel Grid.Row="0" Orientation="Horizontal">
 								<Button Content="Options" Margin="5"  />
@@ -225,7 +239,7 @@
 								<Button Content="Forces?" Margin="5" />
 							</StackPanel>
 							<TextBlock Grid.Row="1"
-							 TextWrapping="Wrap" Height="180" FontSize="14"
+							 TextWrapping="Wrap" Height="150" FontSize="14"
 							 VerticalAlignment="Top" 
 							 Grid.RowSpan="2" Margin="10,5,0,0">
 								Press 22 Web 22<LineBreak />
@@ -394,14 +408,6 @@
 			</TabControl>
 
 		</Grid>
-
-		<StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
-			<Label Content="Estimate Created" />
-			<Label Grid.Row="1" Width="120" Height="24"
-			 Margin="0" Content="02/14/2023" FontFamily="Courier New" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-		</StackPanel>
-
-	
 
 	</Grid>
 

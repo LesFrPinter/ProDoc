@@ -18,7 +18,6 @@ namespace ProDocEstimate
 
 		private void mnuQuotations_Click(object sender, RoutedEventArgs e)
 		{ 
-//			Quotations quotations = new Quotations();
 			Window quotations = new Quotations();
 			quotations.Owner = this;
 			quotations.ShowDialog();
@@ -26,7 +25,6 @@ namespace ProDocEstimate
 
 		private void mnuItems_Click(object sender, RoutedEventArgs e)
 		{
-//			Items items = new Items();
 			Window items = new Items();
 			items.Owner = this;
 			items.ShowDialog();
@@ -51,6 +49,13 @@ namespace ProDocEstimate
 			Window standards = new Views.Standards();
 			standards.Owner = this;
 			standards.ShowDialog();
+		}
+
+		private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
+		{
+			Window newEstimate = new Views.NewEsimate();
+			newEstimate.Owner = this;
+			newEstimate.ShowDialog();
 		}
 	}
 }

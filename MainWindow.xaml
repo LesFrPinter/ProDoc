@@ -39,6 +39,7 @@
 				<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
 				<MenuItem x:Name="mnuPV02" Header="PV02" Height="40" Click="mnuPV02_Click" />
 				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
+				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
 			</MenuItem>
 		</Menu>
 
