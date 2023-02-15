@@ -126,14 +126,42 @@
 					<Label Grid.Row="6" Grid.Column="0" Content="Folder/Sheeter Slowdown" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10 0 0 0" />
 					<TextBox Grid.Row="6" Grid.Column="2" Width="60" Text="88" HorizontalContentAlignment="Right" />
 
-					<Label Grid.Row="7"   Grid.Column="0" Content="ECL: Setup" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10 0 0 0" />
-					<TextBox Grid.Row="7" Grid.Column="1" Width="80" Text="110.10" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" />
+					<Label Grid.Row="10"   Grid.Column="0" Content="ECL: Setup" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10 0 0 0" />
+					<TextBox Grid.Row="10" Grid.Column="1" Width="80" Text="110.10" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" />
 
-					<Label Grid.Row="7"   Grid.Column="1" Content="Run" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="100 0 0 0" />
-					<TextBox Grid.Row="7" Grid.Column="1" Width="80"    Text="110.10" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Margin="140 0 0 0" Grid.ColumnSpan="2" />
+					<Label Grid.Row="10"   Grid.Column="1" Content="Run" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="100 0 0 0" />
+					<TextBox Grid.Row="10" Grid.Column="1" Width="80"    Text="110.10" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Margin="140 0 0 0" Grid.ColumnSpan="2" />
 
-					<Label Grid.Row="7"   Grid.Column="3" Content="Matl" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0 0 0 0" />
-					<TextBox Grid.Row="7" Grid.Column="3" Width="80"    Text="802.20" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Margin="40 0 0 0" Grid.ColumnSpan="2" />
+					<Label Grid.Row="10"   Grid.Column="3" Content="Matl" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0 0 0 0" />
+					<TextBox Grid.Row="10" Grid.Column="3" Width="80"    Text="802.20" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Margin="40 0 0 0" Grid.ColumnSpan="2" />
+
+					<Label Grid.Row="2" Content="Footage Speed" Grid.Column="4" FontWeight="DemiBold" />
+					<Label Grid.Row="3" Content="(M/ft)            (ft/min)" Grid.Column="4" FontWeight="DemiBold" Margin="120 0 0 0" 
+					 Grid.ColumnSpan="2" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="4" Grid.Column="4" Width="90" Text="1.00" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="4" Grid.Column="5" Width="90" Text="50"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="5" Grid.Column="4" Width="90" Text="1.50"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="5" Grid.Column="5" Width="90" Text="70"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="6" Grid.Column="4" Width="90" Text="2.50"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="6" Grid.Column="5" Width="90" Text="105"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="7" Grid.Column="4" Width="90" Text="6.00"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="7" Grid.Column="5" Width="90" Text="120"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="8" Grid.Column="4" Width="90" Text="10.00"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="8" Grid.Column="5" Width="90" Text="135"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="9" Grid.Column="4" Width="90" Text="50.00"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="9" Grid.Column="5" Width="90" Text="140"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="10" Grid.Column="4" Width="90" Text="100.00"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="10" Grid.Column="5" Width="90" Text="150"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
+
+					<TextBox Grid.Row="11" Grid.Column="4" Width="90" Text="233.00"     HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+					<TextBox Grid.Row="11" Grid.Column="5" Width="90" Text="160"     HorizontalContentAlignment="Right" HorizontalAlignment="Left" />
 
 				</Grid>
 
