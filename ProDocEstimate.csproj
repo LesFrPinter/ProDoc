@@ -15,7 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\PDS-logo-lrg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\CustSearchTreeView.xaml" />
   </ItemGroup>
 
   <ItemGroup>

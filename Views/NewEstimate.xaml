@@ -63,17 +63,22 @@
 			 HorizontalAlignment="Stretch" Padding="3 0 3 0" />
 
 				<Label Grid.Row="1" Content="   Next Estimate Number" HorizontalAlignment="Left" />
-				<CheckBox Content="Auto" Grid.Row="2" Margin="100 0 0 0" FontSize="18" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="True" />
+				<CheckBox Content="Auto" Grid.Row="2" Margin="10 0 0 0" FontSize="18" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="True" />
 
-				<TextBox Width="100" Grid.Row="2" Margin="200 0 0 0"  Height="22"
+				<TextBox Width="100" Grid.Row="2" Margin="100 0 0 0"  Height="22"
 			VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-				<Label Grid.Row="1" Grid.Column="1" Content="   Number" HorizontalAlignment="Left" />
-				<TextBox Width="100" Grid.Row="1" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="96796" FontSize="15"
-			VerticalAlignment="Center"
-			HorizontalAlignment="Left"/>
-				<Label Grid.Row="1" Grid.Column="1" Content="MULTI BUSINESS FORMS" HorizontalAlignment="Left" Margin="220 0 0 0" 
+				<Label Grid.Row="1" Grid.Column="1" Content="  Number" HorizontalAlignment="Left" />
+				<TextBox x:Name="txtCustNo" Width="100" Grid.Row="1" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="96796" FontSize="15"
+				 VerticalAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick"
+			   HorizontalAlignment="Left" />
+				<Label x:Name="lblCustName" Grid.Row="1" Grid.Column="1" Content="MULTI BUSINESS FORMS" HorizontalAlignment="Left" Margin="220 0 0 0" 
 			 Foreground="CornflowerBlue" FontWeight="Bold" />
+
+				<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0">
+					<RadioButton x:Name="rbGrid" Content="Grid" />
+					<RadioButton x:Name="rbTree" Content="TreeView"/>
+				</StackPanel>
 
 				<Label Grid.Row="3" Grid.Column="1" Content="   Contact" HorizontalAlignment="Left" />
 				<TextBox Width="300" Grid.Row="3" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="Rep Name Goes Here" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>

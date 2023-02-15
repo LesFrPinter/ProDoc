@@ -1,0 +1,67 @@
+﻿<Window x:Class="ProDocEstimate.Views.TreeViewCustSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="TreeViewCustSearch" Height="450" Width="800">
+	
+		<Grid Background="{StaticResource AllForms}">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="30"/>
+			</Grid.RowDefinitions>
+
+			<StackPanel Orientation="Horizontal" Grid.Row="0">
+				<Label Content="Name: " HorizontalAlignment="Left" />
+				<TextBox x:Name="txtCustName" Width="140" VerticalContentAlignment="Center" Margin="0 4" />
+				<Label Content="Cust #: " HorizontalAlignment="Left" />
+				<TextBox x:Name="txtCustNo" Width="140" VerticalContentAlignment="Center" Margin="0 4" />
+				<CheckBox Content="Partial" VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0" />
+				<CheckBox Content="Descending" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+			</StackPanel>
+
+			<TreeView
+			x:Name="tvCustomers"
+			Grid.Row="1" 
+			Background="Transparent" 
+			FontFamily="Courier New" 
+			FontSize="18" 
+			MouseDoubleClick="tvCustomers_MouseDoubleClick"
+			FontWeight="DemiBold" >
+
+				<!--<TreeView.ItemContainerStyle>
+					<Style TargetType="{x:Type TreeViewItem}">
+						<EventSetter Event="MouseDoubleClick" />
+					</Style>
+				</TreeView.ItemContainerStyle>-->
+
+				<TreeViewItem Header="Company: State of Alabama (40314)" IsExpanded="True"  >
+					<TreeViewItem Header="Location  |  Montgomery, AL" IsExpanded="True" >
+						<TreeViewItem Header="  Contact: George Raft     | Phone: (208) 331-1221" />
+						<TreeViewItem Header="  Contact: Sam Billart     | Phone: (208) 331-2043" />
+					</TreeViewItem>
+					<TreeViewItem Header="Location  |  Dothan, GA" IsExpanded="True" >
+						<TreeViewItem Header="  Contact: Sally           | Phone: (706) 321-4033" />
+					</TreeViewItem>
+				</TreeViewItem>
+				<TreeViewItem Header="Company: Chick Fil-A (65202)"  IsExpanded="True" >
+					<TreeViewItem Header="Location  |  Houston, TX" IsExpanded="True" >
+						<TreeViewItem Header="  Contact: Donald Shellman | Phone: (713) 667-4309" />
+					</TreeViewItem>
+				</TreeViewItem>
+			</TreeView>
+
+			<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0" >
+				<Button Content="O_k"      x:Name="btnSelect" Click="btnSelect_Click" />
+				<Button Content="_Cancel"  x:Name="btnCancel" />
+				<Button Content="_Options" x:Name="btnOptions" />
+			</StackPanel>
+
+		</Grid>
+
+</Window>

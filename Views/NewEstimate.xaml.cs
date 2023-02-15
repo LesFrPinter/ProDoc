@@ -33,5 +33,24 @@ namespace ProDocEstimate.Views
 			MessageBox.Show("Copy to where?", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Question);
 		}
 
-	}
+		private void TextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			if (rbGrid.IsChecked == true)
+			{ 
+				CustomerSearch srch = new CustomerSearch();
+				srch.ShowDialog();
+				txtCustNo.Text = srch.Custno.ToString();
+				lblCustName.Content = srch.CustName;
+				srch.Close();
+			}
+			else
+			{ 
+				TreeViewCustSearch srch = new TreeViewCustSearch();
+				srch.ShowDialog();
+				txtCustNo.Text = srch.Custno.ToString();
+				lblCustName.Content = srch.CustName;
+				srch.Close();
+			}
+		}
+  }
 }
