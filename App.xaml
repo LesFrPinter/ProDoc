@@ -14,7 +14,7 @@
 			<Setter Property="VerticalAlignment" Value="Center" />
 			<Setter Property="Margin" Value="2 0 0 0" />
 			<Setter Property="Foreground" Value="Blue" />
-			<Setter Property="FontWeight" Value="Bold" />
+			<Setter Property="FontWeight" Value="Normal" />
 		</Style>
 
 		<Style TargetType="Button">
@@ -25,6 +25,34 @@
 			<Setter Property="Foreground" Value="White" />
 			<Setter Property="Background" Value="Green" />
 			<Setter Property="Padding" Value="4 0 4 0" />
+
+			<Setter Property="Button.Effect">
+				<Setter.Value>
+					<DropShadowEffect Color="Black" Direction="225" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
+				</Setter.Value>
+			</Setter>
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border CornerRadius="10" Background="Green" BorderThickness="1">
+						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
+					</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+
+			<Style.Resources>
+				<Style TargetType="Border">
+					<Setter Property="CornerRadius" Value="3"/>
+					<Style.Triggers>
+						<Trigger Property="IsMouseDirectlyOver" Value="True">
+							<Setter Property="Background" Value="Red" />
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+			</Style.Resources>
+
 		</Style>
 
 		<Style TargetType="DataGrid">

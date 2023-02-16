@@ -1,0 +1,60 @@
+﻿<Window x:Class="ProDocEstimate.Views.SalesRepLookup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Sales Rep Lookup" 
+				Height="450" Width="500">
+				
+	<Grid Background="{StaticResource AllForms}">
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="30" />
+		</Grid.RowDefinitions>
+
+
+		<StackPanel Orientation="Horizontal" Grid.Row="0">
+			<ComboBox x:Name="cmbSearchBy" Width="120" VerticalContentAlignment="Center" Margin="10 4 0 4" >
+				<ComboBoxItem Content="FIRST NAME" />
+				<ComboBoxItem Content="LAST NAME" />
+			</ComboBox>
+			<TextBox  x:Name="txtName" Width="140" VerticalContentAlignment="Center" Margin="4" />
+			<CheckBox Content="Partial" VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0" />
+			<CheckBox Content="Descending" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+		</StackPanel>
+
+		<DataGrid 
+		 x:Name="dgReps" 
+		 Grid.Row="1" 
+		 SelectedValuePath="Code" 
+		 SelectedItem="LastName"
+		 ItemsSource="{Binding Reps.DefaultView}" 
+		 Margin="10 0"
+		 MouseDoubleClick="dgReps_MouseDoubleClick" >
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Last Name"  Width="3*" Binding="{Binding Path=LastName}"  ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="First Name" Width="3*" Binding="{Binding Path=FirstName}" ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="Code"       Width="*"  Binding="{Binding Path=Code}"      ElementStyle="{StaticResource CellLeftAlign}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+			<Button x:Name="btnSelect"  Click="btnSelect_Click" Height="24" Padding="5 0 5 0"	>
+				<AccessText>O_k</AccessText>
+			</Button>
+			<Button x:Name="btnCancel"  Click="btnCancel_Click"  Height="24"  >
+				<AccessText>_Cancel</AccessText>
+			</Button>
+			<Button x:Name="btnOptions" Click="btnOptions_Click" Height="24" >
+				<AccessText>_Options</AccessText>
+			</Button>
+		</StackPanel>
+
+	</Grid>
+
+</Window>

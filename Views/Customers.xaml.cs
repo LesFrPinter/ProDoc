@@ -8,7 +8,7 @@ namespace ProDocEstimate
 {
 	public partial class Customers : Window, INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private DataTable custs;
 		public  DataTable Custs

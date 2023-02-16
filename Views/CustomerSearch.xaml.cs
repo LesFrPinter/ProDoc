@@ -22,10 +22,8 @@ namespace ProDocEstimate.Views
 
 		private void btnSelect_Click(object sender, RoutedEventArgs e)
 		{
-//			txtCustName.Text = dgCusts.SelectedValue as string;
-
-			CustName = txtCustName.Text;
-			Custno = int.Parse(txtCustNo.Text);
+			//			txtCustName.Text = dgCusts.SelectedValue as string;
+			if (txtCustName.Text != null) { CustName = txtCustName.Text; Custno = int.Parse(txtCustNo.Text); }
 			this.Hide();
     }
 

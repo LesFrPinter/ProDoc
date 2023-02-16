@@ -2,12 +2,17 @@
 
 namespace ProDocEstimate.Views
 {
-	public partial class NewEsimate : Window
+	public partial class NewEstimate : Window
 	{
-		public NewEsimate()
+		public NewEstimate()
 		{
 			InitializeComponent();
+			DataContext = this;
 		}
+
+		private string? message; public string? Message { get { return message; } set { message = value; } }
+
+
 		private void mnuExit_Click(object sender, RoutedEventArgs e)
 		{
 			this.Close();
@@ -52,5 +57,14 @@ namespace ProDocEstimate.Views
 				srch.Close();
 			}
 		}
-  }
+
+		private void txtSalesRep_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			SalesRepLookup sr = new SalesRepLookup();
+			sr.ShowDialog();
+			txtSalesRep.Text = sr.SalesRepCode;
+			lblSalesRep.Content = sr.SalesRep;
+			sr.Close();
+		}
+	}
 }

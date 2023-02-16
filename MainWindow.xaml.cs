@@ -62,7 +62,7 @@ namespace ProDocEstimate
 
 		private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
 		{
-			Window newEstimate = new Views.NewEsimate();
+			Window newEstimate = new Views.NewEstimate();
 			newEstimate.Owner = this;
 			newEstimate.ShowDialog();
 		}
@@ -74,7 +74,16 @@ namespace ProDocEstimate
 			cl.lblSearchType.Content = cl.SearchType;
 			cl.ShowDialog();
 			CustName = cl.CustomerName;
-			MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory", "Edit", MessageBoxButton.OK, MessageBoxImage.Information);
+			if(CustName?.Length!=0)
+			{ 
+//			MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); 
+				NewEstimate ne = new NewEstimate();
+				ne.Message = "Editing an existing quote";
+				ne.ShowDialog();
+			}
+			else
+			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
+
 			cl.Close();
     }
 
@@ -85,7 +94,15 @@ namespace ProDocEstimate
 			cl.lblSearchType.Content = cl.SearchType;
 			cl.ShowDialog();
 			CustName = cl.CustomerName;
-			MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory and assign a new quote number", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+//		MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory and assign a new quote number", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+			if (CustName?.Length != 0)
+			{ NewEstimate ne = new NewEstimate();
+				ne.Message = "Copy of Quote # " + cl.CustomerCode + " with a new quote number";
+				ne.ShowDialog();
+			}
+			else
+			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
+
 			cl.Close();
 		}
 

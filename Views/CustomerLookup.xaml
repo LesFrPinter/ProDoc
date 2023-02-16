@@ -20,7 +20,7 @@
 
 			<StackPanel Orientation="Horizontal" Grid.Row="0">
 				<Label Content="Name: " HorizontalAlignment="Left" />
-				<TextBox x:Name="txtCustName" Width="240" VerticalContentAlignment="Center" Margin="0 4" />
+				<TextBox x:Name="txtCustName" Width="240" VerticalContentAlignment="Center" Margin="0 4" Text="{Binding CustName}" />
 				<Label Content="Cust #: " HorizontalAlignment="Left" />
 				<TextBox x:Name="txtCustNo" Width="70" VerticalContentAlignment="Center" Margin="0 4" />
 				<CheckBox Content="Partial" VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0" />
