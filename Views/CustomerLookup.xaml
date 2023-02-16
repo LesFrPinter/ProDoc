@@ -1,0 +1,54 @@
+﻿<Window x:Class="ProDocEstimate.Views.CustomerLookup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Customer Lookup" Height="450" Width="1200">
+
+	<Grid>
+
+		<Grid Background="{StaticResource AllForms}">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="30"/>
+			</Grid.RowDefinitions>
+
+			<StackPanel Orientation="Horizontal" Grid.Row="0">
+				<Label Content="Name: " HorizontalAlignment="Left" />
+				<TextBox x:Name="txtCustName" Width="240" VerticalContentAlignment="Center" Margin="0 4" />
+				<Label Content="Cust #: " HorizontalAlignment="Left" />
+				<TextBox x:Name="txtCustNo" Width="70" VerticalContentAlignment="Center" Margin="0 4" />
+				<CheckBox Content="Partial" VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0" />
+				<CheckBox Content="Descending" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+				<Label x:Name="lblSearchType" Content="{Binding Path=SearchType}" Width="500" HorizontalAlignment="Right" 
+				 Margin="0 0 20 0" HorizontalContentAlignment="Right" Height="22" Padding="2" FontSize="12" FontWeight="Medium" />
+			</StackPanel>
+
+			<DataGrid Grid.Row="1" >
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="CUSTOMER NAME" Width="2*" Binding="{Binding Path=CustomerName}" />
+					<DataGridTextColumn Header="CODE" Width="75" Binding="{Binding Path=CustomerCode}" />
+					<DataGridTextColumn Header="ADDRESS" Width="2*" Binding="{Binding Path=Address}" />
+					<DataGridTextColumn Header="CITY" Width="*" Binding="{Binding Path=City}" />
+					<DataGridTextColumn Header="STATE" Width="50" Binding="{Binding Path=State}" />
+					<DataGridTextColumn Header="ZIP" Width="75" Binding="{Binding Path=ZIP}" />
+					<DataGridTextColumn Header="PHONE" Width="125" Binding="{Binding Path=Phone}" />
+					<DataGridTextColumn Header="Something else" Width="125" />
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" >
+				<Button x:Name="btnOK" Content="O_k" Margin="10 2 10 2" Click="btnOK_Click" />
+				<Button x:Name="btnCancel" Content="_Cancel" Margin="10 2 10 2" Click="btnCancel_Click" />
+			</StackPanel>
+
+		</Grid>
+
+	</Grid>
+
+</Window>

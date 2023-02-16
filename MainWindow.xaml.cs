@@ -1,10 +1,19 @@
-﻿using System.Windows;
+﻿using ProDocEstimate.Views;
+using System.Windows;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
 	public partial class MainWindow : Window
 	{
 		public MainWindow() { InitializeComponent(); }
+
+		private string? custName;
+		public string? CustName
+		{
+			get { return custName; }
+			set { custName = value; }
+		}
 
 		private void mnuFileExit_Click(object sender, RoutedEventArgs e)
 		{ Application.Current.Shutdown(); }
@@ -56,6 +65,38 @@ namespace ProDocEstimate
 			Window newEstimate = new Views.NewEsimate();
 			newEstimate.Owner = this;
 			newEstimate.ShowDialog();
+		}
+
+		private void mnuEdit_Click(object sender, RoutedEventArgs e)
+		{
+			CustomerLookup cl = new CustomerLookup();
+			cl.SearchType = "Edit an existing quote";
+			cl.lblSearchType.Content = cl.SearchType;
+			cl.ShowDialog();
+			CustName = cl.CustomerName;
+			MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory", "Edit", MessageBoxButton.OK, MessageBoxImage.Information);
+			cl.Close();
+    }
+
+		private void mnuCopy_Click(object sender, RoutedEventArgs e)
+		{
+			CustomerLookup cl = new CustomerLookup();
+			cl.SearchType = "Copy an existing quote";
+			cl.lblSearchType.Content = cl.SearchType;
+			cl.ShowDialog();
+			CustName = cl.CustomerName;
+			MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory and assign a new quote number", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+			cl.Close();
+		}
+
+		private void mnuBlank_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Display a blank quote screen with a new quote number", "New", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+
+		private void mnuCombo_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("What is this?", "New", MessageBoxButton.OK, MessageBoxImage.Question);
 		}
 	}
 }
