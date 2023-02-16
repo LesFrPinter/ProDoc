@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ProDocEstimate"
              StartupUri="MainWindow.xaml">
+	
 	<Application.Resources>
 
 		<!--Set menu direction to Left-to-Right here-->
@@ -86,6 +87,23 @@
 			</Style.Triggers>
 		</Style>
 
+		<Style x:Key="TextField" TargetType="TextBox" >
+			<Setter Property="Control.Height" Value="30" />
+			<Setter Property="FontFamily"     Value="Courier New" />
+			<Setter Property="FontSize"       Value="14" />
+			<Setter Property="Control.Width"  Value="120" />
+			<Setter Property="Control.Margin" Value="10 0 0 0" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Style.Triggers>
+				<Trigger Property="IsKeyboardFocusWithin" Value="True">
+					<Setter Property="Control.Background" Value="Blue"/>
+					<Setter Property="Control.Foreground" Value="White"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
 		<Style TargetType="Label" x:Name="MainTitle" x:Key="MainTitle">
 			<Setter Property="FontSize" Value="64" />
 			<Setter Property="Foreground" Value="White" />
@@ -105,6 +123,19 @@
 				<Color A="100" R="130" G="160" B="180"/>
 			</SolidColorBrush.Color>
 		</SolidColorBrush>
+
+		<Style TargetType="ComboBox" >
+			<Setter Property="FontFamily" Value="Courier New" />
+			<Setter Property="FontSize"   Value="14" />
+			<Setter Property="Margin"     Value="10 0 0 0" />
+			<Style.Triggers>
+				<Trigger Property="IsKeyboardFocusWithin" Value="True">
+					<Setter Property="Background" Value="Blue"/>
+					<Setter Property="Foreground" Value="White"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
 
 	</Application.Resources>
 

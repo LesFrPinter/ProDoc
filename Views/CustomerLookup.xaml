@@ -43,8 +43,12 @@
 			</DataGrid>
 
 			<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" >
-				<Button x:Name="btnOK" Content="O_k" Margin="10 2 10 2" Click="btnOK_Click" />
-				<Button x:Name="btnCancel" Content="_Cancel" Margin="10 2 10 2" Click="btnCancel_Click" />
+				<Button x:Name="btnOK" Margin="10 2 10 2" Click="btnOK_Click" >
+					<AccessText>O_k</AccessText>
+				</Button>
+				<Button x:Name="btnCancel" Margin="10 2 10 2" Click="btnCancel_Click" >
+					<AccessText>_Cancel</AccessText>
+				</Button>
 			</StackPanel>
 
 		</Grid>

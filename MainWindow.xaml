@@ -34,6 +34,10 @@
 			<MenuItem Header="_Demos">
 				<MenuItem x:Name="mnuQuotations" Header="_Quotations" Height="40" Click="mnuQuotations_Click" />
 				<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
+				<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
+				<MenuItem x:Name="mnuPV02" Header="PV02" Height="40" Click="mnuPV02_Click" />
+				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
+				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
 				<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />
 				<MenuItem Header="Print" Height="40" />
 			</MenuItem>
@@ -42,11 +46,6 @@
 				<MenuItem x:Name="mnuCopy"  Header="_Copy an existing estimate" Click="mnuCopy_Click" />
 				<MenuItem x:Name="mnuBlank" Header="New _blank estimate"        Click="mnuBlank_Click" />
 				<MenuItem x:Name="mnuCombo" Header="New c_ombo estimate"        Click="mnuCombo_Click" />
-
-				<!--<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
-				<MenuItem x:Name="mnuPV02" Header="PV02" Height="40" Click="mnuPV02_Click" />
-				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
-				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />-->
 			</MenuItem>
 		</Menu>
 

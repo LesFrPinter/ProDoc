@@ -3,63 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:local="clr-namespace:ProDocEstimate"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Title="Customers" 
 				Height="750" Width="900">
-
-	<Window.Resources>
-
-		<Style TargetType="Button">
-			<Setter Property="Foreground" Value="yellow" />
-			<Setter Property="Background" Value="blue" />
-			<Setter Property="Margin" Value="5 12 2 12" />
-		</Style>
-
-		<Style TargetType="Label">
-			<Setter Property="Foreground" Value="Green" />
-			<Setter Property="Background" Value="Transparent" />
-			<Setter Property="Padding" Value="3" />
-			<Setter Property="FontSize" Value="18" />
-			<Setter Property="Margin" Value="0 0 10 0" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="HorizontalAlignment" Value="Right" />
-		</Style>
-
-		<Style TargetType="TextBox">
-			<Setter Property="Foreground" Value="Black" />
-			<Setter Property="Background" Value="LightYellow" />
-			<Setter Property="Padding" Value="3" />
-			<Setter Property="FontSize" Value="14" />
-			<Setter Property="FontFamily" Value="Courier New" />
-			<Setter Property="Margin" Value="0 0 10 0" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="HorizontalAlignment" Value="Left" />
-			<Style.Triggers>
-				<Trigger Property="IsFocused" Value="True">
-					<Setter Property="Background" Value="Blue"/>
-					<Setter Property="Foreground" Value="White"/>
-				</Trigger>
-			</Style.Triggers>
-		</Style>
-
-		<Style TargetType="ComboBox">
-			<Setter Property="FontSize" Value="14" />
-			<Setter Property="FontFamily" Value="Courier New" />
-			<Setter Property="Margin" Value="0 0 10 0" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="HorizontalAlignment" Value="Left" />
-			<Style.Triggers>
-				<Trigger Property="IsFocused" Value="True">
-					<Setter Property="Background" Value="Blue"/>
-					<Setter Property="Foreground" Value="White"/>
-				</Trigger>
-			</Style.Triggers>
-		</Style>
-
-
-	</Window.Resources>
 
 	<Grid Background="LightGray" >
 
@@ -102,42 +51,77 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<Label 
-					 Content="Customers" 
-					 Background="purple"
-					 Foreground="White"
-					 Padding="10"
-					 FontSize="24" 
-					 HorizontalAlignment="Left" 
-					 Margin="10,0,0,0" Grid.ColumnSpan="3" />
+					<Border 
+					 Grid.Column="0"
+					 CornerRadius="10" 
+					 BorderThickness="2" 
+					 HorizontalAlignment="Left"
+					 Margin="0 0 0 0"
+					 Background="Purple" 
+					 Height="52" Grid.ColumnSpan="2"
+					 VerticalAlignment="Top"
+					 Width="auto">
+
+						<Label 
+						 Content="Customers" 
+						 Background="Purple"
+						 Foreground="White"
+						 Padding="5"
+						 FontSize="18" 
+						 HorizontalAlignment="Left" VerticalAlignment="Center"
+						 Margin="2,0,0,0"  />
+
+					</Border>
 
 					<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="5">
-						<Button Content="_Add" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click" Height="32" />
-						<Button Content="_Edit" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click_1" Height="32" />
-						<Button Content="_Save" Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_2" Height="32" />
-						<Button Content="_Cancel" Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_3"  Height="32" />
-						<Button x:Name="btnDelete" Content="_Delete" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" Height="32" />
-						<Button Content="_Find" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Height="32" />
-						<Button x:Name="cmdSelect" Click="cmdSelect_Click" Content="Se_lect" Padding="5" FontSize="18" Height="36" Margin="750 0 0 0" />
+						<Button  Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click" Height="32" >
+							<AccessText>_Add</AccessText>
+						</Button>
+						<Button Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click_1" Height="32" >
+							<AccessText>_Edit</AccessText>
+						</Button>
+						<Button Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_2" Height="32" >
+							<AccessText>_Save</AccessText>
+						</Button>
+						<Button Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_3"  Height="32" >
+							<AccessText>_Cancel</AccessText>
+						</Button>
+						<Button x:Name="btnDelete" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" Height="32" >
+							<AccessText>_Delete</AccessText>
+						</Button>
+						<Button  Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Height="32" >
+							<AccessText>_Find</AccessText>
+						</Button>
+						<Button x:Name="cmdSelect" Click="cmdSelect_Click" Margin="750 0 0 0" >
+							<AccessText>Se_lect</AccessText>
+						</Button>
 					</StackPanel>
 
 					<Label Grid.Row="1" Grid.Column="1" Content="Customer Name" HorizontalAlignment="Right" />
 					<Label Grid.Row="2" Grid.Column="1" Content="Address" HorizontalAlignment="Right" />
 					<Label Grid.Row="3" Grid.Column="1" Content="City, State, ZIP" HorizontalAlignment="Right" />
 					<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
-					<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Right" />
+					<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Left" Margin="90 0 0 0" />
 
-					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" Margin="0,6,0,5" Text="State of Alabama" Height="26" HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
-					<TextBox x:Name="txtAddress"      Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="202 Main Street"  Height="26" />
-					<TextBox x:Name="txtCity"         Grid.Row="3" Grid.Column="2" Width="170" Margin="0,6,0,6" Text="Montgomery"  Height="26"  Grid.ColumnSpan="2"  />
-					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="50"  Margin="25,6,0,6" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="24" Foreground="Black"  >
+					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" Margin="0,6,0,5" 
+					 Text="State of Alabama" Height="26" 
+					 Style="{StaticResource TextField}"
+					 HorizontalAlignment="Left" Grid.ColumnSpan="3" />
+					<TextBox x:Name="txtAddress"      Style="{StaticResource TextField}"
+					Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="202 Main Street"  Height="26" />
+					<TextBox x:Name="txtCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left" 
+					Grid.Row="3" Grid.Column="2" Width="170" Margin="0,6,0,6" Text="Montgomery"  Height="26"  Grid.ColumnSpan="2"  />
+					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="50"  Margin="25,2,0,2" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="24" Foreground="Black"  >
 						<ComboBoxItem Content="AK" />
 						<ComboBoxItem Content="AL" />
 						<ComboBoxItem Content="AR" />
 					</ComboBox>
-					<TextBox x:Name="txtZIP"          Grid.Row="3" Grid.Column="3" Width="95" Margin="80 6 0 6" Text="20214"  Height="24"  Grid.ColumnSpan="2" />
-					<TextBox x:Name="txtContact"      Grid.Row="4" Grid.Column="2" Width="225" Margin="0 6 0 6" Text="George Raft"  Height="24"  Grid.ColumnSpan="2"  />
-					<TextBox x:Name="txtPhone"        Grid.Row="4" Grid.Column="4" Width="135" Margin="0 6 0 6" Text="(605) 761-1207"  Height="24"  Grid.ColumnSpan="2" />
+					<TextBox x:Name="txtZIP"          Style="{StaticResource TextField}"
+					Grid.Row="3" Grid.Column="3" Width="95" Margin="80 6 0 6" Text="20214"  Height="24"  Grid.ColumnSpan="2" />
+					<TextBox x:Name="txtContact"      Style="{StaticResource TextField}"
+					Grid.Row="4" Grid.Column="2" Width="225" Margin="0 6 0 6" Text="George Raft"  Height="24"  Grid.ColumnSpan="2"  />
+					<TextBox x:Name="txtPhone"        Style="{StaticResource TextField}"
+					 Grid.Row="4" Grid.Column="4" Width="135" Margin="0 6 0 6" Text="(605) 761-1207"  Height="24"  Grid.ColumnSpan="2" />
 
 				</Grid>
 
