@@ -8,10 +8,13 @@ namespace ProDocEstimate.Views
 		{
 			InitializeComponent();
 			DataContext = this;
+			customerText = "Customer name here";
+			estimateText = "Estimate details here ";
 		}
 
-		private string? message; public string? Message { get { return message; } set { message = value; } }
-
+		private string? message;      public string? Message      { get { return message;      } set { message = value; } }
+		private string  customerText; public string? CustomerText { get { return customerText; } set { customerText = value; } }
+		private string  estimateText; public string? EstimateText { get { return estimateText; } set { estimateText = value; } }
 
 		private void mnuExit_Click(object sender, RoutedEventArgs e)
 		{

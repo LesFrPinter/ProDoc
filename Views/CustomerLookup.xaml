@@ -21,12 +21,16 @@
 			<StackPanel Orientation="Horizontal" Grid.Row="0">
 				<Label Content="Name: " HorizontalAlignment="Left" />
 				<TextBox x:Name="txtCustName" Width="240" VerticalContentAlignment="Center" Margin="0 4" Text="{Binding CustName}" />
+				<Button  x:Name="btnGo" Content="Go" Click="btnGo_Click" Height="22" Width="40" Margin="20 0" >
+				<Button.Content 
+				</Button>
 				<Label Content="Cust #: " HorizontalAlignment="Left" />
 				<TextBox x:Name="txtCustNo" Width="70" VerticalContentAlignment="Center" Margin="0 4" />
-				<CheckBox Content="Partial" VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0" />
-				<CheckBox Content="Descending" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
-				<Label x:Name="lblSearchType" Content="{Binding Path=SearchType}" Width="500" HorizontalAlignment="Right" 
-				 Margin="0 0 20 0" HorizontalContentAlignment="Right" Height="22" Padding="2" FontSize="12" FontWeight="Medium" />
+				<CheckBox x:Name="cbPartial" Content="Partial"      VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0"  />
+				<CheckBox x:Name="dbDesc"    Content="Descending"   VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+				<CheckBox x:Name="cbAuto"    Content="AutoComplete" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+				<Label x:Name="lblSearchType" Content="{Binding Path=SearchType}" Width="200" HorizontalAlignment="Right" 
+				 Margin="10 0 20 0" HorizontalContentAlignment="Right" Height="22" Padding="2" FontSize="12" FontWeight="Medium" />
 			</StackPanel>
 
 			<DataGrid Grid.Row="1" >

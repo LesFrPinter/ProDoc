@@ -35,5 +35,10 @@ namespace ProDocEstimate.Views
 			this.DataContext = viewModel;
 			this.Hide();
 		}
-	}
+
+		private void btnGo_Click(object sender, RoutedEventArgs e)
+		{
+
+        }
+    }
 }
