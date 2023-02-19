@@ -10,12 +10,9 @@ namespace ProDocEstimate.Views
 	public partial class CustomerLookup : Window
 	{
 		public CustomerLookup()
-		{
-			InitializeComponent();
+		{ InitializeComponent();
 			this.PreviewKeyDown += (ss, ee) =>
-			{
-				if (ee.Key == Key.Escape) { this.Hide(); this.btnCancel.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); }
-			};
+			{ if (ee.Key == Key.Escape) { this.Hide(); this.btnCancel.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); } };
 		}
 
 		public string ConnectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProDocument;Data Source=SHUTTLE";
@@ -29,23 +26,17 @@ namespace ProDocEstimate.Views
 		private string? customerCode; public string? CustomerCode { get { return customerCode; } set { customerCode = value; } }
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
-		{
-			DataRowView? row = dgCustomers.SelectedItem as DataRowView;
+		{ DataRowView? row = dgCustomers.SelectedItem as DataRowView;
 			CustomerCode = row?.Row.ItemArray[1]?.ToString();
 			CustomerName = row?.Row.ItemArray[2]?.ToString();
 			this.Hide();
 		}
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
-		{
-			viewModel.CustName = ""; CustomerName = ""; CustomerCode = "";
-			this.DataContext = viewModel;
-			this.Hide();
-		}
+		{ viewModel.CustName = ""; CustomerName = ""; CustomerCode = ""; this.DataContext = viewModel; this.Hide(); }
 
 		private void btnGo_Click(object sender, RoutedEventArgs e)
-		{
-			cn = new SqlConnection(ConnectionString);
+		{ cn = new SqlConnection(ConnectionString);
 			cn.Open();
 			string prefix = (cbPartial.IsChecked == true) ? "Partial" : "Cust";
 			string procname = (cbDesc.IsChecked == true) ? prefix + "NameDESC " : prefix + "NameASC ";
@@ -58,8 +49,7 @@ namespace ProDocEstimate.Views
 		}
 
 		private void txtCustName_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if(cbAuto.IsChecked != true) { return; }
+		{ if(cbAuto.IsChecked != true) { return; }
 			cn = new SqlConnection(ConnectionString);
 			cn.Open();
 			string prefix = (cbPartial.IsChecked == true) ? "Partial" : "Cust";
@@ -71,6 +61,8 @@ namespace ProDocEstimate.Views
 			dgCustomers.ItemsSource = ds.Tables[0].DefaultView; dgCustomers.SelectedIndex = 0;
 			this.Title = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
 		}
-	}
 
+		private void dgCustomers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{ this.btnOK.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); }
+	}
 }

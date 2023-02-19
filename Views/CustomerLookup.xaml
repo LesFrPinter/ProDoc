@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Customer Lookup" Height="450" Width="1200">
+        Title="Customer Lookup" 
+				Height="450" Width="1180">
 
 	<Grid>
 
@@ -33,7 +34,7 @@
 				 Margin="10 0 20 0" HorizontalContentAlignment="Right" Height="22" Padding="2" FontSize="12" FontWeight="Medium" />
 			</StackPanel>
 
-			<DataGrid x:Name="dgCustomers" Grid.Row="1" IsSynchronizedWithCurrentItem="True" >
+			<DataGrid x:Name="dgCustomers" Grid.Row="1" IsSynchronizedWithCurrentItem="True" MouseDoubleClick="dgCustomers_MouseDoubleClick" >
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="CUSTOMER NAME" Width="2*" Binding="{Binding Path=CUST_NAME}" />
 					<DataGridTextColumn Header="CODE" Width="75" Binding="{Binding Path=CUST_NUMB}" />
@@ -42,7 +43,7 @@
 					<DataGridTextColumn Header="STATE" Width="50" Binding="{Binding Path=STATE}" />
 					<DataGridTextColumn Header="ZIP" Width="75" Binding="{Binding Path=ZIP}" />
 					<DataGridTextColumn Header="PHONE" Width="125" Binding="{Binding Path=PHONE}" />
-					<DataGridTextColumn Header="Something else" Width="125" />
+					<DataGridTextColumn Header="Attention" Width="125" Binding="{Binding Path=ATTENTION}" />
 				</DataGrid.Columns>
 			</DataGrid>
 

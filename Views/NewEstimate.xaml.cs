@@ -5,8 +5,7 @@ namespace ProDocEstimate.Views
 	public partial class NewEstimate : Window
 	{
 		public NewEstimate()
-		{
-			InitializeComponent();
+		{ InitializeComponent();
 			DataContext = this;
 			customerText = "Customer name here";
 			estimateText = "Estimate details here ";
@@ -17,43 +16,31 @@ namespace ProDocEstimate.Views
 		private string  estimateText; public string? EstimateText { get { return estimateText; } set { estimateText = value; } }
 
 		private void mnuExit_Click(object sender, RoutedEventArgs e)
-		{
-			this.Close();
-		}
+		{ this.Close(); }
 
 		private void mnuDelete_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBox.Show("Really?", "Not actually working at this time", MessageBoxButton.YesNo, MessageBoxImage.Question);
-		}
+		{ MessageBox.Show("Really?", "Not actually working at this time", MessageBoxButton.YesNo, MessageBoxImage.Question); }
 
 		private void mnuClear_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBox.Show("Really?", "Not actually working at this time", MessageBoxButton.YesNo, MessageBoxImage.Information);
-		}
+		{ MessageBox.Show("Really?", "Not actually working at this time", MessageBoxButton.YesNo, MessageBoxImage.Information); }
 
 		private void mnuPrint_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBox.Show("Printing...", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Information);
-		}
+		{ MessageBox.Show("Printing...", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Information); }
 
 		private void mnuCopy_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBox.Show("Copy to where?", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Question);
-		}
+		{ MessageBox.Show("Copy to where?", "Not actually working at this time", MessageBoxButton.OK, MessageBoxImage.Question); }
 
 		private void TextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			if (rbGrid.IsChecked == true)
-			{ 
-				CustomerLookup srch = new CustomerLookup();
+			{ CustomerLookup srch = new CustomerLookup();
 				srch.ShowDialog();
-				txtCustNo.Text = srch.CustomerCode.ToString();
-				lblCustName.Content = srch.CustomerName;
+				if(srch.CustomerCode != null)
+					{ txtCustNo.Text = srch.CustomerCode.ToString(); lblCustName.Content = srch.CustomerName; }
 				srch.Close();
 			}
 			else
-			{ 
-				TreeViewCustSearch srch = new TreeViewCustSearch();
+			{ TreeViewCustSearch srch = new TreeViewCustSearch();
 				srch.ShowDialog();
 				txtCustNo.Text = srch.Custno.ToString();
 				lblCustName.Content = srch.CustName;
@@ -62,8 +49,7 @@ namespace ProDocEstimate.Views
 		}
 
 		private void txtSalesRep_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			SalesRepLookup sr = new SalesRepLookup();
+		{ SalesRepLookup sr = new SalesRepLookup();
 			sr.ShowDialog();
 			txtSalesRep.Text = sr.SalesRepCode;
 			lblSalesRep.Content = sr.SalesRep;
