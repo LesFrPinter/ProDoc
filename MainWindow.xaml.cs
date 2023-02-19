@@ -8,12 +8,8 @@ namespace ProDocEstimate
 	{
 		public MainWindow() { InitializeComponent(); }
 
-		private string? custName;
-		public string? CustName
-		{
-			get { return custName; }
-			set { custName = value; }
-		}
+		private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
+		private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
 
 		private void mnuFileExit_Click(object sender, RoutedEventArgs e)
 		{ Application.Current.Shutdown(); }
@@ -74,14 +70,15 @@ namespace ProDocEstimate
 			cl.lblSearchType.Content = cl.SearchType;
 			cl.ShowDialog();
 			CustName = cl.CustomerName;
+			CustCode = cl.CustomerCode;
 			if(CustName?.Length!=0)
-			{ 
-//			MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); 
-				NewEstimate ne = new NewEstimate();
+			{ NewEstimate ne = new NewEstimate();
 				ne.Message = "Editing an existing quote";
+				ne.lblCustName.Content = CustName;
+				ne.txtCustNo.Text = CustCode;
 				ne.ShowDialog();
 			}
-			else
+				else
 			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
 
 			cl.Close();
@@ -94,10 +91,12 @@ namespace ProDocEstimate
 			cl.lblSearchType.Content = cl.SearchType;
 			cl.ShowDialog();
 			CustName = cl.CustomerName;
-//		MessageBox.Show("Retrieve Quote # " + cl.CustomerCode + "  (" + CustName + ") into memory and assign a new quote number", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+			CustCode = cl.CustomerCode;
 			if (CustName?.Length != 0)
 			{ NewEstimate ne = new NewEstimate();
 				ne.Message = "Copy of Quote # " + cl.CustomerCode + " with a new quote number";
+				ne.lblCustName.Content = CustName;
+				ne.txtCustNo.Text = CustCode;
 				ne.ShowDialog();
 			}
 			else

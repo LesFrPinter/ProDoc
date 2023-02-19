@@ -45,10 +45,10 @@ namespace ProDocEstimate.Views
 		{
 			if (rbGrid.IsChecked == true)
 			{ 
-				CustomerSearch srch = new CustomerSearch();
+				CustomerLookup srch = new CustomerLookup();
 				srch.ShowDialog();
-				txtCustNo.Text = srch.Custno.ToString();
-				lblCustName.Content = srch.CustName;
+				txtCustNo.Text = srch.CustomerCode.ToString();
+				lblCustName.Content = srch.CustomerName;
 				srch.Close();
 			}
 			else

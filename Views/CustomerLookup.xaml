@@ -20,37 +20,37 @@
 
 			<StackPanel Orientation="Horizontal" Grid.Row="0">
 				<Label Content="Name: " HorizontalAlignment="Left" />
-				<TextBox x:Name="txtCustName" Width="240" VerticalContentAlignment="Center" Margin="0 4" Text="{Binding CustName}" />
-				<Button  x:Name="btnGo" Content="Go" Click="btnGo_Click" Height="22" Width="40" Margin="20 0" >
-				<Button.Content 
+				<TextBox x:Name="txtCustName" Width="240" VerticalContentAlignment="Center" Margin="0 4" Text="{Binding CustName}" TextChanged="txtCustName_TextChanged" />
+				<Button  x:Name="btnGo" Click="btnGo_Click" Height="26" Width="40" Margin="20 0" >
+					<AccessText>_Go</AccessText>
 				</Button>
 				<Label Content="Cust #: " HorizontalAlignment="Left" />
 				<TextBox x:Name="txtCustNo" Width="70" VerticalContentAlignment="Center" Margin="0 4" />
-				<CheckBox x:Name="cbPartial" Content="Partial"      VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0"  />
-				<CheckBox x:Name="dbDesc"    Content="Descending"   VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
-				<CheckBox x:Name="cbAuto"    Content="AutoComplete" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+				<CheckBox x:Name="cbPartial" Content="_Partial"      VerticalContentAlignment="Center" FontSize="16" Margin="30 0 0 0"  />
+				<CheckBox x:Name="cbDesc"    Content="_Descending"   VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
+				<CheckBox x:Name="cbAuto"    Content="_AutoComplete" VerticalContentAlignment="Center" FontSize="16" Margin="10 0 0 0" />
 				<Label x:Name="lblSearchType" Content="{Binding Path=SearchType}" Width="200" HorizontalAlignment="Right" 
 				 Margin="10 0 20 0" HorizontalContentAlignment="Right" Height="22" Padding="2" FontSize="12" FontWeight="Medium" />
 			</StackPanel>
 
-			<DataGrid Grid.Row="1" >
+			<DataGrid x:Name="dgCustomers" Grid.Row="1" IsSynchronizedWithCurrentItem="True" >
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="CUSTOMER NAME" Width="2*" Binding="{Binding Path=CustomerName}" />
-					<DataGridTextColumn Header="CODE" Width="75" Binding="{Binding Path=CustomerCode}" />
-					<DataGridTextColumn Header="ADDRESS" Width="2*" Binding="{Binding Path=Address}" />
-					<DataGridTextColumn Header="CITY" Width="*" Binding="{Binding Path=City}" />
-					<DataGridTextColumn Header="STATE" Width="50" Binding="{Binding Path=State}" />
+					<DataGridTextColumn Header="CUSTOMER NAME" Width="2*" Binding="{Binding Path=CUST_NAME}" />
+					<DataGridTextColumn Header="CODE" Width="75" Binding="{Binding Path=CUST_NUMB}" />
+					<DataGridTextColumn Header="ADDRESS" Width="2*" Binding="{Binding Path=ADDRESS1}" />
+					<DataGridTextColumn Header="CITY" Width="*" Binding="{Binding Path=CITY}" />
+					<DataGridTextColumn Header="STATE" Width="50" Binding="{Binding Path=STATE}" />
 					<DataGridTextColumn Header="ZIP" Width="75" Binding="{Binding Path=ZIP}" />
-					<DataGridTextColumn Header="PHONE" Width="125" Binding="{Binding Path=Phone}" />
+					<DataGridTextColumn Header="PHONE" Width="125" Binding="{Binding Path=PHONE}" />
 					<DataGridTextColumn Header="Something else" Width="125" />
 				</DataGrid.Columns>
 			</DataGrid>
 
 			<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" >
-				<Button x:Name="btnOK" Margin="10 2 10 2" Click="btnOK_Click" >
+				<Button x:Name="btnOK" Margin="10 2 10 2" Click="btnOK_Click" Height="25" Width="40" >
 					<AccessText>O_k</AccessText>
 				</Button>
-				<Button x:Name="btnCancel" Margin="10 2 10 2" Click="btnCancel_Click" >
+				<Button x:Name="btnCancel" Margin="10 2 10 2" Click="btnCancel_Click" Height="25" Width="70" >
 					<AccessText>_Cancel</AccessText>
 				</Button>
 			</StackPanel>
