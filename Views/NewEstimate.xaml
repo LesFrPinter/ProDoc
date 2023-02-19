@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="New Esimate" 
+        Title="New Estimate" 
 				Height="750" Width="900">
 
 	<Grid>
@@ -63,7 +63,7 @@
 					<TabItem>
 
 						<TabItem.Header>
-							<TextBlock FontSize="24" Background="Blue" Foreground="White" Text="Base" />
+							<Label Content="Base" FontFamily="22" Style="{StaticResource SubTitle}" />
 						</TabItem.Header>
 
 						<Grid>
@@ -207,7 +207,25 @@
 
 					<TabItem>
 						<TabItem.Header>
-							<TextBlock FontSize="24" Background="Blue" Foreground="White" Text="Detail" />
+							<Label Content="_Detail" FontFamily="22" Style="{StaticResource SubTitle}" />
+						</TabItem.Header>
+					</TabItem>
+
+					<TabItem>
+						<TabItem.Header>
+							<Label Content="Cost _Summary" FontFamily="22" Style="{StaticResource SubTitle}" />
+						</TabItem.Header>
+					</TabItem>
+
+					<TabItem>
+						<TabItem.Header>
+							<Label Content="_Comments" FontFamily="22" Style="{StaticResource SubTitle}" />
+						</TabItem.Header>
+					</TabItem>
+
+					<TabItem>
+						<TabItem.Header>
+							<Label Content="_Quote text" FontFamily="22" Style="{StaticResource SubTitle}" />
 						</TabItem.Header>
 					</TabItem>
 

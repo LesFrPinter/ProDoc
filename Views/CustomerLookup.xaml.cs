@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Windows;
+using System.Configuration;
 using System.Windows.Input;
 using System.Data.SqlClient;
 using System.Windows.Controls;
@@ -15,7 +16,8 @@ namespace ProDocEstimate.Views
 			{ if (ee.Key == Key.Escape) { this.Hide(); this.btnCancel.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); } };
 		}
 
-		public string ConnectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProDocument;Data Source=SHUTTLE";
+//		public string ConnectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProDocument;Data Source=SHUTTLE";
+		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 		public SqlConnection cn = new SqlConnection();
 		public SqlDataAdapter ?da;
 
