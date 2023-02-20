@@ -1,8 +1,5 @@
-﻿using System;
+﻿using System.Windows;
 using System.ComponentModel;
-using System.Data;
-using System.Runtime.CompilerServices;
-using System.Windows;
 
 namespace ProDocEstimate
 {
@@ -17,14 +14,8 @@ namespace ProDocEstimate
 			set { customerName = value;/* OnPropertyChanged(""); */ }
 		}
 
-		private decimal qty1;
-
-		public decimal Qty1
-		{
-			get { return qty1; }
-			set { qty1 = value; /*OnPropertyChanged();*/ }
-		}
-
+		private decimal qty1; public decimal Qty1 { get { return qty1; } set { qty1 = value; /*OnPropertyChanged();*/ } }
+		private decimal qty2; public decimal Qty2 { get { return qty2; } set { qty2 = value; /*OnPropertyChanged();*/ } }
 
 		public Quotations() { InitializeComponent(); }
 

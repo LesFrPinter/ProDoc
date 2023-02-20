@@ -56,5 +56,24 @@ namespace ProDocEstimate.Views
 			lblSalesRep.Content = sr.SalesRep;
 			sr.Close();
 		}
+
+		private void btnLoadTemplate_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("What happens here?", "Load Template", MessageBoxButton.OK, MessageBoxImage.Question);
+    }
+
+		private void btnBaseCharges_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("What happens here?", "Apply Base Charges", MessageBoxButton.OK, MessageBoxImage.Question);
+		}
+
+		private void txtEstimator_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			EstimatorLookup es = new EstimatorLookup();
+			es.ShowDialog();
+			txtEstimator.Text = es.EstimatorCode;
+			lblEstimatorName.Content = es.Estimator;
+			es.Close();
+		}
 	}
 }

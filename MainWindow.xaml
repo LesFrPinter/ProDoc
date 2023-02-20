@@ -32,7 +32,7 @@
 				<MenuItem  FlowDirection="RightToLeft" x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" />
 			</MenuItem>
 			<MenuItem Header="_Demos">
-				<MenuItem x:Name="mnuQuotations" Header="_Quotations" Height="40" Click="mnuQuotations_Click" />
+				<MenuItem x:Name="mnuQuotations" Header="_Quotations (from whiteboard)" Height="40" Click="mnuQuotations_Click" />
 				<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
 				<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
 				<MenuItem x:Name="mnuPV02" Header="PV02" Height="40" Click="mnuPV02_Click" />

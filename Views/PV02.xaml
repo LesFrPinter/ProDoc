@@ -233,10 +233,10 @@
 								<RowDefinition Height=".8*" />
 							</Grid.RowDefinitions>
 							<StackPanel Grid.Row="0" Orientation="Horizontal">
-								<Button Content="Options" Margin="5"  />
-								<Button Content="Lots" Margin="5" />
-								<Button Content="Paper" Margin="5" />
-								<Button Content="Forces?" Margin="5" />
+								<Button Content="Options" Margin="2" Height="24" Padding="5 0" />
+								<Button Content="Lots" Margin="2" Height="24" Padding="5 0" />
+								<Button Content="Paper" Margin="2" Height="24" Padding="5 0" />
+								<Button Content="Forces?" Margin="2" Height="24" Padding="5 0" />
 							</StackPanel>
 							<TextBlock Grid.Row="1"
 							 TextWrapping="Wrap" Height="150" FontSize="14"
@@ -271,7 +271,7 @@
 
 							<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Center"  />
 							<ComboBox x:Name="cmbActionCode" Grid.Row="4" Width="150"  
-							 HorizontalAlignment="Center" Background="LightYellow" Height="30" Foreground="Black"  >
+							 HorizontalAlignment="Center" Background="LightYellow" Height="24" Foreground="Black"  >
 								<ComboBoxItem Content="Action Code 1" IsSelected="True" />
 								<ComboBoxItem Content="Action Code 2" />
 								<ComboBoxItem Content="Action Code 3" />

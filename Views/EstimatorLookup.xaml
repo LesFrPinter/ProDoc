@@ -29,26 +29,34 @@
 		</StackPanel>
 
 		<DataGrid 
+		 ToolTip="Loaded from database"
 		 x:Name="dgReps" 
 		 Grid.Row="1" 
 		 SelectedValuePath="Code" 
 		 SelectedItem="LastName"
+		 MouseDoubleClick="dgReps_MouseDoubleClick"
 		 ItemsSource="{Binding Reps.DefaultView}"  >
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Last Name"  Width="3*" Binding="{Binding Path=LastName}"  ElementStyle="{StaticResource CellLeftAlign}" />
-				<DataGridTextColumn Header="First Name" Width="3*" Binding="{Binding Path=FirstName}" ElementStyle="{StaticResource CellLeftAlign}" />
-				<DataGridTextColumn Header="Code"       Width="*"  Binding="{Binding Path=Code}"      ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="Last Name"  Width="1*"   Binding="{Binding Path=LASTNAME}"   ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="First Name" Width="1*"   Binding="{Binding Path=FIRSTNAME}"  ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="Address"    Width="1.5*" Binding="{Binding Path=ADDRESS}"    ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="City"       Width="*"    Binding="{Binding Path=CITY}"       ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="ST"         Width=".3*"  Binding="{Binding Path=STATE}"      ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="ZIP"        Width=".5*"  Binding="{Binding Path=ZIP}"        ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="Phone"      Width=".75*" Binding="{Binding Path=PHONE}"      ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="Initials"   Width=".5*"  Binding="{Binding Path=INITIALS}"   ElementStyle="{StaticResource CellLeftAlign}" />
+				<DataGridTextColumn Header="NUM"     Width=".3*"     Binding="{Binding Path=CODE}"       ElementStyle="{StaticResource CellLeftAlign}" />
 			</DataGrid.Columns>
 		</DataGrid>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
-			<Button x:Name="btnSelect"   Padding="10 4" >
+			<Button x:Name="btnSelect"   Padding="10 4" Click="btnSelect_Click" >
 				<AccessText>O_k</AccessText>
 			</Button>
-			<Button x:Name="btnCancel"   Padding="10 4" >
+			<Button x:Name="btnCancel"   Padding="10 4" Click="btnCancel_Click" >
 				<AccessText>_Cancel</AccessText>
 			</Button>
-			<Button x:Name="btnOptions"  Padding="10 4" >
+			<Button x:Name="btnOptions"  Padding="10 4" Click="btnOptions_Click" >
 				<AccessText>_Options</AccessText>
 			</Button>
 		</StackPanel>

@@ -58,12 +58,27 @@
 
 			<Grid Grid.Row="2" VerticalAlignment="Top" >
 
-				<TabControl Margin="0 20 0 0" Background="LightGray">
+				<TabControl Margin="0 10" Background="LightGray">
 
 					<TabItem>
 
 						<TabItem.Header>
-							<Label Content="Base" FontFamily="22" Style="{StaticResource SubTitle}" />
+
+							<Border BorderThickness="1,1,1,0"
+								BorderBrush="Gray"
+								CornerRadius="5">
+								<Border Margin="2"
+									Background="Green"
+									BorderBrush="Gray"
+									Height="35"
+									CornerRadius="5"
+									HorizontalAlignment="Left">
+									<Label BorderThickness="1"
+									 Foreground="Gainsboro"
+									 Content=" Base"/>
+								</Border>
+							</Border>
+
 						</TabItem.Header>
 
 						<Grid>
@@ -106,14 +121,18 @@
 								</StackPanel>
 
 								<Label Grid.Row="3" Grid.Column="1" Content="   Contact" HorizontalAlignment="Left" />
-								<TextBox Width="300" Grid.Row="3" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="Rep Name Goes Here" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+								<TextBox Width="300" Grid.Row="3" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="Contact Name Here" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 								<Label Grid.Row="4" Grid.Column="1" Content="   Sales Rep" HorizontalAlignment="Left" />
 								<TextBox x:Name="txtSalesRep" Width="40" Grid.Row="4" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="999" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" MouseDoubleClick="txtSalesRep_MouseDoubleClick"  />
 
 								<Label x:Name="lblSalesRep" Grid.Row="4" Grid.Column="1" Content="House Account" HorizontalAlignment="Left" Margin="150 0 0 0" Foreground="CornflowerBlue" FontWeight="Bold" />
 
 								<Label Grid.Row="4" Grid.Column="1" Content="Estimator" HorizontalAlignment="Left" Margin="300 0 0 0" />
-								<TextBox Width="40" Grid.Row="4" Grid.Column="1" Margin="390 0 0 0"  Height="22" Text="888" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+								<TextBox x:Name="txtEstimator" Width="40" Grid.Row="4" Grid.Column="1" Margin="390 0 0 0"  Height="22" Text="888" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" MouseDoubleClick="txtEstimator_MouseDoubleClick"/>
+								<Label Grid.Row="4" x:Name="lblEstimatorName"
+								 Content="Estimator name" HorizontalAlignment="Left" Margin="435,0,0,0" Grid.Column="1" Width="220" />
+								
 								<Label Grid.Row="5" Grid.Column="1" Content="Plant ID" HorizontalAlignment="Left" Margin="300 0 0 0" />
 								<TextBox Width="40" Grid.Row="5" Grid.Column="1" Margin="390 0 0 0"  Height="22" Text="999" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 							</Grid>
@@ -151,7 +170,7 @@
 										<ComboBoxItem Content="Type 3" />
 									</ComboBox>
 
-									<Button Grid.Row="1" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" >
+									<Button x:Name="btnLoadTemplate" Grid.Row="1" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" Click="btnLoadTemplate_Click" >
 										<AccessText>_Load Template</AccessText>
 									</Button>
 
@@ -193,7 +212,7 @@
 
 									<Label Grid.Row="6" Grid.Column="1" Content="Product Code" Margin="0 0 0 0" />
 									<TextBox Width="100" Grid.Row="6"  Grid.Column="2" Margin="10 0 0 0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-									<Button Grid.Row="6" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" >
+									<Button x:Name="btnBaseCharges" Grid.Row="6" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" Click="btnBaseCharges_Click" >
 										<AccessText>_Apply Base Charge</AccessText>
 									</Button>
 
@@ -207,25 +226,232 @@
 
 					<TabItem>
 						<TabItem.Header>
-							<Label Content="_Detail" FontFamily="22" Style="{StaticResource SubTitle}" />
+
+							<Border BorderThickness="1,1,1,0"
+								BorderBrush="Gray"
+								CornerRadius="5">
+								<Border Margin="2"
+									Background="Green"
+									BorderBrush="Gray"
+									Height="35"
+									CornerRadius="5"
+									HorizontalAlignment="Left">
+									<Label BorderThickness="1"
+									 Foreground="Gainsboro"
+									 Content=" Detail"/>
+								</Border>
+							</Border>
+
+						</TabItem.Header>
+
+						<Grid>
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="32" />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition Height="3*" />
+							</Grid.RowDefinitions>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+
+							<Label Content="Quantity" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="0" />
+
+							<Label Content="Price/M" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="1" />
+
+							<Label Content="Adjustment" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="0" Grid.Column="2" />
+							<Label Content="        Total" HorizontalAlignment="Left"
+						  Grid.Row="0" Grid.Column="3" />
+							<Label Content="$ 1320.00" HorizontalAlignment="Left"
+						 Margin="10 0 0 0" Grid.Row="1" Grid.Column="3" />
+
+							<telerik:RadMaskedNumericInput Grid.Row="1" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="1" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
+
+							<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="2" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
+							<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="2" Grid.Column="3" />
+
+							<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="3" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
+							<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="3" Grid.Column="3 " />
+
+							<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="4" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
+							<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="4" Grid.Column="3" />
+
+							<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="0" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="1" Mask="" Style="{StaticResource InputField}" />
+							<telerik:RadMaskedNumericInput Grid.Row="5" Grid.Column="2" Mask="" Style="{StaticResource InputField}" />
+							<Label Content="" HorizontalAlignment="Right"
+						 Margin="10 0 0 0" Grid.Row="5" Grid.Column="3" />
+
+							<DataGrid 
+						 FontFamily="Courier New" FontSize="13"
+						 x:Name="MyGrid"
+						 Grid.Row="7" 
+						 Grid.RowSpan="10" 
+						 Grid.ColumnSpan="4" 
+						 Height="300" 
+						 Width="600"
+						 VerticalAlignment="Top"
+						 HorizontalAlignment="Left"
+						 Background="LightGray" 
+						 ItemsSource="{Binding Est.DefaultView}"
+						 IsSynchronizedWithCurrentItem="True"
+						 AutoGenerateColumns="False"  >
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="SEQ"                 Width="65"  Binding="{Binding Path=Seq}"     ElementStyle="{StaticResource CellRightAlign}" />
+									<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Feature}" ElementStyle="{StaticResource CellLeftAlign}" />
+									<DataGridTextColumn Header="FLAT"                Width="100" Binding="{Binding Path=Flat}"    ElementStyle="{StaticResource CellRightAlign}" />
+									<DataGridTextColumn Header="RUN"                 Width="85"  Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<Grid Grid.Row="0" Grid.Column="2" Width="220" Height="380" 
+						 HorizontalAlignment="Right" VerticalAlignment="Top"
+						 Margin="0 180 0 0" Grid.RowSpan="15" Grid.ColumnSpan="2" >
+
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*" />
+									<RowDefinition Height="4*" />
+									<RowDefinition Height=".8*" />
+									<RowDefinition Height=".8*" />
+									<RowDefinition Height=".8*" />
+								</Grid.RowDefinitions>
+								<StackPanel Grid.Row="0" Orientation="Horizontal">
+									<Button Content="Options" Margin="2" Height="24" Padding="5 0" />
+									<Button Content="Lots" Margin="2" Height="24" Padding="5 0" />
+									<Button Content="Paper" Margin="2" Height="24" Padding="5 0" />
+									<Button Content="Forces?" Margin="2" Height="24" Padding="5 0" />
+								</StackPanel>
+								<TextBlock Grid.Row="1"
+							 TextWrapping="Wrap" Height="150" FontSize="14"
+							 VerticalAlignment="Top" 
+							 Grid.RowSpan="2" Margin="10,5,0,0">
+								Press 22 Web 22<LineBreak />
+								  22 inch press<LineBreak />
+								Collator: 311<LineBreak />
+									11 inch collator<LineBreak />
+								SalesRep: 999<LineBreak />
+									House Account<LineBreak />
+									COMMENTS EXIST
+								</TextBlock>
+
+								<Border CornerRadius="12" Grid.Row="2" >
+									<Button Content="Cartons" Width="100" Margin="4" Height="24" >
+										<Button.Effect>
+											<DropShadowEffect BlurRadius="10" Direction="225" Color="brown" />
+										</Button.Effect>
+										<Button.Resources>
+											<Style TargetType="Border">
+												<Setter Property="CornerRadius" Value="5"/>
+												<Style.Triggers>
+													<Trigger Property="IsMouseDirectlyOver" Value="True">
+														<Setter Property="Background" Value="Red" />
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Resources>
+									</Button>
+								</Border>
+
+								<Label  Grid.Row="3" Content="Feature/Action Code" HorizontalAlignment="Center"  />
+								<ComboBox x:Name="cmbActionCode" Grid.Row="4" Width="150"  
+							 HorizontalAlignment="Center" Background="LightYellow" Height="24" Foreground="Black"  >
+									<ComboBoxItem Content="Action Code 1" IsSelected="True" />
+									<ComboBoxItem Content="Action Code 2" />
+									<ComboBoxItem Content="Action Code 3" />
+								</ComboBox>
+
+							</Grid>
+
+						</Grid>
+
+					</TabItem>
+
+					<TabItem>
+						<TabItem.Header>
+
+							<Border BorderThickness="1,1,1,0"
+								BorderBrush="Gray"
+								CornerRadius="5">
+								<Border Margin="2"
+									Background="Green"
+									BorderBrush="Gray"
+									Height="35"
+									CornerRadius="5"
+									HorizontalAlignment="Left">
+									<Label BorderThickness="1"
+									 Foreground="Gainsboro"
+									 Content="Cost _Summary"/>
+								</Border>
+							</Border>
+
 						</TabItem.Header>
 					</TabItem>
 
 					<TabItem>
 						<TabItem.Header>
-							<Label Content="Cost _Summary" FontFamily="22" Style="{StaticResource SubTitle}" />
+							<Border BorderThickness="1,1,1,0"
+								BorderBrush="Gray"
+								CornerRadius="5">
+								<Border Margin="2"
+									Background="Green"
+									BorderBrush="Gray"
+									Height="35"
+									CornerRadius="5"
+									HorizontalAlignment="Left">
+									<Label BorderThickness="1"
+									 Foreground="Gainsboro"
+									 Content="_Comments"/>
+								</Border>
+							</Border>
 						</TabItem.Header>
 					</TabItem>
 
 					<TabItem>
 						<TabItem.Header>
-							<Label Content="_Comments" FontFamily="22" Style="{StaticResource SubTitle}" />
-						</TabItem.Header>
-					</TabItem>
-
-					<TabItem>
-						<TabItem.Header>
-							<Label Content="_Quote text" FontFamily="22" Style="{StaticResource SubTitle}" />
+							<Border BorderThickness="1,1,1,0"
+								BorderBrush="Gray"
+								CornerRadius="5">
+								<Border Margin="2"
+									Background="Green"
+									BorderBrush="Gray"
+									Height="35"
+									CornerRadius="5"
+									HorizontalAlignment="Left">
+									<Label BorderThickness="1"
+									 Foreground="Gainsboro"
+									 Content="_Quote text"/>
+								</Border>
+							</Border>
 						</TabItem.Header>
 					</TabItem>
 
