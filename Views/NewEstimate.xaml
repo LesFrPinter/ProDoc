@@ -134,7 +134,11 @@
 								 Content="Estimator name" HorizontalAlignment="Left" Margin="435,0,0,0" Grid.Column="1" Width="220" />
 								
 								<Label Grid.Row="5" Grid.Column="1" Content="Plant ID" HorizontalAlignment="Left" Margin="300 0 0 0" />
-								<TextBox Width="40" Grid.Row="5" Grid.Column="1" Margin="390 0 0 0"  Height="22" Text="999" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+								<TextBox x:Name="txtPlantID" MouseDoubleClick="txtPlantID_MouseDoubleClick"
+								 Width="40" Grid.Row="5" Grid.Column="1" Margin="390 0 0 0"  Height="22" Text="999" 
+								 FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
 							</Grid>
 
 							<Grid Grid.Row="1" Height="300" >
@@ -164,15 +168,15 @@
 									<Label Content="BASE OPTIONS" Grid.ColumnSpan="5"  Grid.Row="0" Background="#FFAFAFD2" Foreground="Black" HorizontalAlignment="Stretch" Padding="3 0 3 0" />
 									<Label Grid.Row="1" Content="Project Type" />
 
+									<Button x:Name="btnLoadTemplate" Grid.Row="1" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" Click="btnLoadTemplate_Click" >
+										<AccessText>_Load Template</AccessText>
+									</Button>
+
 									<ComboBox Grid.Row="1" Grid.Column="1" Width="250" Height="26" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0" Foreground="Black" >
 										<ComboBoxItem Content="Type 1" IsSelected="True" />
 										<ComboBoxItem Content="Type 2" />
 										<ComboBoxItem Content="Type 3" />
 									</ComboBox>
-
-									<Button x:Name="btnLoadTemplate" Grid.Row="1" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" Click="btnLoadTemplate_Click" >
-										<AccessText>_Load Template</AccessText>
-									</Button>
 
 									<Label Grid.Row="2" Content="Parts" />
 									<xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="PartsSpinner"  Width="50" Minimum="1" Maximum="12" Margin="10 2 0 2" HorizontalAlignment="Left" />
@@ -211,7 +215,10 @@
 									</ComboBox>
 
 									<Label Grid.Row="6" Grid.Column="1" Content="Product Code" Margin="0 0 0 0" />
-									<TextBox Width="100" Grid.Row="6"  Grid.Column="2" Margin="10 0 0 0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+									<TextBox x:Name="txtProductCode" MouseDoubleClick="txtProductCode_MouseDoubleClick"
+									 Width="100" Grid.Row="6"  Grid.Column="2" Margin="10 0 0 0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+
 									<Button x:Name="btnBaseCharges" Grid.Row="6" Height="26" Width="125" Grid.Column="4" Background="Green" Foreground="White" Click="btnBaseCharges_Click" >
 										<AccessText>_Apply Base Charge</AccessText>
 									</Button>
@@ -313,30 +320,29 @@
 						 Margin="10 0 0 0" Grid.Row="5" Grid.Column="3" />
 
 							<DataGrid 
-						 FontFamily="Courier New" FontSize="13"
-						 x:Name="MyGrid"
-						 Grid.Row="7" 
-						 Grid.RowSpan="10" 
-						 Grid.ColumnSpan="4" 
-						 Height="300" 
-						 Width="600"
-						 VerticalAlignment="Top"
-						 HorizontalAlignment="Left"
-						 Background="LightGray" 
-						 ItemsSource="{Binding Est.DefaultView}"
-						 IsSynchronizedWithCurrentItem="True"
-						 AutoGenerateColumns="False"  >
+								 FontFamily="Courier New" 
+								 FontSize="13"
+								 x:Name="MyGrid"
+								 Grid.Row="7" 
+								 Grid.RowSpan="10" 
+								 Grid.ColumnSpan="4" 
+								 Height="300" 
+								 Width="600"
+								 VerticalAlignment="Top"
+								 HorizontalAlignment="Left"
+								 Background="LightGray" 
+								 IsSynchronizedWithCurrentItem="True"
+								 AutoGenerateColumns="False"  >
 								<DataGrid.Columns>
-									<DataGridTextColumn Header="SEQ"                 Width="65"  Binding="{Binding Path=Seq}"     ElementStyle="{StaticResource CellRightAlign}" />
-									<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=Feature}" ElementStyle="{StaticResource CellLeftAlign}" />
-									<DataGridTextColumn Header="FLAT"                Width="100" Binding="{Binding Path=Flat}"    ElementStyle="{StaticResource CellRightAlign}" />
-									<DataGridTextColumn Header="RUN"                 Width="85"  Binding="{Binding Path=Run}"     ElementStyle="{StaticResource CellRightAlign}" />
+									<DataGridTextColumn Header="SEQ"                 Width="65"  Binding="{Binding Path=SEQ}"     ElementStyle="{StaticResource CellRightAlign}" />
+									<DataGridTextColumn Header="FEATURE DESCRIPTION" Width="340" Binding="{Binding Path=FEATURE}" ElementStyle="{StaticResource CellLeftAlign}" />
+									<DataGridTextColumn Header="FLAT"                Width="100" Binding="{Binding Path=FLAT}"    ElementStyle="{StaticResource CellRightAlign}" />
+									<DataGridTextColumn Header="RUN"                 Width="85"  Binding="{Binding Path=RUN}"     ElementStyle="{StaticResource CellRightAlign}" />
 								</DataGrid.Columns>
 							</DataGrid>
 
-							<Grid Grid.Row="0" Grid.Column="2" Width="220" Height="380" 
-						 HorizontalAlignment="Right" VerticalAlignment="Top"
-						 Margin="0 180 0 0" Grid.RowSpan="15" Grid.ColumnSpan="2" >
+							<Grid Grid.Row="0" Grid.Column="2" Width="240" Height="380" HorizontalAlignment="Right" VerticalAlignment="Top"
+						   Margin="0 180 0 0" Grid.RowSpan="15" Grid.ColumnSpan="2" >
 
 								<Grid.RowDefinitions>
 									<RowDefinition Height="*" />
@@ -346,10 +352,10 @@
 									<RowDefinition Height=".8*" />
 								</Grid.RowDefinitions>
 								<StackPanel Grid.Row="0" Orientation="Horizontal">
-									<Button Content="Options" Margin="2" Height="24" Padding="5 0" />
-									<Button Content="Lots" Margin="2" Height="24" Padding="5 0" />
-									<Button Content="Paper" Margin="2" Height="24" Padding="5 0" />
-									<Button Content="Forces?" Margin="2" Height="24" Padding="5 0" />
+									<Button x:Name="btnOptions" Content="Options" Margin="2" Height="28" Padding="10 0" Click="btnOptions_Click" />
+									<Button x:Name="btnLots"    Content="Lots"    Margin="2" Height="28" Padding="10 0" Click="btnOptions_Click" />
+									<Button x:Name="btnPaper"   Content="Paper"   Margin="2" Height="28" Padding="10 0" Click="btnOptions_Click" />
+									<Button x:Name="btnForces"  Content="Forces?" Margin="2" Height="28" Padding="10 0" Click="btnOptions_Click"   />
 								</StackPanel>
 								<TextBlock Grid.Row="1"
 							 TextWrapping="Wrap" Height="150" FontSize="14"
@@ -365,7 +371,7 @@
 								</TextBlock>
 
 								<Border CornerRadius="12" Grid.Row="2" >
-									<Button Content="Cartons" Width="100" Margin="4" Height="24" >
+									<Button Content="Cartons" Width="100" Margin="4" Height="24" x:Name="btnCartons"  Click="btnOptions_Click" >
 										<Button.Effect>
 											<DropShadowEffect BlurRadius="10" Direction="225" Color="brown" />
 										</Button.Effect>

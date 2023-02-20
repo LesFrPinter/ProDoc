@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Data;
 
 namespace ProDocEstimate.Views
 {
@@ -9,11 +10,14 @@ namespace ProDocEstimate.Views
 			DataContext = this;
 			customerText = "Customer name here";
 			estimateText = "Estimate details here ";
+			LoadData();
 		}
 
 		private string? message;      public string? Message      { get { return message;      } set { message = value; } }
 		private string  customerText; public string? CustomerText { get { return customerText; } set { customerText = value; } }
 		private string  estimateText; public string? EstimateText { get { return estimateText; } set { estimateText = value; } }
+
+		private DataTable DgFeatures; public DataTable dgFeatures  { get { return DgFeatures; } set { DgFeatures = value; } }
 
 		private void mnuExit_Click(object sender, RoutedEventArgs e)
 		{ this.Close(); }
@@ -74,6 +78,42 @@ namespace ProDocEstimate.Views
 			txtEstimator.Text = es.EstimatorCode;
 			lblEstimatorName.Content = es.Estimator;
 			es.Close();
+		}
+
+		private void btnOptions_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("What Does this do?", "Not defined", MessageBoxButton.OK, MessageBoxImage.Question);
+		}
+
+		private void txtProductCode_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			MessageBox.Show("What happens here?", "Product Code", MessageBoxButton.OK, MessageBoxImage.Question);
+		}
+
+		private void txtPlantID_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			MessageBox.Show("What happens here?", "Plant ID", MessageBoxButton.OK, MessageBoxImage.Question);
+		}
+
+	  public void LoadData()
+		{
+			this.dgFeatures = new DataTable("Features");
+			this.dgFeatures.Columns.Add("SEQ");
+			this.dgFeatures.Columns.Add("FEATURE");
+			this.dgFeatures.Columns.Add("FLAT");
+			this.dgFeatures.Columns.Add("RUN");
+
+			this.dgFeatures.Rows.Add("14", "PREPR = PRE PRESS",  "35.00", "0.00");
+			this.dgFeatures.Rows.Add("16", "610-Trim",           "10.00", "1.00");
+			this.dgFeatures.Rows.Add("17", "11-2-BLK-STD",       "45.00", "0.70");
+			this.dgFeatures.Rows.Add("18", "11-20 THERMO INK",   "40.00", "2.00");
+			this.dgFeatures.Rows.Add("19", "11-8-BACKER",        "40.00", "0.00");
+			this.dgFeatures.Rows.Add("20", "11-1-1 STD COLOR",   "20.00", "0.60");
+			this.dgFeatures.Rows.Add("21", "11-6-PMS MATCH",     "20.00", "0.50");
+			this.dgFeatures.Rows.Add("22", "NANO-NaNoCopy Void", "25.00", "0.00");
+			this.dgFeatures.Rows.Add("23", "HPO-1U-HP Digital Print 1 Up", "30.00", "30.00");
+
+			MyGrid.ItemsSource = dgFeatures.DefaultView;
 		}
 	}
 }
