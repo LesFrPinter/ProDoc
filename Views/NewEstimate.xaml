@@ -50,7 +50,7 @@
 
 				<StackPanel Grid.Row="1" Orientation="Horizontal" Width="880">
 					<Label Style="{StaticResource SubTitle}" Content="CUSTOMER" Width="80" />
-					<Label HorizontalAlignment="Left"  x:Name="lblMessage" Padding="0" Width="600" Margin="10 0 0 0" Height="24" Content="{Binding Path=CustomerText}" />
+					<Label HorizontalAlignment="Left" x:Name="lblMessage" Padding="0" Width="600" Margin="10 0 0 0" Height="24"  />
 					<Label Grid.Row="2" Width="95" Height="24" Margin="80 0 0 0" Content="02/14/2023" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" />
 				</StackPanel>
 
@@ -101,8 +101,8 @@
 								<TextBox x:Name="txtCustNo" Width="100" Grid.Row="1" Grid.Column="1" Margin="100 0 0 0"  Height="22" Text="96796" VerticalAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick" HorizontalAlignment="Left" />
 								<Label x:Name="lblCustName" Grid.Row="1" Grid.Column="1" Content="MULTI BUSINESS FORMS" HorizontalAlignment="Left" Margin="220 0 0 0" Foreground="CornflowerBlue" FontWeight="Bold" />
 								<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0">
-									<RadioButton x:Name="rbGrid" Content="Grid" />
-									<RadioButton x:Name="rbTree" Content="TreeView" IsChecked="True"  />
+									<RadioButton x:Name="rbGrid" Content="Grid" IsChecked="True" />
+									<RadioButton x:Name="rbTree" Content="TreeView" />
 								</StackPanel>
 
 								<Label Grid.Row="3" Grid.Column="1" Content="   Contact" HorizontalAlignment="Left" />

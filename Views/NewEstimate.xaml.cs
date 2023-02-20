@@ -36,7 +36,8 @@ namespace ProDocEstimate.Views
 			{ CustomerLookup srch = new CustomerLookup();
 				srch.ShowDialog();
 				if(srch.CustomerCode != null)
-					{ txtCustNo.Text = srch.CustomerCode.ToString(); lblCustName.Content = srch.CustomerName; }
+					{ txtCustNo.Text = srch.CustomerCode.ToString(); lblCustName.Content = srch.CustomerName; 
+					  lblMessage.Content = "(" + srch.CustomerCode + ") " + srch.CustomerName; }
 				srch.Close();
 			}
 			else

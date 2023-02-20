@@ -76,6 +76,7 @@ namespace ProDocEstimate
 				ne.Message = "Editing an existing quote";
 				ne.lblCustName.Content = CustName;
 				ne.txtCustNo.Text = CustCode;
+				ne.lblMessage.Content = "(" + CustCode + ") " + CustName;
 				ne.ShowDialog();
 			}
 				else
