@@ -39,7 +39,7 @@
 				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
 				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
 				<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />
-				<MenuItem Header="Print" Height="40" />
+				<MenuItem x:Name="mnuTest" Header="Test" Height="40" Click="mnuTest_Click" />
 			</MenuItem>
 			<MenuItem Header="_Current system" Height="40" >
 				<MenuItem x:Name="mnuEdit"  Header="_Edit an existing estimate" Click="mnuEdit_Click" />

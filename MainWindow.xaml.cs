@@ -115,5 +115,12 @@ namespace ProDocEstimate
 		{
 			MessageBox.Show("What is this?", "New", MessageBoxButton.OK, MessageBoxImage.Question);
 		}
-	}
+
+		private void mnuTest_Click(object sender, RoutedEventArgs e)
+		{
+			Tests test = new Tests();
+			test.Owner = this;
+			test.ShowDialog();
+    }
+  }
 }
