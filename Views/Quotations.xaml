@@ -20,7 +20,7 @@
 			<Setter Property="Margin" Value="10 0 0 0" />
 		</Style>
 	</Window.Resources>
-	<Viewbox>
+
 
 		<Grid Background="LightGray">
 
@@ -70,6 +70,8 @@
 					FontSize="24"
 					Foreground="White" />
 			</Border>
+
+		<Viewbox Grid.Row="1" Stretch="UniformToFill">
 
 			<TabControl
 				x:Name="Tabs"
@@ -1163,8 +1165,8 @@
 
 			</TabControl>
 
-		</Grid>
+		</Viewbox>
 
-	</Viewbox>
+	</Grid>
 
 </Window>
