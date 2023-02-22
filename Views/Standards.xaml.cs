@@ -1,27 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ProDocEstimate.Views
 {
-    /// <summary>
-    /// Interaction logic for Standards.xaml
-    /// </summary>
-    public partial class Standards : Window
+	public partial class Standards : Window, INotifyPropertyChanged
     {
-        public Standards()
-        {
-            InitializeComponent();
-        }
+
+		private bool editing;    public bool Editing    { get { return editing;    } set { editing = value; NotEditing = !editing; OnPropertyChanged(); } }
+		private bool notediting; public bool NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
+
+		public Standards()
+      {
+        InitializeComponent();
+				Editing = false;
+				DataContext = this;
+      }
+
+		public event PropertyChangedEventHandler? PropertyChanged;
+		protected void OnPropertyChanged([CallerMemberName] string? name = null)
+		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+		private void mnuExit_Click(object sender, RoutedEventArgs e)
+		{
+      Close();
     }
+
+		private void mnuEdit_Click(object sender, RoutedEventArgs e)
+		{
+			Editing = true;
+		}
+
+		private void mnuNew_Click(object sender, RoutedEventArgs e)
+		{
+			Editing = true;
+		}
+
+		private void mnuSave_Click(object sender, RoutedEventArgs e)
+		{
+			Editing = false;
+		}
+
+		private void mnuCancel_Click(object sender, RoutedEventArgs e)
+		{
+			Editing = false;
+		}
+	}
 }

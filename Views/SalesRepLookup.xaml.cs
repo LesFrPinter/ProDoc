@@ -3,6 +3,7 @@ using System.Windows;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace ProDocEstimate.Views
 {
@@ -16,16 +17,12 @@ namespace ProDocEstimate.Views
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;
+		protected void OnPropertyChanged([CallerMemberName] string? name = null)
+		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		private DataTable? reps;
-		public DataTable? Reps
-		{
-			get { return reps; }
-			set { reps = value; /*OnPropertyChanged();*/ }
-		}
-
-		private string salesRepCode; public string SalesRepCode { get { return salesRepCode; } set { salesRepCode = value; } }
-		private string salesRep;     public string SalesRep     { get { return salesRep;     } set { salesRep = value;     } }
+		private DataTable? reps;      public DataTable? Reps         { get { return reps;         } set { reps         = value; OnPropertyChanged(); } }
+		private string? salesRepCode; public string?    SalesRepCode { get { return salesRepCode; } set { salesRepCode = value; OnPropertyChanged(); } }
+		private string? salesRep;     public string?    SalesRep     { get { return salesRep;     } set { salesRep     = value; OnPropertyChanged(); } }
 
 		private void btnSelect_Click(object sender, RoutedEventArgs e)
 		{
@@ -33,8 +30,6 @@ namespace ProDocEstimate.Views
 			int RowNum = dgReps.SelectedIndex;
 			SalesRep     = Reps?.Rows[RowNum][1] + " " + Reps?.Rows[RowNum][0];
 			SalesRepCode = Reps?.Rows[RowNum][2].ToString();
-
-			//			SalesRepCode = dgReps.SelectedValue.ToString();
 #pragma warning restore CS8601 // Possible null reference assignment.
 			this.Hide(); 
 		}

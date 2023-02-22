@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ProDocEstimate.Views
@@ -17,25 +18,28 @@ namespace ProDocEstimate.Views
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
-		private DataTable est;
-		public DataTable Est
+		protected void OnPropertyChanged([CallerMemberName] string? name = null)
+		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+		private DataTable? est;
+		public DataTable? Est
 		{
 			get { return est; }
-			set { est = value; /*OnPropertyChanged(new DependencyPropertyChangedEventArgs());*/ }
+			set { est = value; OnPropertyChanged(); }
 		}
 
-		private DataTable summary;
-		public DataTable Summary
+		private DataTable? summary;
+		public DataTable? Summary
 		{
 			get { return summary; }
-			set { summary = value; }
+			set { summary = value; OnPropertyChanged(); }
 		}
 
-		private DataTable otherData;
-		public DataTable OtherData
+		private DataTable? otherData;
+		public DataTable? OtherData
 		{
 			get { return otherData; }
-			set { otherData = value; }
+			set { otherData = value; OnPropertyChanged(); }
 		}
 
 		private void LoadData()

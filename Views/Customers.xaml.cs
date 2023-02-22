@@ -10,55 +10,26 @@ namespace ProDocEstimate
 	{
 		public event PropertyChangedEventHandler? PropertyChanged;
 
-		private DataTable custs;
-		public  DataTable Custs
-		{ get { return custs; }
-			set { custs = value; OnPropertyChanged(); }
-		}
+		protected void OnPropertyChanged([CallerMemberName] string? name = null)
+		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		//public DataTable? custs { get; private set; }
+		//protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+		//{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
 
-		private bool notediting = true;
-		public bool NotEditing
-		{ get { return notediting; }
-			set
-			{ notediting = value; OnPropertyChanged(nameof(NotEditing));
-			}
-		}
-
-		private bool editing;
-		public bool Editing
-		{ get { return editing; }
-			set { editing = value;
-				NotEditing = !editing;
-				OnPropertyChanged(); }
-		}
-
-		private bool newCustomer;
-		public bool NewCustomer
-		{
-			get { return newCustomer; }
-			set { newCustomer = value; OnPropertyChanged(nameof(NewCustomer)); }
-		}
-
-		private string selcust;
-		public string SelectedCustomer
-		{
-			get { return selcust; }
-			set { selcust = value; OnPropertyChanged(); }
-		}
+		private DataTable? custs;             public DataTable? Custs            { get { return custs;       } set { custs       = value; OnPropertyChanged(); } }
+		private bool?      notediting = true; public bool?      NotEditing       { get { return notediting;  } set { notediting  = value; OnPropertyChanged(); } }
+		private bool?      editing;           public bool?      Editing          { get { return editing;     } set { editing     = value; NotEditing = !editing; OnPropertyChanged(); } }
+		private bool?      newCustomer;       public bool?      NewCustomer      { get { return newCustomer; } set { newCustomer = value; OnPropertyChanged(); } }
+		private string?    selcust;           public string?    SelectedCustomer { get { return selcust;     } set { selcust     = value; OnPropertyChanged(); } }
 
 		public Customers()
 		{ InitializeComponent();
 			this.DataContext = this;
 			this.Editing = false;
 			if 
-				(!NewCustomer) { LoadCustData(); }
+				( NewCustomer != null ) { LoadCustData(); }
 			else 
-				{ this.Editing = true;
-					txtCustomerName.Text = new String(' ', 40);
-					txtAddress.Text = new String(' ', 40);
-			}
+				{ this.Editing = true; txtCustomerName.Text = new String(' ', 40); txtAddress.Text = new String(' ', 40); }
 		}
 
 		private void LoadCustData()
@@ -100,11 +71,6 @@ namespace ProDocEstimate
 		private void Button_Click_3(object sender, RoutedEventArgs e)
 		{
 			Editing = false;
-		}
-
-		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
