@@ -164,9 +164,6 @@
 							<RowDefinition Height="*" />
 							<RowDefinition Height="*" />
 							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="1*" />
@@ -515,25 +512,27 @@
 					</Grid>
 
 				</Grid>
+
 			</TabItem>
 
 			<TabItem Header="Feature Standards">
 
-				<Grid Width="900" Background="LightGray">
+				<Grid Margin="0,0,-2,0" Background="LightGray">
 
 					<Grid.RowDefinitions>
+						<RowDefinition Height="40" />
 						<RowDefinition Height="*" />
-						<RowDefinition Height="16*" />
 					</Grid.RowDefinitions>
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
-						<!--  Why can't I add a second column definition here?  -->
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
 					<StackPanel
 						Grid.Row="0"
 						Grid.Column="0"
+						Grid.ColumnSpan="2"
 						Orientation="Horizontal">
 						<Label
 							Background="LightSteelBlue"
@@ -550,7 +549,7 @@
 							Foreground="WhiteSmoke" />
 						<TextBox
 							x:Name="FeatureNum"
-							Width="75"
+							Width="125"
 							Height="24" />
 						<Label
 							Background="LightSteelBlue"
@@ -558,7 +557,7 @@
 							Foreground="WhiteSmoke" />
 						<TextBox
 							x:Name="Description"
-							Width="300"
+							Width="320"
 							Height="24"
 							Margin="10,0,0,0" />
 						<Label
@@ -575,10 +574,6 @@
 
 					<Grid Grid.Row="1" Grid.Column="0">
 
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
-						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
 							<RowDefinition />
 							<RowDefinition />
@@ -815,26 +810,173 @@
 
 					<Grid Grid.Row="1" Grid.Column="1">
 
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
 						<Line
 							Grid.Row="1"
 							Grid.Column="1"
 							Margin="0,0,0,2"
+							HorizontalAlignment="Left"
 							VerticalAlignment="Top"
 							Stroke="Blue"
 							StrokeThickness="2"
-							X1="420"
-							X2="420"
-							Y1="10"
-							Y2="380" />
+							X1="1"
+							X2="1"
+							Y1="1"
+							Y2="600" />
 
 						<Label
-							Grid.Row="1"
+							Grid.Row="0"
 							Grid.Column="1"
 							Margin="10,0"
 							Padding="2"
-							VerticalAlignment="Top"
+							VerticalAlignment="Center"
 							Content="PRICING OPTIONS"
 							Foreground="BlueViolet" />
+
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
+							<Label Content="# Around" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+							<Label Content="Part" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+							<Label Content="Stream" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="2" Orientation="Horizontal">
+							<Label Content="Ask: # Flat" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+							<TextBox Width="240" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="3" Orientation="Horizontal">
+							<Label Content="       # Run" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+							<TextBox Width="240" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="4" Orientation="Horizontal">
+							<Label Content="    Percent" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+							<Label Content="Type" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<Line
+							Grid.Row="5"
+							Width="400"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="2"
+							X2="430"
+							Y1="2"
+							Y2="2" />
+
+						<Label
+							Grid.Row="5"
+							Grid.Column="1"
+							Margin="10,0"
+							Padding="2"
+							VerticalAlignment="Center"
+							Content="ECL NUMBERS"
+							Foreground="BlueViolet" />
+
+						<StackPanel Grid.Row="6" Orientation="Horizontal">
+							<Label Content="Setup" />
+							<TextBox Width="70" Style="{StaticResource TextField}" />
+							<Label Content="Run" />
+							<TextBox Width="70" Style="{StaticResource TextField}" />
+							<Label Content="Matl" />
+							<TextBox Width="70" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<Line
+							Grid.Row="7"
+							Width="400"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="2"
+							X2="430"
+							Y1="2"
+							Y2="2" />
+
+						<Label
+							Grid.Row="7"
+							Grid.Column="1"
+							Margin="10,0"
+							Padding="2"
+							VerticalAlignment="Center"
+							Content="MISCELLANEOUS OPTIONS"
+							Foreground="BlueViolet" />
+
+						<StackPanel Grid.Row="8" Orientation="Horizontal">
+							<Label Content="Sets" />
+							<TextBox Width="40" Style="{StaticResource TextField}" />
+							<CheckBox Content="Multiple Stream OK" />
+						</StackPanel>
+
+						<CheckBox
+							Grid.Row="9"
+							Margin="110,-10,0,0"
+							Content="Slowdown / part (press)" />
+
+						<StackPanel Grid.Row="10" Orientation="Horizontal">
+							<Label Content="WASTE: Setup" />
+							<TextBox Width="50" Style="{StaticResource TextField}" />
+							<Label Content="Run %" />
+							<TextBox Width="50" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="11" Orientation="Horizontal">
+							<Label Content="M/R Impressions" />
+							<TextBox Width="150" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="12" Orientation="Horizontal">
+							<Label Content="Alert:  " />
+							<TextBox Width="350" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel
+							Grid.Row="7"
+							Grid.RowSpan="5"
+							Height="150"
+							Margin="300,0,0,0">
+							<Label HorizontalAlignment="Center" Content="CARTON" />
+							<Label HorizontalAlignment="Center" Content="Qty/Feature" />
+							<TextBox
+								Width="60"
+								HorizontalAlignment="Center"
+								Style="{StaticResource TextField}" />
+							<Label HorizontalAlignment="Center" Content="Calc Type" />
+							<TextBox
+								Width="60"
+								HorizontalAlignment="Center"
+								Style="{StaticResource TextField}" />
+						</StackPanel>
 
 					</Grid>
 
