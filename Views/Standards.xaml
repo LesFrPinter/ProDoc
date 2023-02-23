@@ -12,28 +12,27 @@
 	mc:Ignorable="d">
 
 	<Window.Resources>
-		<!--<Style TargetType="Label">
-			<Setter Property="Foreground" Value="Green" />
-			<Setter Property="Background" Value="Transparent" />
-			<Setter Property="Padding" Value="3" />
-			<Setter Property="FontSize" Value="14" />
-			<Setter Property="Margin" Value="0,0,10,0" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="HorizontalAlignment" Value="Right" />
-		</Style>-->
-
 		<Style x:Key="TextField" TargetType="TextBox">
 			<Setter Property="Height" Value="24" />
 			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
 			<Setter Property="Margin" Value="10,0,0,0" />
+		</Style>
+		<Style TargetType="Label">
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Padding" Value="2" />
+			<Setter Property="Margin" Value="10,6,10,6" />
 		</Style>
 	</Window.Resources>
 
 	<Grid>
+
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
+
 		<Menu>
 			<MenuItem
 				x:Name="mnuExit"
@@ -63,6 +62,7 @@
 		</Menu>
 
 		<TabControl Grid.Row="1" Margin="10">
+
 			<TabItem Header="Press Standards">
 
 				<Grid Background="LightGray">
@@ -72,8 +72,8 @@
 						<RowDefinition Height="10*" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="149*" />
-						<ColumnDefinition Width="725*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
 					<Grid
@@ -516,8 +516,334 @@
 
 				</Grid>
 			</TabItem>
-			<TabItem Header="Features Standards" />
+
+			<TabItem Header="Feature Standards">
+
+				<Grid Width="900" Background="LightGray">
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="16*" />
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<!--  Why can't I add a second column definition here?  -->
+					</Grid.ColumnDefinitions>
+
+					<StackPanel
+						Grid.Row="0"
+						Grid.Column="0"
+						Orientation="Horizontal">
+						<Label
+							Background="LightSteelBlue"
+							Content="STANDARD"
+							Foreground="WhiteSmoke" />
+						<TextBox
+							x:Name="StandardNum"
+							Width="30"
+							Height="24"
+							Margin="10,0,0,0" />
+						<Label
+							Background="LightSteelBlue"
+							Content="FEATURE"
+							Foreground="WhiteSmoke" />
+						<TextBox
+							x:Name="FeatureNum"
+							Width="75"
+							Height="24" />
+						<Label
+							Background="LightSteelBlue"
+							Content="DESCRIPTION"
+							Foreground="WhiteSmoke" />
+						<TextBox
+							x:Name="Description"
+							Width="300"
+							Height="24"
+							Margin="10,0,0,0" />
+						<Label
+							Margin="15,0,0,0"
+							Background="LightSteelBlue"
+							Content="SORT"
+							Foreground="WhiteSmoke" />
+						<TextBox
+							x:Name="Sort"
+							Width="50"
+							Height="24"
+							Margin="10,0,0,0" />
+					</StackPanel>
+
+					<Grid Grid.Row="1" Grid.Column="0">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+
+						<Label
+							Margin="10,0"
+							Padding="2"
+							Content="PRICING AMOUNTS"
+							Foreground="BlueViolet" />
+
+						<StackPanel
+							Grid.Row="1"
+							Width="400"
+							Margin="30,-6,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+							<Label Content="Flat $" />
+							<TextBox Width="120" Style="{StaticResource TextField}" />
+							<Label Content="Run $" />
+							<TextBox Width="120" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<Line
+							Grid.Row="1"
+							Width="400"
+							Margin="0,0,0,2"
+							VerticalAlignment="Bottom"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="20"
+							X2="380"
+							Y1="12"
+							Y2="12" />
+
+						<StackPanel
+							Grid.Row="2"
+							Width="400"
+							Margin="30,0,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+							<Label Content="Price by" />
+							<Label Content="Inch" />
+							<TextBox Width="60" Style="{StaticResource TextField}" />
+							<Label Content="Sq inch" />
+							<TextBox Width="60" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<StackPanel
+							Grid.Row="3"
+							Width="400"
+							Margin="30,-6,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+							<Label Content="Sell $" />
+							<TextBox Width="120" Style="{StaticResource TextField}" />
+							<Label Content="Cost $" />
+							<TextBox Width="120" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<Line
+							Grid.Row="3"
+							Width="400"
+							Margin="0,0,0,2"
+							VerticalAlignment="Bottom"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="20"
+							X2="380"
+							Y1="12"
+							Y2="12" />
+
+						<StackPanel
+							Grid.Row="4"
+							Width="400"
+							Margin="30,-6,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+							<Label Margin="0,0,66,0" Content="Pric = Cost + M/U %" />
+							<TextBox Width="50" Style="{StaticResource TextField}" />
+							<TextBox Width="120" Style="{StaticResource TextField}" />
+						</StackPanel>
+
+						<Line
+							Grid.Row="4"
+							Width="400"
+							Margin="0,0,0,2"
+							VerticalAlignment="Bottom"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="20"
+							X2="380"
+							Y1="12"
+							Y2="12" />
+
+						<StackPanel Grid.Row="5" Orientation="Horizontal">
+							<Label
+								Margin="10,0"
+								Padding="2"
+								Content="COSTS"
+								Foreground="BlueViolet" />
+							<Label
+								Width="40"
+								Margin="60,0"
+								Padding="2"
+								Content="TIME" />
+							<Label
+								Width="60"
+								Margin="0,0"
+								Padding="2"
+								Content="MATERIAL" />
+							<Label
+								Width="80"
+								Margin="40,0"
+								Padding="2"
+								Content="SLOWDOWN" />
+						</StackPanel>
+
+						<Grid Grid.Row="6" Grid.RowSpan="6">
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="2*" />
+								<ColumnDefinition Width="2*" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+							<Label Grid.Row="0" Content="Prep" />
+							<TextBox
+								Grid.Row="0"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="0"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}" />
+
+							<Label Grid.Row="1" Content="Press" />
+							<TextBox
+								Grid.Row="1"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="1"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="1"
+								Grid.Column="3"
+								Width="80"
+								Style="{StaticResource TextField}" />
+
+							<Label Grid.Row="2" Content="Color" />
+							<TextBox
+								Grid.Row="2"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="2"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="2"
+								Grid.Column="3"
+								Width="80"
+								Style="{StaticResource TextField}" />
+
+							<Label Grid.Row="3" Content="Bind" />
+							<TextBox
+								Grid.Row="3"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}" />
+
+							<TextBox
+								Grid.Row="4"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="4"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}" />
+
+							<Label
+								Grid.Row="5"
+								Grid.ColumnSpan="2"
+								Margin="40,0,0,0"
+								Content="One Time Cost" />
+							<TextBox
+								Grid.Row="5"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}" />
+							<TextBox
+								Grid.Row="5"
+								Grid.Column="3"
+								Width="40"
+								Style="{StaticResource TextField}" />
+
+						</Grid>
+
+					</Grid>
+
+					<Grid Grid.Row="1" Grid.Column="1">
+
+						<Line
+							Grid.Row="1"
+							Grid.Column="1"
+							Margin="0,0,0,2"
+							VerticalAlignment="Top"
+							Stroke="Blue"
+							StrokeThickness="2"
+							X1="420"
+							X2="420"
+							Y1="10"
+							Y2="380" />
+
+						<Label
+							Grid.Row="1"
+							Grid.Column="1"
+							Margin="10,0"
+							Padding="2"
+							VerticalAlignment="Top"
+							Content="PRICING OPTIONS"
+							Foreground="BlueViolet" />
+
+					</Grid>
+
+				</Grid>
+
+			</TabItem>
+
 			<TabItem Header="Collator Standards" />
+
 		</TabControl>
 
 	</Grid>
