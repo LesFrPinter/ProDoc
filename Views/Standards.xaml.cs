@@ -12,12 +12,8 @@ namespace ProDocEstimate.Views
 		private bool? notediting; public bool? NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
 
 		private string? pressStandardNum;   public string? PressStandardNum   { get { return pressStandardNum;   } set { pressStandardNum   = value; OnPropertyChanged(); } }
-		private string? featureStandardNum; public string? FeatureStandardNum { get { return featureStandardNum; } set { featureStandardNum = value; OnPropertyChanged(); } }
-		private string? featureNum;					public string? FeatureNum					{ get { return featureNum;				 } set { featureNum					= value; OnPropertyChanged(); } }
 		private string? pressDescription;   public string? PressDescription   { get { return pressDescription;   } set { pressDescription   = value; OnPropertyChanged(); } }
-		private string? featureDescription; public string? FeatureDescription { get { return featureDescription; } set { featureDescription = value; OnPropertyChanged(); } }
 		private string? pressNum;						public string? PressNum						{ get { return pressNum;					 } set { pressNum						= value; OnPropertyChanged(); } }
-		private string? sort;								public string? Sort								{ get { return sort;							 } set { sort								= value; OnPropertyChanged(); } }
 
 		private string? web;        public string? Web { get { return web; } set { web = value; OnPropertyChanged(); } }
 		private string? webFrac;    public string? WebFrac { get { return webFrac; } set { webFrac = value; OnPropertyChanged(); } }
@@ -55,6 +51,25 @@ namespace ProDocEstimate.Views
 		private string? materialCost; public string? MaterialCost { get { return materialCost; } set { materialCost = value; OnPropertyChanged(); } }
 
 		// Feature Standards properties
+
+		//	private string? web; public string? Web { get { return web; } set { web = value; OnPropertyChanged(); } }
+		//	private string? web; public string? Web { get { return web; } set { web = value; OnPropertyChanged(); } }
+
+		private string? featureStandardNum; public string? FeatureStandardNum { get { return featureStandardNum; } set { featureStandardNum = value; OnPropertyChanged(); } }
+		private string? featureNum; public string? FeatureNum { get { return featureNum; } set { featureNum = value; OnPropertyChanged(); } }
+		private string? featureDescription; public string? FeatureDescription { get { return featureDescription; } set { featureDescription = value; OnPropertyChanged(); } }
+		private string? sort; public string? Sort { get { return sort; } set { sort = value; OnPropertyChanged(); } }
+		private string? flatPricing; public string? FlatPricing { get { return flatPricing; } set { flatPricing = value; OnPropertyChanged(); } }
+		private string? runPricing; public string? RunPricing { get { return runPricing; } set { runPricing = value; OnPropertyChanged(); } }
+		private string? priceByInch; public string? PriceByInch { get { return priceByInch; } set { priceByInch = value; } }
+		private string? priceBySqInch; public string? PriceBySqInch { get { return priceBySqInch; } set { priceBySqInch = value; } }
+		private string? sellDollars; public string? SellDollars { get { return sellDollars; } set { sellDollars = value; OnPropertyChanged(); } }
+		private string? costDollars; public string? CostDollars { get { return costDollars; } set { costDollars = value; OnPropertyChanged(); } }
+		private string? costMU1; public string? CostMU1 { get { return costMU1; } set { costMU1 = value; OnPropertyChanged(); } }
+		private string? costMU2; public string? CostMU2 { get { return costMU2; } set { costMU2 = value; OnPropertyChanged(); } }
+		private string? pressTime; public string? PressTime { get { return pressTime; } set { pressTime = value; OnPropertyChanged(); } }
+		private string? pressMaterial; public string? PressMaterial { get { return pressMaterial; } set { pressTime = value; OnPropertyChanged(); } }
+		private string? pressSlowdown; public string? PressSlowdown { get { return pressSlowdown; } set { pressSlowdown = value; OnPropertyChanged(); } }
 
 
 		public Standards()

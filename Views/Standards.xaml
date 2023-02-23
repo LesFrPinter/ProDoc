@@ -703,9 +703,15 @@
 							Margin="30,-6,0,0"
 							HorizontalAlignment="Left"
 							Orientation="Horizontal">
-							<Label Margin="0,0,66,0" Content="Pric = Cost + M/U %" />
-							<TextBox Width="50" Style="{StaticResource TextField}" />
-							<TextBox Width="120" Style="{StaticResource TextField}" />
+							<Label Margin="0,0,66,0" Content="Price = Cost + M/U %" />
+							<TextBox
+							 x:Name="txtCostMU1"
+							 Text="{Binding Path=CostMU1}"
+							 Width="50" Style="{StaticResource TextField}" />
+							<TextBox 
+							 x:Name="txtCostMU2"
+							 Text="{Binding Path=CostMU2}"
+							 Width="120" Style="{StaticResource TextField}" />
 						</StackPanel>
 
 						<Line
