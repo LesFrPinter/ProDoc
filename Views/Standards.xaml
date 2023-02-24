@@ -92,14 +92,14 @@
 							Foreground="LightGray" />
 						<TextBox
 							x:Name="txtStandardNum1"
-							Text="{Binding Path=PressStandardNum}"
 							Width="25"
 							Height="24"
 							Margin="110,2,0,2"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							VerticalContentAlignment="Center"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=PressStandardNum}" />
 
 						<Label
 							Height="24"
@@ -112,14 +112,14 @@
 
 						<TextBox
 							x:Name="txtPressNum1"
-							Text="{Binding Path=PressNum}"
 							Width="25"
 							Height="24"
 							Margin="220,2,0,2"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							VerticalContentAlignment="Center"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=PressNum}" />
 
 						<Label
 							Height="26"
@@ -131,14 +131,14 @@
 							Foreground="LightGray" />
 						<TextBox
 							x:Name="txtPressDescription"
-							Text="{Binding Path=PressDescription}"
 							Width="320"
 							Height="24"
 							Margin="350,2,0,2"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Left"
 							VerticalContentAlignment="Center"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=PressDescription}" />
 
 					</Grid>
 
@@ -180,12 +180,12 @@
 							Grid.Column="0"
 							Content="Web" />
 						<TextBox
-							Text="{Binding Path=Web}"
 							x:Name="txtWeb"
 							Grid.Row="0"
 							Grid.Column="1"
 							Width="30"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=Web}" />
 						<Label
 							Grid.Row="0"
 							Grid.Column="2"
@@ -193,12 +193,12 @@
 
 						<TextBox
 							x:Name="txtCostPerHr"
-							Text="{Binding Path=CostPerHr}"
 							Grid.Row="0"
 							Grid.Column="3"
 							Width="90"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=CostPerHr}" />
 
 						<Label
 							Grid.Row="0"
@@ -211,26 +211,26 @@
 							FontSize="14"
 							Foreground="LightGray" />
 						<TextBox
-							Text="{Binding Path=BaseSpeed}"
 							x:Name="txtBaseSpeed"
 							Grid.Row="0"
 							Grid.Column="7"
 							Width="80"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=BaseSpeed}" />
 
 						<Label
 							Grid.Row="1"
 							Grid.Column="0"
 							Content="Web-frac" />
 						<TextBox
-							Text="{Binding Path=WebFrac}"
 							x:Name="txtWebFrac"
 							Grid.Row="1"
 							Grid.Column="1"
 							Width="90"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=WebFrac}" />
 						<Label
 							Grid.Row="1"
 							Grid.Column="2"
@@ -238,64 +238,64 @@
 
 						<TextBox
 							x:Name="txtSellPerHr"
-							Text="{Binding Path=SellPerHr}"
 							Grid.Row="1"
 							Grid.Column="3"
 							Width="90"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=SellPerHr}" />
 
 						<Label
 							Grid.Row="2"
 							Grid.Column="0"
 							Content="Width" />
 						<TextBox
-							Text="{Binding Path=PaperWidth}"
 							x:Name="txtPaperWidth"
 							Grid.Row="2"
 							Grid.Column="1"
 							Width="90"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=PaperWidth}" />
 
 						<Label
 							Grid.Row="3"
 							Grid.Column="0"
 							Content="Towers" />
 						<TextBox
-							Text="{Binding Path=Towers}"
 							x:Name="txtTowers"
 							Grid.Row="3"
 							Grid.Column="1"
 							Width="30"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=Towers}" />
 
 						<Label
 							Grid.Row="4"
 							Grid.Column="0"
 							Content="Variable" />
 						<TextBox
-							Grid.Row="4"
 							x:Name="txtVariable"
-							Text="{Binding Path=Variable}"
+							Grid.Row="4"
 							Grid.Column="1"
 							Width="30"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=Variable}" />
 
 						<Label
 							Grid.Row="5"
 							Grid.Column="0"
 							Content="Restrict to" />
 						<TextBox
-							Text="{Binding Path=RestrictTo}"
 							x:Name="txtRestrictTo"
 							Grid.Row="5"
 							Grid.Column="1"
 							Width="30"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=RestrictTo}" />
 
 						<Label
 							Grid.Row="6"
@@ -305,7 +305,6 @@
 							HorizontalAlignment="Left"
 							Content="Folder/Sheeter Slowdown" />
 						<TextBox
-						  Text="{Binding Path=Slowdown}"
 							x:Name="txtSlowdown"
 							Grid.Row="6"
 							Grid.Column="1"
@@ -313,7 +312,8 @@
 							Width="60"
 							Margin="140,0,0,0"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=Slowdown}" />
 
 						<Label
 							Grid.Row="10"
@@ -387,73 +387,73 @@
 							FontWeight="DemiBold" />
 
 						<TextBox
-							Text="{Binding Path=ThouPerFt1}"
 							Grid.Row="4"
 							Grid.Column="4"
 							Width="90"
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=ThouPerFt1}" />
 						<TextBox
-							Text="{Binding Path=FtPerMin1}"
 							Grid.Row="4"
 							Grid.Column="5"
 							Width="90"
 							Margin="10,0,0,0"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=FtPerMin1}" />
 
 						<TextBox
-							Text="{Binding Path=ThouPerFt2}"
 							Grid.Row="5"
 							Grid.Column="4"
 							Width="90"
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=ThouPerFt2}" />
 						<TextBox
-							Text="{Binding Path=FtPerMin2}"
 							Grid.Row="5"
 							Grid.Column="5"
 							Width="90"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=FtPerMin2}" />
 
 						<TextBox
-							Text="{Binding Path=ThouPerFt2}"
 							Grid.Row="6"
 							Grid.Column="4"
 							Width="90"
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=ThouPerFt2}" />
 						<TextBox
-							Text="{Binding Path=FtPerMin3}"
 							Grid.Row="6"
 							Grid.Column="5"
 							Width="90"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=FtPerMin3}" />
 
 						<TextBox
-							Text="{Binding Path=ThouPerFt4}"
 							Grid.Row="7"
 							Grid.Column="4"
 							Width="90"
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=ThouPerFt4}" />
 						<TextBox
-							Text="{Binding Path=FtPerMin4}"
 							Grid.Row="7"
 							Grid.Column="5"
 							Width="90"
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding Path=FtPerMin4}" />
 
 						<TextBox
 							Grid.Row="8"
@@ -479,7 +479,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt6}"/>
+							Text="{Binding Path=ThouPerFt6}" />
 						<TextBox
 							Grid.Row="9"
 							Grid.Column="5"
@@ -554,38 +554,38 @@
 							Foreground="WhiteSmoke" />
 						<TextBox
 							x:Name="txtFeatureStandardNum"
-							Text="{Binding Path=FeatureStandardNum}"
 							Width="30"
 							Height="24"
-							Margin="10,0,0,0" />
+							Margin="10,0,0,0"
+							Text="{Binding Path=FeatureStandardNum}" />
 						<Label
 							Background="LightSteelBlue"
 							Content="FEATURE"
 							Foreground="WhiteSmoke" />
 						<TextBox
-							Text="{Binding Path=FeatureNum}"
 							x:Name="txtFeatureNum"
 							Width="125"
-							Height="24" />
+							Height="24"
+							Text="{Binding Path=FeatureNum}" />
 						<Label
 							Background="LightSteelBlue"
 							Content="DESCRIPTION"
 							Foreground="WhiteSmoke" />
 						<TextBox
 							x:Name="txtFeatureDescription"
-							Text="{Binding Path=FeatureDescription}"
 							Width="320"
 							Height="24"
-							Margin="10,0,0,0" />
+							Margin="10,0,0,0"
+							Text="{Binding Path=FeatureDescription}" />
 						<Label
 							Background="LightSteelBlue"
 							Content="SORT"
 							Foreground="WhiteSmoke" />
 						<TextBox
-							Text="{Binding Path=Sort}"
 							x:Name="txtSort"
 							Width="50"
-							Height="24" />
+							Height="24"
+							Text="{Binding Path=Sort}" />
 					</StackPanel>
 
 					<Grid Grid.Row="1" Grid.Column="0">
@@ -625,15 +625,17 @@
 							HorizontalAlignment="Left"
 							Orientation="Horizontal">
 							<Label Content="Flat $" />
-							<TextBox Width="120" 
-							 x:Name="txtFlatPricing"
-							 Text="{Binding Path=FlatPricing}"
-							 Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtFlatPricing"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=FlatPricing}" />
 							<Label Content="Run $" />
-							<TextBox Width="120" 
-							 x:Name="txtRunPricing"
-							 Text="{Binding Path=RunPricing}"
-							 Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtRunPricing"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=RunPricing}" />
 						</StackPanel>
 
 						<Line
@@ -656,15 +658,17 @@
 							Orientation="Horizontal">
 							<Label Content="Price by" />
 							<Label Content="Inch" />
-							<TextBox Width="60" 
-							 x:Name="txtPriceByInch"
-							 Text="{Binding Path=PriceByInch}"
-							 Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtPriceByInch"
+								Width="60"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PriceByInch}" />
 							<Label Content="Sq inch" />
-							<TextBox Width="60"
-							 x:Name="txtPriceBySqInch"
-							 Text="{Binding Path=PriceBySqInch}"
-							 Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtPriceBySqInch"
+								Width="60"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PriceBySqInch}" />
 						</StackPanel>
 
 						<StackPanel
@@ -674,15 +678,17 @@
 							HorizontalAlignment="Left"
 							Orientation="Horizontal">
 							<Label Content="Sell $" />
-							<TextBox 
-							 x:Name="txtSellDollars"
-							 Text="{Binding Path=SellDollars}"
-							 Width="120" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtSellDollars"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=SellDollars}" />
 							<Label Content="Cost $" />
-							<TextBox 
-							 x:Name="txtCostDollars"
-							 Text="{Binding Path=CostDollars}"
-							 Width="120" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtCostDollars"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CostDollars}" />
 						</StackPanel>
 
 						<Line
@@ -705,13 +711,15 @@
 							Orientation="Horizontal">
 							<Label Margin="0,0,66,0" Content="Price = Cost + M/U %" />
 							<TextBox
-							 x:Name="txtCostMU1"
-							 Text="{Binding Path=CostMU1}"
-							 Width="50" Style="{StaticResource TextField}" />
-							<TextBox 
-							 x:Name="txtCostMU2"
-							 Text="{Binding Path=CostMU2}"
-							 Width="120" Style="{StaticResource TextField}" />
+								x:Name="txtCostMU1"
+								Width="50"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CostMU1}" />
+							<TextBox
+								x:Name="txtCostMU2"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CostMU2}" />
 						</StackPanel>
 
 						<Line
@@ -749,9 +757,8 @@
 								Content="SLOWDOWN" />
 						</StackPanel>
 
-						<Grid Grid.Row="6"
-						 Grid.RowSpan="6">
-							
+						<Grid Grid.Row="6" Grid.RowSpan="6">
+
 							<Grid.RowDefinitions>
 								<RowDefinition />
 								<RowDefinition />
@@ -770,88 +777,88 @@
 
 							<TextBox
 								x:Name="txtPrepTime"
-								Text="{Binding Path=PrepTime}"
 								Grid.Row="0"
 								Grid.Column="1"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PrepTime}" />
 							<TextBox
 								x:Name="txtPrepMaterial"
-								Text="{Binding Path=PrepMaterial}"
 								Grid.Row="0"
 								Grid.Column="2"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PrepMaterial}" />
 
 							<Label Grid.Row="1" Content="Press" />
 							<TextBox
 								x:Name="txtPressTime"
-								Text="{Binding Path=PressTime}"
 								Grid.Row="1"
 								Grid.Column="1"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PressTime}" />
 							<TextBox
 								x:Name="txtPressMaterial"
-								Text="{Binding Path=PressMaterial}"
 								Grid.Row="1"
 								Grid.Column="2"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PressMaterial}" />
 							<TextBox
 								x:Name="txtPressSlowdown"
-								Text="{Binding Path=PressSlowdown}"
 								Grid.Row="1"
 								Grid.Column="3"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PressSlowdown}" />
 
 							<Label Grid.Row="2" Content="Color" />
 							<TextBox
 								x:Name="txtColorTime"
-								Text="{Binding Path=ColorTime}"
 								Grid.Row="2"
 								Grid.Column="1"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ColorTime}" />
 							<TextBox
 								x:Name="txtColorMaterial"
-								Text="{Binding Path=ColorMaterial}"
 								Grid.Row="2"
 								Grid.Column="2"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ColorMaterial}" />
 							<TextBox
 								x:Name="txtColorSlowdown"
-								Text="{Binding Path=ColorSlowdown}"
 								Grid.Row="2"
 								Grid.Column="3"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ColorSlowdown}" />
 
 							<Label Grid.Row="3" Content="Bind" />
 							<TextBox
 								x:Name="txtBindCost"
-								Text="{Binding Path=BindCost}"
 								Grid.Row="3"
 								Grid.Column="1"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=BindCost}" />
 
 							<TextBox
 								x:Name="txtOtherTime"
-								Text="{Binding Path=OtherTime}"
 								Grid.Row="4"
 								Grid.Column="1"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OtherTime}" />
 							<TextBox
 								x:Name="txtOtherMaterial"
-								Text="{Binding Path=OtherMaterial}"
 								Grid.Row="4"
 								Grid.Column="2"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OtherMaterial}" />
 
 							<Label
 								Grid.Row="5"
@@ -860,18 +867,18 @@
 								Content="One Time Cost" />
 							<TextBox
 								x:Name="txtOneTimeMaterial"
-								Text="{Binding Path=OneTimeMaterial}"
 								Grid.Row="5"
 								Grid.Column="2"
 								Width="80"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OneTimeMaterial}" />
 							<TextBox
 								x:Name="txtWhatsThis"
-								Text="{Binding Path=WhatsThis}"
 								Grid.Row="5"
 								Grid.Column="3"
 								Width="40"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=WhatsThis}" />
 
 						</Grid>
 
@@ -922,63 +929,68 @@
 							Content="PRICING OPTIONS"
 							Foreground="BlueViolet" />
 
-						<StackPanel Grid.Row="1"
-						 Orientation="Horizontal">
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
 							<Label Content="# Around" />
-							<TextBox 
-							 x:Name="txtOptNumAround"
-							 Text="{Binding Path=OptNumAround}"
-							 Width="40" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtOptNumAround"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptNumAround}" />
 							<Label Content="Part" />
-							<TextBox 
-							 x:Name="txtOptPart"
-							 Text="{Binding Path=OptPart}"
-							 Width="40" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtOptPart"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptPart}" />
 							<Label Content="Stream" />
 							<TextBox
-							 x:Name="txtOptStream"
-							 Text="{Binding Path=OptStream}"
-							 Width="40" Style="{StaticResource TextField}" />
+								x:Name="txtOptStream"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptStream}" />
 						</StackPanel>
 
-						<StackPanel Grid.Row="2"
-						 Orientation="Horizontal">
+						<StackPanel Grid.Row="2" Orientation="Horizontal">
 							<Label Content="Ask: # Flat" />
-							<TextBox 
-							 x:Name="txtAskNumFlat"
-							 Text="{Binding Path=AskNumFlat}"
-							 Width="40" Style="{StaticResource TextField}" />
-							<TextBox 
-							 x:Name="txtAskNumFlatDesc"
-							 Text="{Binding Path=AskNumFlatDesc}"
-							 Width="240" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtAskNumFlat"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=AskNumFlat}" />
+							<TextBox
+								x:Name="txtAskNumFlatDesc"
+								Width="240"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=AskNumFlatDesc}" />
 						</StackPanel>
 
-						<StackPanel Grid.Row="3"
-						 Orientation="Horizontal">
+						<StackPanel Grid.Row="3" Orientation="Horizontal">
 							<Label Content="       # Run" />
-							<TextBox 
-							 x:Name="txtAskNumRun"
-							 Text="{Binding Path=AskNumRun}"
-							 Width="40" Style="{StaticResource TextField}" />
-							<TextBox 
-							 x:Name="txtNumAskRunDesc"
-							 Text="{Binding Path=AskNumRunDesc}"
-							 Width="240" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtAskNumRun"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=AskNumRun}" />
+							<TextBox
+								x:Name="txtNumAskRunDesc"
+								Width="240"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=AskNumRunDesc}" />
 						</StackPanel>
 
-						<StackPanel
-						 Grid.Row="4" Orientation="Horizontal">
+						<StackPanel Grid.Row="4" Orientation="Horizontal">
 							<Label Content="    Percent" />
-							<TextBox 
-							 x:Name="txtOptPercent"
-							 Text="{Binding Path=OptPercent}"
-							 Width="40" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtOptPercent"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptPercent}" />
 							<Label Content="Type" />
-							<TextBox 
-							 x:Name="txtOptType"
-							 Text="{Binding Path=OptType}"
-							 Width="40" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtOptType"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptType}" />
 						</StackPanel>
 
 						<Line
@@ -1002,23 +1014,25 @@
 							Content="ECL NUMBERS"
 							Foreground="BlueViolet" />
 
-						<StackPanel
-						 Grid.Row="6" Orientation="Horizontal">
+						<StackPanel Grid.Row="6" Orientation="Horizontal">
 							<Label Content="Setup" />
-							<TextBox 
-							 x:Name="txtECLSetup"
-							 Text="{Binding Path=ECLSetup}"
-							 Width="70" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtECLSetup"
+								Width="70"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ECLSetup}" />
 							<Label Content="Run" />
-							<TextBox 
-							 x:Name="txtECLRun"
-							 Text="{Binding Path=ECLRun}"
-							Width="70" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtECLRun"
+								Width="70"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ECLRun}" />
 							<Label Content="Matl" />
-							<TextBox 
-							 x:Name="txtECLMaterial"
-							 Text="{Binding Path=ECLMaterial}"
-							Width="70" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtECLMaterial"
+								Width="70"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ECLMaterial}" />
 						</StackPanel>
 
 						<Line
@@ -1042,54 +1056,57 @@
 							Content="MISCELLANEOUS OPTIONS"
 							Foreground="BlueViolet" />
 
-						<StackPanel
-						 Grid.Row="8" Orientation="Horizontal">
+						<StackPanel Grid.Row="8" Orientation="Horizontal">
 							<Label Content="Sets" />
-							<TextBox 
-							 x:Name="txtSets"
-							 Text="{Binding Path=Sets}"
-							 Width="40" Style="{StaticResource TextField}" />
-							<CheckBox 
-							 x:Name="chkMultStreamOK"
-							 IsChecked="{Binding Path=MultStreamOK}"
-							 Content="Multiple Stream OK" />
+							<TextBox
+								x:Name="vtxtSets"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=Sets}" />
+							<CheckBox
+								x:Name="chkMultStreamOK"
+								Content="Multiple Stream OK"
+								IsChecked="{Binding Path=MultStreamOK}" />
 						</StackPanel>
 
 						<CheckBox
 							x:Name="chkOptSlowdown"
-							IsChecked="{Binding Path=OptSlowdown}"
 							Grid.Row="9"
 							Margin="105,-10,0,0"
-							Content="Slowdown / part (press)" />
+							Content="Slowdown / part (press)"
+							IsChecked="{Binding Path=OptSlowdown}" />
 
-						<StackPanel
-						 Grid.Row="10" Orientation="Horizontal">
+						<StackPanel Grid.Row="10" Orientation="Horizontal">
 							<Label Content="WASTE: Setup" />
-							<TextBox 
-							 x:Name="txtWasteSetup"
-							 Text="{Binding Path=WasteSetup}"
-							 Width="50" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtWasteSetup"
+								Width="50"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=v}" />
 							<Label Content="Run %" />
-							<TextBox 
-							 x:Name="txtWasteRunPct"
-							 Text="{Binding Path=WasteRunPct}"
-							 Width="50" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtWasteRunPct"
+								Width="50"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=WasteRunPct}" />
 						</StackPanel>
 
 						<StackPanel Grid.Row="11" Orientation="Horizontal">
 							<Label Content="M/R Impressions" />
-							<TextBox 
-							 x:Name="txtMRImpressions"
-							 Text="{Binding Path=MRImpressions}"
-							 Width="150" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtMRImpressions"
+								Width="150"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=MRImpressions}" />
 						</StackPanel>
 
 						<StackPanel Grid.Row="12" Orientation="Horizontal">
 							<Label Content="Alert:  " />
-							<TextBox 
-							 x:Name="txtAlert"
-							 Text="{Binding Path=Alert}"
-							 Width="350" Style="{StaticResource TextField}" />
+							<TextBox
+								x:Name="txtAlert"
+								Width="350"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=Alert}" />
 						</StackPanel>
 
 						<StackPanel
@@ -1100,18 +1117,18 @@
 							<Label HorizontalAlignment="Center" Content="CARTON" />
 							<Label HorizontalAlignment="Center" Content="Qty/Feature" />
 							<TextBox
-							  x:Name="txtCartonQty"
-								Text="{Binding Path=CartonQty}"
+								x:Name="txtCartonQty"
 								Width="60"
 								HorizontalAlignment="Center"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CartonQty}" />
 							<Label HorizontalAlignment="Center" Content="Calc Type" />
 							<TextBox
-							  x:Name="txtCalcType"
-								Text="{Binding Path=CalcType}"
+								x:Name="txtCalcType"
 								Width="60"
 								HorizontalAlignment="Center"
-								Style="{StaticResource TextField}" />
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CalcType}" />
 						</StackPanel>
 
 					</Grid>
@@ -1120,7 +1137,572 @@
 
 			</TabItem>
 
-			<TabItem Header="Collator Standards" />
+			<TabItem Header="Collator Standards">
+
+				<Grid Background="LightGray">
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="30" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="60" />
+					</Grid.RowDefinitions>
+
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Label
+							Width="200"
+							VerticalContentAlignment="Center"
+							Background="LightSteelBlue"
+							Content="STANDARD #"
+							Foreground="AliceBlue" />
+						<TextBox
+							Width="50"
+							Height="22"
+							Style="{StaticResource TextField}" />
+						<Label
+							Width="200"
+							VerticalContentAlignment="Center"
+							Background="LightSteelBlue"
+							Content="COLLATOR #"
+							Foreground="AliceBlue" />
+						<TextBox
+							Width="50"
+							Height="22"
+							Style="{StaticResource TextField}" />
+						<Label
+							Width="80"
+							VerticalContentAlignment="Center"
+							Background="LightSteelBlue"
+							Content="DESCRIPTION"
+							Foreground="AliceBlue" />
+						<TextBox
+							Width="190"
+							Height="22"
+							Style="{StaticResource TextField}" />
+					</StackPanel>
+
+					<Grid Grid.Row="1">
+
+						<Grid>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<Grid Grid.Column="0">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="2*" />
+									<ColumnDefinition Width="2*" />
+								</Grid.ColumnDefinitions>
+
+								<Label
+									Grid.ColumnSpan="4"
+									Background="LightSteelBlue"
+									Content="#Parts               Continuous        Snap-out         "
+									FontSize="20"
+									Foreground="AliceBlue" />
+								<Label
+									Grid.Row="1"
+									HorizontalAlignment="Right"
+									Content="1"
+									FontSize="18" />
+								<Label
+									Grid.Row="2"
+									HorizontalAlignment="Right"
+									Content="2"
+									FontSize="18" />
+								<Label
+									Grid.Row="3"
+									HorizontalAlignment="Right"
+									Content="3"
+									FontSize="18" />
+								<Label
+									Grid.Row="4"
+									HorizontalAlignment="Right"
+									Content="4"
+									FontSize="18" />
+								<Label
+									Grid.Row="5"
+									HorizontalAlignment="Right"
+									Content="5"
+									FontSize="18" />
+								<Label
+									Grid.Row="6"
+									HorizontalAlignment="Right"
+									Content="6"
+									FontSize="18" />
+								<Label
+									Grid.Row="7"
+									HorizontalAlignment="Right"
+									Content="7"
+									FontSize="18" />
+								<Label
+									Grid.Row="8"
+									HorizontalAlignment="Right"
+									Content="8"
+									FontSize="18" />
+								<Label
+									Grid.Row="9"
+									HorizontalAlignment="Right"
+									Content="9"
+									FontSize="18" />
+								<Label
+									Grid.Row="10"
+									HorizontalAlignment="Right"
+									Content="10"
+									FontSize="18" />
+
+								<TextBox
+									Grid.Row="1"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="2"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="3"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="4"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="5"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="6"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="7"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="8"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="9"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="10"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+								<TextBox
+									Grid.Row="1"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="2"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="3"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="4"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="5"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="6"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="7"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="8"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="9"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="10"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+							</Grid>
+							<Grid Grid.Column="1">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="*" />
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="2*" />
+									<ColumnDefinition Width="2*" />
+								</Grid.ColumnDefinitions>
+
+								<Label
+									Grid.ColumnSpan="4"
+									Background="LightSteelBlue"
+									Content="#Parts               Continuous        Snap-out         "
+									FontSize="20"
+									Foreground="AliceBlue" />
+								<Label
+									Grid.Row="1"
+									HorizontalAlignment="Right"
+									Content="1"
+									FontSize="18" />
+								<Label
+									Grid.Row="2"
+									HorizontalAlignment="Right"
+									Content="2"
+									FontSize="18" />
+								<Label
+									Grid.Row="3"
+									HorizontalAlignment="Right"
+									Content="3"
+									FontSize="18" />
+								<Label
+									Grid.Row="4"
+									HorizontalAlignment="Right"
+									Content="4"
+									FontSize="18" />
+								<Label
+									Grid.Row="5"
+									HorizontalAlignment="Right"
+									Content="5"
+									FontSize="18" />
+								<Label
+									Grid.Row="6"
+									HorizontalAlignment="Right"
+									Content="6"
+									FontSize="18" />
+								<Label
+									Grid.Row="7"
+									HorizontalAlignment="Right"
+									Content="7"
+									FontSize="18" />
+								<Label
+									Grid.Row="8"
+									HorizontalAlignment="Right"
+									Content="8"
+									FontSize="18" />
+								<Label
+									Grid.Row="9"
+									HorizontalAlignment="Right"
+									Content="9"
+									FontSize="18" />
+								<Label
+									Grid.Row="10"
+									HorizontalAlignment="Right"
+									Content="10"
+									FontSize="18" />
+
+								<TextBox
+									Grid.Row="1"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="2"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="3"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="4"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="5"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="6"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="7"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="8"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="9"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="10"
+									Grid.Column="1"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+								<TextBox
+									Grid.Row="1"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="2"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="3"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="4"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="5"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="6"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="7"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="8"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="9"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+								<TextBox
+									Grid.Row="10"
+									Grid.Column="2"
+									Width="120"
+									Height="30"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+							</Grid>
+
+						</Grid>
+
+					</Grid>
+
+					<StackPanel Grid.Row="2" Orientation="Horizontal">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<StackPanel Grid.Row="0" Orientation="Horizontal">
+								<Label
+									Width="120"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center"
+									Content="COST $/hr" />
+								<TextBox
+									Width="120"
+									Height="22"
+									Style="{StaticResource TextField}" />
+								<Label
+									Width="120"
+									Margin="300,0,0,0"
+									HorizontalContentAlignment="Center"
+									VerticalContentAlignment="Center"
+									Background="LightSteelBlue"
+									Content="   -ECL --" />
+							</StackPanel>
+							<StackPanel Grid.Row="1" Orientation="Horizontal">
+								<Label
+									Width="120"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center"
+									Content="SELL $/hr" />
+								<TextBox
+									Width="120"
+									Height="22"
+									Style="{StaticResource TextField}" />
+								<StackPanel Grid.Row="0" Orientation="Horizontal">
+									<Label
+										Margin="100,0,0,0"
+										HorizontalContentAlignment="Right"
+										VerticalContentAlignment="Center"
+										Content="Setup" />
+									<TextBox
+										Width="100"
+										Height="22"
+										Style="{StaticResource TextField}" />
+									<Label
+										HorizontalContentAlignment="Right"
+										VerticalContentAlignment="Center"
+										Content="Run" />
+									<TextBox
+										Width="100"
+										Height="22"
+										Style="{StaticResource TextField}" />
+									<Label
+										HorizontalContentAlignment="Right"
+										VerticalContentAlignment="Center"
+										Content="Material" />
+									<TextBox
+										Width="100"
+										Height="22"
+										Style="{StaticResource TextField}" />
+								</StackPanel>
+
+							</StackPanel>
+						</Grid>
+					</StackPanel>
+
+				</Grid>
+
+			</TabItem>
 
 		</TabControl>
 
