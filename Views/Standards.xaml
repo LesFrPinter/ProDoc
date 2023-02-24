@@ -1202,6 +1202,7 @@
 									<RowDefinition Height="*" />
 									<RowDefinition Height="*" />
 									<RowDefinition Height="*" />
+									<RowDefinition Height="3*" />
 								</Grid.RowDefinitions>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="*" />
@@ -1422,6 +1423,7 @@
 									<RowDefinition Height="*" />
 									<RowDefinition Height="*" />
 									<RowDefinition Height="*" />
+									<RowDefinition Height="3*" />
 								</Grid.RowDefinitions>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="*" />
