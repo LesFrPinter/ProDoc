@@ -33,13 +33,10 @@
 			</MenuItem>
 			<MenuItem Header="_Demos">
 				<MenuItem x:Name="mnuQuotations" Header="_Quotations (from whiteboard)" Height="40" Click="mnuQuotations_Click" />
-				<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
-				<MenuItem x:Name="mnuPV01" Header="PV01" Height="40" Click="mnuPV01_Click" />
-				<MenuItem x:Name="mnuPV02" Header="PV02" Height="40" Click="mnuPV02_Click" />
-				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
 				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
-				<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />
-				<MenuItem x:Name="mnuTest" Header="Test" Height="40" Click="mnuTest_Click" />
+				<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
+				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
+				<!--<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />-->
 			</MenuItem>
 			<MenuItem Header="_Current system" Height="40" >
 				<MenuItem x:Name="mnuEdit"  Header="_Edit an existing estimate" Click="mnuEdit_Click" />

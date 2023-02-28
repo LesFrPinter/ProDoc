@@ -16,14 +16,15 @@ namespace ProDocEstimate
 
 		private string?  customerName; public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
 		private string?  activePage;   public string? ActivePage   { get { return activePage;   } set { activePage   = value; OnPropertyChanged(); } }
-		private decimal? qty1;         public decimal? Qty1        { get { return qty1;         } set { qty1     = value; OnPropertyChanged(); } }
-		private decimal? qty2;         public decimal? Qty2        { get { return qty2;         } set { qty2     = value; OnPropertyChanged(); } }
-		private decimal? qty3;         public decimal? Qty3        { get { return qty3;         } set { qty3     = value; OnPropertyChanged(); } }
-		private decimal? qty4;         public decimal? Qty4        { get { return qty4;         } set { qty4     = value; OnPropertyChanged(); } }
-		private decimal? qty5;         public decimal? Qty5        { get { return qty5;         } set { qty5     = value; OnPropertyChanged(); } }
-		private decimal? qty6;         public decimal? Qty6        { get { return qty6;         } set { qty6     = value; OnPropertyChanged(); } }
-		private DataTable? features;   public DataTable? Features  { get { return features;     } set { features = value; OnPropertyChanged(); } }
-		private DataTable? elements;   public DataTable? Elements  { get { return elements;     } set { elements = value; OnPropertyChanged(); } }
+		private decimal? qty1;         public decimal? Qty1        { get { return qty1;         } set { qty1      = value; OnPropertyChanged(); } }
+		private decimal? qty2;         public decimal? Qty2        { get { return qty2;         } set { qty2      = value; OnPropertyChanged(); } }
+		private decimal? qty3;         public decimal? Qty3        { get { return qty3;         } set { qty3      = value; OnPropertyChanged(); } }
+		private decimal? qty4;         public decimal? Qty4        { get { return qty4;         } set { qty4      = value; OnPropertyChanged(); } }
+		private decimal? qty5;         public decimal? Qty5        { get { return qty5;         } set { qty5      = value; OnPropertyChanged(); } }
+		private decimal? qty6;         public decimal? Qty6        { get { return qty6;         } set { qty6      = value; OnPropertyChanged(); } }
+		private DataTable? features;   public DataTable? Features  { get { return features;     } set { features  = value; OnPropertyChanged(); } }
+		private DataTable? elements;   public DataTable? Elements  { get { return elements;     } set { elements  = value; OnPropertyChanged(); } }
+		private DataTable? projTypes;  public DataTable? ProjTypes { get { return projTypes;    } set { projTypes = value; OnPropertyChanged(); } }
 
 		public Quotations()  
 		{ 
@@ -31,27 +32,34 @@ namespace ProDocEstimate
 			DataContext = this;
 			LoadFeatures();
 			LoadElements();
+			LoadProjTypes();
 		}
 
 		private void btnLookup_Click(object sender, RoutedEventArgs e)
-		{ Customers lookup = new Customers();
-			lookup.tabPage.TabIndex = 2;
-			lookup.tabPageTreeView.IsSelected = true;
-			lookup.ShowDialog();
-			System.Windows.MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
-			lookup.Close();
+		{ 
+			//Customers lookup = new Customers();
+			//lookup.tabPage.TabIndex = 2;
+			//lookup.tabPageTreeView.IsSelected = true;
+			//lookup.ShowDialog();
+			//System.Windows.MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
+			//lookup.Close();
 		}
 
 		private void btnNew_Click(object sender, RoutedEventArgs e)
-		{ Customers lookup = new Customers();
-			lookup.NewCustomer = true;
-			lookup.ShowDialog();
-			System.Windows.MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
-			lookup.Close();			
+		{ 
+			//Customers lookup = new Customers();
+			//lookup.NewCustomer = true;
+			//lookup.ShowDialog();
+			//System.Windows.MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
+			//lookup.Close();			
 		}
 
 		private void btnBaseCharge_Click(object sender, RoutedEventArgs e)
-		{ System.Windows.MessageBox.Show("Just activates page 2; not needed.", "Suggest removing", MessageBoxButton.OK, MessageBoxImage.Information); }
+		{
+			Page2.IsEnabled = true;
+			Page3.IsEnabled = true;
+			Page2.Focus();
+		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
 		{ System.Windows.MessageBox.Show("Copy by Quote # or by Job #", "Copy", MessageBoxButton.OK, MessageBoxImage.Question); }
@@ -104,6 +112,18 @@ namespace ProDocEstimate
 
 			this.dgFeatures.DataContext = this;
 			this.dgFeatures.ItemsSource = Features.DefaultView;
+		}
+
+		private void LoadProjTypes()
+		{
+			this.ProjTypes = new DataTable("ProjTypes");
+			this.ProjTypes.Columns.Add("TEXT");
+			this.ProjTypes.Rows.Add("Continuous");
+			this.ProjTypes.Rows.Add("Snap-in");
+			this.cmbProjectType.DataContext = this;
+			this.cmbProjectType.ItemsSource = ProjTypes.DefaultView;
+			this.cmbProjectType.DisplayMemberPath = "TEXT";
+			this.cmbProjectType.SelectedValuePath = "TEXT";
 		}
 
 		private void btnShowHideFeaturesPicker_Click(object sender, RoutedEventArgs e)

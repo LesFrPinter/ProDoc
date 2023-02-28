@@ -1212,9 +1212,10 @@
 
 								<Label
 									Grid.ColumnSpan="4"
+									Height="30"
 									Background="LightSteelBlue"
-									Content="#Parts               Continuous        Snap-out         "
-									FontSize="20"
+									Content="#Parts           Continuous           Snap-out         "
+									FontSize="18"
 									Foreground="AliceBlue" />
 								<Label
 									Grid.Row="1"
@@ -1433,9 +1434,10 @@
 
 								<Label
 									Grid.ColumnSpan="4"
+									Height="30"
 									Background="LightSteelBlue"
-									Content="#Parts               Continuous        Snap-out         "
-									FontSize="20"
+									Content="#Parts           Continuous           Snap-out         "
+									FontSize="18"
 									Foreground="AliceBlue" />
 								<Label
 									Grid.Row="1"

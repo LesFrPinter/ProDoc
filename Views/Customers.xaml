@@ -127,7 +127,7 @@
 
 			</TabItem>
 
-			<TabItem Header="Tabular search" >
+			<!--<TabItem Header="Tabular search" >
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="40" />
@@ -163,8 +163,8 @@
 							<DataGridTextColumn Header="ZIP" Width="Auto" Binding="{Binding Path=ZIP}" />
 							<DataGridTextColumn Header="Phone" Width="Auto" Binding="{Binding Path=Phone}" />
 							<DataGridTextColumn Header="Contact" Width="Auto" Binding="{Binding Path=Contact}" />
-							<!--<DataGridCheckBoxColumn Header="Credit Hold" Width="100" />
-							<DataGridTextColumn Header="Last Job" />-->
+							--><!--<DataGridCheckBoxColumn Header="Credit Hold" Width="100" />
+							<DataGridTextColumn Header="Last Job" />--><!--
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
@@ -220,7 +220,7 @@
 
 				</Grid>
 
-			</TabItem>
+			</TabItem>-->
 
 		</TabControl>
 
