@@ -624,7 +624,7 @@
 						VerticalAlignment="Top"
 						IsEnabled="False"
 						Style="{StaticResource TextField}"
-						Text="{Binding City}" />
+						Text="{Binding Path=CSZ, Mode=OneWay}" />
 
 					<Label
 						Grid.Row="16"

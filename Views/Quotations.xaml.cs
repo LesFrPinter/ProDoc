@@ -21,6 +21,7 @@ namespace ProDocEstimate
 		private string? zip;           public string? ZIP          { get { return zip;          } set { zip          = value; OnPropertyChanged(); } }
 		private string? location;      public string? Location     { get { return location;     } set { location     = value; OnPropertyChanged(); } }
 		private string? phone;         public string? Phone        { get { return phone;        } set { phone        = value; OnPropertyChanged(); } }
+		private string? csz;					 public string? CSZ          { get { return csz;          }	set { csz          = value; OnPropertyChanged(); } }
 
 		private string?  activePage;   public string? ActivePage   { get { return activePage;   } set { activePage   = value; OnPropertyChanged(); } }
 		private decimal? qty1;         public decimal? Qty1        { get { return qty1;         } set { qty1      = value; OnPropertyChanged(); } }
@@ -145,31 +146,36 @@ namespace ProDocEstimate
 		}
 
 		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		{ string x = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
+		{ //string x = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
 			string controlname = (sender as ComboBox).Name;
 
 			int Int1 = 0; int Int2 = 0;
-			if((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null) { 
-				string Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem).Content.ToString();
-				Int1 = int.Parse(Str1);
-			}
+			float Frac1 = 0.00F; float Frac2 = 0.00F;
 
-			if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null) { 
-				string Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem).Content.ToString();
-				Int2 = int.Parse(Str2);
-			}
+			if ((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null)
+			{ string Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem).Content.ToString(); Int1 = int.Parse(Str1);  }
+
+			if ((cmbFinalSizeFrac1.SelectedItem as ComboBoxItem) != null)
+			{ string x =    (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem).Content.ToString();   Frac1 = CalcFraction(x); }
+
+			if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null) 
+			{ string Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem).Content.ToString(); Int2 = int.Parse(Str2);  }
+
+			if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null)
+			{ string x =    (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem).Content.ToString();   Frac2 = CalcFraction(x); }
 
 			if (controlname.Substring(controlname.Length - 1) == "1")
-				{ Decimal1.Content = CalcFraction(x) + Int1; }
+				{ Decimal1.Content = Frac1 + Int1; }
 			else
-				{ Decimal2.Content = CalcFraction(x) + Int2; }
+				{ Decimal2.Content = Frac2 + Int2; }
 		}
 
 		private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
 		{
 			int CustKey = int.Parse(txtCustomerNum.Text);
 			SqlConnection cn = new SqlConnection(ConnectionString);
-			da = new SqlDataAdapter("SELECT * FROM CRC_CU10 WHERE CUST_NUMB = " + CustKey.ToString(), cn);
+			string str = "SELECT *, RTRIM(CITY) + ', ' + STATE + ' ' + ZIP AS CSZ FROM CRC_CU10 WHERE CUST_NUMB = " + CustKey.ToString();
+			da = new SqlDataAdapter(str, cn);
 			DataSet ds = new DataSet();
 			da.Fill(ds);
 			if (ds.Tables[0].Rows.Count > 0 )
@@ -178,10 +184,11 @@ namespace ProDocEstimate
 				DataRow dr = dt.Rows[0];
 				CustomerName = dr[2].ToString();
 				Address = dr[3].ToString();
-				City = dr[5].ToString();
-				State = dr[6].ToString();
-				ZIP = dr[7].ToString();
+				//City = dr[5].ToString();
+				//State = dr[6].ToString();
+				//ZIP = dr[7].ToString();
 				Phone = dr[9].ToString();
+				CSZ = dr[10].ToString();
 			}
 			else
 			{ MessageBox.Show("No match"); }
