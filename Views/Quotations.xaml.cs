@@ -1,10 +1,9 @@
-﻿using System.Windows;
-using System.Data;
+﻿using System.Data;
+using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Options;
-using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
+using System.Windows.Controls;
 
 namespace ProDocEstimate
 {
@@ -36,22 +35,15 @@ namespace ProDocEstimate
 		}
 
 		private void btnLookup_Click(object sender, RoutedEventArgs e)
-		{ 
-			//Customers lookup = new Customers();
-			//lookup.tabPage.TabIndex = 2;
-			//lookup.tabPageTreeView.IsSelected = true;
-			//lookup.ShowDialog();
-			//System.Windows.MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
-			//lookup.Close();
+		{
+			System.Windows.MessageBox
+				.Show(" Customer Lookup screen here ");
 		}
 
 		private void btnNew_Click(object sender, RoutedEventArgs e)
 		{ 
-			//Customers lookup = new Customers();
-			//lookup.NewCustomer = true;
-			//lookup.ShowDialog();
-			//System.Windows.MessageBox.Show(" Selected: New Prospect " + lookup.SelectedCustomer, "Selected");
-			//lookup.Close();			
+			System.Windows.MessageBox
+				.Show(" Do this in the Customer Lookup screen");
 		}
 
 		private void btnBaseCharge_Click(object sender, RoutedEventArgs e)
@@ -74,6 +66,15 @@ namespace ProDocEstimate
 
 		private void txtCustomerNum_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{ System.Windows.MessageBox.Show("For new custumers, a provisional Customer Number starting with 'P' will be created, to be replaced later", "Provisional CustNum", MessageBoxButton.OK, MessageBoxImage.Information); }
+
+		private float CalcFraction(string frac)
+		{
+			string[] parts = frac.Split('/');
+			if (parts.Length == 1)
+			{ return 0.00F; }
+			else
+			{ return float.Parse(parts[0]) / float.Parse(parts[1]); }
+		}
 
 		private void LoadElements()
 		{
@@ -131,5 +132,30 @@ namespace ProDocEstimate
 			dgFeatures.Visibility = (dgFeatures.Visibility == Visibility.Hidden)? Visibility.Visible: Visibility.Hidden;
 		}
 
+		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{ string x = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
+			string controlname = (sender as ComboBox).Name;
+
+			int Int1 = 0; int Int2 = 0;
+			if((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null) { 
+				string Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem).Content.ToString();
+				Int1 = int.Parse(Str1);
+			}
+
+			if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null) { 
+				string Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem).Content.ToString();
+				Int2 = int.Parse(Str2);
+			}
+
+			if (controlname.Substring(controlname.Length - 1) == "1")
+				{ Decimal1.Content = CalcFraction(x) + Int1; }
+			else
+				{ Decimal2.Content = CalcFraction(x) + Int2; }
+		}
+
+		//private void cmbFinalSizeFrac2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		//{
+
+		//}
 	}
 }
