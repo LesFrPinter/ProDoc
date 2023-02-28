@@ -1,9 +1,10 @@
 ﻿using System.Data;
 using System.Windows;
+using System.Data.SqlClient;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xceed.Wpf.Toolkit;
 using System.Windows.Controls;
+using System.Runtime.CompilerServices;
+using System.Configuration;
 
 namespace ProDocEstimate
 {
@@ -13,7 +14,14 @@ namespace ProDocEstimate
 		protected void OnPropertyChanged([CallerMemberName] string? name = null)
 		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		private string?  customerName; public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
+		private string? customerName;  public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
+		private string? address;       public string? Address      { get { return address;      } set { address      = value; OnPropertyChanged(); } }
+		private string? city;          public string? City         { get { return city;         } set { city         = value; OnPropertyChanged(); } }
+		private string? state;         public string? State        { get { return state;        } set { state        = value; OnPropertyChanged(); } }
+		private string? zip;           public string? ZIP          { get { return zip;          } set { zip          = value; OnPropertyChanged(); } }
+		private string? location;      public string? Location     { get { return location;     } set { location     = value; OnPropertyChanged(); } }
+		private string? phone;         public string? Phone        { get { return phone;        } set { phone        = value; OnPropertyChanged(); } }
+
 		private string?  activePage;   public string? ActivePage   { get { return activePage;   } set { activePage   = value; OnPropertyChanged(); } }
 		private decimal? qty1;         public decimal? Qty1        { get { return qty1;         } set { qty1      = value; OnPropertyChanged(); } }
 		private decimal? qty2;         public decimal? Qty2        { get { return qty2;         } set { qty2      = value; OnPropertyChanged(); } }
@@ -33,6 +41,10 @@ namespace ProDocEstimate
 			LoadElements();
 			LoadProjTypes();
 		}
+
+		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+		public SqlConnection cn = new SqlConnection();
+		public SqlDataAdapter? da;
 
 		private void btnLookup_Click(object sender, RoutedEventArgs e)
 		{
@@ -65,7 +77,7 @@ namespace ProDocEstimate
 		}
 
 		private void txtCustomerNum_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{ System.Windows.MessageBox.Show("For new custumers, a provisional Customer Number starting with 'P' will be created, to be replaced later", "Provisional CustNum", MessageBoxButton.OK, MessageBoxImage.Information); }
+		{ System.Windows.MessageBox.Show("For new customers, a provisional Customer Number starting with 'P' will be created, to be replaced later", "Provisional CustNum", MessageBoxButton.OK, MessageBoxImage.Information); }
 
 		private float CalcFraction(string frac)
 		{
@@ -153,9 +165,27 @@ namespace ProDocEstimate
 				{ Decimal2.Content = CalcFraction(x) + Int2; }
 		}
 
-		//private void cmbFinalSizeFrac2_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		//{
+		private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
+		{
+			int CustKey = int.Parse(txtCustomerNum.Text);
+			SqlConnection cn = new SqlConnection(ConnectionString);
+			da = new SqlDataAdapter("SELECT * FROM CRC_CU10 WHERE CUST_NUMB = " + CustKey.ToString(), cn);
+			DataSet ds = new DataSet();
+			da.Fill(ds);
+			if (ds.Tables[0].Rows.Count > 0 )
+			{
+				DataTable dt = ds.Tables[0];
+				DataRow dr = dt.Rows[0];
+				CustomerName = dr[2].ToString();
+				Address = dr[3].ToString();
+				City = dr[5].ToString();
+				State = dr[6].ToString();
+				ZIP = dr[7].ToString();
+				Phone = dr[9].ToString();
+			}
+			else
+			{ MessageBox.Show("No match"); }
+		}
 
-		//}
 	}
 }

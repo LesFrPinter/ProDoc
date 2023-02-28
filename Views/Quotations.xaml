@@ -19,6 +19,16 @@
 			<Setter Property="HorizontalAlignment" Value="Left" />
 			<Setter Property="Margin" Value="10,0,0,0" />
 		</Style>
+
+		<Style TargetType="{x:Type DataGridCell}">
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="pink"></Setter>
+					<Setter Property="FontSize" Value="50"></Setter>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
 	</Window.Resources>
 
 	<Grid Background="LightGray">
@@ -321,9 +331,9 @@
 						Grid.Column="3"
 						Width="auto"
 						Height="22"
-						Margin="65,0,0,0"
 						Padding="0"
-						HorizontalAlignment="Left"
+						Margin="0 0 0 5"
+						HorizontalAlignment="Center"
 						VerticalAlignment="Center"
 						VerticalContentAlignment="center"
 						Content="(" />
@@ -332,12 +342,14 @@
 						x:Name="Decimal1"
 						Grid.Row="3"
 						Grid.Column="3"
-						Width="100"
+						Width="70"
 						Height="22"
 						Padding="0"
+						Margin="0 0 10 0"
+						HorizontalAlignment="Right"
 						VerticalAlignment="Center"
 						VerticalContentAlignment="center"
-						Background="Pink" />
+						Background="ivory" />
 
 					<Label
 						Grid.Row="3"
@@ -355,23 +367,23 @@
 						x:Name="Decimal2"
 						Grid.Row="3"
 						Grid.Column="4"
-						Width="100"
+						Width="70"
 						Height="22"
 						Margin="40,0,0,0"
 						Padding="0"
 						HorizontalAlignment="Left"
 						VerticalAlignment="Center"
 						VerticalContentAlignment="center"
-						Background="LightBlue" />
+						Background="ivory" />
 
 					<Label
 						Grid.Row="3"
 						Grid.Column="4"
 						Width="auto"
 						Height="22"
-						Margin="0,0,25,0"
+						Margin="119,0,0,5"
 						Padding="0"
-						HorizontalAlignment="Right"
+						HorizontalAlignment="Left"
 						VerticalAlignment="Center"
 						VerticalContentAlignment="center"
 						Content=")" />
@@ -536,6 +548,7 @@
 						Width="65"
 						Margin="68,4,0,4"
 						MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
+						LostFocus="txtCustomerNum_LostFocus"
 						Style="{StaticResource TextField}" />
 					<CheckBox
 						x:Name="chkProspect"
@@ -1310,7 +1323,7 @@
 						Content="Email" />
 
 					<TextBox
-						x:Name="Phone"
+						x:Name="txtPhone2"
 						Grid.Row="8"
 						Grid.RowSpan="2"
 						Grid.Column="3"
