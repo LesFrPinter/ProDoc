@@ -183,7 +183,8 @@
 						<Label
 							Grid.Row="0"
 							Grid.Column="0"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="Web" />
 						<TextBox
 							x:Name="txtWeb"
@@ -195,7 +196,8 @@
 						<Label
 							Grid.Row="0"
 							Grid.Column="2"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="COST $/hr" />
 
 						<TextBox
@@ -211,7 +213,8 @@
 							Grid.Row="0"
 							Grid.Column="4"
 							Width="170"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Background="LightSlateGray"
 							Content="Base Speed:"
 							FontSize="12"
@@ -228,7 +231,8 @@
 						<Label
 							Grid.Row="1"
 							Grid.Column="0"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="Web-frac" />
 						<TextBox
 							x:Name="txtWebFrac"
@@ -240,8 +244,9 @@
 							Text="{Binding Path=WebFrac}" />
 						<Label
 							Grid.Row="1"
-							Padding="0" HorizontalAlignment="Right"
 							Grid.Column="2"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="SELL $/hr" />
 
 						<TextBox
@@ -256,7 +261,8 @@
 						<Label
 							Grid.Row="2"
 							Grid.Column="0"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="Width" />
 						<TextBox
 							x:Name="txtPaperWidth"
@@ -270,7 +276,8 @@
 						<Label
 							Grid.Row="3"
 							Grid.Column="0"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="Towers" />
 						<TextBox
 							x:Name="txtTowers"
@@ -284,7 +291,8 @@
 						<Label
 							Grid.Row="4"
 							Grid.Column="0"
-							Padding="0" HorizontalAlignment="Right"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="Variable" />
 						<TextBox
 							x:Name="txtVariable"
@@ -297,8 +305,9 @@
 
 						<Label
 							Grid.Row="5"
-							Padding="0" HorizontalAlignment="Right"
 							Grid.Column="0"
+							Padding="0"
+							HorizontalAlignment="Right"
 							Content="Restrict to" />
 						<TextBox
 							x:Name="txtRestrictTo"
@@ -536,14 +545,14 @@
 							Style="{StaticResource TextField}"
 							Text="{Binding Path=FtPerMin8}" />
 
-						<DataGrid 
-						 Grid.Row="12" 
-						 Grid.RowSpan="9" 
-						 Grid.ColumnSpan="6" 
-						 Width="860" 
-						 IsSynchronizedWithCurrentItem="True"
-						 HorizontalAlignment="Center" 
-						 Margin="0 10 0 0" >
+						<DataGrid
+							Grid.Row="12"
+							Grid.RowSpan="9"
+							Grid.ColumnSpan="6"
+							Width="860"
+							Margin="0,10,0,0"
+							HorizontalAlignment="Center"
+							IsSynchronizedWithCurrentItem="True">
 							<DataGrid.Columns>
 								<DataGridTextColumn Width="80" Header="Std #" />
 								<DataGridTextColumn Width="80" Header="Press #" />
@@ -553,19 +562,26 @@
 							</DataGrid.Columns>
 						</DataGrid>
 
-						<Label Grid.Row="14"
-						 Content="Needs lookup" 
-						 FontSize="32" 
-						 Foreground="Green" 
-						 Background="Transparent" 
-						 FontWeight="Bold"
-						 Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Grid.ColumnSpan="2" Margin="3,18,0,23" Grid.RowSpan="5" Width="223" >
+						<Label
+							Grid.Row="14"
+							Grid.RowSpan="5"
+							Grid.Column="2"
+							Grid.ColumnSpan="2"
+							Width="223"
+							Margin="37,18,0,23"
+							Panel.ZIndex="1"
+							Background="Transparent"
+							Content="Need lookups"
+							FontSize="32"
+							FontWeight="Bold"
+							Foreground="Green"
+							RenderTransformOrigin="0.5,0.5">
 							<Label.RenderTransform>
 								<TransformGroup>
-									<ScaleTransform/>
-									<SkewTransform/>
-									<RotateTransform Angle="-17.788"/>
-									<TranslateTransform/>
+									<ScaleTransform />
+									<SkewTransform />
+									<RotateTransform Angle="-17.788" />
+									<TranslateTransform />
 								</TransformGroup>
 							</Label.RenderTransform>
 						</Label>
@@ -1062,20 +1078,20 @@
 							Foreground="BlueViolet" />
 
 						<StackPanel Grid.Row="6" Orientation="Horizontal">
-							<Label Content="Setup" Padding="0" />
+							<Label Padding="0" Content="Setup" />
 							<TextBox
 								x:Name="txtECLSetup"
 								Width="70"
 								Padding="0"
 								Style="{StaticResource TextField}"
 								Text="{Binding Path=ECLSetup}" />
-							<Label Content="Run"  Padding="0" />
+							<Label Padding="0" Content="Run" />
 							<TextBox
 								x:Name="txtECLRun"
 								Width="70"
 								Style="{StaticResource TextField}"
 								Text="{Binding Path=ECLRun}" />
-							<Label Content="Matl" Padding="0"  />
+							<Label Padding="0" Content="Matl" />
 							<TextBox
 								x:Name="txtECLMaterial"
 								Width="70"
@@ -1105,7 +1121,7 @@
 							Foreground="BlueViolet" />
 
 						<StackPanel Grid.Row="8" Orientation="Horizontal">
-							<Label Content="Sets"  Padding="0"  />
+							<Label Padding="0" Content="Sets" />
 							<TextBox
 								x:Name="vtxtSets"
 								Width="40"
@@ -1125,13 +1141,13 @@
 							IsChecked="{Binding Path=OptSlowdown}" />
 
 						<StackPanel Grid.Row="10" Orientation="Horizontal">
-							<Label Content="WASTE: Setup" Padding="0" />
+							<Label Padding="0" Content="WASTE: Setup" />
 							<TextBox
 								x:Name="txtWasteSetup"
 								Width="50"
 								Style="{StaticResource TextField}"
 								Text="{Binding Path=v}" />
-							<Label Content="Run %"  Padding="0" />
+							<Label Padding="0" Content="Run %" />
 							<TextBox
 								x:Name="txtWasteRunPct"
 								Width="50"
@@ -1140,7 +1156,7 @@
 						</StackPanel>
 
 						<StackPanel Grid.Row="11" Orientation="Horizontal">
-							<Label Content="M/R Impressions"  Padding="0" />
+							<Label Padding="0" Content="M/R Impressions" />
 							<TextBox
 								x:Name="txtMRImpressions"
 								Width="150"
@@ -1149,7 +1165,7 @@
 						</StackPanel>
 
 						<StackPanel Grid.Row="12" Orientation="Horizontal">
-							<Label Content="Alert:  "  Padding="0"  />
+							<Label Padding="0" Content="Alert:  " />
 							<TextBox
 								x:Name="txtAlert"
 								Width="350"
@@ -1163,17 +1179,27 @@
 							Height="138"
 							Margin="300,0,0,0">
 							<Label HorizontalAlignment="Center" Content="CARTON" />
-							<Label HorizontalAlignment="Center" Content="Qty/Feature" Height="16" Padding="0"/>
+							<Label
+								Height="16"
+								Padding="0"
+								HorizontalAlignment="Center"
+								Content="Qty/Feature" />
 							<TextBox
 								x:Name="txtCartonQty"
-								Width="60" Height="22"
+								Width="60"
+								Height="22"
 								HorizontalAlignment="Center"
 								Style="{StaticResource TextField}"
 								Text="{Binding Path=CartonQty}" />
-							<Label HorizontalAlignment="Center" Content="Calc Type" Height="16" Padding="0" />
+							<Label
+								Height="16"
+								Padding="0"
+								HorizontalAlignment="Center"
+								Content="Calc Type" />
 							<TextBox
 								x:Name="txtCalcType"
-								Width="60" Height="22"
+								Width="60"
+								Height="22"
 								HorizontalAlignment="Center"
 								Style="{StaticResource TextField}"
 								Text="{Binding Path=CalcType}" />
@@ -1181,15 +1207,19 @@
 
 					</Grid>
 
-					<DataGrid 
-					 Grid.Row="1" Height="185" Width="860" Grid.ColumnSpan="2"
-					 VerticalAlignment="Bottom" Margin="10 0 10 5" >
+					<DataGrid
+						Grid.Row="1"
+						Grid.ColumnSpan="2"
+						Width="860"
+						Height="185"
+						Margin="10,10,0,0"
+						VerticalAlignment="Bottom">
 						<DataGrid.Columns>
 							<DataGridTextColumn Width="120" Header="Std #" />
 							<DataGridTextColumn Width="120" Header="Feature #" />
 							<DataGridTextColumn Width="600" Header="Description" />
 						</DataGrid.Columns>
-					 </DataGrid>
+					</DataGrid>
 
 				</Grid>
 
@@ -1197,7 +1227,14 @@
 
 			<TabItem Header="Collator Standards">
 
-				<Grid Background="LightGray" Height="640" VerticalAlignment="Top">
+				<Grid
+					Height="640"
+					VerticalAlignment="Top"
+					Background="LightGray">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="149*" />
+						<ColumnDefinition Width="725*" />
+					</Grid.ColumnDefinitions>
 
 					<Grid.RowDefinitions>
 						<RowDefinition Height="30" />
@@ -1206,7 +1243,10 @@
 						<RowDefinition Height="200" />
 					</Grid.RowDefinitions>
 
-					<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<StackPanel
+						Grid.Row="0"
+						Grid.ColumnSpan="2"
+						Orientation="Horizontal">
 						<Label
 							Width="200"
 							VerticalContentAlignment="Center"
@@ -1239,7 +1279,7 @@
 							Style="{StaticResource TextField}" />
 					</StackPanel>
 
-					<Grid Grid.Row="1">
+					<Grid Grid.Row="1" Grid.ColumnSpan="2">
 
 						<Grid>
 
@@ -1269,9 +1309,11 @@
 								</Grid.ColumnDefinitions>
 
 								<Label
+									Grid.RowSpan="2"
 									Grid.ColumnSpan="4"
-									Grid.RowSpan="2" VerticalAlignment="Top"
-									Height="30" Margin="10 0 0 0"
+									Height="30"
+									Margin="10,0,0,0"
+									VerticalAlignment="Top"
 									Background="LightSteelBlue"
 									Content="             #Parts     Continuous                           Snap-out                                "
 									Foreground="AliceBlue" />
@@ -1279,48 +1321,39 @@
 									Grid.Row="1"
 									Padding="0"
 									HorizontalAlignment="Right"
-									Content="1"
-									 />
+									Content="1" />
 								<Label
 									Grid.Row="2"
 									HorizontalAlignment="Right"
-									Content="2"
-									 />
+									Content="2" />
 								<Label
 									Grid.Row="3"
 									HorizontalAlignment="Right"
-									Content="3"
-									 />
+									Content="3" />
 								<Label
 									Grid.Row="4"
 									HorizontalAlignment="Right"
-									Content="4"
-									 />
+									Content="4" />
 								<Label
 									Grid.Row="5"
 									HorizontalAlignment="Right"
-									Content="5"
-									 />
+									Content="5" />
 								<Label
 									Grid.Row="6"
 									HorizontalAlignment="Right"
-									Content="6"
-									 />
+									Content="6" />
 								<Label
 									Grid.Row="7"
 									HorizontalAlignment="Right"
-									Content="7"
-									 />
+									Content="7" />
 								<Label
 									Grid.Row="8"
 									HorizontalAlignment="Right"
-									Content="8"
-									 />
+									Content="8" />
 								<Label
 									Grid.Row="9"
 									HorizontalAlignment="Right"
-									Content="9"
-									 />
+									Content="9" />
 								<Label
 									Grid.Row="10"
 									HorizontalAlignment="Right"
@@ -1490,62 +1523,54 @@
 								</Grid.ColumnDefinitions>
 
 								<Label
+									Grid.RowSpan="2"
 									Grid.ColumnSpan="4"
-									Grid.RowSpan="2" VerticalAlignment="Top"
-									Height="24" Margin="10 0 0 0"
+									Height="24"
+									Margin="10,0,0,0"
+									VerticalAlignment="Top"
 									Background="LightSteelBlue"
 									Content="             #Parts     Continuous                           Snap-out                                "
 									Foreground="AliceBlue" />
 								<Label
 									Grid.Row="1"
 									HorizontalAlignment="Right"
-									Content="1"
-									 />
+									Content="1" />
 								<Label
 									Grid.Row="2"
 									HorizontalAlignment="Right"
-									Content="2"
-									 />
+									Content="2" />
 								<Label
 									Grid.Row="3"
 									HorizontalAlignment="Right"
-									Content="3"
-									 />
+									Content="3" />
 								<Label
 									Grid.Row="4"
 									HorizontalAlignment="Right"
-									Content="4"
-									 />
+									Content="4" />
 								<Label
 									Grid.Row="5"
 									HorizontalAlignment="Right"
-									Content="5"
-									 />
+									Content="5" />
 								<Label
 									Grid.Row="6"
 									HorizontalAlignment="Right"
-									Content="6"
-									 />
+									Content="6" />
 								<Label
 									Grid.Row="7"
 									HorizontalAlignment="Right"
-									Content="7"
-									 />
+									Content="7" />
 								<Label
 									Grid.Row="8"
 									HorizontalAlignment="Right"
-									Content="8"
-									 />
+									Content="8" />
 								<Label
 									Grid.Row="9"
 									HorizontalAlignment="Right"
-									Content="9"
-									 />
+									Content="9" />
 								<Label
 									Grid.Row="10"
 									HorizontalAlignment="Right"
-									Content="10"
-									 />
+									Content="10" />
 
 								<TextBox
 									Grid.Row="1"
@@ -1695,7 +1720,10 @@
 
 					</Grid>
 
-					<StackPanel Grid.Row="2" Orientation="Horizontal">
+					<StackPanel
+						Grid.Row="2"
+						Grid.ColumnSpan="2"
+						Orientation="Horizontal">
 						<Grid>
 							<Grid.RowDefinitions>
 								<RowDefinition />
@@ -1761,12 +1789,13 @@
 						</Grid>
 					</StackPanel>
 
-					<DataGrid 
-					 Grid.Row="3" 
-					 Height="200" 
-					 Width="860" 
-					 Margin="10 0" 
-					 IsSynchronizedWithCurrentItem="True">
+					<DataGrid
+						Grid.Row="3"
+						Grid.ColumnSpan="2"
+						Width="860"
+						Height="180"
+						Margin="7,15,0,5"
+						IsSynchronizedWithCurrentItem="True">
 						<DataGrid.Columns>
 							<DataGridTextColumn Width="100" Header="Std #" />
 							<DataGridTextColumn Width="120" Header="Collator #" />
