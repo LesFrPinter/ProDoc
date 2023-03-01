@@ -2,7 +2,6 @@
 using System.Windows;
 using System.ComponentModel;
 using System.Windows.Controls;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace ProDocEstimate.Views

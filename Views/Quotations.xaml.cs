@@ -1,15 +1,18 @@
-﻿using System.Data;
-using System.Windows;
-using System.Data.SqlClient;
-using System.ComponentModel;
-using System.Windows.Controls;
-using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace ProDocEstimate
 {
 	public partial class Quotations : Window, INotifyPropertyChanged
 	{
+
+		HistoricalPrices hp = new HistoricalPrices();
+
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null)
 		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
@@ -24,15 +27,15 @@ namespace ProDocEstimate
 		private string? csz;					 public string? CSZ          { get { return csz;          }	set { csz          = value; OnPropertyChanged(); } }
 
 		private string?  activePage;   public string? ActivePage   { get { return activePage;   } set { activePage   = value; OnPropertyChanged(); } }
-		private decimal? qty1;         public decimal? Qty1        { get { return qty1;         } set { qty1      = value; OnPropertyChanged(); } }
-		private decimal? qty2;         public decimal? Qty2        { get { return qty2;         } set { qty2      = value; OnPropertyChanged(); } }
-		private decimal? qty3;         public decimal? Qty3        { get { return qty3;         } set { qty3      = value; OnPropertyChanged(); } }
-		private decimal? qty4;         public decimal? Qty4        { get { return qty4;         } set { qty4      = value; OnPropertyChanged(); } }
-		private decimal? qty5;         public decimal? Qty5        { get { return qty5;         } set { qty5      = value; OnPropertyChanged(); } }
-		private decimal? qty6;         public decimal? Qty6        { get { return qty6;         } set { qty6      = value; OnPropertyChanged(); } }
-		private DataTable? features;   public DataTable? Features  { get { return features;     } set { features  = value; OnPropertyChanged(); } }
-		private DataTable? elements;   public DataTable? Elements  { get { return elements;     } set { elements  = value; OnPropertyChanged(); } }
-		private DataTable? projTypes;  public DataTable? ProjTypes { get { return projTypes;    } set { projTypes = value; OnPropertyChanged(); } }
+		private decimal? qty1;         public decimal? Qty1        { get { return qty1;         } set { qty1         = value; OnPropertyChanged(); } }
+		private decimal? qty2;         public decimal? Qty2        { get { return qty2;         } set { qty2         = value; OnPropertyChanged(); } }
+		private decimal? qty3;         public decimal? Qty3        { get { return qty3;         } set { qty3         = value; OnPropertyChanged(); } }
+		private decimal? qty4;         public decimal? Qty4        { get { return qty4;         } set { qty4         = value; OnPropertyChanged(); } }
+		private decimal? qty5;         public decimal? Qty5        { get { return qty5;         } set { qty5         = value; OnPropertyChanged(); } }
+		private decimal? qty6;         public decimal? Qty6        { get { return qty6;         } set { qty6         = value; OnPropertyChanged(); } }
+		private DataTable? features;   public DataTable? Features  { get { return features;     } set { features     = value; OnPropertyChanged(); } }
+		private DataTable? elements;   public DataTable? Elements  { get { return elements;     } set { elements     = value; OnPropertyChanged(); } }
+		private DataTable? projTypes;  public DataTable? ProjTypes { get { return projTypes;    } set { projTypes    = value; OnPropertyChanged(); } }
 
 		public Quotations()  
 		{ 
@@ -194,5 +197,45 @@ namespace ProDocEstimate
 			{ MessageBox.Show("No match"); }
 		}
 
+		private void dgElements_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+		{ if (sender == null) return;
+			var dg = sender as DataGrid;
+			//if (dg == null) return;
+			var index = dg.SelectedIndex;
+			if (index <= 0) return;
+			string Seq = Elements.Rows[index][0].ToString();
+			if (Seq == "10" || Seq == "11" || Seq == "12") {
+				txtPaper.Text = "";
+				txtColor.Text = "";
+				txtBasis.Text = "";
+				return;
+			}
+			string cell = Elements.Rows[index][1].ToString();
+			if (cell != null)
+			{ string[] cells = cell.Split(" ");
+				txtPaper.Text = cells[1].ToString() + " " + cells[2].ToString();
+				txtColor.Text = cells[0].ToString();
+				txtBasis.Text = cells[3].ToString();
+			}
+		}
+
+		private void dgElements_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			//MessageBox.Show(dgElements.CurrentCell.ToString());
+			//Debugger.Break(); // Which cell was clicked?
+		}
+
+		private void dgElements_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			int RowNumber = dgElements.SelectedIndex;
+			int ColumnNumber = dgElements.CurrentCell.Column.DisplayIndex;
+			if (ColumnNumber != 2) return;
+
+			hp = new HistoricalPrices();
+			hp.ShowDialog();
+			float? savedPrice = hp.Price;
+			hp.Close();
+			if (savedPrice != null) { Elements.Rows[RowNumber][ColumnNumber] = savedPrice; }
+		}
 	}
 }
