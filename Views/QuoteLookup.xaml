@@ -22,38 +22,38 @@
 			</Grid.RowDefinitions>
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
-				<Label HorizontalAlignment="Left" Content="Quote # " />
+				<Label HorizontalAlignment="Left" Target="{Binding ElementName=txtQuoteNum}">
+					<AccessText>_Quote #</AccessText>
+				</Label>
 				<TextBox
 					x:Name="txtQuoteNum"
 					Width="100"
 					Margin="0,4"
 					VerticalContentAlignment="Center"
 					Text="{Binding Quote_Num}" />
-				<Label HorizontalAlignment="Left" Content="Name: " />
+				<Label HorizontalAlignment="Left" Target="{Binding ElementName=txtCustName}">
+					<AccessText>_Name</AccessText>
+				</Label>
 				<TextBox
 					x:Name="txtCustName"
 					Width="240"
 					Margin="0,4"
 					VerticalContentAlignment="Center"
-					Text="{Binding CustName}" />
-				<Button
-					x:Name="btnGo"
-					Width="40"
-					Height="26"
-					Click="btnGo_Click"
-					Margin="20,0">
-					<AccessText>_Go</AccessText>
-				</Button>
-				<Label HorizontalAlignment="Left" Content="Cust #: " />
+					Text="{Binding Cust_Name}" />
+				<Label HorizontalAlignment="Left" Target="{Binding ElementName=txtCustNo}">
+					<AccessText>_Cust #</AccessText>
+				</Label>
 				<TextBox
 					x:Name="txtCustNo"
 					Width="70"
 					Margin="0,4"
+					Text="{Binding Cust_Num}" 
 					VerticalContentAlignment="Center" />
 				<CheckBox
 					x:Name="cbPartial"
 					Margin="30,0,0,0"
 					VerticalContentAlignment="Center"
+					IsChecked="{Binding Path=Partial}"
 					Content="_Partial"
 					FontSize="16" />
 				<CheckBox
@@ -61,19 +61,33 @@
 					Margin="10,0,0,0"
 					VerticalContentAlignment="Center"
 					Content="_Descending"
+					IsChecked="{Binding Path=Descending}"
 					FontSize="16" />
 				<CheckBox
 					x:Name="cbAuto"
 					Margin="10,0,0,0"
 					VerticalContentAlignment="Center"
+					IsChecked="{Binding Path=Auto}"
 					Content="_AutoComplete"
 					FontSize="16" />
+
+				<Button
+					x:Name="btnGo"
+					Width="40"
+					Height="26"
+					Margin="20,0"
+					Click="btnGo_Click">
+					<AccessText>_Go</AccessText>
+				</Button>
+
 			</StackPanel>
 
 			<DataGrid
 				x:Name="dgQuotes"
 				Grid.Row="1"
 				Margin="10"
+				SelectedValue="{Binding QUOTE_NUM}"
+				MouseDoubleClick="dgQuotes_MouseDoubleClick"
 				IsSynchronizedWithCurrentItem="True">
 				<DataGrid.Columns>
 					<DataGridTextColumn
@@ -115,14 +129,15 @@
 					x:Name="btnOK"
 					Width="40"
 					Height="25"
-					Margin="10,2,10,2" >
+					Margin="10,2,10,2">
 					<AccessText>O_k</AccessText>
 				</Button>
 				<Button
 					x:Name="btnCancel"
 					Width="70"
 					Height="25"
-					Margin="10,2,10,2" >
+					Click="btnCancel_Click"
+					Margin="10,2,10,2">
 					<AccessText>_Cancel</AccessText>
 				</Button>
 			</StackPanel>

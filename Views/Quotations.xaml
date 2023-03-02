@@ -24,7 +24,6 @@
 			<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
 					<Setter Property="Background" Value="pink" />
-					<!--<Setter Property="FontSize" Value="50"></Setter>-->
 				</Trigger>
 			</Style.Triggers>
 		</Style>

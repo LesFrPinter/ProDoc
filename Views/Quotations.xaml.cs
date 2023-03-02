@@ -18,6 +18,13 @@ namespace ProDocEstimate
 		protected void OnPropertyChanged([CallerMemberName] string? name = null)
 		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
+		private string? quote_num = "";
+			public string? QUOTE_NUM
+		{
+			get { return quote_num; }
+			set { quote_num = value; OnPropertyChanged(); }
+		} 
+
 		private string? customerName;  public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
 		private string? address;       public string? Address      { get { return address;      } set { address      = value; OnPropertyChanged(); } }
 		private string? city;          public string? City         { get { return city;         } set { city         = value; OnPropertyChanged(); } }
@@ -74,6 +81,7 @@ namespace ProDocEstimate
 		{
 			QuoteLookup ql = new QuoteLookup();
 			ql.ShowDialog();
+			QUOTE_NUM = ql.SelQuote; ql.Close();
 		}
 
 		private void Tabs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
