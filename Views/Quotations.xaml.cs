@@ -1,4 +1,5 @@
 ﻿using ProDocEstimate.Views;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -6,12 +7,13 @@ using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Telerik.Licensing;
 
 namespace ProDocEstimate
 {
 	public partial class Quotations : Window, INotifyPropertyChanged
 	{
-
 		HistoricalPrices hp = new HistoricalPrices();
 
 		public event PropertyChangedEventHandler? PropertyChanged;
@@ -23,7 +25,23 @@ namespace ProDocEstimate
 		{
 			get { return quote_num; }
 			set { quote_num = value; OnPropertyChanged(); }
-		} 
+		}
+
+		private string? cust_num; public string? CUST_NUM { get { return cust_num; } set { cust_num = value; OnPropertyChanged(); } }	
+
+		private string? projectType = ""; public  string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
+
+		private string? fsint1;   public string? FSINT1  { get { return fsint1;  } set { fsint1  = value; OnPropertyChanged(); } }
+		private string? fsfrac1;  public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
+		private string? fsint2;   public string? FSINT2  { get { return fsint2;  } set { fsint2  = value; OnPropertyChanged(); } }
+		private string? fsfrac2;  public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
+		private int?    pARTS;    public int?    PARTS   { get { return pARTS;   } set { pARTS   = value; OnPropertyChanged(); } }
+
+		private string? papertype; public string? PAPERTYPE {  get { return papertype; } set { papertype = value; OnPropertyChanged(); } }
+		private string? rollwidth; public string? ROLLWIDTH {  get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
+		private string? presssize; public string? PRESSSIZE {  get { return presssize; } set { presssize = value; OnPropertyChanged(); } }
+		private bool?   lineholes; public bool?   LINEHOLES {  get { return lineholes; } set { lineholes = value; OnPropertyChanged(); } }
+		private string? collatorcut; public string? COLLATORCUT { get { return collatorcut; } set { collatorcut = value; OnPropertyChanged(); } }
 
 		private string? customerName;  public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
 		private string? address;       public string? Address      { get { return address;      } set { address      = value; OnPropertyChanged(); } }
@@ -52,6 +70,7 @@ namespace ProDocEstimate
 			LoadFeatures();
 			LoadElements();
 			LoadProjTypes();
+			this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 		}
 
 		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
@@ -82,6 +101,36 @@ namespace ProDocEstimate
 			QuoteLookup ql = new QuoteLookup();
 			ql.ShowDialog();
 			QUOTE_NUM = ql.SelQuote; ql.Close();
+			if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
+
+			// Retrieve selected quote and populate bindings
+
+			SqlConnection cn = new SqlConnection(ConnectionString);
+			string str = "SELECT * FROM QUOTES WHERE QUOTE_NUM = " + QUOTE_NUM;
+			da = new SqlDataAdapter(str, cn);
+			DataSet ds = new DataSet();
+			da.Fill(ds);
+			if (ds.Tables[0].Rows.Count > 0)	// Actually, will never be empty
+			{ 
+				DataTable dt = ds.Tables[0]; DataRow dr = dt.Rows[0];
+				DataRow dr3 = dt.Rows[0];
+				CUST_NUM    = dt.Rows[0]["CUST_NUM"].ToString();
+				ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();  // dr3[5];
+				FSINT1      = dt.Rows[0]["FSINT1"].ToString();  // dr3[6];
+				FSFRAC1     = dt.Rows[0]["FSFRAC1"].ToString();  // dr3[7];
+				FSINT2      = dt.Rows[0]["FSINT2"].ToString();  // dr3[8];
+				FSFRAC2     = dt.Rows[0]["FSFRAC2"].ToString();  // dr3[9];
+				PARTS				= int.Parse(dt.Rows[0]["PARTS"].ToString());  // dr3[9];
+
+				PAPERTYPE = dt.Rows[0]["PAPERTYPE"].ToString();  // dr3[9];
+				ROLLWIDTH = dt.Rows[0]["ROLLWIDTH"].ToString();  // dr3[9];
+				PRESSSIZE = dt.Rows[0]["PRESSSIZE"].ToString();  // dr3[9];
+				LINEHOLES = bool.Parse(dt.Rows[0]["LINEHOLES"].ToString());  // dr3[9];
+				COLLATORCUT = dt.Rows[0]["COLLATORCUT"].ToString();  // dr3[9];
+
+				txtCustomerNum_LostFocus(this, null);
+
+			}
 		}
 
 		private void Tabs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -161,7 +210,7 @@ namespace ProDocEstimate
 		}
 
 		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		{ //string x = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
+		{ 
 			string? controlname = (sender as ComboBox)?.Name;
 
 			int Int1 = 0; int Int2 = 0;
@@ -179,7 +228,7 @@ namespace ProDocEstimate
 			if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null)
 			{ string? x =    (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem)?.Content.ToString();   Frac2 = CalcFraction(x); }
 
-			if (controlname.Substring(controlname.Length - 1) == "1")
+			if (controlname?.Substring(controlname.Length - 1) == "1")
 				{ Decimal1.Content = Frac1 + Int1; }
 			else
 				{ Decimal2.Content = Frac2 + Int2; }
@@ -230,11 +279,7 @@ namespace ProDocEstimate
 			}
 		}
 
-		private void dgElements_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			//MessageBox.Show(dgElements.CurrentCell.ToString());
-			//Debugger.Break(); // Which cell was clicked?
-		}
+		//private void dgElements_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
 
 		private void dgElements_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
@@ -248,5 +293,7 @@ namespace ProDocEstimate
 			hp.Close();
 			if (savedPrice != null) { Elements.Rows[RowNumber][ColumnNumber] = savedPrice; }
 		}
+
+		private void HandleEsc(object sender, KeyEventArgs e) { if (e.Key == Key.Escape) Close(); }
 	}
 }

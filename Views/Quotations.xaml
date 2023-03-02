@@ -194,7 +194,7 @@
 							FontFamily="Courier New"
 							FontSize="11"
 							SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
-							Text="{Binding FinalSize}">
+							Text="{Binding FSINT1}">
 							<ComboBoxItem Content="1" />
 							<ComboBoxItem Content="2" />
 							<ComboBoxItem Content="3" />
@@ -225,7 +225,7 @@
 							FontFamily="Courier New"
 							FontSize="11"
 							SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
-							Text="{Binding FinalSize}">
+							Text="{Binding FSFRAC1}">
 							<ComboBoxItem Content="" />
 							<ComboBoxItem Content="1/32" />
 							<ComboBoxItem Content="1/16" />
@@ -276,7 +276,7 @@
 							FontFamily="Courier New"
 							FontSize="11"
 							SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
-							Text="{Binding FinalSize}">
+							Text="{Binding FSINT2}">
 							<ComboBoxItem Content="1" />
 							<ComboBoxItem Content="2" />
 							<ComboBoxItem Content="3" />
@@ -307,7 +307,7 @@
 							FontFamily="Courier New"
 							FontSize="11"
 							SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
-							Text="{Binding FinalSize}">
+							Text="{Binding FSFRAC2}">
 							<ComboBoxItem Content="" />
 							<ComboBoxItem Content="1/32" />
 							<ComboBoxItem Content="1/16" />
@@ -404,7 +404,6 @@
 							VerticalContentAlignment="center"
 							Content=")" />
 
-
 						<Label
 							Grid.Row="4"
 							HorizontalAlignment="Right"
@@ -424,7 +423,8 @@
 							FontSize="11"
 							Maximum="12"
 							Minimum="1"
-							Text="1" />
+							Text="1"
+							Value="{Binding PARTS}" />
 
 						<Label
 							Grid.Row="5"
@@ -438,7 +438,7 @@
 							Grid.ColumnSpan="2"
 							Width="170"
 							Margin="4"
-							Text="{Binding ProjectType}">
+							Text="{Binding PAPERTYPE}">
 							<ComboBoxItem Content="First type" IsSelected="True" />
 							<ComboBoxItem Content="Second type" />
 							<ComboBoxItem Content="Third type" />
@@ -455,7 +455,7 @@
 							Grid.Column="1"
 							Width="170"
 							Margin="4"
-							Text="{Binding RollWidth}">
+							Text="{Binding ROLLWIDTH}">
 							<ComboBoxItem Content="11 1/2&quot;" IsSelected="True" />
 							<ComboBoxItem Content="14 7/8&quot;" />
 							<ComboBoxItem Content="Other width" />
@@ -473,7 +473,7 @@
 							Grid.Column="1"
 							Width="170"
 							Margin="4,4,0,4"
-							Text="{Binding PressSize}">
+							Text="{Binding PRESSSIZE}">
 							<ComboBoxItem Content="Small" IsSelected="True" />
 							<ComboBoxItem Content="Medium" />
 							<ComboBoxItem Content="Large" />
@@ -565,7 +565,8 @@
 							Margin="68,4,0,4"
 							LostFocus="txtCustomerNum_LostFocus"
 							MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
-							Style="{StaticResource TextField}" />
+							Style="{StaticResource TextField}"
+							Text="{Binding CUST_NUM}" />
 						<CheckBox
 							x:Name="chkProspect"
 							Grid.Row="11"
@@ -772,7 +773,6 @@
 						ItemsSource="{Binding dtElements.DefaultView}"
 						MouseDoubleClick="dgElements_MouseDoubleClick"
 						SelectedCellsChanged="dgElements_SelectedCellsChanged">
-						<!--  SelectionChanged="dgElements_SelectionChanged">  -->
 
 						<DataGrid.Columns>
 
