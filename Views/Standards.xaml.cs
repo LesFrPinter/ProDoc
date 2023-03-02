@@ -86,26 +86,26 @@ namespace ProDocEstimate.Views
 		private string? oneTimeMaterial; public string? OneTimeMaterial { get { return oneTimeMaterial; } set { oneTimeMaterial = value; OnPropertyChanged(); } }
 		private string? whatsThis;       public string? WhatsThis { get { return whatsThis; } set { whatsThis = value; OnPropertyChanged(); } }
 
-		private string? optNumAround;    public string? OptNumAround { get { return optNumAround; } set { optNumAround = value; OnPropertyChanged(); } }
-		private string? optPart;         public string? OptPart { get { return optPart; } set { optNumAround = value; OnPropertyChanged(); } }
-		private string? optStream;       public string? OptStream { get { return optStream; } set { optStream = value; OnPropertyChanged(); } }
-		private string? askNumFlat;      public string? AskNumFlat { get { return askNumFlat; } set { askNumFlat = value; OnPropertyChanged(); } }
+		private string? optNumAround;    public string? OptNumAround  { get { return optNumAround; } set { optNumAround = value; OnPropertyChanged(); } }
+		private string? optPart;         public string? OptPart       { get { return optPart; } set { optNumAround = value; OnPropertyChanged(); } }
+		private string? optStream;       public string? OptStream     { get { return optStream; } set { optStream = value; OnPropertyChanged(); } }
+		private string? askNumFlat;      public string? AskNumFlat    { get { return askNumFlat; } set { askNumFlat = value; OnPropertyChanged(); } }
 		private string? askNumFlatDesc;  public string? AskNumFlatDesc { get { return askNumFlatDesc; } set { askNumFlatDesc = value; OnPropertyChanged(); } }
-		private string? askNumRun;       public string? AskNumRun { get { return askNumRun; } set { askNumRun = value; OnPropertyChanged(); } }
+		private string? askNumRun;       public string? AskNumRun     { get { return askNumRun; } set { askNumRun = value; OnPropertyChanged(); } }
 		private string? askNumRunDesc;   public string? AskNumRunDesc { get { return askNumRunDesc; } set { askNumRunDesc = value; OnPropertyChanged(); } }
-		private string? optPercent;      public string? OptPercent { get { return optPercent; } set { optPercent = value; OnPropertyChanged(); } }
-		private string? optType;         public string? OptType { get { return optType; } set { optType = value; OnPropertyChanged(); } }
-		private string? eCLSetup;        public string? ECLSetup { get { return eCLSetup; } set { eCLSetup = value; OnPropertyChanged(); } }
-		private string? eCLRun;          public string? ECLRun { get { return eCLRun; } set { web = value; OnPropertyChanged(); } }
-		private string? eCLMaterial;     public string? ECLMaterial { get { return eCLMaterial; } set { web = value; OnPropertyChanged(); } }
-		private string? sets;            public string? Sets { get { return sets; } set { sets = value; OnPropertyChanged(); } }
-		private bool?   multStreamOK;    public bool?   MultStreamOK { get { return multStreamOK; } set { multStreamOK = value; OnPropertyChanged(); } }
-		private string? wasteSetup;      public string? WasteSetup { get { return wasteSetup; } set { wasteSetup = value; OnPropertyChanged(); } }
-		private string? wasteRunPct;     public string? WasteRunPct { get { return wasteRunPct; } set { wasteRunPct = value; OnPropertyChanged(); } }
+		private string? optPercent;      public string? OptPercent    { get { return optPercent; } set { optPercent = value; OnPropertyChanged(); } }
+		private string? optType;         public string? OptType       { get { return optType; } set { optType = value; OnPropertyChanged(); } }
+		private string? eCLSetup;        public string? ECLSetup      { get { return eCLSetup; } set { eCLSetup = value; OnPropertyChanged(); } }
+		private string? eCLRun;          public string? ECLRun        { get { return eCLRun; } set { web = value; OnPropertyChanged(); } }
+		private string? eCLMaterial;     public string? ECLMaterial   { get { return eCLMaterial; } set { web = value; OnPropertyChanged(); } }
+		private string? sets;            public string? Sets          { get { return sets; } set { sets = value; OnPropertyChanged(); } }
+		private bool?   multStreamOK;    public bool?   MultStreamOK  { get { return multStreamOK; } set { multStreamOK = value; OnPropertyChanged(); } }
+		private string? wasteSetup;      public string? WasteSetup    { get { return wasteSetup; } set { wasteSetup = value; OnPropertyChanged(); } }
+		private string? wasteRunPct;     public string? WasteRunPct   { get { return wasteRunPct; } set { wasteRunPct = value; OnPropertyChanged(); } }
 		private string? mRImpressions;   public string? MRImpressions { get { return mRImpressions; } set { mRImpressions = value; OnPropertyChanged(); } }
-		private string? cartonQty;       public string? CartonQty { get { return cartonQty; } set { cartonQty = value; OnPropertyChanged(); } }
-		private string? calcType;        public string? CalcType { get { return calcType; } set { calcType = value; OnPropertyChanged(); } }
-		private string? alert;           public string? Alert { get { return alert; } set { alert = value; OnPropertyChanged(); } }
+		private string? cartonQty;       public string? CartonQty     { get { return cartonQty; } set { cartonQty = value; OnPropertyChanged(); } }
+		private string? calcType;        public string? CalcType      { get { return calcType; } set { calcType = value; OnPropertyChanged(); } }
+		private string? alert;           public string? Alert         { get { return alert; } set { alert = value; OnPropertyChanged(); } }
 
 		public Standards()
       {

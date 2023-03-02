@@ -43,9 +43,9 @@ namespace ProDocEstimate
 
 		private void dgPrices_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{ int RowNumber = dgPrices.SelectedIndex;
-			if (RowNumber > Prices.Rows.Count - 1) return;
+			if (RowNumber > Prices?.Rows.Count - 1) return;
 			int ColumnNumber = dgPrices.CurrentCell.Column.DisplayIndex;
-			DataRow dr = Prices.Rows[RowNumber];
+			DataRow? dr = Prices?.Rows[RowNumber];
 			Price = float.Parse(dr.ItemArray[3].ToString());
 		}
 

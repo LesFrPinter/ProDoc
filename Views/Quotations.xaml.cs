@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ProDocEstimate.Views;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -70,7 +71,10 @@ namespace ProDocEstimate
 		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e)
-		{ System.Windows.MessageBox.Show("Copy by Quote # or by Job #", "Copy", MessageBoxButton.OK, MessageBoxImage.Question); }
+		{
+			QuoteLookup ql = new QuoteLookup();
+			ql.ShowDialog();
+		}
 
 		private void Tabs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{ switch (Tabs.SelectedIndex) 
@@ -150,22 +154,22 @@ namespace ProDocEstimate
 
 		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{ //string x = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
-			string controlname = (sender as ComboBox).Name;
+			string? controlname = (sender as ComboBox)?.Name;
 
 			int Int1 = 0; int Int2 = 0;
 			float Frac1 = 0.00F; float Frac2 = 0.00F;
 
 			if ((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null)
-			{ string Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem).Content.ToString(); Int1 = int.Parse(Str1);  }
+			{ string? Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem)?.Content.ToString(); Int1 = int.Parse(Str1);  }
 
 			if ((cmbFinalSizeFrac1.SelectedItem as ComboBoxItem) != null)
-			{ string x =    (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem).Content.ToString();   Frac1 = CalcFraction(x); }
+			{ string? x =    (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem)?.Content.ToString();   Frac1 = CalcFraction(x); }
 
 			if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null) 
-			{ string Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem).Content.ToString(); Int2 = int.Parse(Str2);  }
+			{ string? Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem)?.Content.ToString(); Int2 = int.Parse(Str2);  }
 
 			if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null)
-			{ string x =    (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem).Content.ToString();   Frac2 = CalcFraction(x); }
+			{ string? x =    (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem)?.Content.ToString();   Frac2 = CalcFraction(x); }
 
 			if (controlname.Substring(controlname.Length - 1) == "1")
 				{ Decimal1.Content = Frac1 + Int1; }
@@ -200,17 +204,16 @@ namespace ProDocEstimate
 		private void dgElements_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
 		{ if (sender == null) return;
 			var dg = sender as DataGrid;
-			//if (dg == null) return;
 			var index = dg.SelectedIndex;
 			if (index <= 0) return;
-			string Seq = Elements.Rows[index][0].ToString();
+			string? Seq = Elements?.Rows[index][0].ToString();
 			if (Seq == "10" || Seq == "11" || Seq == "12") {
 				txtPaper.Text = "";
 				txtColor.Text = "";
 				txtBasis.Text = "";
 				return;
 			}
-			string cell = Elements.Rows[index][1].ToString();
+			string? cell = Elements?.Rows[index][1].ToString();
 			if (cell != null)
 			{ string[] cells = cell.Split(" ");
 				txtPaper.Text = cells[1].ToString() + " " + cells[2].ToString();

@@ -1,13 +1,13 @@
 ﻿<Window
-	x:Class="ProDocEstimate.Views.CustomerLookup"
+	x:Class="ProDocEstimate.Views.QuoteLookup"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:ProDocEstimate.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Title="Customer Lookup"
+	Title="Quote Lookup"
 	Width="1180"
-	Height="450"
+	Height="850"
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
 
@@ -22,20 +22,26 @@
 			</Grid.RowDefinitions>
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Label HorizontalAlignment="Left" Content="Quote # " />
+				<TextBox
+					x:Name="txtQuoteNum"
+					Width="100"
+					Margin="0,4"
+					VerticalContentAlignment="Center"
+					Text="{Binding Quote_Num}" />
 				<Label HorizontalAlignment="Left" Content="Name: " />
 				<TextBox
 					x:Name="txtCustName"
 					Width="240"
 					Margin="0,4"
 					VerticalContentAlignment="Center"
-					Text="{Binding CustName}"
-					TextChanged="txtCustName_TextChanged" />
+					Text="{Binding CustName}" />
 				<Button
 					x:Name="btnGo"
 					Width="40"
 					Height="26"
-					Margin="20,0"
-					Click="btnGo_Click">
+					Click="btnGo_Click"
+					Margin="20,0">
 					<AccessText>_Go</AccessText>
 				</Button>
 				<Label HorizontalAlignment="Left" Content="Cust #: " />
@@ -62,57 +68,42 @@
 					VerticalContentAlignment="Center"
 					Content="_AutoComplete"
 					FontSize="16" />
-				<Label
-					x:Name="lblSearchType"
-					Width="200"
-					Height="22"
-					Margin="10,0,20,0"
-					Padding="2"
-					HorizontalAlignment="Right"
-					HorizontalContentAlignment="Right"
-					Content="{Binding Path=SearchType}"
-					FontSize="12"
-					FontWeight="Medium" />
 			</StackPanel>
 
 			<DataGrid
-				x:Name="dgCustomers"
+				x:Name="dgQuotes"
 				Grid.Row="1"
-				IsSynchronizedWithCurrentItem="True"
-				MouseDoubleClick="dgCustomers_MouseDoubleClick">
+				Margin="10"
+				IsSynchronizedWithCurrentItem="True">
 				<DataGrid.Columns>
+					<DataGridTextColumn
+						Width="*"
+						Binding="{Binding Path=QUOTE_NUM}"
+						Header="Quote #" />
+					<DataGridTextColumn
+						Width="*"
+						Binding="{Binding Path=QUOTE_DATE}"
+						Header="Date" />
+					<DataGridTextColumn
+						Width="*"
+						Binding="{Binding Path=AMOUNT}"
+						Header="Amount" />
 					<DataGridTextColumn
 						Width="2*"
 						Binding="{Binding Path=CUST_NAME}"
-						Header="CUSTOMER NAME" />
-					<DataGridTextColumn
-						Width="75"
-						Binding="{Binding Path=CUST_NUMB}"
-						Header="CODE" />
+						Header="Customer Name" />
 					<DataGridTextColumn
 						Width="2*"
 						Binding="{Binding Path=ADDRESS1}"
-						Header="ADDRESS" />
+						Header="Address" />
 					<DataGridTextColumn
 						Width="*"
-						Binding="{Binding Path=CITY}"
-						Header="CITY" />
-					<DataGridTextColumn
-						Width="50"
-						Binding="{Binding Path=STATE}"
-						Header="STATE" />
-					<DataGridTextColumn
-						Width="75"
-						Binding="{Binding Path=ZIP}"
-						Header="ZIP" />
-					<DataGridTextColumn
-						Width="125"
-						Binding="{Binding Path=PHONE}"
-						Header="PHONE" />
-					<DataGridTextColumn
-						Width="125"
 						Binding="{Binding Path=ATTENTION}"
-						Header="Attention" />
+						Header="Contact" />
+					<DataGridTextColumn
+						Width="*"
+						Binding="{Binding Path=PHONE}"
+						Header="Phone" />
 				</DataGrid.Columns>
 			</DataGrid>
 
@@ -124,16 +115,14 @@
 					x:Name="btnOK"
 					Width="40"
 					Height="25"
-					Margin="10,2,10,2"
-					Click="btnOK_Click">
+					Margin="10,2,10,2" >
 					<AccessText>O_k</AccessText>
 				</Button>
 				<Button
 					x:Name="btnCancel"
 					Width="70"
 					Height="25"
-					Margin="10,2,10,2"
-					Click="btnCancel_Click">
+					Margin="10,2,10,2" >
 					<AccessText>_Cancel</AccessText>
 				</Button>
 			</StackPanel>

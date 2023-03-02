@@ -8,10 +8,10 @@ namespace ProDocEstimate.Views
 {
 	public partial class EstimatorLookup : Window
 	{
-		private string estimator; public string Estimator { get { return estimator; } set { estimator = value; } }
-		private string estimatorCode; public string EstimatorCode { get { return estimatorCode; } set { estimatorCode = value; } }
+		private string? estimator; public string? Estimator { get { return estimator; } set { estimator = value; } }
+		private string? estimatorCode; public string? EstimatorCode { get { return estimatorCode; } set { estimatorCode = value; } }
 
-		private DataTable dt { get; set; }
+		private DataTable? dt { get; set; }
 
 		public EstimatorLookup()
 		{
