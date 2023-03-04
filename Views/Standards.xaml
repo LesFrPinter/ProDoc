@@ -73,7 +73,8 @@
 						<RowDefinition Height="10*" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />  <!--Do I need two columns?-->
+						<ColumnDefinition Width="*" />
+						<!--Do I need two columns?-->
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
@@ -85,6 +86,7 @@
 
 						<Label
 							Height="24"
+							Padding="6 0"
 							Margin="10,0,0,0"
 							HorizontalAlignment="Left"
 							Background="LightSlateGray"
@@ -105,6 +107,7 @@
 						<Label
 							Height="24"
 							Margin="150,0,0,0"
+							Padding="6 0"
 							HorizontalAlignment="Left"
 							Background="LightSlateGray"
 							Content="PRESS #"
@@ -123,7 +126,8 @@
 							Text="{Binding Path=PRESS_NUM}" />
 
 						<Label
-							Height="26"
+							Height="24"
+							Padding="6 0"
 							Margin="260,0,0,0"
 							HorizontalAlignment="Left"
 							Background="LightSlateGray"
@@ -212,8 +216,11 @@
 						<Label
 							Grid.Row="0"
 							Grid.Column="4"
-							Width="70"
-							Padding="0"
+							Height="24"
+							Padding="6 0"
+							Grid.RowSpan="2"
+							Margin="0 -28 0 0"
+							VerticalAlignment="Center"
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Background="LightSlateGray"
@@ -227,7 +234,7 @@
 							Width="80"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=BASE_SPEED}" />
+							Text="{Binding Path=BASESPEED}" />
 
 						<Label
 							Grid.Row="1"
@@ -286,8 +293,8 @@
 							Grid.Row="3"
 							Grid.Column="1"
 							Height="22"
-							Width="30"
-							Text="{Binding Path=TOWERS}" >
+							Width="40"
+							Text="{Binding Path=TOWERS}" Margin="10,3,0,3" >
 							<ComboBoxItem Content="2" />
 							<ComboBoxItem Content="4" />
 							<ComboBoxItem Content="6" />
@@ -322,8 +329,8 @@
 							Grid.Row="5"
 							Grid.Column="1"
 							Height="22"
-							Width="30"
-							Text="{Binding Path=RESTRICTD}" >
+							Width="40"
+							Text="{Binding Path=RESTRICTD}" Margin="10,3,0,3" >
 							<ComboBoxItem Content=" " />
 							<ComboBoxItem Content="S" />
 						</ComboBox>
@@ -425,7 +432,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt1}" />
+							Text="{Binding Path=SPEED1}" />
 						<TextBox
 							Grid.Row="4"
 							Grid.Column="5"
@@ -434,7 +441,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin1}" />
+							Text="{Binding Path=FOOTAGE1}" />
 
 						<TextBox
 							Grid.Row="5"
@@ -443,7 +450,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt2}" />
+							Text="{Binding Path=SPEED2}" />
 						<TextBox
 							Grid.Row="5"
 							Grid.Column="5"
@@ -451,7 +458,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin2}" />
+							Text="{Binding Path=FOOTAGE2}" />
 
 						<TextBox
 							Grid.Row="6"
@@ -460,7 +467,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt2}" />
+							Text="{Binding Path=SPEED2}" />
 						<TextBox
 							Grid.Row="6"
 							Grid.Column="5"
@@ -468,7 +475,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin3}" />
+							Text="{Binding Path=FOOTAGE3}" />
 
 						<TextBox
 							Grid.Row="7"
@@ -477,7 +484,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt4}" />
+							Text="{Binding Path=SPEED4}" />
 						<TextBox
 							Grid.Row="7"
 							Grid.Column="5"
@@ -485,7 +492,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin4}" />
+							Text="{Binding Path=FOOTAGE4}" />
 
 						<TextBox
 							Grid.Row="8"
@@ -494,7 +501,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt5}" />
+							Text="{Binding Path=SPEED5}" />
 						<TextBox
 							Grid.Row="8"
 							Grid.Column="5"
@@ -502,7 +509,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin5}" />
+							Text="{Binding Path=FOOTAGE5}" />
 
 						<TextBox
 							Grid.Row="9"
@@ -511,7 +518,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt6}" />
+							Text="{Binding Path=SPEED6}" />
 						<TextBox
 							Grid.Row="9"
 							Grid.Column="5"
@@ -519,7 +526,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin6}" />
+							Text="{Binding Path=FOOTAGE6}" />
 
 						<TextBox
 							Grid.Row="10"
@@ -528,7 +535,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt7}" />
+							Text="{Binding Path=SPEED7}" />
 						<TextBox
 							Grid.Row="10"
 							Grid.Column="5"
@@ -536,7 +543,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin7}" />
+							Text="{Binding Path=FOOTAGE7}" />
 
 						<TextBox
 							Grid.Row="11"
@@ -545,7 +552,7 @@
 							HorizontalAlignment="Right"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=ThouPerFt8}" />
+							Text="{Binding Path=SPEED8}" />
 						<TextBox
 							Grid.Row="11"
 							Grid.Column="5"
@@ -553,7 +560,7 @@
 							HorizontalAlignment="Left"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=FtPerMin8}" />
+							Text="{Binding Path=FOOTAGE8}" />
 
 						<DataGrid
 							Grid.Row="12"

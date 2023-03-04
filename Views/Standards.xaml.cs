@@ -117,7 +117,7 @@ namespace ProDocEstimate.Views
 
 			PRESS_STANDARD = "01";
 			PRESS_NUM = "01";
-			PRESS_DESCRIPTION = "Description of selected press";
+			PRESS_DESCRIPTION = "22 inch Press";
 
 			WEB = "1.2";
 			WEB2 = "1.3";
@@ -128,9 +128,9 @@ namespace ProDocEstimate.Views
 			RESTRICTD = "S";
 			Slowdown = "1";  // WHAT IS THIS?
 
-			PRESS_COST = "1";
-			PRESS_SELL = "1";
-			BASESPEED = "1";
+			PRESS_COST = "1.12";
+			PRESS_SELL = "2.21";
+			BASESPEED = "428";
 
 			SPEED1 = "91";
 			SPEED2 = "153";
@@ -150,9 +150,9 @@ namespace ProDocEstimate.Views
 			FOOTAGE7 = "91.70";
 			FOOTAGE8 = "183.00";
 
-			SETUP_ECL = "1";
-			RUN_ECL = "1";
-			MATL_ECL = "1";
+			SETUP_ECL = "151.10";
+			RUN_ECL = "151.20";
+			MATL_ECL = "802.00";
 
 			FeatureStandardNum = "02";
 			FeatureNum = "03";
