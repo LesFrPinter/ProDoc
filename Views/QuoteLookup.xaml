@@ -96,12 +96,18 @@
 						Header="Quote #" />
 					<DataGridTextColumn
 						Width="*"
-						Binding="{Binding Path=QUOTE_DATE}"
+						Binding="{Binding Path=QUOTE_DATE, StringFormat=MM/dd/yyyy}"
 						Header="Date" />
 					<DataGridTextColumn
 						Width="*"
-						Binding="{Binding Path=AMOUNT}"
-						Header="Amount" />
+						Binding="{Binding Path=AMOUNT, StringFormat=C}"
+						Header="Amount" >
+						<DataGridTextColumn.ElementStyle>
+							<Style TargetType="{x:Type TextBlock}">
+								<Setter Property="HorizontalAlignment" Value="Right" />
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
 					<DataGridTextColumn
 						Width="2*"
 						Binding="{Binding Path=CUST_NAME}"

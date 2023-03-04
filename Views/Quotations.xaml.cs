@@ -20,14 +20,8 @@ namespace ProDocEstimate
 		protected void OnPropertyChanged([CallerMemberName] string? name = null)
 		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		private string? quote_num = "";
-			public string? QUOTE_NUM
-		{
-			get { return quote_num; }
-			set { quote_num = value; OnPropertyChanged(); }
-		}
-
-		private string? cust_num; public string? CUST_NUM { get { return cust_num; } set { cust_num = value; OnPropertyChanged(); } }	
+		private string? quote_num = ""; public string? QUOTE_NUM { get { return quote_num; } set { quote_num = value; OnPropertyChanged(); } }
+		private string? cust_num;       public string? CUST_NUM { get { return cust_num; } set { cust_num = value; OnPropertyChanged(); } }
 
 		private string? projectType = ""; public  string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
 
@@ -59,9 +53,13 @@ namespace ProDocEstimate
 		private decimal? qty4;         public decimal? Qty4        { get { return qty4;         } set { qty4         = value; OnPropertyChanged(); } }
 		private decimal? qty5;         public decimal? Qty5        { get { return qty5;         } set { qty5         = value; OnPropertyChanged(); } }
 		private decimal? qty6;         public decimal? Qty6        { get { return qty6;         } set { qty6         = value; OnPropertyChanged(); } }
+
 		private DataTable? features;   public DataTable? Features  { get { return features;     } set { features     = value; OnPropertyChanged(); } }
 		private DataTable? elements;   public DataTable? Elements  { get { return elements;     } set { elements     = value; OnPropertyChanged(); } }
 		private DataTable? projTypes;  public DataTable? ProjTypes { get { return projTypes;    } set { projTypes    = value; OnPropertyChanged(); } }
+
+		private DataTable? papertypes; public DataTable? PaperTypes { get { return papertypes; } set { papertypes = value; OnPropertyChanged(); } }
+		private DataTable? rollwidths; public DataTable? RollWidths { get { return rollwidths; } set { rollwidths = value; OnPropertyChanged(); } }
 
 		public Quotations()  
 		{ 
@@ -70,7 +68,14 @@ namespace ProDocEstimate
 			LoadFeatures();
 			LoadElements();
 			LoadProjTypes();
+			LoadPaperTypes();
+			LoadRollWidths();
+
 			this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+			// This also works:
+			//	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+
 		}
 
 		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
@@ -202,6 +207,33 @@ namespace ProDocEstimate
 			this.cmbProjectType.ItemsSource = ProjTypes.DefaultView;
 			this.cmbProjectType.DisplayMemberPath = "TEXT";
 			this.cmbProjectType.SelectedValuePath = "TEXT";
+		}
+
+		private void LoadPaperTypes()
+		{
+			SqlConnection cn = new SqlConnection(ConnectionString);
+			string str = "SELECT PaperType FROM PaperTypes";
+			SqlDataAdapter da = new SqlDataAdapter(str, cn);
+			DataSet ds = new DataSet("PaperTypes");
+			da.Fill(ds);
+			foreach (DataRow dr in ds.Tables[0].Rows)
+			{ cmbPaperType.Items.Add(dr["PaperType"].ToString()); }
+			//cmbPaperType.SelectedValuePath = "PaperType";
+			//cmbPaperType.DisplayMemberPath = "PaperType";
+		}
+
+		private void LoadRollWidths()
+		{
+			SqlConnection cn2 = new SqlConnection(ConnectionString);
+			string str2 = "SELECT RollWidth FROM RollWidths";
+			SqlDataAdapter da2 = new SqlDataAdapter(str2, cn2);
+			DataSet ds2 = new DataSet("dsRollWidths");
+			da2.Fill(ds2);
+//			cmbRollWidth.ItemsSource = ds2.Tables[0].DefaultView;
+			foreach (DataRow dr in ds2.Tables[0].Rows)
+			{ cmbRollWidth.Items.Add(dr["RollWidth"].ToString()); }
+			//cmbRollWidth.SelectedValuePath = "RollWidth";
+			//cmbRollWidth.DisplayMemberPath = "RollWidth";
 		}
 
 		private void btnShowHideFeaturesPicker_Click(object sender, RoutedEventArgs e)
