@@ -96,9 +96,11 @@ namespace ProDocEstimate.Views
 		private string? askNumRunDesc;   public string? AskNumRunDesc { get { return askNumRunDesc; } set { askNumRunDesc = value; OnPropertyChanged(); } }
 		private string? optPercent;      public string? OptPercent    { get { return optPercent; } set { optPercent = value; OnPropertyChanged(); } }
 		private string? optType;         public string? OptType       { get { return optType; } set { optType = value; OnPropertyChanged(); } }
-		private string? eCLSetup;        public string? ECLSetup      { get { return eCLSetup; } set { eCLSetup = value; OnPropertyChanged(); } }
-		private string? eCLRun;          public string? ECLRun        { get { return eCLRun; } set { web = value; OnPropertyChanged(); } }
-		private string? eCLMaterial;     public string? ECLMaterial   { get { return eCLMaterial; } set { web = value; OnPropertyChanged(); } }
+
+		//private string? eCLSetup;        public string? ECLSetup      { get { return eCLSetup; } set { eCLSetup = value; OnPropertyChanged(); } }
+		//private string? eCLRun;          public string? ECLRun        { get { return eCLRun; } set { web = value; OnPropertyChanged(); } }
+		//private string? eCLMaterial;     public string? ECLMaterial   { get { return eCLMaterial; } set { web = value; OnPropertyChanged(); } }
+
 		private string? sets;            public string? Sets          { get { return sets; } set { sets = value; OnPropertyChanged(); } }
 		private bool?   multStreamOK;    public bool?   MultStreamOK  { get { return multStreamOK; } set { multStreamOK = value; OnPropertyChanged(); } }
 		private string? wasteSetup;      public string? WasteSetup    { get { return wasteSetup; } set { wasteSetup = value; OnPropertyChanged(); } }
@@ -194,9 +196,11 @@ namespace ProDocEstimate.Views
 			AskNumRunDesc = "2";
 			OptPercent = "2";
 			OptType = "2";
-			ECLSetup = "2";
-			ECLRun = "2";
-			ECLMaterial = "2";
+
+			//ECLSetup = "2";
+			//ECLRun = "2";
+			//ECLMaterial = "2";
+
 			Sets = "2";
 			MultStreamOK = true;
 			WasteSetup = "22";

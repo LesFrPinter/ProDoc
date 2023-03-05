@@ -465,6 +465,7 @@
 						         Grid.Column="1"
 						         Width="65"
 						         Margin="4"
+										 Text="{Binding Path=COLLATORCUT}"
 						         Style="{StaticResource TextField}" />
 
 						<Label Grid.Row="10"
