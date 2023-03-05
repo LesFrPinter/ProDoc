@@ -2,6 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SharpDX.Direct3D9;
+using Microsoft.OData.Edm;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
+using System.Printing;
 
 namespace ProDocEstimate.Views
 {
@@ -57,35 +61,35 @@ namespace ProDocEstimate.Views
 		//	
 
 		private string? featureStandardNum; public string? FeatureStandardNum { get { return featureStandardNum; } set { featureStandardNum = value; OnPropertyChanged(); } }
-		private string? featureNum;      public string? FeatureNum { get { return featureNum; } set { featureNum = value; OnPropertyChanged(); } }
+		private string? featureNum;      public string? FeatureNum    { get { return featureNum; } set { featureNum = value; OnPropertyChanged(); } }
 		private string? featureDescription; public string? FeatureDescription { get { return featureDescription; } set { featureDescription = value; OnPropertyChanged(); } }
-		private string? sort;            public string? Sort { get { return sort; } set { sort = value; OnPropertyChanged(); } }
-		private string? flatPricing;     public string? FlatPricing { get { return flatPricing; } set { flatPricing = value; OnPropertyChanged(); } }
-		private string? runPricing;      public string? RunPricing { get { return runPricing; } set { runPricing = value; OnPropertyChanged(); } }
-		private string? priceByInch;     public string? PriceByInch { get { return priceByInch; } set { priceByInch = value; } }
+		private string? sort;            public string? Sort          { get { return sort; } set { sort = value; OnPropertyChanged(); } }
+		private string? flatPricing;     public string? FlatPricing   { get { return flatPricing; } set { flatPricing = value; OnPropertyChanged(); } }
+		private string? runPricing;      public string? RunPricing    { get { return runPricing; } set { runPricing = value; OnPropertyChanged(); } }
+		private string? priceByInch;     public string? PriceByInch   { get { return priceByInch; } set { priceByInch = value; } }
 		private string? priceBySqInch;   public string? PriceBySqInch { get { return priceBySqInch; } set { priceBySqInch = value; } }
-		private string? sellDollars;     public string? SellDollars { get { return sellDollars; } set { sellDollars = value; OnPropertyChanged(); } }
-		private string? costDollars;     public string? CostDollars { get { return costDollars; } set { costDollars = value; OnPropertyChanged(); } }
-		private string? costMU1;         public string? CostMU1 { get { return costMU1; } set { costMU1 = value; OnPropertyChanged(); } }
-		private string? costMU2;         public string? CostMU2 { get { return costMU2; } set { costMU2 = value; OnPropertyChanged(); } }
+		private string? sellDollars;     public string? SellDollars   { get { return sellDollars; } set { sellDollars = value; OnPropertyChanged(); } }
+		private string? costDollars;     public string? CostDollars   { get { return costDollars; } set { costDollars = value; OnPropertyChanged(); } }
+		private string? costMU1;         public string? CostMU1       { get { return costMU1; } set { costMU1 = value; OnPropertyChanged(); } }
+		private string? costMU2;         public string? CostMU2       { get { return costMU2; } set { costMU2 = value; OnPropertyChanged(); } }
 
-		private string? prepTime; public string? PrepTime { get { return prepTime; } set { prepTime = value; OnPropertyChanged(); } }
-		private string? prepMaterial; public string? PrepMaterial { get { return prepMaterial; } set { prepMaterial = value; OnPropertyChanged(); } }
-		private string? prepSlowdown; public string? PrepSlowdown { get { return prepSlowdown; } set { prepSlowdown = value; OnPropertyChanged(); } }
+		private string? prepTime;        public string? PrepTime      { get { return prepTime; } set { prepTime = value; OnPropertyChanged(); } }
+		private string? prepMaterial;    public string? PrepMaterial  { get { return prepMaterial; } set { prepMaterial = value; OnPropertyChanged(); } }
+		private string? prepSlowdown;    public string? PrepSlowdown  { get { return prepSlowdown; } set { prepSlowdown = value; OnPropertyChanged(); } }
 
-		private string? pressTime;       public string? PressTime { get { return pressTime; } set { pressTime = value; OnPropertyChanged(); } }
+		private string? pressTime;       public string? PressTime     { get { return pressTime; } set { pressTime = value; OnPropertyChanged(); } }
 		private string? pressMaterial;   public string? PressMaterial { get { return pressMaterial; } set { pressMaterial = value; OnPropertyChanged(); } }
 		private string? pressSlowdown;   public string? PressSlowdown { get { return pressSlowdown; } set { pressSlowdown = value; OnPropertyChanged(); } }
 
-		private string? colorTime;       public string? ColorTime { get { return colorTime; } set { colorTime = value; OnPropertyChanged(); } }
+		private string? colorTime;       public string? ColorTime     { get { return colorTime; } set { colorTime = value; OnPropertyChanged(); } }
 		private string? colorMaterial;   public string? ColorMaterial { get { return colorMaterial; } set { colorMaterial = value; OnPropertyChanged(); } }
 		private string? colorSlowdown;   public string? ColorSlowdown { get { return colorSlowdown; } set { colorSlowdown = value; OnPropertyChanged(); } }
-		private string? bindCost;        public string? BindCost { get { return bindCost; } set { bindCost = value; OnPropertyChanged(); } }
+		private string? bindCost;        public string? BindCost      { get { return bindCost; } set { bindCost = value; OnPropertyChanged(); } }
 
-		private string? otherTime;       public string? OtherTime { get { return otherTime; } set { otherTime = value; OnPropertyChanged(); } }
+		private string? otherTime;       public string? OtherTime     { get { return otherTime; } set { otherTime = value; OnPropertyChanged(); } }
 		private string? otherMaterial;   public string? OtherMaterial { get { return otherMaterial; } set { otherMaterial = value; OnPropertyChanged(); } }
 		private string? oneTimeMaterial; public string? OneTimeMaterial { get { return oneTimeMaterial; } set { oneTimeMaterial = value; OnPropertyChanged(); } }
-		private string? whatsThis;       public string? WhatsThis { get { return whatsThis; } set { whatsThis = value; OnPropertyChanged(); } }
+		private string? whatsThis;       public string? WhatsThis     { get { return whatsThis; } set { whatsThis = value; OnPropertyChanged(); } }
 
 		private string? optNumAround;    public string? OptNumAround  { get { return optNumAround; } set { optNumAround = value; OnPropertyChanged(); } }
 		private string? optPart;         public string? OptPart       { get { return optPart; } set { optNumAround = value; OnPropertyChanged(); } }
@@ -96,11 +100,6 @@ namespace ProDocEstimate.Views
 		private string? askNumRunDesc;   public string? AskNumRunDesc { get { return askNumRunDesc; } set { askNumRunDesc = value; OnPropertyChanged(); } }
 		private string? optPercent;      public string? OptPercent    { get { return optPercent; } set { optPercent = value; OnPropertyChanged(); } }
 		private string? optType;         public string? OptType       { get { return optType; } set { optType = value; OnPropertyChanged(); } }
-
-		//private string? eCLSetup;        public string? ECLSetup      { get { return eCLSetup; } set { eCLSetup = value; OnPropertyChanged(); } }
-		//private string? eCLRun;          public string? ECLRun        { get { return eCLRun; } set { web = value; OnPropertyChanged(); } }
-		//private string? eCLMaterial;     public string? ECLMaterial   { get { return eCLMaterial; } set { web = value; OnPropertyChanged(); } }
-
 		private string? sets;            public string? Sets          { get { return sets; } set { sets = value; OnPropertyChanged(); } }
 		private bool?   multStreamOK;    public bool?   MultStreamOK  { get { return multStreamOK; } set { multStreamOK = value; OnPropertyChanged(); } }
 		private string? wasteSetup;      public string? WasteSetup    { get { return wasteSetup; } set { wasteSetup = value; OnPropertyChanged(); } }
@@ -109,6 +108,65 @@ namespace ProDocEstimate.Views
 		private string? cartonQty;       public string? CartonQty     { get { return cartonQty; } set { cartonQty = value; OnPropertyChanged(); } }
 		private string? calcType;        public string? CalcType      { get { return calcType; } set { calcType = value; OnPropertyChanged(); } }
 		private string? alert;           public string? Alert         { get { return alert; } set { alert = value; OnPropertyChanged(); } }
+
+		// Collator standards
+		private string? coll_std; public string? COLLATOR_STANDARD { get { return coll_std; } set { coll_std = value; OnPropertyChanged(); } }
+		private string? coll_num; public string? COLLATOR_NUM { get { return coll_num; } set { coll_num = value; OnPropertyChanged(); } }
+		private Date? created; public Date? CREATED { get { return created; } set { created = value; OnPropertyChanged(); } }
+		private Date? changed; public Date? CHANGED { get { return changed; } set { changed = value; OnPropertyChanged(); } }
+		private string? collator_description; public string? COLLATOR_DESCRIPTION { get { return collator_description; } set { collator_description = value; OnPropertyChanged(); } }
+
+		private int? cont_speed1; public int? CONT_SPEED1 { get { return cont_speed1; } set { cont_speed1 = value; OnPropertyChanged(); } }
+		private int? cont_speed2; public int? CONT_SPEED2 { get { return cont_speed2; } set { cont_speed2 = value; OnPropertyChanged(); } }
+		private int? cont_speed3; public int? CONT_SPEED3 { get { return cont_speed3; } set { cont_speed3 = value; OnPropertyChanged(); } }
+		private int? cont_speed4; public int? CONT_SPEED4 { get { return cont_speed4; } set { cont_speed4 = value; OnPropertyChanged(); } }
+		private int? cont_speed5; public int? CONT_SPEED5 { get { return cont_speed5; } set { cont_speed5 = value; OnPropertyChanged(); } }
+		private int? cont_speed6; public int? CONT_SPEED6 { get { return cont_speed6; } set { cont_speed6 = value; OnPropertyChanged(); } }
+		private int? cont_speed7; public int? CONT_SPEED7 { get { return cont_speed7; } set { cont_speed7 = value; OnPropertyChanged(); } }
+		private int? cont_speed8; public int? CONT_SPEED8 { get { return cont_speed8; } set { cont_speed8 = value; OnPropertyChanged(); } }
+		private int? cont_speed9; public int? CONT_SPEED9 { get { return cont_speed9; } set { cont_speed9 = value; OnPropertyChanged(); } }
+		private int? cont_speed10; public int? CONT_SPEED10 { get { return cont_speed10; } set { cont_speed10 = value; OnPropertyChanged(); } }
+
+		private int? snap_speed1; public int? SNAP_SPEED1 { get { return snap_speed1; } set { snap_speed1 = value; OnPropertyChanged(); } }
+		private int? snap_speed2; public int? SNAP_SPEED2 { get { return snap_speed2; } set { snap_speed2 = value; OnPropertyChanged(); } }
+		private int? snap_speed3; public int? SNAP_SPEED3 { get { return snap_speed3; } set { snap_speed3 = value; OnPropertyChanged(); } }
+		private int? snap_speed4; public int? SNAP_SPEED4 { get { return snap_speed4; } set { snap_speed4 = value; OnPropertyChanged(); } }
+		private int? snap_speed5; public int? SNAP_SPEED5 { get { return snap_speed5; } set { snap_speed5 = value; OnPropertyChanged(); } }
+		private int? snap_speed6; public int? SNAP_SPEED6 { get { return snap_speed6; } set { snap_speed6 = value; OnPropertyChanged(); } }
+		private int? snap_speed7; public int? SNAP_SPEED7 { get { return snap_speed7; } set { snap_speed7 = value; OnPropertyChanged(); } }
+		private int? snap_speed8; public int? SNAP_SPEED8 { get { return snap_speed8; } set { snap_speed8 = value; OnPropertyChanged(); } }
+		private int? snap_speed9; public int? SNAP_SPEED9 { get { return snap_speed9; } set { snap_speed9 = value; OnPropertyChanged(); } }
+		private int? snap_speed10; public int? SNAP_SPEED10 { get { return snap_speed10; } set { snap_speed10 = value; OnPropertyChanged(); } }
+
+		private int? cont_speed21; public int? CONT_SPEED21 { get { return cont_speed21; } set { cont_speed21 = value; OnPropertyChanged(); } }
+		private int? cont_speed22; public int? CONT_SPEED22 { get { return cont_speed22; } set { cont_speed22 = value; OnPropertyChanged(); } }
+		private int? cont_speed23; public int? CONT_SPEED23 { get { return cont_speed23; } set { cont_speed23 = value; OnPropertyChanged(); } }
+		private int? cont_speed24; public int? CONT_SPEED24 { get { return cont_speed24; } set { cont_speed24 = value; OnPropertyChanged(); } }
+		private int? cont_speed25; public int? CONT_SPEED25 { get { return cont_speed25; } set { cont_speed25 = value; OnPropertyChanged(); } }
+		private int? cont_speed26; public int? CONT_SPEED26 { get { return cont_speed26; } set { cont_speed26 = value; OnPropertyChanged(); } }
+		private int? cont_speed27; public int? CONT_SPEED27 { get { return cont_speed27; } set { cont_speed27 = value; OnPropertyChanged(); } }
+		private int? cont_speed28; public int? CONT_SPEED28 { get { return cont_speed28; } set { cont_speed28 = value; OnPropertyChanged(); } }
+		private int? cont_speed29; public int? CONT_SPEED29 { get { return cont_speed29; } set { cont_speed29 = value; OnPropertyChanged(); } }
+		private int? cont_speed210; public int? CONT_SPEED210 { get { return cont_speed210; } set { cont_speed210 = value; OnPropertyChanged(); } }
+
+		private int? snap_speed21; public int? SNAP_SPEED21 { get { return snap_speed21; } set { snap_speed21 = value; OnPropertyChanged(); } }
+		private int? snap_speed22; public int? SNAP_SPEED22 { get { return snap_speed22; } set { snap_speed22 = value; OnPropertyChanged(); } }
+		private int? snap_speed23; public int? SNAP_SPEED23 { get { return snap_speed23; } set { snap_speed23 = value; OnPropertyChanged(); } }
+		private int? snap_speed24; public int? SNAP_SPEED24 { get { return snap_speed24; } set { snap_speed24 = value; OnPropertyChanged(); } }
+		private int? snap_speed25; public int? SNAP_SPEED25 { get { return snap_speed25; } set { snap_speed25 = value; OnPropertyChanged(); } }
+		private int? snap_speed26; public int? SNAP_SPEED26 { get { return snap_speed26; } set { snap_speed26 = value; OnPropertyChanged(); } }
+		private int? snap_speed27; public int? SNAP_SPEED27 { get { return snap_speed27; } set { snap_speed27 = value; OnPropertyChanged(); } }
+		private int? snap_speed28; public int? SNAP_SPEED28 { get { return snap_speed28; } set { snap_speed28 = value; OnPropertyChanged(); } }
+		private int? snap_speed29; public int? SNAP_SPEED29 { get { return snap_speed29; } set { snap_speed29 = value; OnPropertyChanged(); } }
+		private int? snap_speed210; public int? SNAP_SPEED210 { get { return snap_speed210; } set { snap_speed210 = value; OnPropertyChanged(); } }
+
+
+		private float? coll_setup_ecl; public float? COLL_SETUP_ECL { get { return coll_setup_ecl; } set { coll_setup_ecl = value; } }
+		private float? coll_run_ecl;   public float? COLL_RUN_ECL   { get { return coll_run_ecl;   } set { coll_run_ecl   = value; } }
+		private float? coll_matl_ecl;  public float? COLL_MATL_ECL  { get { return coll_matl_ecl;  } set { coll_matl_ecl  = value; } }
+
+		private float? coll_cost; public float? COLL_COST { get { return coll_cost; } set { coll_cost = value; } }
+		private float? coll_sell; public float? COLL_SELL { get { return coll_sell; } set { coll_sell = value; } }
 
 		public Standards()
       {
@@ -152,9 +210,9 @@ namespace ProDocEstimate.Views
 			FOOTAGE7 = "91.70";
 			FOOTAGE8 = "183.00";
 
-			SETUP_ECL = "151.10";
-			RUN_ECL = "151.20";
-			MATL_ECL = "802.00";
+			SETUP_ECL = "151.10";	// prefix with "PRESS_"
+			RUN_ECL = "151.20";   //    "
+			MATL_ECL = "802.00";  //    "
 
 			FeatureStandardNum = "02";
 			FeatureNum = "03";
@@ -197,10 +255,6 @@ namespace ProDocEstimate.Views
 			OptPercent = "2";
 			OptType = "2";
 
-			//ECLSetup = "2";
-			//ECLRun = "2";
-			//ECLMaterial = "2";
-
 			Sets = "2";
 			MultStreamOK = true;
 			WasteSetup = "22";
@@ -209,7 +263,44 @@ namespace ProDocEstimate.Views
 			CartonQty = "2";
 			CalcType = "2";
 			Alert = "Where does this come from?";
-	}
+
+			COLLATOR_STANDARD = "1";
+			COLLATOR_NUM = "311";
+			COLLATOR_DESCRIPTION = "11 inch collator";
+
+			Date CREATED = new DateTime(2022,02,01);
+			Date CHANGED = new DateTime(2022, 05, 14);
+
+			CONT_SPEED1 = 177;
+			CONT_SPEED2 = 177;
+			CONT_SPEED3 = 177;
+			CONT_SPEED4 = 177;
+			CONT_SPEED5 = 177;
+			CONT_SPEED6 = 159;
+			CONT_SPEED7 = 159;
+
+			SNAP_SPEED1 = 135;
+			SNAP_SPEED2 = 135;
+			SNAP_SPEED3 = 135;
+			SNAP_SPEED4 = 135;
+			SNAP_SPEED5 = 135;
+			SNAP_SPEED6 = 125;
+			SNAP_SPEED7 = 117;
+			SNAP_SPEED8 = 117;
+			SNAP_SPEED9 = 117;
+			SNAP_SPEED10 = 117;
+
+			// CONT_SPEED21-210 have no values in the database
+
+			SNAP_SPEED21 = 117;
+			SNAP_SPEED22 = 117;
+
+			COLL_SETUP_ECL = 303.10F;
+			COLL_RUN_ECL = 303.20F;
+			COLL_MATL_ECL = 303.20F;
+			COLL_COST = 40.00F;
+			COLL_SELL = 40.00F;
+		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null)

@@ -640,7 +640,7 @@
 							Width="30"
 							Height="24"
 							Margin="10,0,0,0"
-							Text="{Binding Path=FeatureStandardNum}" />
+							Text="{Binding Path=FEATURE_STANDARD}" />
 						<Label
 							Background="LightSteelBlue"
 							Content="FEATURE"
@@ -1268,17 +1268,18 @@
 						Grid.ColumnSpan="2"
 						Orientation="Horizontal">
 						<Label
-							Width="200"
+							Width="140"
 							VerticalContentAlignment="Center"
 							Background="LightSteelBlue"
 							Content="STANDARD #"
 							Foreground="AliceBlue" />
 						<TextBox
-							Width="50"
+							Width="100"
 							Height="22"
+							Text="{Binding Path=COLLATOR_STANDARD}"
 							Style="{StaticResource TextField}" />
 						<Label
-							Width="200"
+							Width="149"
 							VerticalContentAlignment="Center"
 							Background="LightSteelBlue"
 							Content="COLLATOR #"
@@ -1286,6 +1287,7 @@
 						<TextBox
 							Width="50"
 							Height="22"
+							Text="{Binding Path=COLLATOR_NUM}"
 							Style="{StaticResource TextField}" />
 						<Label
 							Width="80"
@@ -1296,6 +1298,7 @@
 						<TextBox
 							Width="190"
 							Height="22"
+							Text="{Binding Path=COLLATOR_DESCRIPTION}"
 							Style="{StaticResource TextField}" />
 					</StackPanel>
 
@@ -1384,6 +1387,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED1}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1391,6 +1395,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED2}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1398,6 +1403,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED3}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1405,6 +1411,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED4}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1412,6 +1419,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED5}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1419,6 +1427,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED6}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1426,6 +1435,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED7}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1433,6 +1443,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED8}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1440,6 +1451,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED9}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1448,6 +1460,7 @@
 									Width="120"
 									Height="24"
 									HorizontalContentAlignment="Right"
+									Text="{Binding Path=CONT_SPEED10}"
 									VerticalContentAlignment="Center" />
 
 								<TextBox
@@ -1455,6 +1468,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED1}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1462,6 +1476,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED2}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1469,6 +1484,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED3}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1476,6 +1492,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED4}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1483,6 +1500,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED5}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1490,6 +1508,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED6}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1497,6 +1516,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED7}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1504,6 +1524,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED8}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1511,6 +1532,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED9}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1518,10 +1540,12 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED10}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 
 							</Grid>
+
 							<Grid Grid.Column="1">
 								<Grid.RowDefinitions>
 									<RowDefinition Height="*" />
@@ -1597,6 +1621,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED21}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1604,6 +1629,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED22}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1611,6 +1637,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED23}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1618,6 +1645,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED24}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1625,6 +1653,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED25}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1632,6 +1661,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED26}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1639,6 +1669,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED27}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1646,6 +1677,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED28}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1653,6 +1685,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED29}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1660,6 +1693,7 @@
 									Grid.Column="1"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=CONT_SPEED210}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 
@@ -1668,6 +1702,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED21}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1675,6 +1710,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED22}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1682,6 +1718,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED23}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1689,6 +1726,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED24}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1696,6 +1734,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED25}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1703,6 +1742,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED26}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1710,6 +1750,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED27}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1717,6 +1758,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED28}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1724,6 +1766,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED29}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 								<TextBox
@@ -1731,6 +1774,7 @@
 									Grid.Column="2"
 									Width="120"
 									Height="24"
+									Text="{Binding Path=SNAP_SPEED210}"
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center" />
 
@@ -1758,6 +1802,7 @@
 								<TextBox
 									Width="120"
 									Height="22"
+									Text="{Binding Path=COLL_COST}"
 									Style="{StaticResource TextField}" />
 								<Label
 									Width="120"
@@ -1776,6 +1821,7 @@
 								<TextBox
 									Width="120"
 									Height="22"
+									Text="{Binding Path=COLL_SELL}"
 									Style="{StaticResource TextField}" />
 								<StackPanel Grid.Row="0" Orientation="Horizontal">
 									<Label
@@ -1786,6 +1832,7 @@
 									<TextBox
 										Width="100"
 										Height="22"
+									  Text="{Binding Path=COLL_SETUP_ECL}"
 										Style="{StaticResource TextField}" />
 									<Label
 										HorizontalContentAlignment="Right"
@@ -1794,6 +1841,7 @@
 									<TextBox
 										Width="100"
 										Height="22"
+									  Text="{Binding Path=COLL_RUN_ECL}"
 										Style="{StaticResource TextField}" />
 									<Label
 										HorizontalContentAlignment="Right"
@@ -1802,6 +1850,7 @@
 									<TextBox
 										Width="100"
 										Height="22"
+									  Text="{Binding Path=COLL_MATL_ECL}"
 										Style="{StaticResource TextField}" />
 								</StackPanel>
 

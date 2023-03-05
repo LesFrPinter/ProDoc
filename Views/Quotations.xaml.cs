@@ -283,7 +283,7 @@ namespace ProDocEstimate
 		{ if (sender == null) return;
 			var dg = sender as DataGrid;
 			var index = dg.SelectedIndex;
-			if (index <= 0) return;
+			if (index < 0) return;
 			string? Seq = Elements?.Rows[index][0].ToString();
 			if (Seq == "10" || Seq == "11" || Seq == "12") {
 				txtPaper.Text = "";
