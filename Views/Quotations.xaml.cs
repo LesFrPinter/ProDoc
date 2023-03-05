@@ -29,7 +29,7 @@ namespace ProDocEstimate
 		private string? fsfrac1;  public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
 		private string? fsint2;   public string? FSINT2  { get { return fsint2;  } set { fsint2  = value; OnPropertyChanged(); } }
 		private string? fsfrac2;  public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
-		private int?    pARTS;    public int?    PARTS   { get { return pARTS;   } set { pARTS   = value; OnPropertyChanged(); } }
+		private int?    parts;    public int?    PARTS   { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
 
 		private string? papertype; public string? PAPERTYPE {  get { return papertype; } set { papertype = value; OnPropertyChanged(); } }
 		private string? rollwidth; public string? ROLLWIDTH {  get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
@@ -120,17 +120,17 @@ namespace ProDocEstimate
 				DataTable dt = ds.Tables[0]; DataRow dr = dt.Rows[0];
 				DataRow dr3 = dt.Rows[0];
 				CUST_NUM    = dt.Rows[0]["CUST_NUM"].ToString();
-				ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();  // dr3[5];
+				ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();
 				FSINT1      = dt.Rows[0]["FSINT1"].ToString();  // dr3[6];
 				FSFRAC1     = dt.Rows[0]["FSFRAC1"].ToString();  // dr3[7];
 				FSINT2      = dt.Rows[0]["FSINT2"].ToString();  // dr3[8];
 				FSFRAC2     = dt.Rows[0]["FSFRAC2"].ToString();  // dr3[9];
-				PARTS				= int.Parse(dt.Rows[0]["PARTS"].ToString());  // dr3[9];
+				PARTS				= int.Parse(dt.Rows[0]["PARTS"].ToString());
 
 				PAPERTYPE = dt.Rows[0]["PAPERTYPE"].ToString();  // dr3[9];
 				ROLLWIDTH = dt.Rows[0]["ROLLWIDTH"].ToString();  // dr3[9];
 				PRESSSIZE = dt.Rows[0]["PRESSSIZE"].ToString();  // dr3[9];
-				LINEHOLES = bool.Parse(dt.Rows[0]["LINEHOLES"].ToString());  // dr3[9];
+				LINEHOLES = bool.Parse(dt.Rows[0]["LINEHOLES"].ToString());
 				COLLATORCUT = dt.Rows[0]["COLLATORCUT"].ToString();  // dr3[9];
 
 				txtCustomerNum_LostFocus(this, null);
@@ -212,28 +212,17 @@ namespace ProDocEstimate
 		private void LoadPaperTypes()
 		{
 			SqlConnection cn = new SqlConnection(ConnectionString);
-			string str = "SELECT PaperType FROM PaperTypes";
-			SqlDataAdapter da = new SqlDataAdapter(str, cn);
-			DataSet ds = new DataSet("PaperTypes");
-			da.Fill(ds);
-			foreach (DataRow dr in ds.Tables[0].Rows)
-			{ cmbPaperType.Items.Add(dr["PaperType"].ToString()); }
-			//cmbPaperType.SelectedValuePath = "PaperType";
-			//cmbPaperType.DisplayMemberPath = "PaperType";
+			string str = "SELECT PaperType FROM PaperTypes"; SqlDataAdapter da = new SqlDataAdapter(str, cn);
+			DataSet ds = new DataSet("PaperTypes"); da.Fill(ds); DataTable dt = ds.Tables[0];
+			cmbPaperType.ItemsSource = dt.DefaultView;
 		}
 
 		private void LoadRollWidths()
 		{
 			SqlConnection cn2 = new SqlConnection(ConnectionString);
-			string str2 = "SELECT RollWidth FROM RollWidths";
-			SqlDataAdapter da2 = new SqlDataAdapter(str2, cn2);
-			DataSet ds2 = new DataSet("dsRollWidths");
-			da2.Fill(ds2);
-//			cmbRollWidth.ItemsSource = ds2.Tables[0].DefaultView;
-			foreach (DataRow dr in ds2.Tables[0].Rows)
-			{ cmbRollWidth.Items.Add(dr["RollWidth"].ToString()); }
-			//cmbRollWidth.SelectedValuePath = "RollWidth";
-			//cmbRollWidth.DisplayMemberPath = "RollWidth";
+			string str2 = "SELECT RollWidth FROM RollWidths"; SqlDataAdapter da2 = new SqlDataAdapter(str2, cn2);
+			DataSet ds2 = new DataSet("dsRollWidths"); da2.Fill(ds2); DataTable dt = ds2.Tables[0];
+			cmbRollWidth.ItemsSource = dt.DefaultView;
 		}
 
 		private void btnShowHideFeaturesPicker_Click(object sender, RoutedEventArgs e)

@@ -17,39 +17,39 @@ namespace ProDocEstimate.Views
 		private string? pressNum;						public string? PRESS_NUM				 { get { return pressNum;					  } set { pressNum					 = value; OnPropertyChanged(); } }
 
 		private string? web;        public string? WEB { get { return web; } set { web = value; OnPropertyChanged(); } }
-		private string? webFrac;    public string? WEB2 { get { return webFrac; } set { webFrac = value; OnPropertyChanged(); } }
-		private string? paperWidth; public string? WIDTH { get { return paperWidth; } set { paperWidth = value; OnPropertyChanged(); } }
+		private string? web2;    public string? WEB2 { get { return web2; } set { web2 = value; OnPropertyChanged(); } }
+		private string? width; public string? WIDTH { get { return width; } set { width = value; OnPropertyChanged(); } }
 
 		private string? towers;     public string? TOWERS { get { return towers; } set { towers = value; OnPropertyChanged(); } }
 		private string? variable;   public string? VARIABLE { get { return variable; } set { variable = value; OnPropertyChanged(); } }
 		private string? restrictTo; public string? RESTRICTD { get { return restrictTo; } set { restrictTo = value; OnPropertyChanged(); } }
 		private string? slowdown;   public string? Slowdown { get { return slowdown; } set { slowdown = value; OnPropertyChanged(); } }
 
-		private string? costPerHr;  public string? PRESS_COST { get { return costPerHr; } set { costPerHr = value; OnPropertyChanged(); } }
-		private string? sellPerHr;  public string? PRESS_SELL { get { return sellPerHr; } set { sellPerHr = value; OnPropertyChanged(); } }
+		private string? press_cost;  public string? PRESS_COST { get { return press_cost; } set { press_cost = value; OnPropertyChanged(); } }
+		private string? press_sell;  public string? PRESS_SELL { get { return press_sell; } set { press_sell = value; OnPropertyChanged(); } }
 		private string? baseSpeed;  public string? BASESPEED  { get { return baseSpeed; } set { baseSpeed = value; OnPropertyChanged(); } }
 
-		private string? thouPerFt1; public string? SPEED1 { get { return thouPerFt1; } set { thouPerFt1 = value; OnPropertyChanged(); } }
-		private string? thouPerFt2; public string? SPEED2 { get { return thouPerFt2; } set { thouPerFt2 = value; OnPropertyChanged(); } }
-		private string? thouPerFt3; public string? SPEED3 { get { return thouPerFt3; } set { thouPerFt3 = value; OnPropertyChanged(); } }
-		private string? thouPerFt4; public string? SPEED4 { get { return thouPerFt4; } set { thouPerFt4 = value; OnPropertyChanged(); } }
-		private string? thouPerFt5; public string? SPEED5 { get { return thouPerFt5; } set { thouPerFt5 = value; OnPropertyChanged(); } }
-		private string? thouPerFt6; public string? SPEED6 { get { return thouPerFt6; } set { thouPerFt6 = value; OnPropertyChanged(); } }
-		private string? thouPerFt7; public string? SPEED7 { get { return thouPerFt7; } set { thouPerFt7 = value; OnPropertyChanged(); } }
-		private string? thouPerFt8; public string? SPEED8 { get { return thouPerFt8; } set { thouPerFt8 = value; OnPropertyChanged(); } }
+		private string? speed1; public string? SPEED1 { get { return speed1; } set { speed1 = value; OnPropertyChanged(); } }
+		private string? speed2; public string? SPEED2 { get { return speed2; } set { speed2 = value; OnPropertyChanged(); } }
+		private string? speed3; public string? SPEED3 { get { return speed3; } set { speed3 = value; OnPropertyChanged(); } }
+		private string? speed4; public string? SPEED4 { get { return speed4; } set { speed4 = value; OnPropertyChanged(); } }
+		private string? speed5; public string? SPEED5 { get { return speed5; } set { speed5 = value; OnPropertyChanged(); } }
+		private string? speed6; public string? SPEED6 { get { return speed6; } set { speed6 = value; OnPropertyChanged(); } }
+		private string? speed7; public string? SPEED7 { get { return speed7; } set { speed7 = value; OnPropertyChanged(); } }
+		private string? speed8; public string? SPEED8 { get { return speed8; } set { speed8 = value; OnPropertyChanged(); } }
 
-		private string? ftPerMin1;  public string? FOOTAGE1 { get { return ftPerMin1; } set { ftPerMin1 = value; OnPropertyChanged(); } }
-		private string? ftPerMin2;  public string? FOOTAGE2 { get { return ftPerMin2; } set { ftPerMin2 = value; OnPropertyChanged(); } }
-		private string? ftPerMin3;  public string? FOOTAGE3 { get { return ftPerMin3; } set { ftPerMin3 = value; OnPropertyChanged(); } }
-		private string? ftPerMin4;  public string? FOOTAGE4 { get { return ftPerMin4; } set { ftPerMin4 = value; OnPropertyChanged(); } }
-		private string? ftPerMin5;  public string? FOOTAGE5 { get { return ftPerMin5; } set { ftPerMin5 = value; OnPropertyChanged(); } }
-		private string? ftPerMin6;  public string? FOOTAGE6 { get { return ftPerMin6; } set { ftPerMin6 = value; OnPropertyChanged(); } }
-		private string? ftPerMin7;  public string? FOOTAGE7 { get { return ftPerMin7; } set { ftPerMin7 = value; OnPropertyChanged(); } }
-		private string? ftPerMin8;  public string? FOOTAGE8 { get { return ftPerMin8; } set { ftPerMin8 = value; OnPropertyChanged(); } }
+		private string? footage1;  public string? FOOTAGE1 { get { return footage1; } set { footage1 = value; OnPropertyChanged(); } }
+		private string? footage2;  public string? FOOTAGE2 { get { return footage2; } set { footage2 = value; OnPropertyChanged(); } }
+		private string? footage3;  public string? FOOTAGE3 { get { return footage3; } set { footage3 = value; OnPropertyChanged(); } }
+		private string? footage4;  public string? FOOTAGE4 { get { return footage4; } set { footage4 = value; OnPropertyChanged(); } }
+		private string? footage5;  public string? FOOTAGE5 { get { return footage5; } set { footage5 = value; OnPropertyChanged(); } }
+		private string? footage6;  public string? FOOTAGE6 { get { return footage6; } set { footage6 = value; OnPropertyChanged(); } }
+		private string? footage7;  public string? FOOTAGE7 { get { return footage7; } set { footage7 = value; OnPropertyChanged(); } }
+		private string? footage8;  public string? FOOTAGE8 { get { return footage8; } set { footage8 = value; OnPropertyChanged(); } }
 
-		private string? eclSetup;     public string? SETUP_ECL		{ get { return eclSetup;		 } set { eclSetup			= value; OnPropertyChanged(); } }
-		private string? runCost;      public string? RUN_ECL			{ get { return runCost;			 } set { runCost			= value; OnPropertyChanged(); } }
-		private string? materialCost; public string? MATL_ECL     { get { return materialCost; } set { materialCost = value; OnPropertyChanged(); } }
+		private string? setupECL;     public string? SETUP_ECL		{ get { return setupECL;		 } set { setupECL = value; OnPropertyChanged(); } }
+		private string? runECL;      public string? RUN_ECL			{ get { return runECL;			 } set { runECL = value; OnPropertyChanged(); } }
+		private string? matlECL; public string? MATL_ECL     { get { return matlECL; } set { matlECL = value; OnPropertyChanged(); } }
 
 		// Feature Standards properties
 

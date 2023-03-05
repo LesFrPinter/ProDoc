@@ -240,6 +240,7 @@
 							Grid.Row="1"
 							Grid.Column="0"
 							Padding="0"
+							VerticalContentAlignment="Center"
 							HorizontalAlignment="Right"
 							Content="Web-frac" />
 						<TextBox
@@ -322,6 +323,8 @@
 							Grid.Row="5"
 							Grid.Column="0"
 							Padding="0"
+							Margin="0 0 5 0"
+							Height="22"
 							HorizontalAlignment="Right"
 							Content="Restrict to" />
 						<ComboBox
