@@ -1,0 +1,699 @@
+﻿<Window x:Class="ProDocEstimate.Views.Collator_Standards"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+				WindowStartupLocation="CenterScreen"
+        Title="Collator Standards" 
+				Width="900" Height="750" >
+
+	<Window.Resources>
+		<Style x:Key="TextField" TargetType="TextBox">
+			<Setter Property="Height" Value="24" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Margin" Value="10,0,0,0" />
+		</Style>
+		<Style TargetType="Label">
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="Margin" Value="10,6,10,6" />
+		</Style>
+		<Style TargetType="MenuItem">
+			<Style.Triggers>
+				<Trigger Property="IsEnabled" Value="True">
+					<Setter Property="FontWeight" Value="Bold" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+	</Window.Resources>
+
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Menu>
+			<MenuItem
+				x:Name="mnuExit"
+				Click="mnuExit_Click"
+				Header="E_xit"
+				IsEnabled="{Binding Path=NotEditing}" />
+			<MenuItem
+				x:Name="mnuEdit"
+				Click="mnuEdit_Click"
+				Header="_Edit"
+				IsEnabled="{Binding Path=NotEditing}" />
+			<MenuItem
+				x:Name="mnuNew"
+				Click="mnuNew_Click"
+				Header="_New"
+				IsEnabled="{Binding Path=NotEditing}" />
+			<MenuItem
+				x:Name="mnuSave"
+				Click="mnuSave_Click"
+				Header="_Save"
+				IsEnabled="{Binding Path=Editing}" />
+			<MenuItem
+				x:Name="mnuCancel"
+				Click="mnuCancel_Click"
+				Header="Cancel"
+				IsEnabled="{Binding Path=Editing}" />
+		</Menu>
+
+			<Grid Grid.Row="1"
+					Height="700"
+					VerticalAlignment="Top"
+					Background="LightGray">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="60" />
+					<RowDefinition Height="200" />
+				</Grid.RowDefinitions>
+
+				<StackPanel
+						Grid.Row="0"
+						Grid.ColumnSpan="2"
+						Orientation="Horizontal">
+					<Label
+							Width="140"
+							VerticalContentAlignment="Center"
+							Background="LightSteelBlue"
+							Content="STANDARD #"
+							Foreground="AliceBlue" />
+					<TextBox
+							Width="100"
+							Height="22"
+							Text="{Binding Path=COLLATOR_STANDARD}"
+							Style="{StaticResource TextField}" />
+					<Label
+							Width="149"
+							VerticalContentAlignment="Center"
+							Background="LightSteelBlue"
+							Content="COLLATOR #"
+							Foreground="AliceBlue" />
+					<TextBox
+							Width="50"
+							Height="22"
+							Text="{Binding Path=COLLATOR_NUM}"
+							Style="{StaticResource TextField}" />
+					<Label
+							Width="80"
+							VerticalContentAlignment="Center"
+							Background="LightSteelBlue"
+							Content="DESCRIPTION"
+							Foreground="AliceBlue" />
+					<TextBox
+							Width="190"
+							Height="22"
+							Text="{Binding Path=COLLATOR_DESCRIPTION}"
+							Style="{StaticResource TextField}" />
+				</StackPanel>
+
+				<Grid Grid.Row="1" Grid.ColumnSpan="2">
+
+					<Grid>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+
+						<Grid Grid.Column="0">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="2*" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+
+							<Label
+									Grid.RowSpan="2"
+									Grid.ColumnSpan="4"
+									Height="30"
+									Margin="10,0,0,0"
+									VerticalAlignment="Top"
+									Background="LightSteelBlue"
+									Content="             #Parts     Continuous                           Snap-out                                "
+									Foreground="AliceBlue" />
+							<Label
+									Grid.Row="1"
+									Padding="0"
+									HorizontalAlignment="Right"
+									Content="1" />
+							<Label
+									Grid.Row="2"
+									HorizontalAlignment="Right"
+									Content="2" />
+							<Label
+									Grid.Row="3"
+									HorizontalAlignment="Right"
+									Content="3" />
+							<Label
+									Grid.Row="4"
+									HorizontalAlignment="Right"
+									Content="4" />
+							<Label
+									Grid.Row="5"
+									HorizontalAlignment="Right"
+									Content="5" />
+							<Label
+									Grid.Row="6"
+									HorizontalAlignment="Right"
+									Content="6" />
+							<Label
+									Grid.Row="7"
+									HorizontalAlignment="Right"
+									Content="7" />
+							<Label
+									Grid.Row="8"
+									HorizontalAlignment="Right"
+									Content="8" />
+							<Label
+									Grid.Row="9"
+									HorizontalAlignment="Right"
+									Content="9" />
+							<Label
+									Grid.Row="10"
+									HorizontalAlignment="Right"
+									Content="10" />
+
+							<TextBox
+									Grid.Row="1"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED1}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="2"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED2}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="3"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED3}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="4"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED4}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="5"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED5}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="6"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED6}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="7"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED7}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="8"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED8}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="9"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED9}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="10"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									HorizontalContentAlignment="Right"
+									Text="{Binding Path=CONT_SPEED10}"
+									VerticalContentAlignment="Center" />
+
+							<TextBox
+									Grid.Row="1"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED1}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="2"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED2}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="3"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED3}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="4"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED4}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="5"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED5}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="6"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED6}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="7"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED7}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="8"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED8}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="9"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED9}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="10"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED10}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+						</Grid>
+
+						<Grid Grid.Column="1">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="2*" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+
+							<Label
+									Grid.RowSpan="2"
+									Grid.ColumnSpan="4"
+									Height="24"
+									Margin="10,0,0,0"
+									VerticalAlignment="Top"
+									Background="LightSteelBlue"
+									Content="             #Parts     Continuous                           Snap-out                                "
+									Foreground="AliceBlue" />
+							<Label
+									Grid.Row="1"
+									HorizontalAlignment="Right"
+									Content="1" />
+							<Label
+									Grid.Row="2"
+									HorizontalAlignment="Right"
+									Content="2" />
+							<Label
+									Grid.Row="3"
+									HorizontalAlignment="Right"
+									Content="3" />
+							<Label
+									Grid.Row="4"
+									HorizontalAlignment="Right"
+									Content="4" />
+							<Label
+									Grid.Row="5"
+									HorizontalAlignment="Right"
+									Content="5" />
+							<Label
+									Grid.Row="6"
+									HorizontalAlignment="Right"
+									Content="6" />
+							<Label
+									Grid.Row="7"
+									HorizontalAlignment="Right"
+									Content="7" />
+							<Label
+									Grid.Row="8"
+									HorizontalAlignment="Right"
+									Content="8" />
+							<Label
+									Grid.Row="9"
+									HorizontalAlignment="Right"
+									Content="9" />
+							<Label
+									Grid.Row="10"
+									HorizontalAlignment="Right"
+									Content="10" />
+
+							<TextBox
+									Grid.Row="1"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED21}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="2"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED22}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="3"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED23}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="4"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED24}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="5"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED25}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="6"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED26}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="7"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED27}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="8"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED28}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="9"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED29}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="10"
+									Grid.Column="1"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=CONT_SPEED210}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+							<TextBox
+									Grid.Row="1"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED21}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="2"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED22}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="3"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED23}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="4"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED24}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="5"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED25}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="6"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED26}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="7"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED27}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="8"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED28}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="9"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED29}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+							<TextBox
+									Grid.Row="10"
+									Grid.Column="2"
+									Width="120"
+									Height="24"
+									Text="{Binding Path=SNAP_SPEED210}"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center" />
+
+						</Grid>
+
+					</Grid>
+
+				</Grid>
+
+				<StackPanel
+						Grid.Row="2"
+						Grid.ColumnSpan="2"
+						Orientation="Horizontal">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<StackPanel Grid.Row="0" Orientation="Horizontal">
+							<Label
+									Width="120"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center"
+									Content="COST $/hr" />
+							<TextBox
+									Width="120"
+									Height="22"
+									Text="{Binding Path=COLL_COST}"
+									Style="{StaticResource TextField}" />
+							<Label
+									Width="120"
+									Margin="300,0,0,0"
+									HorizontalContentAlignment="Center"
+									VerticalContentAlignment="Center"
+									Background="LightSteelBlue"
+									Content="   -ECL --" />
+						</StackPanel>
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
+							<Label
+									Width="120"
+									HorizontalContentAlignment="Right"
+									VerticalContentAlignment="Center"
+									Content="SELL $/hr" />
+							<TextBox
+									Width="120"
+									Height="22"
+									Text="{Binding Path=COLL_SELL}"
+									Style="{StaticResource TextField}" />
+							<StackPanel Grid.Row="0" Orientation="Horizontal">
+								<Label
+										Margin="100,0,0,0"
+										HorizontalContentAlignment="Right"
+										VerticalContentAlignment="Center"
+										Content="Setup" />
+								<TextBox
+										Width="100"
+										Height="22"
+									  Text="{Binding Path=COLL_SETUP_ECL}"
+										Style="{StaticResource TextField}" />
+								<Label
+										HorizontalContentAlignment="Right"
+										VerticalContentAlignment="Center"
+										Content="Run" />
+								<TextBox
+										Width="100"
+										Height="22"
+									  Text="{Binding Path=COLL_RUN_ECL}"
+										Style="{StaticResource TextField}" />
+								<Label
+										HorizontalContentAlignment="Right"
+										VerticalContentAlignment="Center"
+										Content="Material" />
+								<TextBox
+										Width="100"
+										Height="22"
+									  Text="{Binding Path=COLL_MATL_ECL}"
+										Style="{StaticResource TextField}" />
+							</StackPanel>
+
+						</StackPanel>
+					</Grid>
+				</StackPanel>
+
+				<DataGrid
+						Grid.Row="3"
+						Grid.ColumnSpan="2"
+						Width="860"
+						Height="180"
+						Margin="7,15,0,5"
+						IsSynchronizedWithCurrentItem="True">
+					<DataGrid.Columns>
+						<DataGridTextColumn Width="100" Header="Std #" />
+						<DataGridTextColumn Width="120" Header="Collator #" />
+						<DataGridTextColumn Width="620" Header="Description" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+
+	</Grid>
+
+</Window>

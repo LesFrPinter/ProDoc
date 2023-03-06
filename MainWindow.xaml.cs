@@ -122,5 +122,17 @@ namespace ProDocEstimate
 			test.Owner = this;
 			test.ShowDialog();
     }
+
+		private void mnuPressStandards_Click(object sender, RoutedEventArgs e) {
+			Press_Standards ps = new Press_Standards(); ps.ShowDialog();
+    }
+
+		private void mnuCollatorStandards_Click(object sender, RoutedEventArgs e) {
+			Collator_Standards cs = new Collator_Standards(); cs.ShowDialog();
+    }
+
+		private void mnuFeatureStandards_Click(object sender, RoutedEventArgs e) {
+			Feature_Standards fs = new Feature_Standards(); fs.ShowDialog();
+    }
   }
 }

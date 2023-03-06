@@ -32,11 +32,15 @@
 				<MenuItem  FlowDirection="RightToLeft" x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" />
 			</MenuItem>
 			<MenuItem Header="_Demos">
-				<MenuItem x:Name="mnuQuotations" Header="_Quotations (from whiteboard)" Height="40" Click="mnuQuotations_Click" />
+				<MenuItem x:Name="mnuQuotations"  Header="_Quotations (from whiteboard)" Height="40" Click="mnuQuotations_Click" />
 				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
-				<MenuItem x:Name="mnuCustomers"  Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
-				<MenuItem x:Name="mnuStandards" Header="Standards" Height="40" Click="mnuStandards_Click"/>
-				<!--<MenuItem x:Name="mnuItems"      Header="_Items"      Height="40" Click="mnuItems_Click"      />-->
+				<MenuItem x:Name="mnuCustomers"   Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
+				<MenuItem x:Name="mnuStandards"   Header="Standards" Height="40" >
+					<MenuItem x:Name="mnuPressStandards"	  Header="Press Standards"    Click="mnuPressStandards_Click"	   />
+					<MenuItem x:Name="mnuCollatorStandards" Header="Collator Standards" Click="mnuCollatorStandards_Click" />
+					<MenuItem x:Name="mnuFeatureStandards"  Header="Feature Standards"  Click="mnuFeatureStandards_Click"  />
+				</MenuItem>
+
 			</MenuItem>
 			<MenuItem Header="_Current system" Height="40" >
 				<MenuItem x:Name="mnuEdit"  Header="_Edit an existing estimate" Click="mnuEdit_Click" />
@@ -47,12 +51,6 @@
 		</Menu>
 
 		<Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
-
-		<!--<TextBlock Grid.Row="1" Text="Pro Vision II" VerticalAlignment="Bottom" Foreground="White" FontSize="56" Margin="0 0 0 10" HorizontalAlignment="Center" FontWeight="Bold" Padding="10" Background="Red" >
-			<TextBlock.Effect>
-				<DropShadowEffect ShadowDepth="12" Direction="330" Color="Black" Opacity="0.8" BlurRadius="10" />
-			</TextBlock.Effect>
-		</TextBlock>-->
 
 		<Label Grid.Row="2" Content="Pro Vision II" Padding="20 5 20 5" FontFamily="Comic Sans MS" Style="{StaticResource MainTitle}"  >
 			<Label.Effect>

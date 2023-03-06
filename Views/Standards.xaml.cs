@@ -1,14 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Microsoft.OData.Edm;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using SharpDX.Direct3D9;
-using Microsoft.OData.Edm;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Printing;
 
-namespace ProDocEstimate.Views
-{
+namespace ProDocEstimate.Views {
+
 	public partial class Standards : Window, INotifyPropertyChanged
     {
 
@@ -20,18 +17,18 @@ namespace ProDocEstimate.Views
 		private string? pressDescription;   public string? PRESS_DESCRIPTION { get { return pressDescription;   } set { pressDescription   = value; OnPropertyChanged(); } }
 		private string? pressNum;						public string? PRESS_NUM				 { get { return pressNum;					  } set { pressNum					 = value; OnPropertyChanged(); } }
 
-		private string? web;        public string? WEB { get { return web; } set { web = value; OnPropertyChanged(); } }
-		private string? web2;    public string? WEB2 { get { return web2; } set { web2 = value; OnPropertyChanged(); } }
-		private string? width; public string? WIDTH { get { return width; } set { width = value; OnPropertyChanged(); } }
+		private string? web;        public string? WEB       { get { return web;        } set { web          = value; OnPropertyChanged(); } }
+		private string? web2;       public string? WEB2      { get { return web2;       } set { web2         = value; OnPropertyChanged(); } }
+		private string? width;      public string? WIDTH     { get { return width;      } set { width        = value; OnPropertyChanged(); } }
 
-		private string? towers;     public string? TOWERS { get { return towers; } set { towers = value; OnPropertyChanged(); } }
-		private string? variable;   public string? VARIABLE { get { return variable; } set { variable = value; OnPropertyChanged(); } }
-		private string? restrictTo; public string? RESTRICTD { get { return restrictTo; } set { restrictTo = value; OnPropertyChanged(); } }
-		private string? slowdown;   public string? Slowdown { get { return slowdown; } set { slowdown = value; OnPropertyChanged(); } }
+		private string? towers;     public string? TOWERS    { get { return towers;     } set { towers       = value; OnPropertyChanged(); } }
+		private string? variable;   public string? VARIABLE  { get { return variable;   } set { variable     = value; OnPropertyChanged(); } }
+		private string? restrictTo; public string? RESTRICTD { get { return restrictTo; } set { restrictTo   = value; OnPropertyChanged(); } }
+		private string? slowdown;   public string? Slowdown  { get { return slowdown;   } set { slowdown     = value; OnPropertyChanged(); } }
 
-		private string? press_cost;  public string? PRESS_COST { get { return press_cost; } set { press_cost = value; OnPropertyChanged(); } }
-		private string? press_sell;  public string? PRESS_SELL { get { return press_sell; } set { press_sell = value; OnPropertyChanged(); } }
-		private string? baseSpeed;  public string? BASESPEED  { get { return baseSpeed; } set { baseSpeed = value; OnPropertyChanged(); } }
+		private string? press_cost; public string? PRESS_COST { get { return press_cost; } set { press_cost  = value; OnPropertyChanged(); } }
+		private string? press_sell; public string? PRESS_SELL { get { return press_sell; } set { press_sell  = value; OnPropertyChanged(); } }
+		private string? baseSpeed;  public string? BASESPEED  { get { return baseSpeed;  } set { baseSpeed   = value; OnPropertyChanged(); } }
 
 		private string? speed1; public string? SPEED1 { get { return speed1; } set { speed1 = value; OnPropertyChanged(); } }
 		private string? speed2; public string? SPEED2 { get { return speed2; } set { speed2 = value; OnPropertyChanged(); } }
@@ -51,9 +48,9 @@ namespace ProDocEstimate.Views
 		private string? footage7;  public string? FOOTAGE7 { get { return footage7; } set { footage7 = value; OnPropertyChanged(); } }
 		private string? footage8;  public string? FOOTAGE8 { get { return footage8; } set { footage8 = value; OnPropertyChanged(); } }
 
-		private string? setupECL;     public string? SETUP_ECL		{ get { return setupECL;		 } set { setupECL = value; OnPropertyChanged(); } }
-		private string? runECL;      public string? RUN_ECL			{ get { return runECL;			 } set { runECL = value; OnPropertyChanged(); } }
-		private string? matlECL; public string? MATL_ECL     { get { return matlECL; } set { matlECL = value; OnPropertyChanged(); } }
+		private string? setupECL;  public string? SETUP_ECL	{ get { return setupECL; } set { setupECL = value; OnPropertyChanged(); } }
+		private string? runECL;    public string? RUN_ECL		{ get { return runECL;	 } set { runECL   = value; OnPropertyChanged(); } }
+		private string? matlECL;   public string? MATL_ECL  { get { return matlECL;  } set { matlECL  = value; OnPropertyChanged(); } }
 
 		// Feature Standards properties
 
