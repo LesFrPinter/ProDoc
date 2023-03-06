@@ -142,10 +142,12 @@
 
 						<TextBox Grid.Row="1"
 						         Grid.Column="1"
-						         Width="100"
-						         Margin="4"
+										 x:Name="txtQuoteNum"
+						         Width="85"
+						         Margin="4,4,0,4"
 						         HorizontalAlignment="Left"
-						         IsEnabled="False"
+						         IsEnabled="True"
+										 LostFocus="txtQuoteNum_LostFocus"
 						         Text="{Binding QUOTE_NUM}" />
 
 						<Label Grid.Row="2"
@@ -1093,7 +1095,7 @@
 					       HorizontalAlignment="Left"
 					       Content="Multiplier" />
 
-								
+
 					<TextBox x:Name="txtPaper"
 					         Grid.Row="9"
 					         Grid.Column="3"
