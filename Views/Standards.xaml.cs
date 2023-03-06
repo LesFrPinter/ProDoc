@@ -268,7 +268,7 @@ namespace ProDocEstimate.Views
 			COLLATOR_NUM = "311";
 			COLLATOR_DESCRIPTION = "11 inch collator";
 
-			Date CREATED = new DateTime(2022,02,01);
+			Date CREATED = new DateTime(2022, 02, 01);
 			Date CHANGED = new DateTime(2022, 05, 14);
 
 			CONT_SPEED1 = 177;

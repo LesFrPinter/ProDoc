@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Telerik.Licensing;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
@@ -60,6 +61,9 @@ namespace ProDocEstimate
 
 		private DataTable? papertypes; public DataTable? PaperTypes { get { return papertypes; } set { papertypes = value; OnPropertyChanged(); } }
 		private DataTable? rollwidths; public DataTable? RollWidths { get { return rollwidths; } set { rollwidths = value; OnPropertyChanged(); } }
+
+		private float mult; public float MULT { get { return mult; } set { mult = value; OnPropertyChanged(); } }
+
 
 		public Quotations()  
 		{ 
@@ -170,9 +174,9 @@ namespace ProDocEstimate
 			this.Elements.Rows.Add("10", "Base Charge",       1.23F, 1.00F, 2.20F);
 			this.Elements.Rows.Add("11", "Order Entry",       0.00D, 0.00D, 0.00D);
 			this.Elements.Rows.Add("12", "Pre Press",         0.00D, 0.00D, 0.00D);
-			this.Elements.Rows.Add("13", @"Wht 11 5/8"" CB",  0.00D, 0.00D, 0.00D);
-			this.Elements.Rows.Add("14", @"Can 11 5/8"" CFB", 0.00D, 0.00D, 0.00D);
-			this.Elements.Rows.Add("15", @"Pink 11 5/8"" CF", 0.00D, 0.00D, 0.00D);
+			this.Elements.Rows.Add("13", @"Wht 11 5/8"" CB",  0.00D, 1.00D, 0.00D);
+			this.Elements.Rows.Add("14", @"Can 11 5/8"" CFB", 0.00D, 1.00D, 0.00D);
+			this.Elements.Rows.Add("15", @"Pink 11 5/8"" CF", 0.00D, 1.00D, 0.00D);
 
 			this.dgElements.DataContext = this;
 			this.dgElements.ItemsSource = Elements.DefaultView;
@@ -289,6 +293,7 @@ namespace ProDocEstimate
 				txtPaper.Text = "";
 				txtColor.Text = "";
 				txtBasis.Text = "";
+				MULT = 1.00F;
 				return;
 			}
 			string? cell = Elements?.Rows[index][1].ToString();
@@ -297,10 +302,9 @@ namespace ProDocEstimate
 				txtPaper.Text = cells[1].ToString() + " " + cells[2].ToString();
 				txtColor.Text = cells[0].ToString();
 				txtBasis.Text = cells[3].ToString();
+				MULT = float.Parse(Elements.Rows[index][3].ToString());
 			}
 		}
-
-		//private void dgElements_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
 
 		private void dgElements_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
@@ -316,5 +320,16 @@ namespace ProDocEstimate
 		}
 
 		private void HandleEsc(object sender, KeyEventArgs e) { if (e.Key == Key.Escape) Close(); }
+
+		private void txtMult_LostFocus(object sender, RoutedEventArgs e) {
+			var index = dgElements.SelectedIndex;
+			if (index >= 0) 
+				{ MULT = float.Parse(txtMult.Text);
+					Elements.Rows[index][3] = MULT.ToString();
+					float Price = float.Parse(Elements.Rows[index][2].ToString());
+					float Extended = MULT * Price;
+					Elements.Rows[index][4] = Extended.ToString();
+				}
+		}
 	}
 }

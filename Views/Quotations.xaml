@@ -64,9 +64,9 @@
 			<Label x:Name="lblPageName"
 			       Grid.RowSpan="2"
 			       Width="auto"
-			       Height="40"
+			       Height="42"
 			       Margin="10,0,0,0"
-			       Padding="5"
+			       Padding="2"
 			       HorizontalAlignment="Center"
 			       Background="Purple"
 			       Content="{Binding Path=ActivePage, Mode=OneWayToSource}"
@@ -915,6 +915,19 @@
 					           Text=" Does each of these rows have a different template?"
 					           TextWrapping="Wrap" />
 
+					<TextBlock Grid.Row="10"
+					           Grid.RowSpan="2"
+					           Grid.Column="7"
+					           Grid.ColumnSpan="2"
+					           Width="110"
+					           Height="50"
+					           Padding="5"
+					           HorizontalAlignment="Left"
+					           Background="LightYellow"
+					           Text="What are these??"
+					           TextWrapping="Wrap" />
+
+
 					<TextBlock Grid.Row="13"
 					           Grid.RowSpan="2"
 					           Grid.Column="6"
@@ -925,6 +938,29 @@
 					           HorizontalAlignment="Left"
 					           Background="LightYellow"
 					           Text="Does FREIGHT need to be added? Where?"
+					           TextWrapping="Wrap" />
+
+					<TextBlock Grid.Row="14"
+					           Grid.RowSpan="2"
+					           Grid.Column="4"
+					           Grid.ColumnSpan="2"
+					           Width="210"
+					           Height="62"
+					           Padding="5"
+					           HorizontalAlignment="Left"
+					           Background="LightYellow"
+					           Text="Are these attached to a quote or to a detail_line?"
+					           TextWrapping="Wrap" />
+
+					<TextBlock Grid.Row="17"
+					           Grid.RowSpan="3"
+					           Grid.Column="4"
+					           Grid.ColumnSpan="2"
+					           Width="210"
+					           Padding="5"
+					           HorizontalAlignment="Left"
+					           Background="LightYellow"
+					           Text="How many of these are there? Will we need a scrolling grid??"
 					           TextWrapping="Wrap" />
 
 					<TextBlock Grid.Row="16"
@@ -1052,6 +1088,12 @@
 					       HorizontalAlignment="Left"
 					       Content="Basis" />
 
+					<Label Grid.Row="8"
+					       Grid.Column="7"
+					       HorizontalAlignment="Left"
+					       Content="Multiplier" />
+
+								
 					<TextBox x:Name="txtPaper"
 					         Grid.Row="9"
 					         Grid.Column="3"
@@ -1062,6 +1104,7 @@
 					         Grid.Row="9"
 					         Grid.Column="4"
 					         Margin="4" />
+
 					<TextBox x:Name="txtType"
 					         Grid.Row="9"
 					         Grid.Column="5"
@@ -1071,8 +1114,19 @@
 					         Grid.Column="6"
 					         Margin="4" />
 
+					<TextBox x:Name="txtMult"
+					         Grid.Row="9"
+					         Grid.Column="7"
+					         Margin="4"
+									 Width="50"
+									 LostFocus="txtMult_LostFocus"
+									 Text="{Binding Path=MULT, Mode=TwoWay, UpdateSourceTrigger=LostFocus ,StringFormat={}{0:#.##}}"
+					         Padding="0"
+					         VerticalAlignment="Center" />
+
+
 				</Grid>
-				<!--</Viewbox>-->
+
 			</TabItem>
 
 			<TabItem x:Name="Page3"
