@@ -11,13 +11,13 @@ using System;
 
 namespace ProDocEstimate {
 	public partial class Quotations : Window, INotifyPropertyChanged {
-		HistoricalPrices hp = new HistoricalPrices();
+		HistoricalPrices hp = new();
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
 		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-		public SqlConnection? cn = new SqlConnection();
+		public SqlConnection? cn = new();
 		public SqlDataAdapter? da;
 
 		private string? quote_num = ""; public string? QUOTE_NUM { get { return quote_num; } set { quote_num = value; OnPropertyChanged(); } }
@@ -25,7 +25,7 @@ namespace ProDocEstimate {
 
 		private string? projectType = ""; public string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
 
-		private string? fsint1; public string? FSINT1 { get { return fsint1; } set { fsint1 = value; OnPropertyChanged(); } }
+		private string? fsint1;  public string? FSINT1  { get { return fsint1;  } set { fsint1  = value; OnPropertyChanged(); } }
 		private string? fsfrac1; public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
 		private string? fsint2; public string? FSINT2 { get { return fsint2; } set { fsint2 = value; OnPropertyChanged(); } }
 		private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
@@ -96,7 +96,7 @@ namespace ProDocEstimate {
 		}
 
 		private void btnCopy_Click(object sender, RoutedEventArgs e) {
-			QuoteLookup ql = new QuoteLookup();
+			QuoteLookup ql = new();
 			ql.ShowDialog();
 			QUOTE_NUM = ql.SelQuote; ql.Close();
 			if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
@@ -108,11 +108,11 @@ namespace ProDocEstimate {
 
 		private void GetQuote() {
 
-			SqlConnection cn = new SqlConnection(ConnectionString);
+			SqlConnection cn = new(ConnectionString);
 			if (QUOTE_NUM == null || QUOTE_NUM == "") QUOTE_NUM = txtQuoteNum.Text.ToString();
 			string str = "SELECT * FROM QUOTES WHERE QUOTE_NUM = " + QUOTE_NUM;
-			SqlDataAdapter da = new SqlDataAdapter(str, cn);
-			DataSet ds = new DataSet();
+			SqlDataAdapter da = new(str, cn);
+			DataSet ds = new();
 			da.Fill(ds);
 
 			if (ds.Tables[0].Rows.Count == 0)
@@ -150,7 +150,7 @@ namespace ProDocEstimate {
 			{ System.Windows.MessageBox.Show("For new customers, a provisional Customer Number starting with 'P' will be created, to be replaced later", "Provisional CustNum", MessageBoxButton.OK, MessageBoxImage.Information); 
 			}
 
-		private float CalcFraction(string frac) {
+		private static float CalcFraction(string frac) {
 			string[] parts = frac.Split('/');
 			if (parts.Length == 1) { return 0.00F; }
 			else { return float.Parse(parts[0]) / float.Parse(parts[1]); }
@@ -205,16 +205,16 @@ namespace ProDocEstimate {
 		}
 
 		private void LoadPaperTypes() {
-			SqlConnection cn = new SqlConnection(ConnectionString);
-			string str = "SELECT PaperType FROM PaperTypes"; SqlDataAdapter da = new SqlDataAdapter(str, cn);
-			DataSet ds = new DataSet("PaperTypes"); da.Fill(ds); DataTable dt = ds.Tables[0];
+			SqlConnection cn = new(ConnectionString);
+			string str = "SELECT PaperType FROM PaperTypes"; SqlDataAdapter da = new(str, cn);
+			DataSet ds = new("PaperTypes"); da.Fill(ds); DataTable dt = ds.Tables[0];
 			cmbPaperType.ItemsSource = dt.DefaultView;
 		}
 
 		private void LoadRollWidths() {
-			SqlConnection cn2 = new SqlConnection(ConnectionString);
-			string str2 = "SELECT RollWidth FROM RollWidths"; SqlDataAdapter da2 = new SqlDataAdapter(str2, cn2);
-			DataSet ds2 = new DataSet("dsRollWidths"); da2.Fill(ds2); DataTable dt = ds2.Tables[0];
+			SqlConnection cn2 = new(ConnectionString);
+			string str2 = "SELECT RollWidth FROM RollWidths"; SqlDataAdapter da2 = new(str2, cn2);
+			DataSet ds2 = new("dsRollWidths"); da2.Fill(ds2); DataTable dt = ds2.Tables[0];
 			cmbRollWidth.ItemsSource = dt.DefaultView;
 		}
 
@@ -222,30 +222,44 @@ namespace ProDocEstimate {
 			dgFeatures.Visibility = (dgFeatures.Visibility == Visibility.Hidden) ? Visibility.Visible : Visibility.Hidden;
 		}
 
-		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) 
+		{
 			string? controlname = (sender as ComboBox)?.Name;
 
 			int Int1 = 0; int Int2 = 0;
 			float Frac1 = 0.00F; float Frac2 = 0.00F;
 
-			if ((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null) { string? Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem)?.Content.ToString(); Int1 = int.Parse(Str1); }
+			if ((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null) { 
+				string? Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem)?.Content.ToString(); 
+				Int1 = int.Parse(Str1); 
+			}
 
-			if ((cmbFinalSizeFrac1.SelectedItem as ComboBoxItem) != null) { string? x = (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem)?.Content.ToString(); Frac1 = CalcFraction(x); }
+			if ((cmbFinalSizeFrac1.SelectedItem as ComboBoxItem) != null) { 
+				string? x = (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem)?.Content.ToString(); 
+				Frac1 = CalcFraction(x); 
+			}
 
-			if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null) { string? Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem)?.Content.ToString(); Int2 = int.Parse(Str2); }
+			if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null) { 
+				string? Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem)?.Content.ToString(); 
+				Int2 = int.Parse(Str2); 
+			}
 
-			if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null) { string? x = (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem)?.Content.ToString(); Frac2 = CalcFraction(x); }
+			if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null) { 
+				string? x = (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem)?.Content.ToString(); 
+				Frac2 = CalcFraction(x); 
+			}
 
-			if (controlname?.Substring(controlname.Length - 1) == "1") { Decimal1.Content = Frac1 + Int1; }
-			else { Decimal2.Content = Frac2 + Int2; }
+			if (controlname?.Substring(controlname.Length - 1) == "1") 
+						{ Decimal1.Content = Frac1 + Int1; }
+			 else { Decimal2.Content = Frac2 + Int2; }
 		}
 
 		private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e) {
 			int CustKey = int.Parse(txtCustomerNum.Text);
-			SqlConnection cn = new SqlConnection(ConnectionString);
+			SqlConnection cn = new(ConnectionString);
 			string str = "SELECT *, RTRIM(CITY) + ', ' + STATE + ' ' + ZIP AS CSZ FROM CRC_CU10 WHERE CUST_NUMB = " + CustKey.ToString();
-			SqlDataAdapter da = new SqlDataAdapter(str, cn);
-			DataSet ds = new DataSet();
+			SqlDataAdapter da = new(str, cn);
+			DataSet ds = new();
 			da.Fill(ds);
 			if (ds.Tables[0].Rows.Count > 0) {
 				DataTable dt = ds.Tables[0];
