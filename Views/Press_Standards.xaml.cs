@@ -22,8 +22,8 @@ namespace ProDocEstimate.Views {
 		private string? restrictTo; public string? RESTRICTD { get { return restrictTo; } set { restrictTo = value; OnPropertyChanged(); } }
 		private string? slowdown; public string? Slowdown { get { return slowdown; } set { slowdown = value; OnPropertyChanged(); } }
 
-		private string? press_cost; public string? PRESS_COST { get { return press_cost; } set { press_cost = value; OnPropertyChanged(); } }
-		private string? press_sell; public string? PRESS_SELL { get { return press_sell; } set { press_sell = value; OnPropertyChanged(); } }
+		private float? press_cost; public float? PRESS_COST { get { return press_cost; } set { press_cost = value; OnPropertyChanged(); } }
+		private float? press_sell; public float? PRESS_SELL { get { return press_sell; } set { press_sell = value; OnPropertyChanged(); } }
 		private string? baseSpeed; public string? BASESPEED { get { return baseSpeed; } set { baseSpeed = value; OnPropertyChanged(); } }
 
 		private string? speed1; public string? SPEED1 { get { return speed1; } set { speed1 = value; OnPropertyChanged(); } }
@@ -68,8 +68,8 @@ namespace ProDocEstimate.Views {
 			RESTRICTD = "S";
 			Slowdown = "1";  // WHAT IS THIS?
 
-			PRESS_COST = "1.12";
-			PRESS_SELL = "2.21";
+			PRESS_COST = 1.12F;
+			PRESS_SELL = 2.21F;
 			BASESPEED = "428";
 
 			SPEED1 = "91";
@@ -92,7 +92,10 @@ namespace ProDocEstimate.Views {
 
 			SETUP_ECL = "151.10"; // prefix with "PRESS_"
 			RUN_ECL = "151.20";   //    "
-			MATL_ECL = "802.00";  //    
+			MATL_ECL = "802.00";  //
+														//
+			Editing = false;
+
 		}
 
 		private void mnuExit_Click(object sender, RoutedEventArgs e) {

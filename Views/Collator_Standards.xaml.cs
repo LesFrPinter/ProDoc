@@ -113,6 +113,7 @@ namespace ProDocEstimate.Views {
 			COLL_COST = 40.00F;
 			COLL_SELL = 40.00F;
 
+			Editing = false;
 		}
 
 		private void mnuExit_Click(object sender, RoutedEventArgs e) {

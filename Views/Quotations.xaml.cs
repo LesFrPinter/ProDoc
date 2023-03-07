@@ -54,15 +54,14 @@ namespace ProDocEstimate {
 		private decimal? qty5; public decimal? Qty5 { get { return qty5; } set { qty5 = value; OnPropertyChanged(); } }
 		private decimal? qty6; public decimal? Qty6 { get { return qty6; } set { qty6 = value; OnPropertyChanged(); } }
 
-		private DataTable? features; public DataTable? Features { get { return features; } set { features = value; OnPropertyChanged(); } }
-		private DataTable? elements; public DataTable? Elements { get { return elements; } set { elements = value; OnPropertyChanged(); } }
-		private DataTable? projTypes; public DataTable? ProjTypes { get { return projTypes; } set { projTypes = value; OnPropertyChanged(); } }
+		private DataTable? features;   public DataTable? Features { get { return features; } set { features = value; OnPropertyChanged(); } }
+		private DataTable? elements;   public DataTable? Elements { get { return elements; } set { elements = value; OnPropertyChanged(); } }
+		private DataTable? projTypes;  public DataTable? ProjTypes { get { return projTypes; } set { projTypes = value; OnPropertyChanged(); } }
 
 		private DataTable? papertypes; public DataTable? PaperTypes { get { return papertypes; } set { papertypes = value; OnPropertyChanged(); } }
 		private DataTable? rollwidths; public DataTable? RollWidths { get { return rollwidths; } set { rollwidths = value; OnPropertyChanged(); } }
 
 		private float mult; public float MULT { get { return mult; } set { mult = value; OnPropertyChanged(); } }
-
 
 		public Quotations() {
 			InitializeComponent();
@@ -286,6 +285,8 @@ namespace ProDocEstimate {
 		private void dgElements_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
 			int RowNumber = dgElements.SelectedIndex;
 			int ColumnNumber = dgElements.CurrentCell.Column.DisplayIndex;
+			string? rn = Elements?.Rows[RowNumber][0].ToString();
+			if ( rn == "10" || rn == "11" || rn == "12" ) return;
 			if (ColumnNumber != 2) return;
 
 			hp = new HistoricalPrices();

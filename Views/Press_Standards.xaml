@@ -215,7 +215,7 @@
 							Width="90"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=PRESS_COST}" />
+							Text="{Binding Path=PRESS_COST, StringFormat=C}" />
 
 					<Label
 							Grid.Row="0"
@@ -269,7 +269,7 @@
 							Width="90"
 							HorizontalContentAlignment="Right"
 							Style="{StaticResource TextField}"
-							Text="{Binding Path=PRESS_SELL}" />
+							Text="{Binding Path=PRESS_SELL, StringFormat=C}" />
 
 					<Label
 							Grid.Row="2"
@@ -573,8 +573,8 @@
 							Grid.Row="12"
 							Grid.RowSpan="9"
 							Grid.ColumnSpan="6"
-							Width="860"
-							Margin="0,10,0,0"
+							Width="880"
+							Margin="10"
 							HorizontalAlignment="Center"
 							IsSynchronizedWithCurrentItem="True">
 						<DataGrid.Columns>
@@ -586,29 +586,6 @@
 						</DataGrid.Columns>
 					</DataGrid>
 
-					<Label
-							Grid.Row="14"
-							Grid.RowSpan="5"
-							Grid.Column="2"
-							Grid.ColumnSpan="2"
-							Width="223"
-							Margin="37,18,0,23"
-							Panel.ZIndex="1"
-							Background="Transparent"
-							Content="Need lookups"
-							FontSize="32"
-							FontWeight="Bold"
-							Foreground="Green"
-							RenderTransformOrigin="0.5,0.5">
-						<Label.RenderTransform>
-							<TransformGroup>
-								<ScaleTransform />
-								<SkewTransform />
-								<RotateTransform Angle="-17.788" />
-								<TranslateTransform />
-							</TransformGroup>
-						</Label.RenderTransform>
-					</Label>
 
 				</Grid>
 

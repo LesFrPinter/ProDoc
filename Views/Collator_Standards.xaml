@@ -95,7 +95,7 @@
 							Content="STANDARD #"
 							Foreground="AliceBlue" />
 					<TextBox
-							Width="100"
+							Width="30"
 							Height="22"
 							Text="{Binding Path=COLLATOR_STANDARD}"
 							Style="{StaticResource TextField}" />
@@ -117,7 +117,7 @@
 							Content="DESCRIPTION"
 							Foreground="AliceBlue" />
 					<TextBox
-							Width="190"
+							Width="250"
 							Height="22"
 							Text="{Binding Path=COLLATOR_DESCRIPTION}"
 							Style="{StaticResource TextField}" />
@@ -620,11 +620,14 @@
 									HorizontalContentAlignment="Right"
 									VerticalContentAlignment="Center"
 									Content="COST $/hr" />
+
 							<TextBox
 									Width="120"
 									Height="22"
-									Text="{Binding Path=COLL_COST}"
+									Text="{Binding Path=COLL_COST, StringFormat=C}"
+									HorizontalContentAlignment="Right"
 									Style="{StaticResource TextField}" />
+
 							<Label
 									Width="120"
 									Margin="300,0,0,0"
@@ -632,6 +635,7 @@
 									VerticalContentAlignment="Center"
 									Background="LightSteelBlue"
 									Content="   -ECL --" />
+
 						</StackPanel>
 						<StackPanel Grid.Row="1" Orientation="Horizontal">
 							<Label
@@ -642,7 +646,8 @@
 							<TextBox
 									Width="120"
 									Height="22"
-									Text="{Binding Path=COLL_SELL}"
+									Text="{Binding Path=COLL_SELL, StringFormat=C}"
+									HorizontalContentAlignment="Right"
 									Style="{StaticResource TextField}" />
 							<StackPanel Grid.Row="0" Orientation="Horizontal">
 								<Label

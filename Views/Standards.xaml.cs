@@ -89,7 +89,7 @@ namespace ProDocEstimate.Views {
 		private string? whatsThis;       public string? WhatsThis     { get { return whatsThis; } set { whatsThis = value; OnPropertyChanged(); } }
 
 		private string? optNumAround;    public string? OptNumAround  { get { return optNumAround; } set { optNumAround = value; OnPropertyChanged(); } }
-		private string? optPart;         public string? OptPart       { get { return optPart; } set { optNumAround = value; OnPropertyChanged(); } }
+		private string? optPart;         public string? OptPart       { get { return optPart; } set { optPart = value; OnPropertyChanged(); } }
 		private string? optStream;       public string? OptStream     { get { return optStream; } set { optStream = value; OnPropertyChanged(); } }
 		private string? askNumFlat;      public string? AskNumFlat    { get { return askNumFlat; } set { askNumFlat = value; OnPropertyChanged(); } }
 		private string? askNumFlatDesc;  public string? AskNumFlatDesc { get { return askNumFlatDesc; } set { askNumFlatDesc = value; OnPropertyChanged(); } }

@@ -1,24 +1,171 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ProDocEstimate.Views {
-	/// <summary>
-	/// Interaction logic for Feature_Standards.xaml
-	/// </summary>
-	public partial class Feature_Standards : Window {
+
+	public partial class Feature_Standards : Window, INotifyPropertyChanged {
+
+		public event PropertyChangedEventHandler? PropertyChanged;
+		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+		private bool? editing; public bool? Editing { get { return editing; } set { editing = value; NotEditing = !editing; OnPropertyChanged(); } }
+		private bool? notediting; public bool? NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
+
+		//		private string? featureStandardNum; public string? FeatureStandardNum { get { return featureStandardNum; } set { featureStandardNum = value; OnPropertyChanged(); } }
+		private string? feature;            public string? FEATURE { get { return feature; } set { feature = value; OnPropertyChanged(); } }
+		private string? feature_Num;         public string? FEATURE_NUM    { get { return feature_Num; } set { feature_Num = value; OnPropertyChanged(); } }
+		private string? feature_Description; public string? FEATURE_DESCRIPTION { get { return feature_Description; } set { feature_Description = value; OnPropertyChanged(); } }
+		private string? sort;               public string? Sort          { get { return sort; } set { sort = value; OnPropertyChanged(); } }
+		//private string? flat_charge;        public string? FLAT_CHARGE   { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
+		//private string? run_charge;         public string? RUN_CHARGE { get { return run_charge; } set { run_charge = value; OnPropertyChanged(); } }
+		private string? ask_price_in;       public string? ASK_PRICE_IN  { get { return ask_price_in; } set { ask_price_in = value; OnPropertyChanged(); } }
+		private string? ask_price_sq_in;    public string? ASK_PRICE_SQ_IN { get { return ask_price_sq_in; } set { ask_price_sq_in = value; OnPropertyChanged(); } }
+		private string? sellDollars;        public string? SellDollars   { get { return sellDollars; } set { sellDollars = value; OnPropertyChanged(); } }
+		private string? costDollars;        public string? CostDollars   { get { return costDollars; } set { costDollars = value; OnPropertyChanged(); } }
+		private string? costMU1;            public string? CostMU1       { get { return costMU1; } set { costMU1 = value; OnPropertyChanged(); } }
+		private string? costMU2;            public string? CostMU2       { get { return costMU2; } set { costMU2 = value; OnPropertyChanged(); } }
+
+		private float? esqsel; public float? ESQSEL { get { return esqsel; } set { esqsel = value; OnPropertyChanged(); } }
+		private float? esqcst; public float? ESQCST { get { return esqcst; } set { esqcst = value; OnPropertyChanged(); } }
+
+		private string? prep_dept_time;     public string? PREP_DEPT_TIME { get { return prep_dept_time; } set { prep_dept_time = value; OnPropertyChanged(); } }
+		private string? prep_dept_matl;     public string? PREP_DEPT_MATL { get { return prep_dept_matl; } set { prep_dept_matl = value; OnPropertyChanged(); } }
+		private string? prepSlowdown;       public string? PrepSlowdown   { get { return prepSlowdown; } set { prepSlowdown = value; OnPropertyChanged(); } }
+
+		private string? press_setup_time;   public string? PRESS_SETUP_TIME     { get { return press_setup_time; } set { press_setup_time = value; OnPropertyChanged(); } }
+		private string? press_setup_material; public string? PRESS_SETUP_MATERIAL { get { return press_setup_material; } set { press_setup_material = value; OnPropertyChanged(); } }
+		private string? press_Slowdown;      public string? PRESS_SLOWDOWN { get { return press_Slowdown; } set { press_Slowdown = value; OnPropertyChanged(); } }
+
+		private string? colorTime;          public string? ColorTime     { get { return colorTime; } set { colorTime = value; OnPropertyChanged(); } }
+		private string? colorMaterial;      public string? ColorMaterial { get { return colorMaterial; } set { colorMaterial = value; OnPropertyChanged(); } }
+		private string? colorSlowdown;      public string? ColorSlowdown { get { return colorSlowdown; } set { colorSlowdown = value; OnPropertyChanged(); } }
+		private string? bindTime;           public string? BindTime      { get { return bindTime; } set { bindTime = value; OnPropertyChanged(); } }
+
+		private string? otherTime;          public string? OtherTime     { get { return otherTime; } set { otherTime = value; OnPropertyChanged(); } }
+		private string? otherMaterial;      public string? OtherMaterial { get { return otherMaterial; } set { otherMaterial = value; OnPropertyChanged(); } }
+		private string? oneTimeMaterial;    public string? OneTimeMaterial { get { return oneTimeMaterial; } set { oneTimeMaterial = value; OnPropertyChanged(); } }
+		private string? whatsThis;          public string? WhatsThis     { get { return whatsThis; } set { whatsThis = value; OnPropertyChanged(); } }
+
+		private string? optNumAround;       public string? OptNumAround  { get { return optNumAround; } set { optNumAround = value; OnPropertyChanged(); } }
+		private string? optPart;            public string? OptPart       { get { return optPart; } set { optPart = value; OnPropertyChanged(); } }
+		private string? optStream;          public string? OptStream     { get { return optStream; } set { optStream = value; OnPropertyChanged(); } }
+		private float? flat_charge;         public float? FLAT_CHARGE    { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
+		private string? flat_prompt;        public string? FLAT_PROMPT   { get { return flat_prompt; } set { flat_prompt = value; OnPropertyChanged(); } }
+		private float? run_charge;          public float? RUN_CHARGE     { get { return run_charge; } set { run_charge = value; OnPropertyChanged(); } }
+		private string? run_prompt;         public string? RUN_PROMPT    { get { return run_prompt; } set { run_prompt = value; OnPropertyChanged(); } }
+		private string? optPercent;         public string? OptPercent    { get { return optPercent; } set { optPercent = value; OnPropertyChanged(); } }
+		private string? optType;            public string? OptType       { get { return optType; } set { optType = value; OnPropertyChanged(); } }
+		private string? sets;               public string? Sets          { get { return sets; } set { sets = value; OnPropertyChanged(); } }
+		private bool? multStreamOK;         public bool?   MultStreamOK  { get { return multStreamOK; } set { multStreamOK = value; OnPropertyChanged(); } }
+		private string? wasteSetup;         public string? WasteSetup    { get { return wasteSetup; } set { wasteSetup = value; OnPropertyChanged(); } }
+		private string? wasteRunPct;        public string? WasteRunPct   { get { return wasteRunPct; } set { wasteRunPct = value; OnPropertyChanged(); } }
+		private string? mr_impr;						public string? MR_IMPR { get { return mr_impr; } set { mr_impr = value; OnPropertyChanged(); } }
+		private string? cartonQty;          public string? CartonQty     { get { return cartonQty; } set { cartonQty = value; OnPropertyChanged(); } }
+		private string? calcType;           public string? CalcType      { get { return calcType; } set { calcType = value; OnPropertyChanged(); } }
+		private string? alert;              public string? Alert         { get { return alert; } set { alert = value; OnPropertyChanged(); } }
+		private float? setupECL;            public float? SETUP_ECL      { get { return setupECL; } set { setupECL = value; OnPropertyChanged(); } }
+		private float? runECL;              public float? RUN_ECL        { get { return runECL; } set { runECL = value; OnPropertyChanged(); } }
+		private float? matlECL;             public float? MATL_ECL       { get { return matlECL; } set { matlECL = value; OnPropertyChanged(); } }
+		private bool slowdown_per_part;     public bool SLOWDOWN_PER_PART { get { return slowdown_per_part; } set { slowdown_per_part = value; OnPropertyChanged(); } }
+		private bool multi_strm_ok;         public bool MULTI_STRM_OK    { get { return multi_strm_ok; }      set { multi_strm_ok     = value; OnPropertyChanged(); } }
+
+
 		public Feature_Standards() {
 			InitializeComponent();
+			DataContext = this;
+
+			FEATURE = "1";
+			FEATURE_NUM = "11-1";
+			FEATURE_DESCRIPTION = "1 STD COLOR";
+			Sort = "DESC";
+			FLAT_CHARGE = 20F;
+			RUN_CHARGE = 0.600000023841858F;
+			ASK_PRICE_IN = "R";
+			ASK_PRICE_SQ_IN = "R";
+
+			SellDollars = "99";
+			CostDollars = "99";
+
+			CostMU1 = "99";
+			CostMU2 = "99";
+
+			PREP_DEPT_TIME = "0.200000002980232";
+			PREP_DEPT_MATL = "5";
+			PrepSlowdown = "";
+
+			PRESS_SETUP_TIME = "0.25";
+			PRESS_SETUP_MATERIAL = "99";
+			PRESS_SLOWDOWN = "99";
+
+			ColorTime = "99";
+			ColorMaterial = "99";
+			ColorSlowdown = "99";
+
+			BindTime = "99";
+
+			
+			OtherTime = "99";
+			OtherMaterial = "99";
+
+			OneTimeMaterial = "99";
+			WhatsThis = "99";
+
+			OptNumAround = "99";
+			OptPart = "99";
+			OptStream = "99";
+
+			FLAT_CHARGE = 20.00F;
+			FLAT_PROMPT = "# 3 hole MR";
+			RUN_CHARGE = 0.600000023841858F;
+			RUN_PROMPT = "# of MR";
+
+			OptPercent = "99";
+			OptType = "99";
+
+			Sets = "99";
+			MultStreamOK = true;
+			WasteSetup = "22";
+			WasteRunPct = "99";
+			MR_IMPR = "15";
+			CartonQty = "99";
+			CalcType = "99";
+			Alert = "caution total ink colors 3";
+
+			SETUP_ECL = 101.099998474121F;
+			RUN_ECL = 101.199996948242F;
+			MATL_ECL = 807F;
+
+			Editing = false;
+
+			SLOWDOWN_PER_PART = true;
+			MULTI_STRM_OK = true;
+
+			ESQCST = 0.680000007152557F;
+			ESQSEL = 0.680000007152557F;
+
+//			PressMaterial = 99F;
+
+		}
+
+		private void mnuExit_Click(object sender, RoutedEventArgs e) {
+			Close();
+		}
+
+		private void mnuEdit_Click(object sender, RoutedEventArgs e) {
+			Editing = true;
+		}
+
+		private void mnuNew_Click(object sender, RoutedEventArgs e) {
+			Editing = true;
+		}
+
+		private void mnuSave_Click(object sender, RoutedEventArgs e) {
+			Editing = false;
+		}
+
+		private void mnuCancel_Click(object sender, RoutedEventArgs e) {
+			Editing = false;
 		}
 	}
 }
