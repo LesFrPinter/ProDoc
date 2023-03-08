@@ -360,5 +360,12 @@ namespace ProDocEstimate {
 			if ((QTY4a != null && QTY4a != 0) && (CPM4a != null && CPM4a != 0) & (MAR4a != null && MAR4a != 0)) { float? result = QTY4a * CPM4a * MAR4a; EXT4a = EXT4a = result / 1000.00F; }
 		}
 
+		private void Markup1_GotFocus(object sender, RoutedEventArgs e) {
+			Markup1.SelectAll();
+		}
+
+		private async void SelectAll_OnTextBoxGotFocus(object sender, RoutedEventArgs e) {
+			await Application.Current.Dispatcher.InvokeAsync((sender as TextBox).SelectAll);
+		}
 	}
 }
