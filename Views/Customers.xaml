@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Title="Customers" 
-				Height="750" Width="900">
+				Height="570" Width="900">
 
 
 	<Window.Resources>
@@ -352,7 +352,7 @@
 
 			<TabItem Header="_Search" >
 
-				<Grid>
+					<Grid  Width="1200">
 
 					<Grid.RowDefinitions>
 						<RowDefinition Height="40" />
@@ -369,8 +369,8 @@
 						<TextBox x:Name="txtSearchContact"  Width="150" Margin="10 6 0 6" Text="{Binding Path=SearchContact}" />
 						<Label Content="Other: " Margin="20 6 0 6"  />
 						<TextBox x:Name="txtSearchOther"    Width="100" Margin="10 6 0 6" Text="{Binding Path=SearchOther}" />
-						<Button x:Name="btnApply" Content="Apply filter" Margin="10 3 10 3" Width="90" FontWeight="Bold" FontSize="14" />
-						<Button x:Name="btnClear" Content="Clear filter" Margin="0 3 110 3" Width="90" FontWeight="Bold" Click="btnClear_Click" FontSize="14" />
+						<Button x:Name="btnApply" Content="Apply _filter" Margin="320 3 10 3" Width="90" FontWeight="Bold" FontSize="14" Click="btnApply_Click" />
+						<Button x:Name="btnClear" Content="_Clear filter" Margin="0 3 110 3" Width="90" FontWeight="Bold" Click="btnClear_Click" FontSize="14" />
 					</StackPanel>
 
 					<DataGrid 
@@ -378,8 +378,8 @@
 					 Grid.Row="2" 
 					 Background="LightCyan" 
 					 ColumnWidth="auto"
-					 Width="870"
-					 Margin="5"
+					 Width="1180"
+					 Margin="10"
 					 ItemsSource="{Binding Custs.DefaultView}"
 					 IsSynchronizedWithCurrentItem="True"
 					 AutoGenerateColumns="False"  >

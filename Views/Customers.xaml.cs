@@ -35,22 +35,7 @@ namespace ProDocEstimate
 
 		private void LoadCustData()
 		{
-
-			//this.Custs = new DataTable("Custs");
-			//this.Custs.Columns.Add("Customer");
-			//this.Custs.Columns.Add("Address");
-			//this.Custs.Columns.Add("City");
-			//this.Custs.Columns.Add("State");
-			//this.Custs.Columns.Add("ZIP");
-			//this.Custs.Columns.Add("Phone");
-			//this.Custs.Columns.Add("Contact");
-
-			//this.Custs.Rows.Add("State of Alabama", "202 Main Street", "Mongomery", "AL", "20214", "(605) 761-1207", "George Raft");
-			//this.Custs.Rows.Add("State of Alabama", "202 Main Street", "Mongomery", "AL", "20214", "(605) 761-4344", "Samatha Billart");
-			//this.Custs.Rows.Add("State of Georgia", "114 Yale Avenue", "Dothan", "GA", "20214", "(706) 321-4033", "Sally");
-			//this.Custs.Rows.Add("Chick Fil-A", "1001 Fannin Street", "Houston", "TX", "77024", "(713) 667-4309", "Donald Shellman");
-
-			//this.MyGrid.DataContext = this;
+		
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -94,6 +79,10 @@ namespace ProDocEstimate
 			SelectedCustomer = "State of Georgia";
 			this.Hide();
     }
-  }
+
+		private void btnApply_Click(object sender, RoutedEventArgs e) {
+
+		}
+	}
 
 }
