@@ -10,125 +10,350 @@
         Title="Customers" 
 				Height="750" Width="900">
 
+
+	<Window.Resources>
+		<Style TargetType="Label">
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+		</Style>
+		<Style TargetType="Button">
+			<Setter Property="Height" Value="24" />
+			<Setter Property="Background" Value="LightGreen" />
+			<Setter Property="Foreground" Value="White" />
+			<Setter Property="FontSize" Value="10" />
+			<Setter Property="Margin" Value="3" />
+			<Setter Property="Padding" Value="5 0" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border CornerRadius="8" Background="Blue" BorderBrush="#ccc" BorderThickness="0,1,1,0" >
+							<Border.Effect>
+								<DropShadowEffect ShadowDepth="4" Direction="305" Color="DarkGray" />
+							</Border.Effect>
+							<ContentPresenter 
+							 x:Name="contentPresenter"
+							 ContentTemplate="{TemplateBinding ContentTemplate}" 
+							 Content="{TemplateBinding Content}" 
+							 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+							 Margin="{TemplateBinding Padding}" 
+							 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+
+	<Viewbox>
+
 	<Grid Background="LightGray" >
 
 		<Grid.RowDefinitions>
-			<RowDefinition Height="50" />
-			<RowDefinition Height="50" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<TabControl x:Name="tabPage" Grid.Row="2" FontSize="24">
+		<TabControl x:Name="tabPage" Grid.Row="0" FontSize="18" VerticalAlignment="Top" Height="720" Margin="5" >
 
-			<TabItem Header="Details" >
+			<TabItem Header="_Details" >
 
-				<Grid Background="LightCyan">
+				<Grid>
 
 					<Grid.RowDefinitions>
-						<RowDefinition Height="60" />
-						<RowDefinition Height="35" />
-						<RowDefinition Height="35" />
-						<RowDefinition Height="35" />
-						<RowDefinition Height="35" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="150" />
-						<ColumnDefinition Width="150" />
-						<ColumnDefinition Width="150" />
-						<ColumnDefinition Width="150" />
-						<ColumnDefinition Width="150" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
+					<Grid Background="#CCCEAD" Grid.Row="0" >
 
-					<Border 
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+						</Grid.RowDefinitions>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Border 
 					 Grid.Column="0"
 					 CornerRadius="10" 
 					 BorderThickness="2" 
 					 HorizontalAlignment="Left"
-					 Margin="0 0 0 0"
+					 Margin="0"
+					 Padding="10 0"
 					 Background="Purple" 
-					 Height="52" Grid.ColumnSpan="2"
+					 Height="40" Grid.ColumnSpan="2"
 					 VerticalAlignment="Top"
 					 Width="auto">
 
-						<Label 
-						 Content="Customers" 
+							<Label 
+						 Content="Customer" 
 						 Background="Purple"
 						 Foreground="White"
 						 Padding="5"
-						 FontSize="18" 
+						 FontSize="14" 
 						 HorizontalAlignment="Left" VerticalAlignment="Center"
 						 Margin="2,0,0,0"  />
 
-					</Border>
+						</Border>
 
-					<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="5">
-						<Button  Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click" Height="32" >
-							<AccessText>_Add</AccessText>
-						</Button>
-						<Button Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="Button_Click_1" Height="32" >
-							<AccessText>_Edit</AccessText>
-						</Button>
-						<Button Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_2" Height="32" >
-							<AccessText>_Save</AccessText>
-						</Button>
-						<Button Padding="5" FontSize="14" IsEnabled="{Binding Editing}" Click="Button_Click_3"  Height="32" >
-							<AccessText>_Cancel</AccessText>
-						</Button>
-						<Button x:Name="btnDelete" Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" Height="32" >
-							<AccessText>_Delete</AccessText>
-						</Button>
-						<Button  Padding="5" FontSize="14" IsEnabled="{Binding NotEditing}" Height="32" >
-							<AccessText>_Find</AccessText>
-						</Button>
-						<Button x:Name="cmdSelect" Click="cmdSelect_Click" Margin="750 0 0 0" >
-							<AccessText>Se_lect</AccessText>
-						</Button>
-					</StackPanel>
+						<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="5">
+							<Button  IsEnabled="{Binding NotEditing}" Click="Button_Click" >
+								<AccessText>_Add</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding NotEditing}" Click="Button_Click_1" >
+								<AccessText>_Edit</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding Editing}" Click="Button_Click_2" >
+								<AccessText>_Save</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding Editing}" Click="Button_Click_3"  >
+								<AccessText>_Cancel</AccessText>
+							</Button>
+							<Button x:Name="btnDelete" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" >
+								<AccessText>_Delete</AccessText>
+							</Button>
+							<Button  IsEnabled="{Binding NotEditing}" >
+								<AccessText>_Find</AccessText>
+							</Button>
+							<Button x:Name="cmdSelect" Click="cmdSelect_Click" Margin="750 0 0 0" >
+								<AccessText>Se_lect</AccessText>
+							</Button>
+						</StackPanel>
 
-					<Label Grid.Row="1" Grid.Column="1" Content="Customer Name" HorizontalAlignment="Right" />
-					<Label Grid.Row="2" Grid.Column="1" Content="Address" HorizontalAlignment="Right" />
-					<Label Grid.Row="3" Grid.Column="1" Content="City, State, ZIP" HorizontalAlignment="Right" />
-					<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
-					<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Left" Margin="90 0 0 0" />
+						<Label Grid.Row="1" Grid.Column="1" Content="Name" HorizontalAlignment="Right" />
+						<Label Grid.Row="2" Grid.Column="1" Content="Address" HorizontalAlignment="Right" />
+						<Label Grid.Row="3" Grid.Column="1" Content="City, State, ZIP" HorizontalAlignment="Right" />
+						<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
+						<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Left" Margin="90 0 0 0" />
 
-					<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" Margin="0,6,0,5" 
-					 Text="State of Alabama" Height="26" 
+						<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" 
+					 Text="State of Alabama" Height="20" 
 					 Style="{StaticResource TextField}"
 					 HorizontalAlignment="Left" Grid.ColumnSpan="3" />
-					<TextBox x:Name="txtAddress"      Style="{StaticResource TextField}"
-					Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Margin="0,6,0,6" Text="202 Main Street"  Height="26" />
-					<TextBox x:Name="txtCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left" 
-					Grid.Row="3" Grid.Column="2" Width="170" Margin="0,6,0,6" Text="Montgomery"  Height="26"  Grid.ColumnSpan="2"  />
-					<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="50"  Margin="25,2,0,2" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="24" Foreground="Black"  >
-						<ComboBoxItem Content="AK" />
-						<ComboBoxItem Content="AL" />
-						<ComboBoxItem Content="AR" />
-					</ComboBox>
-					<TextBox x:Name="txtZIP"          Style="{StaticResource TextField}"
-					Grid.Row="3" Grid.Column="3" Width="95" Margin="80 6 0 6" Text="20214"  Height="24"  Grid.ColumnSpan="2" />
-					<TextBox x:Name="txtContact"      Style="{StaticResource TextField}"
-					Grid.Row="4" Grid.Column="2" Width="225" Margin="0 6 0 6" Text="George Raft"  Height="24"  Grid.ColumnSpan="2"  />
-					<TextBox x:Name="txtPhone"        Style="{StaticResource TextField}"
-					 Grid.Row="4" Grid.Column="4" Width="135" Margin="0 6 0 6" Text="(605) 761-1207"  Height="24"  Grid.ColumnSpan="2" />
+						<TextBox x:Name="txtAddress"      Style="{StaticResource TextField}"
+					Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Text="202 Main Street"  Height="20" />
+						<TextBox x:Name="txtCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left" 
+					Grid.Row="3" Grid.Column="2" Width="170" Text="Montgomery"  Height="20"  Grid.ColumnSpan="2"  />
+						<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="42"  Margin="35,2,0,2" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="20" Foreground="Black"  >
+							<ComboBoxItem Content="AK" />
+							<ComboBoxItem Content="AL" />
+							<ComboBoxItem Content="AR" />
+						</ComboBox>
+						<TextBox x:Name="txtZIP"          Style="{StaticResource TextField}"
+					Grid.Row="3" Grid.Column="3" Width="95" Margin="85 0 0 0" Text="20214"  Height="20"  Grid.ColumnSpan="2" />
+						<TextBox x:Name="txtContact"      Style="{StaticResource TextField}"
+					Grid.Row="4" Grid.Column="2" Width="225" Text="George Raft"  Height="20"  Grid.ColumnSpan="2"  />
+						<TextBox x:Name="txtPhone"        Style="{StaticResource TextField}"
+					 Grid.Row="4" Grid.Column="4" Width="135" Text="(605) 761-1207"  Height="20"  Grid.ColumnSpan="2" />
+
+					</Grid>
+
+					<Grid Background="#CCCEBE" Grid.Row="1">
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+						</Grid.RowDefinitions>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Border 
+					 Grid.Column="0"
+					 CornerRadius="10" 
+					 BorderThickness="2" 
+					 HorizontalAlignment="Left"
+					 Margin="0"
+					 Padding="10 0"
+					 Background="Purple" 
+					 Height="40" Grid.ColumnSpan="2"
+					 VerticalAlignment="Top"
+					 Width="auto">
+
+							<Label 
+						 Content="Location" 
+						 Background="Purple"
+						 Foreground="White"
+						 Padding="5"
+						 FontSize="14" 
+						 HorizontalAlignment="Left" VerticalAlignment="Center"
+						 Margin="2,0,0,0"  />
+
+						</Border>
+
+						<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="5">
+							<Button  IsEnabled="{Binding NotEditing}" Click="Button_Click" >
+								<AccessText>_Add</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding NotEditing}" Click="Button_Click_1" >
+								<AccessText>_Edit</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding Editing}" Click="Button_Click_2" >
+								<AccessText>_Save</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding Editing}" Click="Button_Click_3"  >
+								<AccessText>_Cancel</AccessText>
+							</Button>
+							<Button x:Name="btnDelete2" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" >
+								<AccessText>_Delete</AccessText>
+							</Button>
+							<Button  IsEnabled="{Binding NotEditing}" >
+								<AccessText>_Find</AccessText>
+							</Button>
+							<Button x:Name="cmdSelect2" Click="cmdSelect_Click" Margin="750 0 0 0" >
+								<AccessText>Se_lect</AccessText>
+							</Button>
+						</StackPanel>
+
+						<Label Grid.Row="1" Grid.Column="1" Content="Name" HorizontalAlignment="Right" />
+						<Label Grid.Row="2" Grid.Column="1" Content="Address" HorizontalAlignment="Right" />
+						<Label Grid.Row="3" Grid.Column="1" Content="City, State, ZIP" HorizontalAlignment="Right" />
+						<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
+						<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Left" Margin="90 0 0 0" />
+
+						<!--<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" 
+					 Text="State of Alabama" Height="20" 
+					 Style="{StaticResource TextField}"
+					 HorizontalAlignment="Left" Grid.ColumnSpan="3" />
+						<TextBox x:Name="txtAddress"      Style="{StaticResource TextField}"
+					Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Text="202 Main Street"  Height="20" />
+						<TextBox x:Name="txtCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left" 
+					Grid.Row="3" Grid.Column="2" Width="170" Text="Montgomery"  Height="20"  Grid.ColumnSpan="2"  />
+						<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="42"  Margin="35,2,0,2" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="20" Foreground="Black"  >
+							<ComboBoxItem Content="AK" />
+							<ComboBoxItem Content="AL" />
+							<ComboBoxItem Content="AR" />
+						</ComboBox>
+						<TextBox x:Name="txtZIP"          Style="{StaticResource TextField}"
+					Grid.Row="3" Grid.Column="3" Width="95" Margin="85 0 0 0" Text="20214"  Height="20"  Grid.ColumnSpan="2" />
+						<TextBox x:Name="txtContact"      Style="{StaticResource TextField}"
+					Grid.Row="4" Grid.Column="2" Width="225" Text="George Raft"  Height="20"  Grid.ColumnSpan="2"  />
+						<TextBox x:Name="txtPhone"        Style="{StaticResource TextField}"
+					 Grid.Row="4" Grid.Column="4" Width="135" Text="(605) 761-1207"  Height="20"  Grid.ColumnSpan="2" />-->
+
+					</Grid>
+
+					<Grid Background="#CCCECF" Grid.Row="2">
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+							<RowDefinition Height="24" />
+						</Grid.RowDefinitions>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Border 
+					 Grid.Column="0"
+					 CornerRadius="10" 
+					 BorderThickness="2" 
+					 HorizontalAlignment="Left"
+					 Margin="0"
+					 Padding="10 0"
+					 Background="Purple" 
+					 Height="40" Grid.ColumnSpan="2"
+					 VerticalAlignment="Top"
+					 Width="auto">
+
+							<Label 
+						 Content="Contact" 
+						 Background="Purple"
+						 Foreground="White"
+						 Padding="5"
+						 FontSize="14" 
+						 HorizontalAlignment="Left" VerticalAlignment="Center"
+						 Margin="2,0,0,0"  />
+
+						</Border>
+
+						<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="5">
+							<Button  IsEnabled="{Binding NotEditing}" Click="Button_Click" >
+								<AccessText>_Add</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding NotEditing}" Click="Button_Click_1" >
+								<AccessText>_Edit</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding Editing}" Click="Button_Click_2" >
+								<AccessText>_Save</AccessText>
+							</Button>
+							<Button IsEnabled="{Binding Editing}" Click="Button_Click_3"  >
+								<AccessText>_Cancel</AccessText>
+							</Button>
+							<Button x:Name="btnDelete3" IsEnabled="{Binding NotEditing}" Click="btnDelete_Click" >
+								<AccessText>_Delete</AccessText>
+							</Button>
+							<Button  IsEnabled="{Binding NotEditing}" >
+								<AccessText>_Find</AccessText>
+							</Button>
+							<Button x:Name="cmdSelect3" Click="cmdSelect_Click" Margin="750 0 0 0" >
+								<AccessText>Se_lect</AccessText>
+							</Button>
+						</StackPanel>
+
+						<Label Grid.Row="1" Grid.Column="1" Content="Name" HorizontalAlignment="Right" />
+						<Label Grid.Row="2" Grid.Column="1" Content="Address" HorizontalAlignment="Right" />
+						<Label Grid.Row="3" Grid.Column="1" Content="City, State, ZIP" HorizontalAlignment="Right" />
+						<Label Grid.Row="4" Grid.Column="1" Content="Contact" HorizontalAlignment="Right" />
+						<Label Grid.Row="4" Grid.Column="3" Content="Phone" HorizontalAlignment="Left" Margin="90 0 0 0" />
+
+						<!--<TextBox x:Name="txtCustomerName" Grid.Row="1" Grid.Column="2" Width="447" 
+					 Text="State of Alabama" Height="20" 
+					 Style="{StaticResource TextField}"
+					 HorizontalAlignment="Left" Grid.ColumnSpan="3" />
+						<TextBox x:Name="txtAddress"      Style="{StaticResource TextField}"
+					Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" Text="202 Main Street"  Height="20" />
+						<TextBox x:Name="txtCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left" 
+					Grid.Row="3" Grid.Column="2" Width="170" Text="Montgomery"  Height="20"  Grid.ColumnSpan="2"  />
+						<ComboBox x:Name="cmbState"       Grid.Row="3" Grid.Column="3" Width="42"  Margin="35,2,0,2" HorizontalAlignment="Left" Background="LightYellow"  Text="AL" Height="20" Foreground="Black"  >
+							<ComboBoxItem Content="AK" />
+							<ComboBoxItem Content="AL" />
+							<ComboBoxItem Content="AR" />
+						</ComboBox>
+						<TextBox x:Name="txtZIP"          Style="{StaticResource TextField}"
+					Grid.Row="3" Grid.Column="3" Width="95" Margin="85 0 0 0" Text="20214"  Height="20"  Grid.ColumnSpan="2" />
+						<TextBox x:Name="txtContact"      Style="{StaticResource TextField}"
+					Grid.Row="4" Grid.Column="2" Width="225" Text="George Raft"  Height="20"  Grid.ColumnSpan="2"  />
+						<TextBox x:Name="txtPhone"        Style="{StaticResource TextField}"
+					 Grid.Row="4" Grid.Column="4" Width="135" Text="(605) 761-1207"  Height="20"  Grid.ColumnSpan="2" />-->
+
+					</Grid>
 
 				</Grid>
 
 			</TabItem>
 
-			<!--<TabItem Header="Tabular search" >
+			<TabItem Header="_Search" >
+
 				<Grid>
+
 					<Grid.RowDefinitions>
 						<RowDefinition Height="40" />
 						<RowDefinition Height="40" />
@@ -138,11 +363,13 @@
 					<Label Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" Margin="10 0 0 0" FontWeight="Bold" Foreground="Green" />
 
 					<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
-						<Label Content="Partial name: " />
-						<TextBox x:Name="txtSearchCustomer" Width="200" Margin="0 6 0 6" />
+						<Label Content="Customer name: " />
+						<TextBox x:Name="txtSearchCustomer" Width="150" Margin="0 6 0 6" Text="{Binding Path=SearchCustomer}" />
 						<Label Content="Contact: " Margin="20 6 0 6"  />
-						<TextBox x:Name="txtSearchContact" Width="200" Margin="10 6 0 6" />
-						<Button x:Name="btnApply" Content="Apply filter" Margin="500 3 10 3" Width="90" FontWeight="Bold" FontSize="14" />
+						<TextBox x:Name="txtSearchContact"  Width="150" Margin="10 6 0 6" Text="{Binding Path=SearchContact}" />
+						<Label Content="Other: " Margin="20 6 0 6"  />
+						<TextBox x:Name="txtSearchOther"    Width="100" Margin="10 6 0 6" Text="{Binding Path=SearchOther}" />
+						<Button x:Name="btnApply" Content="Apply filter" Margin="10 3 10 3" Width="90" FontWeight="Bold" FontSize="14" />
 						<Button x:Name="btnClear" Content="Clear filter" Margin="0 3 110 3" Width="90" FontWeight="Bold" Click="btnClear_Click" FontSize="14" />
 					</StackPanel>
 
@@ -151,79 +378,32 @@
 					 Grid.Row="2" 
 					 Background="LightCyan" 
 					 ColumnWidth="auto"
+					 Width="870"
+					 Margin="5"
 					 ItemsSource="{Binding Custs.DefaultView}"
 					 IsSynchronizedWithCurrentItem="True"
 					 AutoGenerateColumns="False"  >
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Customer" Width="Auto" Binding="{Binding Path=Customer}" >
 							</DataGridTextColumn>
-							<DataGridTextColumn Header="Address" Width="Auto" Binding="{Binding Path=Address}" />
+							<DataGridTextColumn Header="Location" Width="Auto" Binding="{Binding Path=Location}" />
 							<DataGridTextColumn Header="City" Width="Auto" Binding="{Binding Path=City}" />
 							<DataGridComboBoxColumn Header="State" Width="50" TextBinding="{Binding Path=State}" />
-							<DataGridTextColumn Header="ZIP" Width="Auto" Binding="{Binding Path=ZIP}" />
-							<DataGridTextColumn Header="Phone" Width="Auto" Binding="{Binding Path=Phone}" />
+							<DataGridTextColumn Header="Corp.Phone" Width="Auto" Binding="{Binding Path=CorpPhone}" />
+							<DataGridTextColumn Header="Cont.Phone" Width="Auto" Binding="{Binding Path=ContPhone}" />
 							<DataGridTextColumn Header="Contact" Width="Auto" Binding="{Binding Path=Contact}" />
-							--><!--<DataGridCheckBoxColumn Header="Credit Hold" Width="100" />
-							<DataGridTextColumn Header="Last Job" />--><!--
+							<DataGridCheckBoxColumn Header="Credit Hold" Width="100" />
+							<DataGridTextColumn Header="Last Job" />
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
+
 			</TabItem>
-
-			<TabItem x:Name="tabPageTreeView" Header="TreeView search" >
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="40" />
-						<RowDefinition Height="40" />
-						<RowDefinition Height="*" />
-					</Grid.RowDefinitions>
-
-					<Label Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" Margin="10 0 0 0" FontWeight="Bold" Foreground="Green" />
-
-					<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
-						<Label Content="Partial name: " />
-						<TextBox x:Name="txtSearchCustomer2" Width="200" Margin="0 6 0 6" />
-						<Label Content="Contact: " Margin="20 6 0 6"  />
-						<TextBox x:Name="txtSearchContact2" Width="200" Margin="10 6 0 6" />
-						<Button x:Name="btnApply2" Content="Apply filter" Margin="500 6 10 6" Width="90" FontWeight="Bold" FontSize="14" />
-						<Button x:Name="btnClear2" Content="Clear filter" Margin="0 6 110 6" Width="90" FontWeight="Bold" Click="btnClear2_Click" FontSize="14" />
-					</StackPanel>
-
-					<TreeView
-					 Grid.Row="2" 
-					 Background="LightCyan" 
-					 FontFamily="Courier New" 
-					 FontSize="24" 
-					 FontWeight="DemiBold" >
-
-						<TreeView.ItemContainerStyle>
-							<Style TargetType="{x:Type TreeViewItem}">
-								<EventSetter Event="MouseDoubleClick" Handler="cmdSelect_Click" />
-							</Style>
-						</TreeView.ItemContainerStyle>
-
-						<TreeViewItem Header="Company: State of Alabama" IsExpanded="True" >
-							<TreeViewItem Header="Location  |  Montgomery, AL" IsExpanded="True" >
-								<TreeViewItem Header="  Contact: George Raft     | Phone: (208) 331-1221" />
-								<TreeViewItem Header="  Contact: Sam Billart     | Phone: (208) 331-2043" />
-							</TreeViewItem>
-							<TreeViewItem Header="Location  |  Dothan, GA" IsExpanded="True" >
-								<TreeViewItem Header="  Contact: Sally           | Phone: (706) 321-4033" />
-							</TreeViewItem>
-						</TreeViewItem>
-						<TreeViewItem Header="Company: Chick Fillet"  IsExpanded="True" >
-							<TreeViewItem Header="Location  |  Houston, TX" IsExpanded="True" >
-								<TreeViewItem Header="  Contact: Donald Shellman | Phone: (713) 667-4309" />
-							</TreeViewItem>
-						</TreeViewItem>
-					</TreeView>
-
-				</Grid>
-
-			</TabItem>-->
 
 		</TabControl>
 
 	</Grid>
+
+	</Viewbox>
 
 </Window>

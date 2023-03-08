@@ -13,14 +13,15 @@ namespace ProDocEstimate
 		protected void OnPropertyChanged([CallerMemberName] string? name = null)
 		{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		//protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		//{ PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
-
-		private DataTable? custs;             public DataTable? Custs            { get { return custs;       } set { custs       = value; OnPropertyChanged(); } }
+		private DataTable? search;            public DataTable? Search           { get { return search;      } set { search      = value; OnPropertyChanged(); } }
 		private bool?      notediting = true; public bool?      NotEditing       { get { return notediting;  } set { notediting  = value; OnPropertyChanged(); } }
 		private bool?      editing;           public bool?      Editing          { get { return editing;     } set { editing     = value; NotEditing = !editing; OnPropertyChanged(); } }
 		private bool?      newCustomer;       public bool?      NewCustomer      { get { return newCustomer; } set { newCustomer = value; OnPropertyChanged(); } }
 		private string?    selcust;           public string?    SelectedCustomer { get { return selcust;     } set { selcust     = value; OnPropertyChanged(); } }
+
+		private string? searchCustomer; public string? SearchCustomer { get { return searchCustomer; } set { searchCustomer = value; OnPropertyChanged(); } }
+		private string? searchContact;  public string? SearchContact  { get { return searchContact;  } set { searchContact  = value; OnPropertyChanged(); } }
+		private string? searchOther   ; public string? SearchOther    { get { return searchOther   ; } set { searchOther    = value; OnPropertyChanged(); } }
 
 		public Customers()
 		{ InitializeComponent();
@@ -85,12 +86,7 @@ namespace ProDocEstimate
 
 		private void btnClear_Click(object sender, RoutedEventArgs e)
 		{
-
-		}
-
-		private void btnClear2_Click(object sender, RoutedEventArgs e)
-		{
-
+			SearchCustomer = ""; SearchContact = ""; SearchOther = ""; // OnPropertyChanged();
 		}
 
 		private void cmdSelect_Click(object sender, RoutedEventArgs e)

@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Windows.Controls;
 using System.Runtime.CompilerServices;
 using System;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate {
 	public partial class Quotations : Window, INotifyPropertyChanged {
@@ -27,9 +28,9 @@ namespace ProDocEstimate {
 
 		private string? fsint1;  public string? FSINT1  { get { return fsint1;  } set { fsint1  = value; OnPropertyChanged(); } }
 		private string? fsfrac1; public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
-		private string? fsint2; public string? FSINT2 { get { return fsint2; } set { fsint2 = value; OnPropertyChanged(); } }
+		private string? fsint2;  public string? FSINT2  { get { return fsint2;  } set { fsint2  = value; OnPropertyChanged(); } }
 		private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
-		private int? parts; public int? PARTS { get { return parts; } set { parts = value; OnPropertyChanged(); } }
+		private int?    parts;   public int? PARTS      { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
 
 		private string? papertype; public string? PAPERTYPE { get { return papertype; } set { papertype = value; OnPropertyChanged(); } }
 		private string? rollwidth; public string? ROLLWIDTH { get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
@@ -47,12 +48,26 @@ namespace ProDocEstimate {
 		private string? csz; public string? CSZ { get { return csz; } set { csz = value; OnPropertyChanged(); } }
 
 		private string? activePage; public string? ActivePage { get { return activePage; } set { activePage = value; OnPropertyChanged(); } }
-		private decimal? qty1; public decimal? Qty1 { get { return qty1; } set { qty1 = value; OnPropertyChanged(); } }
-		private decimal? qty2; public decimal? Qty2 { get { return qty2; } set { qty2 = value; OnPropertyChanged(); } }
-		private decimal? qty3; public decimal? Qty3 { get { return qty3; } set { qty3 = value; OnPropertyChanged(); } }
-		private decimal? qty4; public decimal? Qty4 { get { return qty4; } set { qty4 = value; OnPropertyChanged(); } }
-		private decimal? qty5; public decimal? Qty5 { get { return qty5; } set { qty5 = value; OnPropertyChanged(); } }
-		private decimal? qty6; public decimal? Qty6 { get { return qty6; } set { qty6 = value; OnPropertyChanged(); } }
+		
+		private float? qty1a; public float? QTY1a { get { return qty1a; } set { qty1a = value; OnPropertyChanged(); } }
+		private float? qty2a; public float? QTY2a { get { return qty2a; } set { qty2a = value; OnPropertyChanged(); } }
+		private float? qty3a; public float? QTY3a { get { return qty3a; } set { qty3a = value; OnPropertyChanged(); } }
+		private float? qty4a; public float? QTY4a { get { return qty4a; } set { qty4a = value; OnPropertyChanged(); } }
+
+		private float? cpm1a; public float? CPM1a { get { return cpm1a; } set { cpm1a = value; OnPropertyChanged(); } }
+		private float? cpm2a; public float? CPM2a { get { return cpm2a; } set { cpm2a = value; OnPropertyChanged(); } }
+		private float? cpm3a; public float? CPM3a { get { return cpm3a; } set { cpm3a = value; OnPropertyChanged(); } }
+		private float? cpm4a; public float? CPM4a { get { return cpm4a; } set { cpm4a = value; OnPropertyChanged(); } }
+
+		private float? mar1a; public float? MAR1a { get { return mar1a; } set { mar1a = value; OnPropertyChanged(); } }
+		private float? mar2a; public float? MAR2a { get { return mar2a; } set { mar2a = value; OnPropertyChanged(); } }
+		private float? mar3a; public float? MAR3a { get { return mar3a; } set { mar3a = value; OnPropertyChanged(); } }
+		private float? mar4a; public float? MAR4a { get { return mar4a; } set { mar4a = value; OnPropertyChanged(); } }
+
+		private float? ext1a; public float? EXT1a { get { return ext1a; } set { ext1a = value; OnPropertyChanged(); } }
+		private float? ext2a; public float? EXT2a { get { return ext2a; } set { ext2a = value; OnPropertyChanged(); } }
+		private float? ext3a; public float? EXT3a { get { return ext3a; } set { ext3a = value; OnPropertyChanged(); } }
+		private float? ext4a; public float? EXT4a { get { return ext4a; } set { ext4a = value; OnPropertyChanged(); } }
 
 		private DataTable? features;   public DataTable? Features { get { return features; } set { features = value; OnPropertyChanged(); } }
 		private DataTable? elements;   public DataTable? Elements { get { return elements; } set { elements = value; OnPropertyChanged(); } }
@@ -325,8 +340,25 @@ namespace ProDocEstimate {
 		private void txtQuoteNum_LostFocus(object sender, RoutedEventArgs e) 
 			{
 				GetQuote();
-	//txtCustomerNum_LostFocus(this, null);
+				//txtCustomerNum_LostFocus(this, null);
 			}
+
+		private void Qty1b_LostFocus(object sender, RoutedEventArgs e) {
+				if( (QTY1a!=null && QTY1a!=0) && (CPM1a != null && CPM1a != 0) & (MAR1a != null && MAR1a != 0) )  
+				{ float? result = QTY1a * CPM1a * MAR1a; EXT1a = EXT1a = result / 1000.00F; }
+		}
+
+		private void Qty2b_LostFocus(object sender, RoutedEventArgs e) {
+			if ((QTY2a != null && QTY2a != 0) && (CPM2a != null && CPM2a != 0) & (MAR2a != null && MAR2a != 0)) { float? result = QTY2a * CPM2a * MAR2a; EXT2a = EXT2a = result / 1000.00F; }
+		}
+
+		private void Qty3b_LostFocus(object sender, RoutedEventArgs e) {
+			if ((QTY3a != null && QTY3a != 0) && (CPM3a != null && CPM3a != 0) & (MAR3a != null && MAR3a != 0)) { float? result = QTY3a * CPM3a * MAR3a; EXT3a = EXT3a = result / 1000.00F; }
+		}
+
+		private void Qty4b_LostFocus(object sender, RoutedEventArgs e) {
+			if ((QTY4a != null && QTY4a != 0) && (CPM4a != null && CPM4a != 0) & (MAR4a != null && MAR4a != 0)) { float? result = QTY4a * CPM4a * MAR4a; EXT4a = EXT4a = result / 1000.00F; }
+		}
 
 	}
 }

@@ -17,15 +17,20 @@
   <ItemGroup>
     <Compile Remove="Views\CustomerSearch.xaml.cs" />
     <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
+    <Compile Remove="Views\PV01.xaml.cs" />
+    <Compile Remove="Views\PV02.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Images\PDS-logo-lrg.png" />
+    <None Remove="Screenshots\WaterMark.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Remove="Views\CustomerSearch.xaml" />
     <Page Remove="Views\CustSearchTreeView.xaml" />
+    <Page Remove="Views\PV01.xaml" />
+    <Page Remove="Views\PV02.xaml" />
   </ItemGroup>
 
   <ItemGroup>
