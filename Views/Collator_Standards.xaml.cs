@@ -3,16 +3,28 @@ using System.Windows;
 using Microsoft.OData.Edm;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
 
-namespace ProDocEstimate.Views {
+namespace ProDocEstimate.Views
+{
 
-	public partial class Collator_Standards : Window, INotifyPropertyChanged {
+	public partial class Collator_Standards : Window, INotifyPropertyChanged
+	{
 
-	public event PropertyChangedEventHandler? PropertyChanged;
-	protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+		public event PropertyChangedEventHandler? PropertyChanged;
+		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
 		private bool? editing; public bool? Editing { get { return editing; } set { editing = value; NotEditing = !editing; OnPropertyChanged(); } }
 		private bool? notediting; public bool? NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
+
+		private string id; public string ID { get { return id; } set { id = value; OnPropertyChanged(); } }
+		private DataSet ds; public DataSet DS { get { return ds; } set { ds = value; OnPropertyChanged(); } }
+
+		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+		public SqlConnection cn = new SqlConnection();
+		public SqlDataAdapter? da;
 
 		private string? coll_std; public string? COLLATOR_STANDARD { get { return coll_std; } set { coll_std = value; OnPropertyChanged(); } }
 		private string? coll_num; public string? COLLATOR_NUM { get { return coll_num; } set { coll_num = value; OnPropertyChanged(); } }
@@ -72,69 +84,101 @@ namespace ProDocEstimate.Views {
 		private float? coll_cost; public float? COLL_COST { get { return coll_cost; } set { coll_cost = value; } }
 		private float? coll_sell; public float? COLL_SELL { get { return coll_sell; } set { coll_sell = value; } }
 
-		public Collator_Standards() {
+		public Collator_Standards()
+		{
 			InitializeComponent();
 			DataContext = this;
 
-			COLLATOR_STANDARD = "1";
-			COLLATOR_NUM = "311";
-			COLLATOR_DESCRIPTION = "11 inch collator";
+			//COLLATOR_STANDARD = "1";
+			//COLLATOR_NUM = "311";
+			//COLLATOR_DESCRIPTION = "11 inch collator";
 
-			Date CREATED = new DateTime(2022, 02, 01);
-			Date CHANGED = new DateTime(2022, 05, 14);
+			//Date CREATED = new DateTime(2022, 02, 01);
+			//Date CHANGED = new DateTime(2022, 05, 14);
 
-			CONT_SPEED1 = 177;
-			CONT_SPEED2 = 177;
-			CONT_SPEED3 = 177;
-			CONT_SPEED4 = 177;
-			CONT_SPEED5 = 177;
-			CONT_SPEED6 = 159;
-			CONT_SPEED7 = 159;
+			//CONT_SPEED1 = 177;
+			//CONT_SPEED2 = 177;
+			//CONT_SPEED3 = 177;
+			//CONT_SPEED4 = 177;
+			//CONT_SPEED5 = 177;
+			//CONT_SPEED6 = 159;
+			//CONT_SPEED7 = 159;
 
-			SNAP_SPEED1 = 135;
-			SNAP_SPEED2 = 135;
-			SNAP_SPEED3 = 135;
-			SNAP_SPEED4 = 135;
-			SNAP_SPEED5 = 135;
-			SNAP_SPEED6 = 125;
-			SNAP_SPEED7 = 117;
-			SNAP_SPEED8 = 117;
-			SNAP_SPEED9 = 117;
-			SNAP_SPEED10 = 117;
+			//SNAP_SPEED1 = 135;
+			//SNAP_SPEED2 = 135;
+			//SNAP_SPEED3 = 135;
+			//SNAP_SPEED4 = 135;
+			//SNAP_SPEED5 = 135;
+			//SNAP_SPEED6 = 125;
+			//SNAP_SPEED7 = 117;
+			//SNAP_SPEED8 = 117;
+			//SNAP_SPEED9 = 117;
+			//SNAP_SPEED10 = 117;
 
 			// CONT_SPEED21-210 have no values in the database
 
-			SNAP_SPEED21 = 117;
-			SNAP_SPEED22 = 117;
+			//SNAP_SPEED21 = 117;
+			//SNAP_SPEED22 = 117;
 
-			COLL_SETUP_ECL = 303.10F;
-			COLL_RUN_ECL = 303.20F;
-			COLL_MATL_ECL = 303.20F;
-			COLL_COST = 40.00F;
-			COLL_SELL = 40.00F;
+			//COLL_SETUP_ECL = 303.10F;
+			//COLL_RUN_ECL = 303.20F;
+			//COLL_MATL_ECL = 303.20F;
+			//COLL_COST = 40.00F;
+			//COLL_SELL = 40.00F;
 
 			Editing = false;
 		}
 
-		private void mnuExit_Click(object sender, RoutedEventArgs e) {
+		private void mnuExit_Click(object sender, RoutedEventArgs e)
+		{
 			Close();
 		}
 
-		private void mnuEdit_Click(object sender, RoutedEventArgs e) {
+		private void mnuEdit_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = true;
 		}
 
-		private void mnuNew_Click(object sender, RoutedEventArgs e) {
+		private void mnuNew_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = true;
 		}
 
-		private void mnuSave_Click(object sender, RoutedEventArgs e) {
+		private void mnuSave_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = false;
 		}
 
-		private void mnuCancel_Click(object sender, RoutedEventArgs e) {
+		private void mnuCancel_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = false;
 		}
 
+		private void txtPartial_LostFocus(object sender, RoutedEventArgs e)
+		{
+			cn = new SqlConnection(ConnectionString);
+			cn.Open();
+			string str = txtSearch.Text.Trim();
+			string cmd = "SELECT ID, COLLATOR_STANDARD, COLLATOR_NUM, COLLATOR_DESCRIPTION FROM COLLATOR_STANDARDS" +
+									 " WHERE COLLATOR_DESCRIPTION LIKE '%" + str + "%' ORDER BY 1, 2";
+			da = new SqlDataAdapter(cmd, cn);
+			ds = new DataSet();
+			da.Fill(ds);
+			dgCollators.ItemsSource = ds.Tables[0].DefaultView; dgCollators.SelectedIndex = 0;
+			lblResult.Content = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
+		}
+
+		private void dgCollators_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			int selindex = dgCollators.SelectedIndex;
+			if (selindex >= 0 && selindex < ds.Tables[0].Rows.Count)
+			{ ID = DS.Tables[0].Rows[selindex][0].ToString();
+				string cmd = "SELECT * FROM COLLATOR_STANDARDS WHERE ID LIKE '" + ID + "%' ORDER BY 1, 2";
+				da = new SqlDataAdapter(cmd, cn);
+				DataSet ds = new DataSet();
+				da.Fill(ds);
+				DataContext = ds.Tables[0].DefaultView;
+			}
+		}
 	}
 }

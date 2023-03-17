@@ -1,6 +1,13 @@
 ﻿using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Configuration;
+using System.Data.SqlClient;
+using ProDocEstimate.ViewModels;
+using System.Data;
+using System.Windows.Controls;
+using System.Xml;
+using System;
 
 namespace ProDocEstimate.Views {
 
@@ -8,6 +15,13 @@ namespace ProDocEstimate.Views {
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+		private string id; public string ID { get { return id; } set { id = value; OnPropertyChanged(); } }
+		private DataSet ds; public DataSet DS {  get { return ds; } set { ds = value; OnPropertyChanged(); } }
+
+		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+		public SqlConnection cn = new SqlConnection();
+		public SqlDataAdapter? da;
 
 		private bool? editing; public bool? Editing { get { return editing; } set { editing = value; NotEditing = !editing; OnPropertyChanged(); } }
 		private bool? notediting; public bool? NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
@@ -75,66 +89,66 @@ namespace ProDocEstimate.Views {
 			InitializeComponent();
 			DataContext = this;
 
-			FEATURE = "1";
-			FEATURE_NUM = "11-1";
-			FEATURE_DESCRIPTION = "1 STD COLOR";
-			Sort = "DESC";
-			FLAT_CHARGE = 20F;
-			RUN_CHARGE = 0.600000023841858F;
-			ASK_PRICE_IN = "R";
-			ASK_PRICE_SQ_IN = "R";
+			//FEATURE = "1";
+			//FEATURE_NUM = "11-1";
+			//FEATURE_DESCRIPTION = "1 STD COLOR";
+			//Sort = "DESC";
+			//FLAT_CHARGE = 20F;
+			//RUN_CHARGE = 0.600000023841858F;
+			//ASK_PRICE_IN = "R";
+			//ASK_PRICE_SQ_IN = "R";
 
-			SellDollars = "99";
-			CostDollars = "99";
+			//SellDollars = "99";
+			//CostDollars = "99";
 
-			CostMU1 = "99";
-			CostMU2 = "99";
+			//CostMU1 = "99";
+			//CostMU2 = "99";
 
-			PREP_DEPT_TIME = "0.200000002980232";
-			PREP_DEPT_MATL = "5";
-			PrepSlowdown = "";
+			//PREP_DEPT_TIME = "0.200000002980232";
+			//PREP_DEPT_MATL = "5";
+			//PrepSlowdown = "";
 
-			PRESS_SETUP_TIME = "0.25";
-			PRESS_SETUP_MATERIAL = "99";
-			PRESS_SLOWDOWN = "99";
+			//PRESS_SETUP_TIME = "0.25";
+			//PRESS_SETUP_MATERIAL = "99";
+			//PRESS_SLOWDOWN = "99";
 
-			ColorTime = "99";
-			ColorMaterial = "99";
-			ColorSlowdown = "99";
+			//ColorTime = "99";
+			//ColorMaterial = "99";
+			//ColorSlowdown = "99";
 
-			BindTime = "99";
+			//BindTime = "99";
 
 			
-			OtherTime = "99";
-			OtherMaterial = "99";
+			//OtherTime = "99";
+			//OtherMaterial = "99";
 
-			OneTimeMaterial = "99";
-			WhatsThis = "99";
+			//OneTimeMaterial = "99";
+			//WhatsThis = "99";
 
-			OptNumAround = "99";
-			OptPart = "99";
-			OptStream = "99";
+			//OptNumAround = "99";
+			//OptPart = "99";
+			//OptStream = "99";
 
-			FLAT_CHARGE = 20.00F;
-			FLAT_PROMPT = "# 3 hole MR";
-			RUN_CHARGE = 0.600000023841858F;
-			RUN_PROMPT = "# of MR";
+			//FLAT_CHARGE = 20.00F;
+			//FLAT_PROMPT = "# 3 hole MR";
+			//RUN_CHARGE = 0.600000023841858F;
+			//RUN_PROMPT = "# of MR";
 
-			OptPercent = "99";
-			OptType = "99";
+			//OptPercent = "99";
+			//OptType = "99";
 
-			Sets = "99";
-			MultStreamOK = true;
-			WasteSetup = "22";
-			WasteRunPct = "99";
-			MR_IMPR = "15";
-			CartonQty = "99";
-			CalcType = "99";
-			Alert = "caution total ink colors 3";
+			//Sets = "99";
+			//MultStreamOK = true;
+			//WasteSetup = "22";
+			//WasteRunPct = "99";
+			//MR_IMPR = "15";
+			//CartonQty = "99";
+			//CalcType = "99";
+			//Alert = "caution total ink colors 3";
 
-			SETUP_ECL = 101.099998474121F;
-			RUN_ECL = 101.199996948242F;
-			MATL_ECL = 807F;
+			//SETUP_ECL = 101.099998474121F;
+			//RUN_ECL = 101.199996948242F;
+			//MATL_ECL = 807F;
 
 			Editing = false;
 
@@ -166,6 +180,37 @@ namespace ProDocEstimate.Views {
 
 		private void mnuCancel_Click(object sender, RoutedEventArgs e) {
 			Editing = false;
+		}
+
+		private void SearchTerm_LostFocus(object sender, RoutedEventArgs e)
+		{
+			cn = new SqlConnection(ConnectionString);
+			cn.Open();
+			string str = txtSearch.Text.Trim();
+			string cmd = "SELECT ID, FEATURE, FEATURE_NUM, FEATURE_DESCRIPTION, FLAT_PROMPT FROM FEATURE_STANDARDS" +
+									 " WHERE FEATURE_DESCRIPTION LIKE '%" + str + "%' ORDER BY 1, 2";
+			da = new SqlDataAdapter(cmd, cn);
+			ds = new DataSet();
+			da.Fill(ds);
+			dgFeatures.ItemsSource = ds.Tables[0].DefaultView; dgFeatures.SelectedIndex = 0;
+			lblResult.Content = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
+		}
+
+		private void dgFeatures_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+			int selindex = dgFeatures.SelectedIndex;
+			if(selindex >= 0 && selindex < ds.Tables[0].Rows.Count) { 
+			ID = DS.Tables[0].Rows[selindex][0].ToString();
+			string cmd = "SELECT * FROM FEATURE_STANDARDS WHERE ID LIKE '" + ID + "%' ORDER BY 1, 2";
+			da = new SqlDataAdapter(cmd, cn);
+			DataSet ds = new DataSet();
+			da.Fill(ds);
+			DataContext = ds.Tables[0].DefaultView;
+			}
+		}
+
+		private void dgFeatures_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			dgFeatures_MouseDoubleClick(new Object(), null);
 		}
 	}
 }

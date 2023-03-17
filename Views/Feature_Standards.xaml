@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Feature Standards" 
 				Width="900"
-				Height="750"
+				Height="850"
 				WindowStartupLocation="CenterScreen">
 
 	<Window.Resources>
@@ -39,6 +39,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="220" />
 		</Grid.RowDefinitions>
 
 		<Menu>
@@ -69,7 +70,7 @@
 				IsEnabled="{Binding Path=Editing}" />
 		</Menu>
 
-		<Grid Grid.Row="1" Background="LightGray">
+		<Grid Grid.Row="1" Background="LightGray" Height="750">
 
 			<Grid.RowDefinitions>
 				<RowDefinition Height="40" />
@@ -128,25 +129,20 @@
 							Background="LightSteelBlue"
 							Content="SORT"
 							Padding="5 0"
-							Foreground="Orange" />
-				<!--WhiteSmoke-->
+							Foreground="Orange" Visibility="Hidden" />
+				
 				<TextBox
 							x:Name="txtSort"
 							Width="50"
 							Height="24"
 							VerticalAlignment="Center" VerticalContentAlignment="Center"
-							Margin="5 0 0 0"
+							Margin="5 0 0 0" Visibility="Hidden" 
 							Text="{Binding Path=Sort}" Foreground="Orange"/>
 			</StackPanel>
 
-			<Grid Grid.Row="1" Grid.Column="0">
+			<Grid Grid.Row="1" Grid.Column="0" Height="520" VerticalAlignment="Top">
 
 				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
 					<RowDefinition />
 					<RowDefinition />
 					<RowDefinition />
@@ -309,9 +305,11 @@
 								Content="SLOWDOWN" />
 				</StackPanel>
 
-				<Grid Grid.Row="6" Grid.RowSpan="6">
+				<Grid Grid.Row="6" Grid.RowSpan="8">
 
 					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
 						<RowDefinition />
 						<RowDefinition />
 						<RowDefinition />
@@ -431,6 +429,20 @@
 								Width="40"
 								Style="{StaticResource TextField}"
 								Text="{Binding Path=WhatsThis}"  Foreground="Orange"/>
+
+					<Label Grid.Row="7" Content="Enter any part of name: " Grid.ColumnSpan="2" />
+
+					<TextBox x:Name="txtSearch" 
+					 Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" 
+					 HorizontalAlignment="Left" Margin="95 0 0 0" Width="110" 
+					 VerticalAlignment="Center" VerticalContentAlignment="Center" 
+					 LostFocus="SearchTerm_LostFocus" />
+
+					<Button Grid.Row="7" HorizontalAlignment="Left" Margin="90 0 0 0" Width="40" Grid.Column="2" Grid.ColumnSpan="2" >
+						<AccessText>_Go</AccessText>
+					</Button>
+
+					<Label x:Name="lblResult" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Content="" />
 
 				</Grid>
 
@@ -698,45 +710,26 @@
 
 			</Grid>
 
-			<DataGrid
-						Grid.Row="1"
-						Grid.ColumnSpan="2"
-						Width="890"
-						Height="200"
-						Margin="10"
-						VerticalAlignment="Bottom">
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="120" Header="Std #" />
-					<DataGridTextColumn Width="120" Header="Feature #" />
-					<DataGridTextColumn Width="600" Header="Description" />
-				</DataGrid.Columns>
-			</DataGrid>
-
-			<Label
-				Grid.Row="1"
-				Grid.ColumnSpan="2"
-				Width="223"
-				VerticalAlignment="Bottom"
-				Height="160"
-				Margin="326,0,0,10"
-				Panel.ZIndex="1"
-				Background="Transparent"
-				Content="Needs lookups"
-				FontSize="32"
-				FontWeight="Bold"
-				Foreground="Green"
-				RenderTransformOrigin="0.5,0.5">
-				<Label.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform />
-						<SkewTransform />
-						<RotateTransform Angle="-17.788" />
-						<TranslateTransform />
-					</TransformGroup>
-				</Label.RenderTransform>
-			</Label>
-
 		</Grid>
+
+		<DataGrid x:Name="dgFeatures"
+		  Grid.Row="2"
+			Grid.ColumnSpan="2"
+			Width="890"
+			Height="200"
+			Margin="10"
+			IsSynchronizedWithCurrentItem="True"
+			SelectedItem="{Binding SelectedItem}"
+			SelectionChanged="dgFeatures_SelectionChanged"
+			MouseDoubleClick="dgFeatures_MouseDoubleClick"
+			VerticalAlignment="Bottom">
+			<DataGrid.Columns>
+				<DataGridTextColumn Width="50" Header="Std #"        Binding="{Binding FEATURE}" />
+				<DataGridTextColumn Width="70" Header="Feature #"    Binding="{Binding FEATURE_NUM}" />
+				<DataGridTextColumn Width="200" Header="Description" Binding="{Binding FEATURE_DESCRIPTION}" />
+				<DataGridTextColumn Width="300" Header="Prompt"      Binding="{Binding FLAT_PROMPT}" />
+			</DataGrid.Columns>
+		</DataGrid>
 
 	</Grid>
 

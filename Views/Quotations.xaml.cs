@@ -211,8 +211,14 @@ namespace ProDocEstimate {
 		private void LoadProjTypes() {
 			this.ProjTypes = new DataTable("ProjTypes");
 			this.ProjTypes.Columns.Add("TEXT");
+			this.ProjTypes.Rows.Add("");
 			this.ProjTypes.Rows.Add("Continuous");
-			this.ProjTypes.Rows.Add("Snap-in");
+			this.ProjTypes.Rows.Add("Snap");
+			this.ProjTypes.Rows.Add("Cut Sheet");
+			this.ProjTypes.Rows.Add("RX");
+			this.ProjTypes.Rows.Add("Ballot");
+			this.ProjTypes.Rows.Add("Imprint");
+			this.ProjTypes.Rows.Add("Other");
 			this.cmbProjectType.DataContext = this;
 			this.cmbProjectType.ItemsSource = ProjTypes.DefaultView;
 			this.cmbProjectType.DisplayMemberPath = "TEXT";

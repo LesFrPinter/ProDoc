@@ -1,10 +1,20 @@
 ﻿using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
 
 namespace ProDocEstimate.Views {
-	public partial class Press_Standards : Window, INotifyPropertyChanged 
-		{
+	public partial class Press_Standards : Window, INotifyPropertyChanged
+	{
+
+		private string id; public string ID { get { return id; } set { id = value; OnPropertyChanged(); } }
+		private DataSet ds; public DataSet DS { get { return ds; } set { ds = value; OnPropertyChanged(); } }
+
+		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+		public SqlConnection cn = new SqlConnection();
+		public SqlDataAdapter? da;
 
 		private bool? editing; public bool? Editing { get { return editing; } set { editing = value; NotEditing = !editing; OnPropertyChanged(); } }
 		private bool? notediting; public bool? NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
@@ -51,73 +61,107 @@ namespace ProDocEstimate.Views {
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		public Press_Standards() {
+		public Press_Standards()
+		{
 			InitializeComponent();
 			DataContext = this;
 
-			PRESS_STANDARD = "01";
-			PRESS_NUM = "01";
-			PRESS_DESCRIPTION = "22 inch Press";
+			//PRESS_STANDARD = "01";
+			//PRESS_NUM = "01";
+			//PRESS_DESCRIPTION = "22 inch Press";
 
-			WEB = "1.2";
-			WEB2 = "1.3";
-			WIDTH = @"14 7/8""";
+			//WEB = "1.2";
+			//WEB2 = "1.3";
+			//WIDTH = @"14 7/8""";
 
-			TOWERS = "2";
-			VARIABLE = "Y";
-			RESTRICTD = "S";
-			Slowdown = "1";  // WHAT IS THIS?
+			//TOWERS = "2";
+			//VARIABLE = "Y";
+			//RESTRICTD = "S";
+			//Slowdown = "1";  // WHAT IS THIS?
 
-			PRESS_COST = 1.12F;
-			PRESS_SELL = 2.21F;
-			BASESPEED = "428";
+			//PRESS_COST = 1.12F;
+			//PRESS_SELL = 2.21F;
+			//BASESPEED = "428";
 
-			SPEED1 = "91";
-			SPEED2 = "153";
-			SPEED3 = "185";
-			SPEED4 = "244";
-			SPEED5 = "275";
-			SPEED6 = "325";
-			SPEED7 = "360";
-			SPEED8 = "450";
+			//SPEED1 = "91";
+			//SPEED2 = "153";
+			//SPEED3 = "185";
+			//SPEED4 = "244";
+			//SPEED5 = "275";
+			//SPEED6 = "325";
+			//SPEED7 = "360";
+			//SPEED8 = "450";
 
-			FOOTAGE1 = "1.38";
-			FOOTAGE2 = "4.58";
-			FOOTAGE3 = "6.88";
-			FOOTAGE4 = "9.17";
-			FOOTAGE5 = "13.75";
-			FOOTAGE6 = "45.80";
-			FOOTAGE7 = "91.70";
-			FOOTAGE8 = "183.00";
+			//FOOTAGE1 = "1.38";
+			//FOOTAGE2 = "4.58";
+			//FOOTAGE3 = "6.88";
+			//FOOTAGE4 = "9.17";
+			//FOOTAGE5 = "13.75";
+			//FOOTAGE6 = "45.80";
+			//FOOTAGE7 = "91.70";
+			//FOOTAGE8 = "183.00";
 
-			SETUP_ECL = "151.10"; // prefix with "PRESS_"
-			RUN_ECL = "151.20";   //    "
-			MATL_ECL = "802.00";  //
-														//
+			//SETUP_ECL = "151.10"; // prefix with "PRESS_"
+			//RUN_ECL = "151.20";   //    "
+			//MATL_ECL = "802.00";  //
+			//
 			Editing = false;
 
 		}
 
-		private void mnuExit_Click(object sender, RoutedEventArgs e) {
+		private void mnuExit_Click(object sender, RoutedEventArgs e)
+		{
 			Close();
 		}
 
-		private void mnuEdit_Click(object sender, RoutedEventArgs e) {
+		private void mnuEdit_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = true;
 		}
 
-		private void mnuNew_Click(object sender, RoutedEventArgs e) {
+		private void mnuNew_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = true;
 		}
 
-		private void mnuSave_Click(object sender, RoutedEventArgs e) {
+		private void mnuSave_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = false;
 		}
 
-		private void mnuCancel_Click(object sender, RoutedEventArgs e) {
+		private void mnuCancel_Click(object sender, RoutedEventArgs e)
+		{
 			Editing = false;
 		}
 
+		private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+		{
+			cn = new SqlConnection(ConnectionString);
+			cn.Open();
+			string str = txtSearch.Text.Trim();
+			string cmd = "SELECT ID, STANDARD, PRESS_NUMBER, DESCRIPTION FROM PRESS_STANDARDS" +
+									 " WHERE DESCRIPTION LIKE '%" + str + "%' ORDER BY 1, 2";
+			da = new SqlDataAdapter(cmd, cn);
+			ds = new DataSet();
+			da.Fill(ds);
+			dgPress.ItemsSource = ds.Tables[0].DefaultView; dgPress.SelectedIndex = 0;
+			lblResult.Content = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
+
+		}
+
+		private void dgPress_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			int selindex = dgPress.SelectedIndex;
+			if (selindex >= 0 && selindex < ds.Tables[0].Rows.Count)
+			{
+				ID = DS.Tables[0].Rows[selindex][0].ToString();
+				string cmd = "SELECT * FROM PRESS_STANDARDS WHERE ID LIKE '" + ID + "%' ORDER BY 1, 2";
+				da = new SqlDataAdapter(cmd, cn);
+				DataSet ds = new DataSet();
+				da.Fill(ds);
+				DataContext = ds.Tables[0].DefaultView;
+
+			}
+		}
 	}
-
 }
