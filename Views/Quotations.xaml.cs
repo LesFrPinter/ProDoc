@@ -1,16 +1,17 @@
-﻿using System.Data;
-using System.Windows;
-using System.Configuration;
-using System.Windows.Input;
-using ProDocEstimate.Views;
+﻿using ProDocEstimate.Views;
 using System.ComponentModel;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Controls;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
+using System.Runtime;
 
-namespace ProDocEstimate {
+namespace ProDocEstimate
+{
 	public partial class Quotations : Window, INotifyPropertyChanged {
 		HistoricalPrices hp = new();
 
@@ -81,7 +82,7 @@ namespace ProDocEstimate {
 		public Quotations() {
 			InitializeComponent();
 			DataContext = this;
-			LoadFeatures();
+//			LoadFeatures();
 			LoadElements();
 			LoadProjTypes();
 			LoadPaperTypes();
@@ -204,8 +205,8 @@ namespace ProDocEstimate {
 			this.Features.Rows.Add(0, "Shrink Wrap");
 			this.Features.Rows.Add(0, "Padding");
 
-			this.dgFeatures.DataContext = this;
-			this.dgFeatures.ItemsSource = Features.DefaultView;
+			//this.dgFeatures.DataContext = this;
+			//this.dgFeatures.ItemsSource = Features.DefaultView;
 		}
 
 		private void LoadProjTypes() {
@@ -240,7 +241,8 @@ namespace ProDocEstimate {
 		}
 
 		private void btnShowHideFeaturesPicker_Click(object sender, RoutedEventArgs e) {
-			dgFeatures.Visibility = (dgFeatures.Visibility == Visibility.Hidden) ? Visibility.Visible : Visibility.Hidden;
+			pckFeatures.Visibility = (pckFeatures.Visibility == Visibility.Hidden) ? Visibility.Visible : Visibility.Hidden;
+
 		}
 
 		private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) 

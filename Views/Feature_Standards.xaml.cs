@@ -1,23 +1,21 @@
-﻿using System.Windows;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System;
+using System.Data;
+using System.Windows;
 using System.Configuration;
 using System.Data.SqlClient;
-using ProDocEstimate.ViewModels;
-using System.Data;
+using System.ComponentModel;
 using System.Windows.Controls;
-using System.Xml;
-using System;
+using System.Runtime.CompilerServices;
 
-namespace ProDocEstimate.Views {
-
+namespace ProDocEstimate.Views
+{
 	public partial class Feature_Standards : Window, INotifyPropertyChanged {
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		private string id; public string ID { get { return id; } set { id = value; OnPropertyChanged(); } }
-		private DataSet ds; public DataSet DS {  get { return ds; } set { ds = value; OnPropertyChanged(); } }
+		private string id;  public string  ID { get { return id; } set { id = value; OnPropertyChanged(); } }
+		private DataSet ds; public DataSet DS { get { return ds; } set { ds = value; OnPropertyChanged(); } }
 
 		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 		public SqlConnection cn = new SqlConnection();
@@ -26,13 +24,13 @@ namespace ProDocEstimate.Views {
 		private bool? editing; public bool? Editing { get { return editing; } set { editing = value; NotEditing = !editing; OnPropertyChanged(); } }
 		private bool? notediting; public bool? NotEditing { get { return notediting; } set { notediting = value; OnPropertyChanged(); } }
 
-		//		private string? featureStandardNum; public string? FeatureStandardNum { get { return featureStandardNum; } set { featureStandardNum = value; OnPropertyChanged(); } }
-		private string? feature;            public string? FEATURE { get { return feature; } set { feature = value; OnPropertyChanged(); } }
+		#region Property Declarations
+
+		private string? feature;             public string? FEATURE { get { return feature; } set { feature = value; OnPropertyChanged(); } }
 		private string? feature_Num;         public string? FEATURE_NUM    { get { return feature_Num; } set { feature_Num = value; OnPropertyChanged(); } }
 		private string? feature_Description; public string? FEATURE_DESCRIPTION { get { return feature_Description; } set { feature_Description = value; OnPropertyChanged(); } }
-		private string? sort;               public string? Sort          { get { return sort; } set { sort = value; OnPropertyChanged(); } }
-		//private string? flat_charge;        public string? FLAT_CHARGE   { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
-		//private string? run_charge;         public string? RUN_CHARGE { get { return run_charge; } set { run_charge = value; OnPropertyChanged(); } }
+		private string? sort;                public string? Sort          { get { return sort; } set { sort = value; OnPropertyChanged(); } }
+
 		private string? ask_price_in;       public string? ASK_PRICE_IN  { get { return ask_price_in; } set { ask_price_in = value; OnPropertyChanged(); } }
 		private string? ask_price_sq_in;    public string? ASK_PRICE_SQ_IN { get { return ask_price_sq_in; } set { ask_price_sq_in = value; OnPropertyChanged(); } }
 		private string? sellDollars;        public string? SellDollars   { get { return sellDollars; } set { sellDollars = value; OnPropertyChanged(); } }
@@ -40,8 +38,8 @@ namespace ProDocEstimate.Views {
 		private string? costMU1;            public string? CostMU1       { get { return costMU1; } set { costMU1 = value; OnPropertyChanged(); } }
 		private string? costMU2;            public string? CostMU2       { get { return costMU2; } set { costMU2 = value; OnPropertyChanged(); } }
 
-		private float? esqsel; public float? ESQSEL { get { return esqsel; } set { esqsel = value; OnPropertyChanged(); } }
-		private float? esqcst; public float? ESQCST { get { return esqcst; } set { esqcst = value; OnPropertyChanged(); } }
+		private float? esqsel;							public float? ESQSEL { get { return esqsel; } set { esqsel = value; OnPropertyChanged(); } }
+		private float? esqcst;							public float? ESQCST { get { return esqcst; } set { esqcst = value; OnPropertyChanged(); } }
 
 		private string? prep_dept_time;     public string? PREP_DEPT_TIME { get { return prep_dept_time; } set { prep_dept_time = value; OnPropertyChanged(); } }
 		private string? prep_dept_matl;     public string? PREP_DEPT_MATL { get { return prep_dept_matl; } set { prep_dept_matl = value; OnPropertyChanged(); } }
@@ -84,114 +82,33 @@ namespace ProDocEstimate.Views {
 		private bool slowdown_per_part;     public bool SLOWDOWN_PER_PART { get { return slowdown_per_part; } set { slowdown_per_part = value; OnPropertyChanged(); } }
 		private bool multi_strm_ok;         public bool MULTI_STRM_OK    { get { return multi_strm_ok; }      set { multi_strm_ok     = value; OnPropertyChanged(); } }
 
+		//SLOWDOWN_PER_PART = true;
+		//MULTI_STRM_OK = true;
+
+		//ESQCST = 0.680000007152557F;
+		//ESQSEL = 0.680000007152557F;
+
+		#endregion
 
 		public Feature_Standards() {
 			InitializeComponent();
 			DataContext = this;
-
-			//FEATURE = "1";
-			//FEATURE_NUM = "11-1";
-			//FEATURE_DESCRIPTION = "1 STD COLOR";
-			//Sort = "DESC";
-			//FLAT_CHARGE = 20F;
-			//RUN_CHARGE = 0.600000023841858F;
-			//ASK_PRICE_IN = "R";
-			//ASK_PRICE_SQ_IN = "R";
-
-			//SellDollars = "99";
-			//CostDollars = "99";
-
-			//CostMU1 = "99";
-			//CostMU2 = "99";
-
-			//PREP_DEPT_TIME = "0.200000002980232";
-			//PREP_DEPT_MATL = "5";
-			//PrepSlowdown = "";
-
-			//PRESS_SETUP_TIME = "0.25";
-			//PRESS_SETUP_MATERIAL = "99";
-			//PRESS_SLOWDOWN = "99";
-
-			//ColorTime = "99";
-			//ColorMaterial = "99";
-			//ColorSlowdown = "99";
-
-			//BindTime = "99";
-
-			
-			//OtherTime = "99";
-			//OtherMaterial = "99";
-
-			//OneTimeMaterial = "99";
-			//WhatsThis = "99";
-
-			//OptNumAround = "99";
-			//OptPart = "99";
-			//OptStream = "99";
-
-			//FLAT_CHARGE = 20.00F;
-			//FLAT_PROMPT = "# 3 hole MR";
-			//RUN_CHARGE = 0.600000023841858F;
-			//RUN_PROMPT = "# of MR";
-
-			//OptPercent = "99";
-			//OptType = "99";
-
-			//Sets = "99";
-			//MultStreamOK = true;
-			//WasteSetup = "22";
-			//WasteRunPct = "99";
-			//MR_IMPR = "15";
-			//CartonQty = "99";
-			//CalcType = "99";
-			//Alert = "caution total ink colors 3";
-
-			//SETUP_ECL = 101.099998474121F;
-			//RUN_ECL = 101.199996948242F;
-			//MATL_ECL = 807F;
-
-			Editing = false;
-
-			SLOWDOWN_PER_PART = true;
-			MULTI_STRM_OK = true;
-
-			ESQCST = 0.680000007152557F;
-			ESQSEL = 0.680000007152557F;
-
-//			PressMaterial = 99F;
-
-		}
-
-		private void mnuExit_Click(object sender, RoutedEventArgs e) {
-			Close();
-		}
-
-		private void mnuEdit_Click(object sender, RoutedEventArgs e) {
-			Editing = true;
-		}
-
-		private void mnuNew_Click(object sender, RoutedEventArgs e) {
-			Editing = true;
-		}
-
-		private void mnuSave_Click(object sender, RoutedEventArgs e) {
 			Editing = false;
 		}
 
-		private void mnuCancel_Click(object sender, RoutedEventArgs e) {
-			Editing = false;
-		}
+		private void mnuExit_Click  (object sender, RoutedEventArgs e) { Close(); }
+		private void mnuEdit_Click  (object sender, RoutedEventArgs e) { Editing = true;  }
+		private void mnuNew_Click   (object sender, RoutedEventArgs e) { Editing = true;  }
+		private void mnuSave_Click  (object sender, RoutedEventArgs e) { Editing = false; }
+		private void mnuCancel_Click(object sender, RoutedEventArgs e) { Editing = false; }
 
 		private void SearchTerm_LostFocus(object sender, RoutedEventArgs e)
-		{
-			cn = new SqlConnection(ConnectionString);
-			cn.Open();
+		{ cn = new SqlConnection(ConnectionString); cn.Open();
 			string str = txtSearch.Text.Trim();
 			string cmd = "SELECT ID, FEATURE, FEATURE_NUM, FEATURE_DESCRIPTION, FLAT_PROMPT FROM FEATURE_STANDARDS" +
 									 " WHERE FEATURE_DESCRIPTION LIKE '%" + str + "%' ORDER BY 1, 2";
 			da = new SqlDataAdapter(cmd, cn);
-			ds = new DataSet();
-			da.Fill(ds);
+			ds = new DataSet(); da.Fill(ds);
 			dgFeatures.ItemsSource = ds.Tables[0].DefaultView; dgFeatures.SelectedIndex = 0;
 			lblResult.Content = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
 		}
@@ -202,15 +119,13 @@ namespace ProDocEstimate.Views {
 			ID = DS.Tables[0].Rows[selindex][0].ToString();
 			string cmd = "SELECT * FROM FEATURE_STANDARDS WHERE ID LIKE '" + ID + "%' ORDER BY 1, 2";
 			da = new SqlDataAdapter(cmd, cn);
-			DataSet ds = new DataSet();
-			da.Fill(ds);
+			DataSet ds = new DataSet(); da.Fill(ds);
 			DataContext = ds.Tables[0].DefaultView;
 			}
 		}
 
 		private void dgFeatures_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			dgFeatures_MouseDoubleClick(new Object(), null);
-		}
+		{ dgFeatures_MouseDoubleClick(new Object(), null); }
+
 	}
 }

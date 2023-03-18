@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ProDocEstimate"
+				xmlns:local2="clr-namespace:ProDocEstimate.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="Quotations"
@@ -698,78 +699,63 @@
 						</Grid.ColumnDefinitions>
 
 						<Label Grid.Row="11"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Ink color" />
 						<Label Grid.Row="12"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Backer" />
 						<Label Grid.Row="13"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Punching" />
 						<Label Grid.Row="14"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="CrossPerf" />
 						<Label Grid.Row="15"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Booking" />
 						<Label Grid.Row="16"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Fan a part" />
 						<Label Grid.Row="17"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Shrink wrap" />
 						<Label Grid.Row="18"
-					       Grid.Column="2"
+					       Grid.Column="3"
 					       Width="auto"
 					       HorizontalAlignment="Left"
 					       Content="Padding" />
 
-						<xctk:IntegerUpDown x:Name="Spin11"
-					                    Grid.Row="11"
-					                    Grid.Column="3"
-					                    Width="50"
-					                    Margin="8,4,0,4"
-					                    HorizontalAlignment="Left"
-					                    Maximum="12"
-					                    Minimum="1" />
+						<xctk:IntegerUpDown 
+									x:Name="Spin11"
+					        Grid.Row="11"
+					        Grid.Column="4"
+					        Width="50"
+					        Margin="8,4,0,4"
+					        HorizontalAlignment="Left"
+					        Maximum="12"
+					        Minimum="1" />
 						<Label Grid.Row="11"
-					       Grid.Column="3"
+					       Grid.Column="4"
 					       Width="auto"
-					       Margin="60,0,0,0"
+					       Margin="70,0,0,0"
 					       HorizontalAlignment="Left"
 					       Content="std" />
 
 						<xctk:IntegerUpDown x:Name="Spin12"
-					                    Grid.Row="11"
-					                    Grid.Column="4"
-					                    Width="50"
-					                    Margin="2,4,0,4"
-					                    HorizontalAlignment="Left"
-					                    Maximum="12"
-					                    Minimum="1" />
-						<Label Grid.Row="11"
-					       Grid.Column="4"
-					       Grid.ColumnSpan="2"
-					       Width="auto"
-					       Margin="56,0,0,0"
-					       HorizontalAlignment="Left"
-					       Content="match" />
-
-						<xctk:IntegerUpDown x:Name="Spin13"
 					                    Grid.Row="11"
 					                    Grid.Column="5"
 					                    Width="50"
@@ -780,29 +766,45 @@
 						<Label Grid.Row="11"
 					       Grid.Column="5"
 					       Grid.ColumnSpan="2"
-					       Margin="56,0,0,0"
+					       Width="auto"
+					       Margin="52,0,0,0"
+					       HorizontalAlignment="Left"
+					       Content="match" />
+
+						<xctk:IntegerUpDown x:Name="Spin13"
+					                    Grid.Row="11"
+					                    Grid.Column="5"
+															Grid.ColumnSpan="2"
+					                    Margin="107,4,64,4"
+					                    Maximum="12"
+					                    Minimum="1" />
+						<Label Grid.Row="11"
+					       Grid.Column="6"
+					       Grid.ColumnSpan="2"
+					       Margin="46,0,0,0"
 					       HorizontalAlignment="Left"
 					       Content="split" />
 
 						<xctk:IntegerUpDown x:Name="Spin14"
 					                    Grid.Row="11"
 					                    Grid.Column="6"
+															Grid.ColumnSpan="2"
 					                    Width="50"
-					                    Margin="2,4,0,4"
+					                    Margin="100,4,0,4"
 					                    HorizontalAlignment="Left"
 					                    Maximum="12"
 					                    Minimum="1" />
 						<Label Grid.Row="11"
-					       Grid.Column="6"
+					       Grid.Column="7"
 					       Grid.ColumnSpan="3"
-					       Width="74"
-					       Margin="52,0,0,0"
+					       Width="62"
+					       Margin="40,0,0,0"
 					       HorizontalAlignment="Left"
 					       Content="thermo" />
 
 						<xctk:IntegerUpDown x:Name="Spin15"
 					                    Grid.Row="13"
-					                    Grid.Column="3"
+					                    Grid.Column="4"
 					                    Width="60"
 					                    Margin="4,4,0,4"
 					                    HorizontalAlignment="Left"
@@ -810,25 +812,36 @@
 					                    Minimum="1" />
 
 						<StackPanel Grid.Row="12"
-					            Grid.Column="3"
+					            Grid.Column="4"
 					            Orientation="Horizontal">
 							<RadioButton Margin="10,0,0,0" Content="Yes" />
 							<RadioButton Margin="10,0,0,0" Content="No" />
 						</StackPanel>
 
 						<ComboBox Grid.Row="14"
-					          Grid.Column="3"
+					          Grid.Column="4"
 					          Margin="5,3,0,3">
 							<ComboBoxItem Content="Punch" />
 							<ComboBoxItem Content="Drill" IsSelected="True" />
 						</ComboBox>
 
 						<ComboBox Grid.Row="15"
-					          Grid.Column="3"
+					          Grid.Column="4"
 					          Margin="5,3,0,3">
 							<ComboBoxItem Content="Full" IsSelected="True" />
 							<ComboBoxItem Content="Partial" />
 						</ComboBox>
+
+						<Button x:Name="btnShowHideFeaturesPicker"
+					        Margin="0,5,0,0"
+					        Padding="2"
+									Grid.Row="8"
+									Grid.ColumnSpan="3"
+					        HorizontalAlignment="Left"
+					        VerticalAlignment="Top"
+					        Click="btnShowHideFeaturesPicker_Click"
+					        Content="Show/hide feature picker"
+					        FontSize="12" Height="30" Width="160" />
 
 						<Label x:Name="lblPaper"
 					       Grid.Row="8"
@@ -889,8 +902,41 @@
 					         Padding="0"
 					         VerticalAlignment="Center" />
 
-					</Grid>
+<!--Grid.Row="9" Grid.Column="0" -->
 
+						<local2:FeaturePicker 
+						 x:Name="pckFeatures" 
+						 Grid.Row="10" 
+						 Grid.Column="0" 
+						 Grid.RowSpan="10" 
+						 Grid.ColumnSpan="4" 
+						 Width="360" 
+						 FontSize="10"
+						 HorizontalAlignment="Left"
+						 Visibility="Hidden" />
+
+						<!--<DataGrid x:Name="dgFeatures" Grid.Row="9" Grid.Column="0"
+					          Grid.RowSpan="9"
+										Grid.ColumnSpan="3"
+					          Width="200"
+					          Height="400"
+					          VerticalAlignment="Top"
+					          Background="LightYellow"
+					          BorderBrush="#FF908284"
+					          Visibility="Hidden">
+							<DataGrid.Columns>
+								<DataGridCheckBoxColumn Binding="{Binding SHOW, UpdateSourceTrigger=PropertyChanged}" Header="Show">
+									<DataGridCheckBoxColumn.ElementStyle>
+										<Style TargetType="CheckBox" >
+											<Setter Property="HorizontalAlignment" Value="Center" />
+										</Style>
+									</DataGridCheckBoxColumn.ElementStyle>
+								</DataGridCheckBoxColumn>
+								<DataGridTextColumn Binding="{Binding Path=ITEM}" Header="Item" />
+							</DataGrid.Columns>
+						</DataGrid>-->
+
+					</Grid>
 
 				</TabItem>
 
@@ -1077,45 +1123,7 @@
 
 						</Grid>
 
-						<Button x:Name="btnShowHideFeaturesPicker"
-					        Grid.Row="12"
-					        Grid.RowSpan="3"
-									Grid.ColumnSpan="3"
-					        Margin="0,15,0,0"
-					        Padding="2"
-					        HorizontalAlignment="Left"
-					        VerticalAlignment="Top"
-					        Click="btnShowHideFeaturesPicker_Click"
-					        Content="Show/hide feature picker"
-					        FontSize="12" Height="30" Width="160" />
-
-						<!--  d:ItemsSource="{Binding Path=Options.DefaultView}"  -->
-
-						<DataGrid x:Name="dgFeatures"
-					          Grid.Row="8"
-					          Grid.RowSpan="9"
-					          Grid.Column="2" Margin="50 0 0 0"
-										Grid.ColumnSpan="3"
-					          Width="220"
-					          Height="300"
-					          VerticalAlignment="Top"
-					          Background="LightYellow"
-					          BorderBrush="#FF908284"
-					          Visibility="Hidden">
-							<DataGrid.Columns>
-								<DataGridCheckBoxColumn Binding="{Binding SHOW, UpdateSourceTrigger=PropertyChanged}" Header="Show">
-									<DataGridCheckBoxColumn.ElementStyle>
-										<Style TargetType="CheckBox" >
-											<Setter Property="HorizontalAlignment" Value="Center" />
-										</Style>
-									</DataGridCheckBoxColumn.ElementStyle>
-								</DataGridCheckBoxColumn>
-								<DataGridTextColumn Binding="{Binding Path=ITEM}" Header="Item" />
-							</DataGrid.Columns>
-						</DataGrid>
-
 					</Grid>
-
 
 				</TabItem>
 

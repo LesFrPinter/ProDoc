@@ -49,12 +49,12 @@ namespace ProDocEstimate
 			//pv02.ShowDialog();
 		}
 
-		private void mnuStandards_Click(object sender, RoutedEventArgs e)
-		{
-			Window standards = new Views.Standards();
-			standards.Owner = this;
-			standards.ShowDialog();
-		}
+		//private void mnuStandards_Click(object sender, RoutedEventArgs e)
+		//{
+		//	Window standards = new Views.Standards();
+		//	standards.Owner = this;
+		//	standards.ShowDialog();
+		//}
 
 		private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
 		{
@@ -118,9 +118,6 @@ namespace ProDocEstimate
 
 		private void mnuTest_Click(object sender, RoutedEventArgs e)
 		{
-			Tests test = new Tests();
-			test.Owner = this;
-			test.ShowDialog();
     }
 
 		private void mnuPressStandards_Click(object sender, RoutedEventArgs e) {

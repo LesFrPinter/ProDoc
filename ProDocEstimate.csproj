@@ -19,6 +19,8 @@
     <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
     <Compile Remove="Views\PV01.xaml.cs" />
     <Compile Remove="Views\PV02.xaml.cs" />
+    <Compile Remove="Views\Tests.xaml.cs" />
+    <Compile Remove="Views\TreeViewCustSearch.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +33,8 @@
     <Page Remove="Views\CustSearchTreeView.xaml" />
     <Page Remove="Views\PV01.xaml" />
     <Page Remove="Views\PV02.xaml" />
+    <Page Remove="Views\Tests.xaml" />
+    <Page Remove="Views\TreeViewCustSearch.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,11 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0-preview1" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
-    <PackageReference Include="Microsoft.NETCore.Targets.NETFramework" Version="4.6.0" />
-    <PackageReference Include="telerik.ui.for.wpf.netcore.xaml" Version="2023.1.117" />
+    <PackageReference Include="Microsoft.NETCore.Targets.NETFramework" Version="4.6.1-beta-23516" />
+    <PackageReference Include="telerik.ui.for.wpf.netcore.xaml" Version="2023.1.315" />
   </ItemGroup>
 
 </Project>

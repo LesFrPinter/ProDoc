@@ -87,11 +87,12 @@ namespace ProDocEstimate.Views
 				srch.Close();
 			}
 			else
-			{ TreeViewCustSearch srch = new TreeViewCustSearch();
-				srch.ShowDialog();
-				txtCustNo.Text = srch.Custno.ToString();
-				lblCustName.Content = srch.CustName;
-				srch.Close();
+			{ 
+				//TreeViewCustSearch srch = new TreeViewCustSearch();
+				//srch.ShowDialog();
+				//txtCustNo.Text = srch.Custno.ToString();
+				//lblCustName.Content = srch.CustName;
+				//srch.Close();
 			}
 		}
 

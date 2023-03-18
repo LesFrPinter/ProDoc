@@ -59,6 +59,7 @@
 		</DataGrid>
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal">
+
 			<Label Content="Price to use:" Margin="100 0 0 0" />
 			<TextBox Width="80" Text="{Binding Path=Price}" VerticalContentAlignment="Center" Margin="30 0 10 0" />
 			<Button
@@ -70,6 +71,7 @@
 				ToolTip="Don't return a price"
 				Background="Pink"
 				Foreground="White" />
+
 		</StackPanel>
 
 		<Button
