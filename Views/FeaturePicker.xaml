@@ -31,9 +31,9 @@
 
 		<DataGrid x:Name="dgFeatures" Grid.Row="1" HorizontalAlignment="Left" Width="360" Margin="0,0,0,5" Height="404" VerticalAlignment="Top" Grid.ColumnSpan="3" >
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Feat"					Binding="{Binding FEATURE}"							FontSize="10" />
-				<DataGridTextColumn Header="Feat #"				Binding="{Binding FEATURE_NUM}"					FontSize="10" />
-				<DataGridTextColumn Header="Description"	Binding="{Binding FEATURE_DESCRIPTION}" FontSize="10" />
+				<DataGridTextColumn Header="Feat"		 Binding="{Binding FEATURE}"			 FontSize="10" />
+				<DataGridTextColumn Header="Feat #"		 Binding="{Binding FEATURE_NUM}"		 FontSize="10" />
+				<DataGridTextColumn Header="Description" Binding="{Binding FEATURE_DESCRIPTION}" FontSize="10" />
 			</DataGrid.Columns>
 		</DataGrid>
 

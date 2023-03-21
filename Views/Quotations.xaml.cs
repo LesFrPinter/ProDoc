@@ -7,12 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System;
-using System.Runtime;
 
 namespace ProDocEstimate
 {
-	public partial class Quotations : Window, INotifyPropertyChanged {
+    public partial class Quotations : Window, INotifyPropertyChanged {
 		HistoricalPrices hp = new();
 
 		public event PropertyChangedEventHandler? PropertyChanged;
@@ -22,7 +20,8 @@ namespace ProDocEstimate
 		public SqlConnection? cn = new();
 		public SqlDataAdapter? da;
 
-		private string? quote_num = ""; public string? QUOTE_NUM { get { return quote_num; } set { quote_num = value; OnPropertyChanged(); } }
+        #region Property Declarations
+        private string? quote_num = ""; public string? QUOTE_NUM { get { return quote_num; } set { quote_num = value; OnPropertyChanged(); } }
 		private string? cust_num; public string? CUST_NUM { get { return cust_num; } set { cust_num = value; OnPropertyChanged(); } }
 
 		private string? projectType = ""; public string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
@@ -76,13 +75,14 @@ namespace ProDocEstimate
 
 		private DataTable? papertypes; public DataTable? PaperTypes { get { return papertypes; } set { papertypes = value; OnPropertyChanged(); } }
 		private DataTable? rollwidths; public DataTable? RollWidths { get { return rollwidths; } set { rollwidths = value; OnPropertyChanged(); } }
-
 		private float mult; public float MULT { get { return mult; } set { mult = value; OnPropertyChanged(); } }
+
+		#endregion
 
 		public Quotations() {
 			InitializeComponent();
 			DataContext = this;
-//			LoadFeatures();
+			LoadPressSizes();
 			LoadElements();
 			LoadProjTypes();
 			LoadPaperTypes();
@@ -92,7 +92,6 @@ namespace ProDocEstimate
 
 			// This also works:
 			//	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
-
 		}
 
 		private void btnLookup_Click(object sender, RoutedEventArgs e) {
@@ -226,7 +225,20 @@ namespace ProDocEstimate
 			this.cmbProjectType.SelectedValuePath = "TEXT";
 		}
 
-		private void LoadPaperTypes() {
+		private void LoadPressSizes()
+		{
+			// actually, load distinct Cylinder values from the PressSizes table
+			string str = "SELECT DISTINCT Cylinder FROM PressSizes ORDER BY Cylinder";
+            SqlConnection cn = new(ConnectionString); cn.Open();
+            if (cn.State != ConnectionState.Open)
+            { MessageBox.Show("Couldn't open SQL Connection"); return; }
+            SqlDataAdapter da = new(str, cn);
+            DataSet ds = new("PressSizes"); da.Fill(ds); DataTable dt = ds.Tables[0];
+			for (int r=0; r < dt.Rows.Count; r++)
+			{ cmbPressSize.Items.Add(dt.Rows[r][0].ToString()); }
+        }
+
+        private void LoadPaperTypes() {
 			SqlConnection cn = new(ConnectionString);
 			cn.Open();
 			if(cn.State != ConnectionState.Open)
@@ -375,5 +387,24 @@ namespace ProDocEstimate
 		private async void SelectAll_OnTextBoxGotFocus(object sender, RoutedEventArgs e) {
 			await Application.Current.Dispatcher.InvokeAsync((sender as TextBox).SelectAll);
 		}
-	}
+
+        private void cmbPressSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string cmd = 
+			  "select FormSize from PressSizes where cylinder = '" + cmbPressSize.SelectedValue.ToString()
+			+ "' order by case when charindex(' ', FormSize) > 0 "
+			+ "then convert(int, substring(FormSize,0, charindex(' ', FormSize))) else FormSize end";
+            // Load into the ComboBoxItems of cmbCollatorCut
+            SqlConnection cn = new(ConnectionString); cn.Open();
+            if (cn.State != ConnectionState.Open)
+            { MessageBox.Show("Couldn't open SQL Connection"); return; }
+            SqlDataAdapter da = new(cmd, cn);
+            DataSet ds = new("CollatorCuts"); da.Fill(ds); DataTable dt = ds.Tables[0];
+			cmbCollatorCut.Items.Clear();
+
+            for (int r = 0; r < dt.DefaultView.Count; r++)
+			  { cmbCollatorCut.Items.Add(dt.DefaultView[r][0].ToString()); }
+			cmbCollatorCut.SelectedIndex = 0;
+        }
+    }
 }
