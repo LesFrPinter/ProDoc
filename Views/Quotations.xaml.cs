@@ -228,6 +228,9 @@ namespace ProDocEstimate
 
 		private void LoadPaperTypes() {
 			SqlConnection cn = new(ConnectionString);
+			cn.Open();
+			if(cn.State != ConnectionState.Open)
+            { MessageBox.Show("Couldn't open SQL Connection"); return; }
 			string str = "SELECT PaperType FROM PaperTypes"; SqlDataAdapter da = new(str, cn);
 			DataSet ds = new("PaperTypes"); da.Fill(ds); DataTable dt = ds.Tables[0];
 			cmbPaperType.ItemsSource = dt.DefaultView;
@@ -280,7 +283,7 @@ namespace ProDocEstimate
 		private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e) {
 			int CustKey = int.Parse(txtCustomerNum.Text);
 			SqlConnection cn = new(ConnectionString);
-			string str = "SELECT *, RTRIM(CITY) + ', ' + STATE + ' ' + ZIP AS CSZ FROM CRC_CU10 WHERE CUST_NUMB = " + CustKey.ToString();
+			string str = "SELECT *, RTRIM(CITY) + ', ' + STATE + ' ' + ZIP AS CSZ FROM CUSTOMERS WHERE CUST_NUMB = " + CustKey.ToString();
 			SqlDataAdapter da = new(str, cn);
 			DataSet ds = new();
 			da.Fill(ds);
@@ -289,9 +292,6 @@ namespace ProDocEstimate
 				DataRow dr = dt.Rows[0];
 				CustomerName = dr[2].ToString();
 				Address = dr[3].ToString();
-				//City = dr[5].ToString();
-				//State = dr[6].ToString();
-				//ZIP = dr[7].ToString();
 				Phone = dr[9].ToString();
 				CSZ = dr[10].ToString();
 			}

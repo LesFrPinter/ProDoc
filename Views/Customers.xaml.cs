@@ -66,7 +66,11 @@ namespace ProDocEstimate {
 				" FROM CUSTOMERS, LOCATIONS, CONTACTS WHERE" +
 				" CUSTOMERS.ID = LOCATIONS.CUSTOMERID   AND" +
 				" LOCATIONS.ID = CONTACTS.LOCATIONID    AND" +
-				" CUST_NAME LIKE '%" + SearchCustomer + "%' ORDER BY CUST_NAME";
+				" CUST_NAME LIKE '%" + SearchCustomer + "%' ";
+
+			if(txtSearchContact.Text.TrimEnd().Length > 0 ) { cmd += " AND ContactName like '%" + txtSearchContact.Text.TrimEnd() + "%'"; }
+			
+			cmd += " ORDER BY CUST_NAME";
 			cn = new(ConnectionString);
 			da = new(cmd, cn);
 			DataTable dt = new DataTable();
