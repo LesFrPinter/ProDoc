@@ -145,11 +145,11 @@ namespace ProDocEstimate
 
 				PAPERTYPE = dt.Rows[0]["PAPERTYPE"].ToString();  // dr3[9];
 				ROLLWIDTH = dt.Rows[0]["ROLLWIDTH"].ToString();  // dr3[9];
-				PRESSSIZE = dt.Rows[0]["PRESSSIZE"].ToString();  // dr3[9];
+				PRESSSIZE = dt.Rows[0]["PRESSSIZE"].ToString();  // dr3[9];     "PressSize.Cylinder"
 				LINEHOLES = bool.Parse(dt.Rows[0]["LINEHOLES"].ToString());
-				COLLATORCUT = dt.Rows[0]["COLLATORCUT"].ToString();  // dr3[9];
+				COLLATORCUT = dt.Rows[0]["COLLATORCUT"].ToString();  // dr3[9]; "PressSize.FormSize"	
 
-				txtCustomerNum_LostFocus(this, null);
+                txtCustomerNum_LostFocus(this, null);
 			}
 		}
 
@@ -405,6 +405,12 @@ namespace ProDocEstimate
             for (int r = 0; r < dt.DefaultView.Count; r++)
 			  { cmbCollatorCut.Items.Add(dt.DefaultView[r][0].ToString()); }
 			cmbCollatorCut.SelectedIndex = 0;
+        }
+
+        private void btnPressCalc_Click(object sender, RoutedEventArgs e)
+        {
+			PressCalc pc = new();
+			pc.ShowDialog();
         }
     }
 }

@@ -1101,6 +1101,7 @@
                             </StackPanel>
 
                         </Grid>
+                        <Button x:Name="btnPressCalc" Click="btnPressCalc_Click" Content="Press Calc" Padding="10 2 10 2" HorizontalAlignment="center" Grid.Row="15"/>
 
                     </Grid>
 

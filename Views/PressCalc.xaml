@@ -1,0 +1,93 @@
+﻿<Window x:Class="ProDocEstimate.Views.PressCalc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="LightGray"
+        Title="Press Calc" Height="400" Width="320" WindowStyle="ThreeDBorderWindow">
+
+    <Window.Resources>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Red" />
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85" />
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Press" />
+        <Label Grid.Row="1" Content="Documents" />
+        <Label Grid.Row="2" Content="Waste %" />
+        <Label Grid.Row="3" Content="Material" />
+        <Label Grid.Row="4" Content="# up" />
+
+        <ComboBox x:Name="cmbPress" Grid.Row="0" Grid.Column="1" Width="100" Text="{Binding Path=Press}" Grid.ColumnSpan="2" />
+        <TextBox Grid.Row="1" Grid.Column="1" Width="100" Text="{Binding Path=Documents}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Width="100" Text="{Binding Path=Waste}" />
+        <ComboBox x:Name="cmbMaterial" Grid.Row="3" Grid.Column="1" Width="200" Text="{Binding Path=Material}" Grid.ColumnSpan="2" />
+        <TextBox Grid.Row="4" Grid.Column="1" Width="100" Text="{Binding Path=NumUp}" />
+
+        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Material lbs." />
+        <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="Production rate" />
+        <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Content="Production time (hrs)" />
+        <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Linear feet" />
+        <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Material cost" />
+
+        <Label x:Name="lblMaterialLbs" Content="{Binding Path=MaterialLbs}" 
+            Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" />
+        <Label x:Name="lblProdRate" Content="{Binding Path=ProductionRate}" 
+            Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" />
+        <Label x:Name="lblProdTime" Content="{Binding Path=ProductionTime}" 
+            Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" />
+        <Label x:Name="lblLinearFeet" Content="{Binding Path=LinearFeet}" 
+            Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" />
+        <Label x:Name="lblMaterialCost" Content="{Binding Path=MaterialCost}" 
+            Grid.Row="9" Grid.Column="2" HorizontalAlignment="Left" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0">
+            <Button x:Name="btnCalculate" Click="btnCalculate_Click" Height="24"
+              Content="Calculate" Grid.ColumnSpan="3" HorizontalAlignment="Center" />
+            <Button x:Name="btnClose" Content="Close" Grid.Row="11" Click="btnClose_Click" Height="24" Margin="10 0"/>
+        </StackPanel>
+
+    </Grid>
+
+</Window>
