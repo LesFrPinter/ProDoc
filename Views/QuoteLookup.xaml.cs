@@ -61,8 +61,8 @@ namespace ProDocEstimate.Views
 
 			if (Auto==true) { MessageBox.Show("Autocomplete is not enabled..."); }
 
-      string cmd = "SELECT * FROM QUOTES, CUSTOMERS"
-         + " WHERE QUOTES.CUST_NUM = CUSTOMERS.CUST_NUMB";
+      string cmd = "SELECT * FROM QUOTES LEFT JOIN CUSTOMERS"
+         + " ON QUOTES.CUST_NUM = CUSTOMERS.CUST_NUMB";
 
 			if (txtCustName.Text.Trim().Length > 0)
 			{
