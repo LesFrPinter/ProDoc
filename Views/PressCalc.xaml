@@ -62,7 +62,8 @@
         <ComboBox x:Name="cmbPress" Grid.Row="0" Grid.Column="1" Width="100" Text="{Binding Path=Press}" Grid.ColumnSpan="2" />
         <TextBox Grid.Row="1" Grid.Column="1" Width="100" Text="{Binding Path=Documents}" />
         <TextBox Grid.Row="2" Grid.Column="1" Width="100" Text="{Binding Path=Waste}" />
-        <ComboBox x:Name="cmbMaterial" Grid.Row="3" Grid.Column="1" Width="200" Text="{Binding Path=Material}" Grid.ColumnSpan="2" />
+        <ComboBox x:Name="cmbMaterial" Grid.Row="3" Grid.Column="1" Width="210" Margin="10 4 2 4"
+                  Text="{Binding Path=Material}" Grid.ColumnSpan="2" />
         <TextBox Grid.Row="4" Grid.Column="1" Width="100" Text="{Binding Path=NumUp}" />
 
         <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Material lbs." />

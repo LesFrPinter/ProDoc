@@ -1,13 +1,11 @@
-﻿using System.Windows;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Controls;
-using System.Data.SqlClient;
+﻿using System;
 using System.Data;
+using System.Windows;
 using System.Configuration;
-using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
-using System;
+using System.Data.SqlClient;
+using System.ComponentModel;
+using System.Windows.Controls;
+using System.Runtime.CompilerServices;
 
 //TODO: Change all "Material" references to "Description".
 
@@ -56,7 +54,8 @@ namespace ProDocEstimate.Views
           string cmd = "SELECT Description FROM MasterInventory ORDER BY Description";
           SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
           DataSet ds = new("Material"); da.Fill(ds); DataTable dt = ds.Tables[0];
-           for (int r = 0; r < dt.DefaultView.Count; r++) { cmbMaterial.Items.Add(dt.DefaultView[r][0].ToString()); }
+           for (int r = 0; r < dt.DefaultView.Count; r++) 
+               { cmbMaterial.Items.Add(dt.DefaultView[r][0].ToString()); }
         }
 
         private void LoadDummyData()
