@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\UserControls\**" />
+    <EmbeddedResource Remove="Views\UserControls\**" />
+    <None Remove="Views\UserControls\**" />
+    <Page Remove="Views\UserControls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\CustomerSearch.xaml.cs" />
+    <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
+    <Compile Remove="Views\PV01.xaml.cs" />
+    <Compile Remove="Views\PV02.xaml.cs" />
+    <Compile Remove="Views\Tests.xaml.cs" />
+    <Compile Remove="Views\TreeViewCustSearch.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\PDS-logo-lrg.png" />
+    <None Remove="Screenshots\WaterMark.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\CustomerSearch.xaml" />
+    <Page Remove="Views\CustSearchTreeView.xaml" />
+    <Page Remove="Views\PV01.xaml" />
+    <Page Remove="Views\PV02.xaml" />
+    <Page Remove="Views\Tests.xaml" />
+    <Page Remove="Views\TreeViewCustSearch.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\PDS-logo-lrg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0-preview1" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="Microsoft.NETCore.Targets.NETFramework" Version="4.6.1-beta-23516" />
+    <PackageReference Include="telerik.ui.for.wpf.netcore.xaml" Version="2023.1.315" />
+  </ItemGroup>
+
+</Project>

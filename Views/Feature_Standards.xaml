@@ -1,0 +1,736 @@
+﻿<Window x:Class="ProDocEstimate.Views.Feature_Standards"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        Title="Feature Standards" 
+				Width="900"
+				Height="850"
+				WindowStartupLocation="CenterScreen">
+
+	<Window.Resources>
+		<Style x:Key="TextField" TargetType="TextBox">
+			<Setter Property="Height" Value="24" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Margin" Value="10,0,0,0" />
+		</Style>
+		<Style TargetType="Label">
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="Margin" Value="10,6,10,6" />
+		</Style>
+		<Style TargetType="MenuItem">
+			<Style.Triggers>
+				<Trigger Property="IsEnabled" Value="True">
+					<Setter Property="FontWeight" Value="Bold" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+	</Window.Resources>
+
+	<Grid Background="LightGray">
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="220" />
+		</Grid.RowDefinitions>
+
+		<Menu>
+			<MenuItem
+				x:Name="mnuExit"
+				Click="mnuExit_Click"
+				Header="E_xit"
+				IsEnabled="{Binding Path=NotEditing}" />
+			<MenuItem
+				x:Name="mnuEdit"
+				Click="mnuEdit_Click"
+				Header="_Edit"
+				IsEnabled="{Binding Path=NotEditing}" />
+			<MenuItem
+				x:Name="mnuNew"
+				Click="mnuNew_Click"
+				Header="_New"
+				IsEnabled="{Binding Path=NotEditing}" />
+			<MenuItem
+				x:Name="mnuSave"
+				Click="mnuSave_Click"
+				Header="_Save"
+				IsEnabled="{Binding Path=Editing}" />
+			<MenuItem
+				x:Name="mnuCancel"
+				Click="mnuCancel_Click"
+				Header="Cancel"
+				IsEnabled="{Binding Path=Editing}" />
+		</Menu>
+
+		<Grid Grid.Row="1" Background="LightGray" Height="750">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="40" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<StackPanel
+						Grid.Row="0"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						Orientation="Horizontal">
+				<Label
+							Background="LightSteelBlue"
+							Padding="10 0"
+							Content="STANDARD"
+							Foreground="WhiteSmoke" />
+				<TextBox
+							x:Name="txtFeatureStandardNum"
+							Width="30"
+							Height="24"
+							VerticalAlignment="Center" VerticalContentAlignment="Center"
+							Margin="5,0"
+							Text="{Binding Path=FEATURE}" />
+				<Label
+							Background="LightSteelBlue"
+							Content="FEATURE"
+							Padding="10 0"
+							Margin="10 5"
+							Foreground="WhiteSmoke" />
+				<TextBox
+							x:Name="txtFeatureNum"
+							Width="100"
+							VerticalAlignment="Center" VerticalContentAlignment="Center"
+							Height="24"
+							Margin="5 0 0 0"
+							Text="{Binding Path=FEATURE_NUM}" />
+				<Label
+							Background="LightSteelBlue"
+							Content="DESCRIPTION"
+							Padding="10 0"
+							Margin="10 5"
+							Foreground="WhiteSmoke" />
+				<TextBox
+							x:Name="txtFeatureDescription"
+							Width="280"
+							Height="24"
+							VerticalAlignment="Center" VerticalContentAlignment="Center"
+							Margin="5 0 0 0"
+							Text="{Binding Path=FEATURE_DESCRIPTION}" />
+				<Label
+							Background="LightSteelBlue"
+							Content="SORT"
+							Padding="5 0"
+							Foreground="Orange" Visibility="Hidden" />
+				
+				<TextBox
+							x:Name="txtSort"
+							Width="50"
+							Height="24"
+							VerticalAlignment="Center" VerticalContentAlignment="Center"
+							Margin="5 0 0 0" Visibility="Hidden" 
+							Text="{Binding Path=Sort}" Foreground="Orange"/>
+			</StackPanel>
+
+			<Grid Grid.Row="1" Grid.Column="0" Height="520" VerticalAlignment="Top">
+
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+
+				<Label
+							Margin="10,0"
+							Padding="2"
+							HorizontalAlignment="Left"
+							Content="PRICING AMOUNTS"
+							Foreground="BlueViolet" />
+
+				<StackPanel
+							Grid.Row="1"
+							Width="400"
+							Margin="30,-6,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+					<Label Content="Flat $" />
+					<TextBox
+								x:Name="txtFlatPricing"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=FLAT_CHARGE}" />
+					<Label Content="Run $" />
+					<TextBox
+								x:Name="txtRunPricing"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=RUN_CHARGE}" />
+				</StackPanel>
+
+				<Line
+							Grid.Row="1"
+							Width="480"
+							Margin="20,0,0,2"
+							VerticalAlignment="Bottom"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="20"
+							X2="380"
+							Y1="12"
+							Y2="12" />
+
+				<StackPanel
+							Grid.Row="2"
+							Width="400"
+							Margin="30,0,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+					<Label Content="Price by" />
+					<Label Content="Inch" />
+					<TextBox
+								x:Name="txtPriceByInch"
+								Width="60"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ASK_PRICE_IN}" />
+					<Label Content="Sq inch" />
+					<TextBox
+								x:Name="txtPriceBySqInch"
+								Width="60"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ASK_PRICE_SQ_IN}" />
+				</StackPanel>
+
+				<StackPanel
+							Grid.Row="3"
+							Width="400"
+							Margin="30,-6,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+					<Label Content="Sell $" Foreground="Orange" />
+					<TextBox
+								x:Name="txtSellDollars"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ESQSEL}"  Foreground="Orange"/>
+					<Label Content="Cost $" Foreground="Orange" />
+					<TextBox
+								x:Name="txtCostDollars"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ESQCST}" Foreground="Orange" />
+				</StackPanel>
+
+				<Line
+							Grid.Row="3"
+							Width="400"
+							Margin="0,0,0,2"
+							VerticalAlignment="Bottom"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="20"
+							X2="380"
+							Y1="12"
+							Y2="12" />
+
+				<StackPanel
+							Grid.Row="4"
+							Width="400"
+							Margin="30,-6,0,0"
+							HorizontalAlignment="Left"
+							Orientation="Horizontal">
+					<Label Margin="0,0,66,0" Content="Price = Cost + M/U %" Foreground="Orange"  />
+					<TextBox
+								x:Name="txtCostMU1"
+								Width="50"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CostMU1}" Foreground="Orange"  />
+					<TextBox
+								x:Name="txtCostMU2"
+								Width="120"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CostMU2}" Foreground="Orange" />
+				</StackPanel>
+
+				<Line
+							Grid.Row="4"
+							Width="400"
+							Margin="0,0,0,2"
+							VerticalAlignment="Bottom"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="20"
+							X2="380"
+							Y1="12"
+							Y2="12" />
+
+				<StackPanel Grid.Row="5" Orientation="Horizontal">
+					<Label
+								Margin="10,0"
+								Padding="2"
+								Content="COSTS"
+								Foreground="BlueViolet" />
+					<Label
+								Width="40"
+								Margin="40,0"
+								Padding="2"
+								Content="TIME" />
+					<Label
+								Width="80"
+								Margin="20,0"
+								Padding="2"
+								Content="MATERIAL" />
+					<Label
+								Width="100"
+								Margin="20,0"
+								Padding="2"
+								Content="SLOWDOWN" />
+				</StackPanel>
+
+				<Grid Grid.Row="6" Grid.RowSpan="8">
+
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Row="0" Content="Prep" />
+
+					<TextBox
+								x:Name="txtPrepTime"
+								Grid.Row="0"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PREP_DEPT_TIME}" />
+					<TextBox
+								x:Name="txtPrepMaterial"
+								Grid.Row="0"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PREP_DEPT_MATL}" />
+
+					<Label Grid.Row="1" Content="Press" />
+					<TextBox
+								x:Name="txtPressTime"
+								Grid.Row="1"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PRESS_SETUP_TIME}" />
+					<TextBox
+								x:Name="txtPressMaterial"
+								Grid.Row="1"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PRESS_SETUP_MATERIAL}" Foreground="Orange" />
+					<TextBox
+								x:Name="txtPressSlowdown"
+								Grid.Row="1"
+								Grid.Column="3"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=PressSlowdown}"  Foreground="Orange"/>
+
+					<Label Grid.Row="2" Content="Color" />
+					<TextBox
+								x:Name="txtColorTime"
+								Grid.Row="2"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ColorTime}" Foreground="Orange" />
+					<TextBox
+								x:Name="txtColorMaterial"
+								Grid.Row="2"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ColorMaterial}" Foreground="Orange" />
+					<TextBox
+								x:Name="txtColorSlowdown"
+								Grid.Row="2"
+								Grid.Column="3"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=ColorSlowdown}" Foreground="Orange"  />
+
+					<Label Grid.Row="3" Content="Bind" />
+					<TextBox
+								x:Name="txtBindCost"
+								Grid.Row="3"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=BindTime}"  Foreground="Orange" />
+
+					<TextBox
+								x:Name="txtOtherTime"
+								Grid.Row="4"
+								Grid.Column="1"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OtherTime}"  Foreground="Orange"/>
+					<TextBox
+								x:Name="txtOtherMaterial"
+								Grid.Row="4"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OtherMaterial}"  Foreground="Orange"/>
+
+					<Label
+								Grid.Row="5"
+								Grid.ColumnSpan="2"
+								Margin="40,0,0,0"
+								Content="One Time Cost"  Foreground="Orange"/>
+					<TextBox
+								x:Name="txtOneTimeMaterial"
+								Grid.Row="5"
+								Grid.Column="2"
+								Width="80"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OneTimeMaterial}"  Foreground="Orange"/>
+					<TextBox
+								x:Name="txtWhatsThis"
+								Grid.Row="5"
+								Grid.Column="3"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=WhatsThis}"  Foreground="Orange"/>
+
+					<Label Grid.Row="7" Content="Enter any part of name: " Grid.ColumnSpan="2" />
+
+					<TextBox x:Name="txtSearch" 
+					 Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" 
+					 HorizontalAlignment="Left" Margin="95 0 0 0" Width="110" 
+					 VerticalAlignment="Center" VerticalContentAlignment="Center" 
+					 LostFocus="SearchTerm_LostFocus" />
+
+					<Button Grid.Row="7" HorizontalAlignment="Left" Margin="90 0 0 0" Width="40" Grid.Column="2" Grid.ColumnSpan="2" >
+						<AccessText>_Go</AccessText>
+					</Button>
+
+					<Label x:Name="lblResult" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Content="" />
+
+				</Grid>
+
+			</Grid>
+
+			<Grid Grid.Row="1" Grid.Column="1">
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height=".5*" />
+					<RowDefinition Height=".75*" />
+					<RowDefinition Height=".5*" />
+					<RowDefinition Height=".75*" />
+					<RowDefinition Height=".75*" />
+					<RowDefinition Height=".75*" />
+					<RowDefinition Height=".75*" />
+					<RowDefinition Height=".75*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Line
+							Grid.Row="1"
+							Grid.Column="1"
+							Grid.RowSpan="11"
+							Margin="0,0,0,2"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Stroke="Blue"
+							StrokeThickness="2"
+							X1="1"
+							X2="1"
+							Y1="1"
+							Y2="600" />
+
+				<Label
+							HorizontalAlignment="Left"
+							Grid.Row="0"
+							Grid.Column="1"
+							Margin="10,0"
+							Padding="2"
+							VerticalAlignment="Center"
+							Content="PRICING OPTIONS"
+							Foreground="BlueViolet" />
+
+				<StackPanel Grid.Row="1" Orientation="Horizontal">
+					<Label Content="# Around" Foreground="Orange" />
+					<TextBox
+								x:Name="txtOptNumAround"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptNumAround}" Foreground="Orange"/>
+					<Label Content="Part" Foreground="Orange"  />
+					<TextBox
+								x:Name="txtOptPart"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptPart}"  Foreground="Orange" />
+					<Label Content="Stream"  Foreground="Orange" />
+					<TextBox
+								x:Name="txtOptStream"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptStream}" Foreground="Orange"  />
+				</StackPanel>
+
+				<StackPanel Grid.Row="2" Orientation="Horizontal">
+					<Label Content="Ask: # Flat" />
+					<TextBox
+								x:Name="txtAskNumFlat"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=FLAT_CHARGE}" />
+					<TextBox
+								x:Name="txtAskNumFlatDesc"
+								Width="240"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=FLAT_PROMPT}" />
+				</StackPanel>
+
+				<StackPanel Grid.Row="3" Orientation="Horizontal">
+					<Label Content="       # Run" />
+					<TextBox
+								x:Name="txtAskNumRun"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=RUN_CHARGE}" />
+					<TextBox
+								x:Name="txtNumAskRunDesc"
+								Width="240"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=RUN_PROMPT}" />
+				</StackPanel>
+
+				<StackPanel Grid.Row="4" Orientation="Horizontal">
+					<Label Content="    Percent" Foreground="Orange" />
+					<TextBox
+								x:Name="txtOptPercent"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptPercent}"  Foreground="Orange" />
+					<Label Content="Type" Foreground="Orange"/>
+					<TextBox
+								x:Name="txtOptType"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=OptType}" Foreground="Orange"/>
+				</StackPanel>
+
+				<Line
+							Grid.Row="5"
+							Width="400"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="2"
+							X2="430"
+							Y1="2"
+							Y2="2" />
+
+				<Label
+							Grid.Row="5"
+							Grid.Column="1"
+							Margin="10,0"
+							Padding="2"
+							VerticalAlignment="Center"
+							Content="ECL NUMBERS"
+							Foreground="BlueViolet" />
+
+				<StackPanel Grid.Row="6" Orientation="Horizontal">
+					<Label Padding="0" Content="Setup" />
+					<TextBox
+								x:Name="txtECLSetup"
+								Width="70"
+								Padding="0"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=SETUP_ECL}" />
+					<Label Padding="0" Content="Run" />
+					<TextBox
+								x:Name="txtECLRun"
+								Width="70"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=RUN_ECL}" />
+					<Label Padding="0" Content="Matl" />
+					<TextBox
+								x:Name="txtECLMaterial"
+								Width="70"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=MATL_ECL}" />
+				</StackPanel>
+
+				<Line
+							Grid.Row="7"
+							Width="400"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Stroke="Blue"
+							StrokeThickness="1"
+							X1="2"
+							X2="430"
+							Y1="2"
+							Y2="2" />
+
+				<Label
+							Grid.Row="7"
+							Grid.Column="1"
+							Margin="10,0"
+							Padding="2"
+							VerticalAlignment="Center"
+							Content="MISCELLANEOUS OPTIONS"
+							Foreground="BlueViolet" />
+
+				<StackPanel Grid.Row="8" Orientation="Horizontal">
+					<Label Padding="0" Content="Sets" Foreground="Orange" />
+					<TextBox
+								x:Name="vtxtSets"
+								Width="40"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=Sets}"  Foreground="Orange"/>
+					<CheckBox
+								x:Name="chkMultStreamOK"
+								Content="Multiple Stream OK"
+								IsChecked="{Binding Path=MULTI_STRM_OK}" />
+				</StackPanel>
+
+				<CheckBox
+							x:Name="chkOptSlowdown"
+							Grid.Row="9"
+							Margin="105,-10,0,0"
+							Content="Slowdown / part (press)"
+							IsChecked="{Binding Path=SLOWDOWN_PER_PART}" />
+
+				<StackPanel Grid.Row="10" Orientation="Horizontal">
+					<Label Padding="0" Content="WASTE: Setup" Foreground="Orange" />
+					<TextBox
+								x:Name="txtWasteSetup"
+								Width="50"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=v}" />
+					<Label Padding="0" Content="Run %"  Foreground="Orange"/>
+					<TextBox
+								x:Name="txtWasteRunPct"
+								Width="50"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=WasteRunPct}"  Foreground="Orange"/>
+				</StackPanel>
+
+				<StackPanel Grid.Row="11" Orientation="Horizontal">
+					<Label Padding="0" Content="M/R Impressions" />
+					<TextBox
+								x:Name="txtMRImpressions"
+								Width="150"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=MR_IMPR}" />
+				</StackPanel>
+
+				<StackPanel Grid.Row="12" Orientation="Horizontal">
+					<Label Padding="0" Content="Alert:  " />
+					<TextBox
+								x:Name="txtAlert"
+								Width="350"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=Alert}" />
+				</StackPanel>
+
+				<StackPanel
+							Grid.Row="7"
+							Grid.RowSpan="5"
+							Height="138"
+							Margin="300,0,0,0">
+					<Label HorizontalAlignment="Center" Content="CARTON" />
+					<Label
+								Height="16"
+								Padding="0"
+								HorizontalAlignment="Center"
+								Content="Qty/Feature" Foreground="Orange"/>
+					<TextBox
+								x:Name="txtCartonQty"
+								Width="60"
+								Height="22"
+								HorizontalAlignment="Center"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CartonQty}" Foreground="Orange" />
+					<Label
+								Height="16"
+								Padding="0"
+								HorizontalAlignment="Center"
+								Content="Calc Type" Foreground="Orange" />
+					<TextBox
+								x:Name="txtCalcType"
+								Width="60"
+								Height="22"
+								HorizontalAlignment="Center"
+								Style="{StaticResource TextField}"
+								Text="{Binding Path=CalcType}"  Foreground="Orange" />
+				</StackPanel>
+
+			</Grid>
+
+		</Grid>
+
+		<DataGrid x:Name="dgFeatures"
+		  Grid.Row="2"
+			Grid.ColumnSpan="2"
+			Width="890"
+			Height="200"
+			Margin="10"
+			IsSynchronizedWithCurrentItem="True"
+			SelectedItem="{Binding SelectedItem}"
+			SelectionChanged="dgFeatures_SelectionChanged"
+			MouseDoubleClick="dgFeatures_MouseDoubleClick"
+			VerticalAlignment="Bottom">
+			<DataGrid.Columns>
+				<DataGridTextColumn Width="50" Header="Std #"        Binding="{Binding FEATURE}" />
+				<DataGridTextColumn Width="70" Header="Feature #"    Binding="{Binding FEATURE_NUM}" />
+				<DataGridTextColumn Width="200" Header="Description" Binding="{Binding FEATURE_DESCRIPTION}" />
+				<DataGridTextColumn Width="300" Header="Prompt"      Binding="{Binding FLAT_PROMPT}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+	</Grid>
+
+</Window>
