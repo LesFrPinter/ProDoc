@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ProDocEstimate"
-		xmlns:local2="clr-namespace:ProDocEstimate.Views"
+        xmlns:local2="clr-namespace:ProDocEstimate.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="Quotations"
         Width="900"
         Height="770"
@@ -43,79 +43,85 @@
             </Grid.RowDefinitions>
 
             <Border Width="160"
-		        HorizontalAlignment="Left"
-		        Background="Purple"
-		        BorderThickness="2"
-		        CornerRadius="10">
+			        HorizontalAlignment="Left"
+			        Background="Purple"
+			        BorderThickness="2"
+			        CornerRadius="10">
                 <Label Width="138"
-			       Margin="10,0,0,0"
-			       Padding="10"
-			       HorizontalAlignment="Left"
-			       Background="purple"
-			       Content="Quotations"
-			       FontSize="24"
-			       Foreground="White" />
+				       Margin="10,0,0,0"
+				       Padding="10"
+				       HorizontalAlignment="Left"
+				       Background="purple"
+				       Content="Quotations"
+				       FontSize="24"
+				       Foreground="White" />
             </Border>
 
             <Border Grid.RowSpan="2"
-		        Grid.Column="0"
-		        Width="100"
-		        Height="52"
-		        Margin="0,0,10,0"
-		        HorizontalAlignment="Right"
-		        VerticalAlignment="Top"
-		        Background="Purple"
-		        BorderThickness="2"
-		        CornerRadius="10">
+			        Grid.Column="0"
+			        Width="100"
+			        Height="52"
+			        Margin="0,0,10,0"
+			        HorizontalAlignment="Right"
+			        VerticalAlignment="Top"
+			        Background="Purple"
+			        BorderThickness="2"
+			        CornerRadius="10">
                 <Label x:Name="lblPageName"
-			       Grid.RowSpan="2"
-			       Width="auto"
-			       Height="42"
-			       Margin="10,0,0,0"
-			       Padding="2"
-			       HorizontalAlignment="Center"
-			       Background="Purple"
-			       Content="{Binding Path=ActivePage, Mode=OneWayToSource}"
-			       FontSize="24"
-			       Foreground="White" />
+				       Grid.RowSpan="2"
+				       Width="auto"
+				       Height="42"
+				       Margin="10,0,0,0"
+				       Padding="2"
+				       HorizontalAlignment="Center"
+				       Background="Purple"
+				       Content="{Binding Path=ActivePage, Mode=OneWayToSource}"
+				       FontSize="24"
+				       Foreground="White" />
             </Border>
 
-            <TabControl x:Name="Tabs" Grid.Row="1" Grid.RowSpan="2" Background="LightGray" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged">
+            <TabControl x:Name="Tabs"
+			            Grid.Row="1"
+			            Grid.RowSpan="2"
+			            Background="LightGray"
+			            SelectedIndex="0"
+			            SelectionChanged="Tabs_SelectionChanged">
 
                 <TabItem FontSize="16" Header="    Page 1    ">
 
                     <Grid Height="570">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="31.667" />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="143*" />
+                            <ColumnDefinition Width="32*" />
+                            <ColumnDefinition Width="185*" />
+                            <ColumnDefinition Width="173*" />
+                            <ColumnDefinition Width="126*" />
+                            <ColumnDefinition Width="125*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Row="0"
+                        <Button Grid.ColumnSpan="2"
 						        Height="24"
 						        Margin="95,0,0,0"
 						        Padding="10,2"
@@ -123,7 +129,7 @@
 						        Content="New quote" />
                         <Button x:Name="btnCopy"
 						        Grid.Row="0"
-						        Grid.Column="1"
+						        Grid.Column="2"
 						        Height="24"
 						        Margin="6,5,0,0"
 						        Padding="4,2"
@@ -133,51 +139,60 @@
 						        Content="Copy a previous quote" />
 
                         <Label Grid.Row="1"
-						       Grid.RowSpan="2"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="113,0,0,0"
 						       Padding="0"
-						       VerticalAlignment="Top"
+						       HorizontalAlignment="Left"
 						       Content="Quote #" />
 
-                        <TextBox Grid.Row="1"
-						         Grid.Column="1"
-										 x:Name="txtQuoteNum"
+                        <TextBox x:Name="txtQuoteNum"
+						         Grid.Row="1"
+						         Grid.Column="2"
 						         Width="85"
 						         Margin="4,4,0,4"
 						         HorizontalAlignment="Left"
 						         IsEnabled="True"
-										 LostFocus="txtQuoteNum_LostFocus"
+						         LostFocus="txtQuoteNum_LostFocus"
 						         Text="{Binding QUOTE_NUM}" />
 
                         <Label Grid.Row="2"
-						       Grid.RowSpan="2"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="0,4,4,0"
 						       Padding="0"
 						       VerticalAlignment="Top"
 						       Content="Project Type:" />
 
                         <ComboBox x:Name="cmbProjectType"
 						          Grid.Row="2"
-						          Grid.Column="1"
+						          Grid.Column="2"
 						          Width="170"
-						          Margin="4"
-						          HorizontalAlignment="Left"
+						          Margin="4,4,0,4"
 						          Foreground="Black"
 						          Text="{Binding ProjectType}" />
 
+                        <Label Grid.Row="2"
+						       Grid.Column="3"
+						       Width="170"
+						       Margin="3,0,0,0"
+						       HorizontalAlignment="Left"
+						       FontSize="11">
+                            Get from ESTFORMTYPE
+                        </Label>
+
                         <Label Grid.Row="3"
 						       Grid.Column="0"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="103,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
+						       HorizontalAlignment="Left"
 						       Content="Final Size:" />
 
                         <ComboBox x:Name="cmbFinalSizeInches1"
 						          Grid.Row="3"
-						          Grid.Column="1"
+						          Grid.Column="2"
 						          Width="50"
 						          Height="24"
-						          Margin="4"
+						          Margin="4,4,0,4"
 						          FontFamily="Courier New"
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
@@ -203,7 +218,7 @@
 
                         <ComboBox x:Name="cmbFinalSizeFrac1"
 						          Grid.Row="3"
-						          Grid.Column="1"
+						          Grid.Column="2"
 						          Width="90"
 						          Height="24"
 						          Margin="59,0,0,0"
@@ -246,14 +261,14 @@
                             <ComboBoxItem Content="31/32" />
                         </ComboBox>
                         <Label Grid.Row="3"
-						       Grid.Column="1"
+						       Grid.Column="2"
 						       Margin="156,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="X" />
 
                         <ComboBox x:Name="cmbFinalSizeInches2"
 						          Grid.Row="3"
-						          Grid.Column="2"
+						          Grid.Column="3"
 						          Width="50"
 						          Height="24"
 						          Margin="4,4,0,4"
@@ -282,7 +297,7 @@
 
                         <ComboBox x:Name="cmbFinalSizeFrac2"
 						          Grid.Row="3"
-						          Grid.Column="2"
+						          Grid.Column="3"
 						          Width="90"
 						          Height="24"
 						          Margin="68,0,0,0"
@@ -326,262 +341,307 @@
                         </ComboBox>
 
                         <Label Grid.Row="3"
-						       Grid.Column="3"
+						       Grid.Column="4"
 						       Width="auto"
 						       Height="22"
-						       Margin="45,0,0,5"
+						       Margin="40,2,0,0"
 						       Padding="0"
 						       HorizontalAlignment="Left"
-						       VerticalAlignment="Center"
+						       VerticalAlignment="Top"
 						       VerticalContentAlignment="center"
 						       Content="(" />
 
                         <Label x:Name="Decimal1"
 						       Grid.Row="3"
-						       Grid.Column="3"
+						       Grid.Column="4"
 						       Width="70"
 						       Height="22"
-						       Margin="0,0,10,0"
+						       Margin="46,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       VerticalContentAlignment="center"
 						       Background="ivory" />
 
                         <Label Grid.Row="3"
-						       Grid.Column="4"
+						       Grid.Column="5"
 						       Width="auto"
 						       Height="22"
 						       Margin="10,0,0,0"
 						       Padding="0"
 						       HorizontalAlignment="Left"
-						       VerticalAlignment="Center"
 						       VerticalContentAlignment="center"
 						       Content="X" />
 
                         <Label x:Name="Decimal2"
 						       Grid.Row="3"
-						       Grid.Column="4"
+						       Grid.Column="5"
 						       Width="70"
 						       Height="22"
 						       Margin="40,0,0,0"
 						       Padding="0"
 						       HorizontalAlignment="Left"
-						       VerticalAlignment="Center"
 						       VerticalContentAlignment="center"
 						       Background="ivory" />
 
                         <Label Grid.Row="3"
-						       Grid.Column="4"
+						       Grid.Column="5"
 						       Width="auto"
 						       Height="22"
-						       Margin="119,0,0,5"
+						       Margin="119,2,0,0"
 						       Padding="0"
 						       HorizontalAlignment="Left"
-						       VerticalAlignment="Center"
+						       VerticalAlignment="Top"
 						       VerticalContentAlignment="center"
 						       Content=")" />
 
                         <Label Grid.Row="4"
-						       HorizontalAlignment="Right"
+						       Grid.ColumnSpan="2"
+						       Margin="128,0,0,0"
+						       HorizontalAlignment="Left"
 						       Content="Parts:" />
 
-                        <telerik:RadNumericUpDown 
-                            x:Name="PartsSpinner"
-						    Grid.Row="4"
-						    Grid.Column="1"
-						    Width="24"
-						    Height="24"
-						    Margin="4,0,0,0"
-						    Padding="0"
-						    HorizontalAlignment="Left"
-						    VerticalAlignment="Center"
-						    VerticalContentAlignment="Center"
-						    FontFamily="Courier New"
-						    FontSize="11"
-						    Maximum="12"
-						    Minimum="1"
-						    Value="{Binding Path=PARTS}" NumberDecimalDigits="0" LargeChange="1" IsInteger="True" />
+                        <telerik:RadNumericUpDown x:Name="PartsSpinner"
+						                          Grid.Row="4"
+						                          Grid.Column="2"
+						                          Width="24"
+						                          Height="24"
+						                          Margin="4,0,0,0"
+						                          Padding="0"
+						                          HorizontalAlignment="Left"
+						                          VerticalAlignment="Center"
+						                          VerticalContentAlignment="Center"
+						                          FontFamily="Courier New"
+						                          FontSize="11"
+						                          IsInteger="True"
+						                          LargeChange="1"
+						                          Maximum="12"
+						                          Minimum="1"
+						                          NumberDecimalDigits="0"
+						                          Value="{Binding Path=PARTS}" />
 
                         <Label Grid.Row="5"
-						       Margin="4,0,0,0"
-						       VerticalAlignment="Center"
+						       Grid.ColumnSpan="2"
+						       Margin="85,0,0,0"
+						       HorizontalAlignment="Left"
 						       Content="Paper Type:" />
+
                         <ComboBox x:Name="cmbPaperType"
 						          Grid.Row="5"
-						          Grid.Column="1"
-						          Grid.ColumnSpan="2"
-						          Width="170"
-						          Margin="4"
-											IsSynchronizedWithCurrentItem="True"
-											SelectedValuePath="PaperType"
-											DisplayMemberPath="PaperType"
-						          Text="{Binding PAPERTYPE}">
-                        </ComboBox>
+						          Grid.Column="2"
+						          Width="100"
+						          Margin="4,4,0,4"
+						          IsSynchronizedWithCurrentItem="True"
+						          SelectionChanged="cmbPaperType_SelectionChanged"
+						          Text="{Binding Path=PAPERTYPE}" />
+
+                        <!--  SelectedValuePath="Abbreviation"  -->
+                        <!--  DisplayMemberPath="Abbreviation"  -->
+
+                        <Label Grid.Row="5"
+						       Grid.Column="3"
+						       Width="170"
+						       Margin="3,0,0,0"
+						       HorizontalAlignment="Left"
+						       FontSize="11">
+                            BOND, CRBNLS, ELEC
+                        </Label>
+
+                        <Button x:Name="btnLoadGrid"
+						        Grid.Row="6" Height="24" Margin="0"
+						        Grid.Column="5"
+						        Click="btnLoadGrid_Click"
+						        Content="  Load Page 2 Grid  " />
 
                         <Label Grid.Row="6"
-						       Margin="4,0,0,0"
-						       VerticalAlignment="Center"
+						       Grid.ColumnSpan="2"
+						       Margin="89,0,0,0"
+						       HorizontalAlignment="Left"
 						       Content="Roll Width:" />
                         <ComboBox x:Name="cmbRollWidth"
 						          Grid.Row="6"
-						          Grid.Column="1"
-						          Width="170"
-						          Margin="4"
-											IsSynchronizedWithCurrentItem="True"
-											SelectedValuePath="RollWidth"
-											DisplayMemberPath="RollWidth"
-						          Text="{Binding ROLLWIDTH}">
-                        </ComboBox>
+						          Grid.Column="2"
+						          Width="90"
+						          Margin="4,4,0,4" />
+
+                        <Label Grid.Row="6"
+						       Grid.Column="3"
+									 Grid.ColumnSpan="3"
+						       Margin="3,0,0,0"
+						       HorizontalAlignment="Left"
+						       FontSize="11">
+                            S/B equal to FinalSize (or next size up)
+                        </Label>
 
                         <Label Grid.Row="7"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="99,0,0,0"
 						       Padding="0"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Press Size:" />
                         <ComboBox x:Name="cmbPressSize"
 						          Grid.Row="7"
-						          Grid.Column="1"
+						          Grid.Column="2"
 						          Width="170"
 						          Margin="4,4,0,4"
-                                  SelectionChanged="cmbPressSize_SelectionChanged"
-						          Text="{Binding PRESSSIZE}">
-                        </ComboBox>
+						          SelectionChanged="cmbPressSize_SelectionChanged"
+						          Text="{Binding PRESSSIZE}" />
+
+                        <Label Grid.Row="7"
+						       Grid.Column="3"
+						       Width="170"
+						       Margin="3,0,0,0"
+						       HorizontalAlignment="Left"
+						       FontSize="11">
+                            Cylinders
+                        </Label>
 
                         <Label Grid.Row="8"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="73,0,0,0"
 						       Padding="0"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Lineholes out:" />
 
                         <Label Grid.Row="9"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="56,0,0,0"
 						       Padding="0"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Collator cut size:" />
                         <ComboBox x:Name="cmbCollatorCut"
-						         Grid.Row="9"
-						         Grid.Column="1"
-						         Width="100"
-						         Margin="4,4,0,4"
-								 Text="{Binding Path=COLLATORCUT}" />
+						          Grid.Row="9"
+						          Grid.Column="2"
+						          Width="100"
+						          Margin="4,4,0,4"
+						          Text="{Binding Path=COLLATORCUT}" />
+
+
+                        <Label Grid.Row="9"
+						       Grid.Column="3"
+						       Margin="4,0,0,0"
+						       Padding="0"
+						       HorizontalAlignment="Left"
+						       Content="UP = press size / cut size:"
+						       FontSize="11" />
+
 
                         <Label Grid.Row="10"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="84,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Customer:"
 						       FontSize="18"
 						       FontWeight="bold"
 						       Foreground="blue" />
                         <Button x:Name="btnNew"
 						        Grid.Row="10"
-						        Grid.Column="1"
+						        Grid.Column="2"
 						        Height="24"
-						        Margin="4"
+						        Margin="4,0,0,0"
 						        Padding="8,0"
 						        HorizontalAlignment="Left"
-						        VerticalAlignment="Center"
 						        Click="btnNew_Click"
 						        Content="New" />
                         <Button x:Name="btnLookup"
 						        Grid.Row="10"
-						        Grid.Column="1"
+						        Grid.Column="2"
 						        Height="24"
-						        Margin="4,0,20,0"
+						        Margin="61,0,0,0"
 						        Padding="10,0"
-						        HorizontalAlignment="Right"
-						        VerticalAlignment="Center"
+						        HorizontalAlignment="Left"
 						        Click="btnLookup_Click"
 						        Content="Lookup or copy" />
 
                         <Label Grid.Row="11"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="53,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Customer Name:" />
                         <TextBox x:Name="txtCustomerName"
 						         Grid.Row="11"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="2"
 						         Width="340"
+						         Margin="10,5,0,5"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding CustomerName}" />
 
                         <Label Grid.Row="11"
-						       Grid.Column="3"
+						       Grid.Column="4"
 						       Margin="13,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="Num:" />
                         <TextBox x:Name="txtCustomerNum"
 						         Grid.Row="11"
-						         Grid.Column="3"
+						         Grid.Column="4"
 						         Width="65"
-						         Margin="60,4,0,4"
+						         Margin="60,5,0,5"
 						         LostFocus="txtCustomerNum_LostFocus"
 						         MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding CUST_NUM}" />
                         <CheckBox x:Name="chkProspect"
 						          Grid.Row="11"
-						          Grid.Column="4"
+						          Grid.Column="5"
 						          Margin="10,5,0,0"
 						          VerticalAlignment="Top"
 						          Content="Prospect"
 						          IsEnabled="False" />
 
                         <Label Grid.Row="12"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="113,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Contact:" />
                         <TextBox x:Name="txtContactName"
 						         Grid.Row="12"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="2"
 						         Width="340"
+						         Margin="10,5,0,5"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding ContactName}" />
 
                         <Label Grid.Row="13"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="0,4,4,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
 						       VerticalAlignment="Top"
 						       Content="Location:" />
                         <TextBox x:Name="txtLocation"
 						         Grid.Row="13"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="2"
 						         Width="340"
+						         Margin="10,5,0,4"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Location}" />
                         <Label Grid.Row="14"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="0,4,4,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
 						       VerticalAlignment="Top"
 						       Content="Address:" />
 
                         <TextBox x:Name="txtAddress"
 						         Grid.Row="14"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="4"
 						         Width="600"
+						         Margin="10,5,0,5"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Address}" />
 
                         <TextBox x:Name="txtCity"
 						         Grid.Row="15"
-						         Grid.RowSpan="2"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="4"
 						         Width="600"
 						         VerticalAlignment="Top"
@@ -590,77 +650,84 @@
 						         Text="{Binding Path=CSZ, Mode=OneWay}" />
 
                         <Label Grid.Row="16"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="123,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Phone:" />
 
                         <TextBox x:Name="txtPhone"
 						         Grid.Row="16"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="2"
 						         Width="340"
+						         Margin="10,5,0,4"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Phone}" />
 
                         <Label Grid.Row="17"
-						       Margin="4"
+						       Grid.ColumnSpan="2"
+						       Margin="130,0,0,0"
 						       Padding="0"
-						       HorizontalAlignment="Right"
-						       VerticalAlignment="Center"
+						       HorizontalAlignment="Left"
 						       Content="Email:" />
 
                         <TextBox x:Name="txtEmail"
 						         Grid.Row="17"
-						         Grid.Column="1"
+						         Grid.Column="2"
 						         Grid.ColumnSpan="2"
 						         Width="340"
+						         Margin="10,5,0,5"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Email}" />
 
                         <RadioButton Grid.Row="8"
-						             Grid.Column="1"
-						             Margin="4"
-												 VerticalAlignment="Center" 
+						             Grid.Column="2"
+						             Margin="4,0,4,0"
+						             VerticalAlignment="Center"
 						             Content="Yes" />
                         <RadioButton Grid.Row="8"
-						             Grid.Column="1"
+						             Grid.Column="2"
 						             Margin="60,4,4,4"
 						             Content="No"
 						             IsChecked="True" />
 
-                        <ComboBox x:Name="NumUp" Grid.Row="8" Grid.Column="1" Width="40" HorizontalAlignment="Left" Margin="140 4 4 4" VerticalAlignment="Center" >
+                        <ComboBox x:Name="NumUp"
+						          Grid.Row="8"
+						          Grid.Column="2"
+						          Width="40"
+						          Margin="140,0,0,0"
+						          VerticalAlignment="Center">
                             <ComboBoxItem Content="1" />
                             <ComboBoxItem Content="2" />
                             <ComboBoxItem Content="3" />
                             <ComboBoxItem Content="4" />
                         </ComboBox>
-                        <Label Grid.Row="8" Grid.Column="2" Content="wide" Margin="0" HorizontalAlignment="Left" />
+                        <Label Grid.Row="8"
+						       Grid.Column="3"
+						       HorizontalAlignment="Left"
+						       Content="wide" />
 
                         <Button x:Name="btnBaseCharge"
 						        Grid.Row="17"
-						        Grid.Column="4"
+						        Grid.Column="5"
 						        Height="24"
-						        Margin="4"
 						        Padding="10,2"
-						        HorizontalAlignment="Center"
-						        VerticalAlignment="Top"
 						        Click="btnBaseCharge_Click"
-						        Content="Validate entries" />
+						        Content="Enable page 2" />
 
                     </Grid>
 
                 </TabItem>
 
                 <TabItem x:Name="Page2"
-			         FontSize="16"
-			         Header="    Page 2    "
-			         IsEnabled="False">
+				         FontSize="16"
+				         Header="    Page 2    "
+				         IsEnabled="False">
 
-                    <Grid Height="530" Width="730">
+                    <Grid Width="730" Height="530">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height=".01*" />
@@ -671,18 +738,18 @@
                             <RowDefinition Height=".01*" />
                             <RowDefinition Height=".01*" />
                             <RowDefinition Height=".1*" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <!--  grid goes here  -->
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -697,234 +764,326 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Row="11"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Ink color" />
+						       Grid.Column="2"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Move to other page"
+						       FontSize="11" />
+
+                        <Label Grid.Row="11"
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Ink color" />
                         <Label Grid.Row="12"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Backer" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Backer" />
                         <Label Grid.Row="13"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Punching" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Punching" />
                         <Label Grid.Row="14"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="CrossPerf" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="CrossPerf" />
                         <Label Grid.Row="15"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Booking" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Booking" />
                         <Label Grid.Row="16"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Fan a part" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Fan a part" />
                         <Label Grid.Row="17"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Shrink wrap" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Shrink wrap" />
                         <Label Grid.Row="18"
-					       Grid.Column="3"
-					       Width="auto"
-					       HorizontalAlignment="Left"
-					       Content="Padding" />
+						       Grid.Column="3"
+						       Width="auto"
+						       HorizontalAlignment="Left"
+						       Content="Padding" />
 
-                        <telerik:RadNumericUpDown 
-							x:Name="Spin11"
-					        Grid.Row="11"
-					        Grid.Column="4"
-					        Width="50"
-					        Margin="8,4,0,4"
-					        HorizontalAlignment="Left"
-					        Maximum="12"
-					        Minimum="1" />
+                        <telerik:RadNumericUpDown x:Name="Spin11"
+						                          Grid.Row="11"
+						                          Grid.Column="4"
+						                          Width="50"
+						                          Height="24"
+						                          Margin="8,4,0,4"
+						                          HorizontalAlignment="Left"
+						                          FontSize="11"
+						                          Maximum="12"
+						                          Minimum="1" />
                         <Label Grid.Row="11"
-					       Grid.Column="4"
-					       Width="auto"
-					       Margin="70,0,0,0"
-					       HorizontalAlignment="Left"
-					       Content="std" />
+						       Grid.Column="4"
+						       Width="auto"
+						       Margin="70,0,0,0"
+						       HorizontalAlignment="Left"
+						       Content="std" />
 
-                        <telerik:RadNumericUpDown 
-                            x:Name="Spin12"
-					        Grid.Row="11"
-					        Grid.Column="5"
-					        Width="50"
-					        Margin="2,4,0,4"
-					        HorizontalAlignment="Left"
-					        Maximum="12"
-					        Minimum="1" />
+                        <telerik:RadNumericUpDown x:Name="Spin12"
+						                          Grid.Row="11"
+						                          Grid.Column="5"
+						                          Width="40"
+						                          Height="24"
+						                          Margin="-3,4,0,4"
+						                          HorizontalAlignment="Left"
+						                          FontSize="11"
+						                          Maximum="12"
+						                          Minimum="1" />
                         <Label Grid.Row="11"
-					       Grid.Column="5"
-					       Grid.ColumnSpan="2"
-					       Width="auto"
-					       Margin="52,0,0,0"
-					       HorizontalAlignment="Left"
-					       Content="match" />
+						       Grid.Column="5"
+						       Grid.ColumnSpan="2"
+						       Width="auto"
+						       Margin="57,0,0,0"
+						       HorizontalAlignment="Left"
+						       Content="match" />
 
-                        <telerik:RadNumericUpDown 
-                         x:Name="Spin13"
-					     Grid.Row="11"
-					     Grid.Column="5"
-						 Grid.ColumnSpan="2"
-					     Margin="107,4,64,4"
-					     Maximum="12"
-					     Minimum="1" />
+                        <telerik:RadNumericUpDown x:Name="Spin13"
+						                          Grid.Row="11"
+						                          Grid.Column="5"
+						                          Grid.ColumnSpan="2"
+						                          Height="24"
+						                          Margin="110,4,64,4"
+						                          FontSize="11"
+						                          Maximum="12"
+						                          Minimum="1" />
                         <Label Grid.Row="11"
-					       Grid.Column="6"
-					       Grid.ColumnSpan="2"
-					       Margin="46,0,0,0"
-					       HorizontalAlignment="Left"
-					       Content="split" />
+						       Grid.Column="6"
+						       Grid.ColumnSpan="2"
+						       Margin="58,0,0,0"
+						       HorizontalAlignment="Left"
+						       Content="split" />
 
-                        <telerik:RadNumericUpDown 
-                            x:Name="Spin14"
-					        Grid.Row="11"
-					        Grid.Column="6"
-							Grid.ColumnSpan="2"
-					        Width="50"
-					        Margin="100,4,0,4"
-					        HorizontalAlignment="Left"
-					        Maximum="12"
-					        Minimum="1" />
+                        <telerik:RadNumericUpDown x:Name="Spin14"
+						                          Grid.Row="11"
+						                          Grid.Column="6"
+						                          Grid.ColumnSpan="2"
+						                          Width="50"
+						                          Height="24"
+						                          Margin="100,4,0,4"
+						                          HorizontalAlignment="Left"
+						                          FontSize="11"
+						                          Maximum="12"
+						                          Minimum="1" />
                         <Label Grid.Row="11"
-					       Grid.Column="7"
-					       Grid.ColumnSpan="3"
-					       Width="62"
-					       Margin="40,0,0,0"
-					       HorizontalAlignment="Left"
-					       Content="thermo" />
+						       Grid.Column="7"
+						       Grid.ColumnSpan="3"
+						       Width="62"
+						       Margin="40,0,0,0"
+						       HorizontalAlignment="Left"
+						       Content="thermo" />
 
-                        <telerik:RadNumericUpDown 
-                            x:Name="Spin15"
-					        Grid.Row="13"
-					        Grid.Column="4"
-					        Width="60"
-					        Margin="4,4,0,4"
-					        HorizontalAlignment="Left"
-					        Maximum="12"
-					        Minimum="1" />
+                        <telerik:RadNumericUpDown x:Name="Spin15"
+						                          Grid.Row="13"
+						                          Grid.Column="4"
+						                          Width="60"
+						                          Height="24"
+						                          Margin="4,2,0,2"
+						                          HorizontalAlignment="Left"
+						                          FontSize="8"
+						                          Maximum="12"
+						                          Minimum="1" />
 
                         <StackPanel Grid.Row="12"
-					            Grid.Column="4"
-					            Orientation="Horizontal">
+						            Grid.Column="4"
+						            Orientation="Horizontal">
                             <RadioButton Margin="10,0,0,0" Content="Yes" />
                             <RadioButton Margin="10,0,0,0" Content="No" />
                         </StackPanel>
 
                         <ComboBox Grid.Row="14"
-					          Grid.Column="4"
-					          Margin="5,3,0,3">
+						          Grid.Column="4"
+						          Height="24"
+						          Margin="5,3,0,3">
                             <ComboBoxItem Content="Punch" />
                             <ComboBoxItem Content="Drill" IsSelected="True" />
                         </ComboBox>
 
                         <ComboBox Grid.Row="15"
-					          Grid.Column="4"
-					          Margin="5,3,0,3">
+						          Grid.Column="4"
+						          Height="24"
+						          Margin="5,3,0,3">
                             <ComboBoxItem Content="Full" IsSelected="True" />
                             <ComboBoxItem Content="Partial" />
                         </ComboBox>
 
-                        <Button x:Name="btnShowHideFeaturesPicker"
-					        Margin="0,5,0,0"
-					        Padding="2"
-							Grid.Row="8"
-							Grid.ColumnSpan="3"
-					        HorizontalAlignment="Left"
-					        VerticalAlignment="Top"
-					        Click="btnShowHideFeaturesPicker_Click"
-					        Content="Show/hide feature picker"
-					        FontSize="12" Height="30" Width="160" />
-
-                        <Label x:Name="lblPaper"
-					       Grid.Row="8"
-					       Grid.Column="3"
-					       HorizontalAlignment="Left"
-					       Content="Paper" />
-                        <Label x:Name="lblColor"
-					       Grid.Row="8"
-					       Grid.Column="4"
-					       HorizontalAlignment="Left"
-					       Content="Color" />
-                        <Label x:Name="lblType"
-					       Grid.Row="8"
-					       Grid.Column="5"
-					       HorizontalAlignment="Left"
-					       Content="Type" />
-                        <Label x:Name="lblBasis"
-					       Grid.Row="8"
-					       Grid.Column="6"
-					       HorizontalAlignment="Left"
-					       Content="Basis" />
+                        <!--<Button x:Name="btnShowHideFeaturesPicker"
+						        Grid.Row="8"
+						        Grid.ColumnSpan="3"
+                                Grid.RowSpan="2"
+						        Width="160"
+						        Height="30"
+						        Margin="0,5,0,0"
+						        Padding="2"
+						        HorizontalAlignment="Left"
+						        VerticalAlignment="Top"
+						        Click="btnShowHideFeaturesPicker_Click"
+						        Content="Show/hide feature picker"
+						        FontSize="12" />-->
 
                         <Label Grid.Row="8"
-					       Grid.Column="7"
-					       HorizontalAlignment="Left"
-					       Content="Multiplier" />
+						       Grid.Column="3"
+						       HorizontalAlignment="Left"
+						       Content="Paper Type" />
+                        <Label Grid.Row="7"
+						       Grid.Column="4"
+						       HorizontalAlignment="Left"
+						       Content="Basis" Margin="2,19,0,0" Grid.RowSpan="2" VerticalAlignment="Top" />
+                        <Label Grid.Row="8"
+						       Grid.Column="5"
+						       HorizontalAlignment="Left"
+						       Content="Color" />
+                        <Label x:Name="lblBasis"
+						       Grid.Row="8"
+						       Grid.Column="6"
+						       HorizontalAlignment="Left"
+						       Content="Roll Width" />
 
-                        <TextBox x:Name="txtPaper"
-					         Grid.Row="9"
-					         Grid.Column="3"
-					         Margin="4"
-					         Padding="0"
-					         VerticalAlignment="Center" />
-                        <TextBox x:Name="txtColor"
-					         Grid.Row="9"
-							 VerticalAlignment="Center" 
-					         Grid.Column="4"
-					         Margin="4" />
+                        <ComboBox x:Name="txtPaperType"
+						         Grid.Row="9"
+                                 FontSize="10" Width="60"
+						         Grid.Column="3"
+                                 SelectionChanged="txtPaperType_SelectionChanged"
+                                 Height="22" Margin="4 2" Padding="1"
+						         VerticalAlignment="Center" />
 
-                        <TextBox x:Name="txtType"
-					         Grid.Row="9"
-							 VerticalAlignment="Center" 
-					         Grid.Column="5"
-					         Margin="4" />
-                        <TextBox x:Name="txtBasis"
-					         Grid.Row="9"
-							 VerticalAlignment="Center" 
-					         Grid.Column="6"
-					         Margin="4" />
+ <!--
+    Lbs Needed"(column 2) is calculated when the grid is displayed, and again if a row is changed.
+    Base this on the calculations in the PaperCalc program.
+  -->
+                        
+                        <DataGrid x:Name="dgSheetsOfPaper"
+						          Grid.Row="10"
+						          Grid.RowSpan="2"
+						          Grid.Column="1"
+						          Grid.ColumnSpan="7"
+						          Width="660"
+						          Height="195"
+                                  CanUserAddRows="False"
+						          HorizontalAlignment="Left"
+						          VerticalAlignment="Top"
+                                  SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged">
 
-                        <TextBox x:Name="txtMult"
-					         Grid.Row="9"
-					         Grid.Column="7"
-					         Margin="4"
-							 Width="50"
-							 LostFocus="txtMult_LostFocus"
-							 Text="{Binding Path=MULT, Mode=TwoWay, UpdateSourceTrigger=LostFocus ,StringFormat={}{0:#.##}}"
-					         Padding="0"
-					         VerticalAlignment="Center" />
+                            <DataGrid.Columns>
 
-                        <local2:FeaturePicker 
-						 x:Name="pckFeatures" 
-						 Grid.Row="10" 
-						 Grid.Column="0" 
-						 Grid.RowSpan="10" 
-						 Grid.ColumnSpan="4" 
-						 Width="360" 
+                                <DataGridTextColumn Width="210" Binding="{Binding Path=Description}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Description"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=Needed}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Lbs Needed"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=LastPO}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Last P/O"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=AvgCost}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Avg Cost"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=MastCost}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Mast Cost"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=Extended}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Paper Cost"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <ComboBox x:Name="txtBasis"
+						         Grid.Row="9"
+                                 FontSize="10"
+                                 Width="60"
+						         Grid.Column="4"
+                                 Height="22" Margin="4 2" Padding="1"
+                                 HorizontalAlignment="Left"
+						         VerticalAlignment="Center" />
+
+                        <ComboBox x:Name="txtColor"
+						         Grid.Row="9"
+                                 FontSize="10"
+						         Grid.Column="5"
+						         IsSynchronizedWithCurrentItem="True"
+						         ItemsSource="{Binding dtColors.DefaultView}"
+                                 SelectedValuePath="Color"
+                                 Height="22" Margin="4 2" Padding="1" Width="60"
+						         VerticalAlignment="Center" />
+                        <ComboBox x:Name="txtRollWidth"
+						         Grid.Row="9"
+                                 FontSize="10"
+						         Grid.Column="6"
+                                 Width="60"
+                                 Height="22" Margin="4 2" Padding="1"
+						         VerticalAlignment="Center" />
+
+                        <Button x:Name="btnUpdate"
+						         Grid.Row="9"
+						         Grid.Column="7"
+						         Width="70"
+						         Margin="4"
+                                 Click="btnUpdate_Click"
+                                 Height="24"
+						         Padding="0"
+                                 Content="Update"
+						         VerticalAlignment="Center" />
+
+                        <!--<local2:FeaturePicker
+						 x:Name="pckFeatures"
+						 Grid.Row="10"
+						 Grid.Column="0"
+						 Grid.RowSpan="10"
+						 Grid.ColumnSpan="4"
+						 Width="360"
 						 FontSize="10"
 						 HorizontalAlignment="Left"
-						 Visibility="Hidden" />
+						 Visibility="Hidden" />-->
 
                     </Grid>
 
                 </TabItem>
 
                 <TabItem x:Name="Page3"
-			         FontSize="16"
-			         Header="    Page 3    "
-			         IsEnabled="False">
+				         FontSize="16"
+				         Header="    Page 3    "
+				         IsEnabled="False">
 
-                    <Grid Height="420">
+                    <Grid Height="480">
 
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -956,72 +1115,285 @@
                             <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
 
-                        <!--up to 4 different quantities can be included in the estimate-->
+                        <!--  up to 4 different quantities can be included in the estimate  -->
 
-                        <Label Grid.Row="0" Grid.Column="1" Content="Qty" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Padding="0" />
-                        <Label Grid.Row="0" Grid.Column="2" Content="Cost/M" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Padding="0" />
-                        <Label Grid.Row="0" Grid.Column="3" Content="Markup" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Padding="0" />
-                        <Label Grid.Row="0" Grid.Column="4" Content="Extended" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Padding="0" />
+                        <Label Grid.Row="0"
+						       Grid.Column="1"
+						       Padding="0"
+						       HorizontalAlignment="Center"
+						       VerticalAlignment="Center"
+						       VerticalContentAlignment="Center"
+						       Content="Qty"
+						       FontSize="11" />
+                        <Label Grid.Row="0"
+						       Grid.Column="2"
+						       Padding="0"
+						       HorizontalAlignment="Center"
+						       VerticalAlignment="Center"
+						       VerticalContentAlignment="Center"
+						       Content="Cost/M"
+						       FontSize="11" />
+                        <Label Grid.Row="0"
+						       Grid.Column="3"
+						       Padding="0"
+						       HorizontalAlignment="Center"
+						       VerticalAlignment="Center"
+						       VerticalContentAlignment="Center"
+						       Content="Markup"
+						       FontSize="11" />
+                        <Label Grid.Row="0"
+						       Grid.Column="4"
+						       Padding="0"
+						       HorizontalAlignment="Center"
+						       VerticalAlignment="Center"
+						       VerticalContentAlignment="Center"
+						       Content="Extended"
+						       FontSize="11" />
 
-                        <xctk:IntegerUpDown x:Name="Qty1b"   Grid.Row="1" Grid.Column="1" Width="85" Margin="10,2,0,2" HorizontalAlignment="Left" FontSize="11" Text="{Binding Path=QTY1a}"  ValueChanged="Qty1b_LostFocus" />
-                        <TextBox            x:Name="CPM1"    Grid.Row="1" Width="80" Grid.Column="2" Margin="3,2,0,2"                                           Text="{Binding Path=CPM1a, StringFormat=N2}" HorizontalContentAlignment="Right" TextChanged="Qty1b_LostFocus" FontSize="11" />
-                        <TextBox            x:Name="Markup1" Grid.Row="1" Grid.Column="3" Width="50" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=MAR1a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" TextChanged="Qty1b_LostFocus" FontSize="11" />
-                        <Label              FontSize="9"     Grid.Row="1" Grid.Column="3" Margin="93,0,0,0" Padding="0" HorizontalAlignment="Left" Content="%" Height="21" Width="13" VerticalContentAlignment="Center" />
-                        <TextBox            x:Name="Ext1"    Grid.Row="1" Grid.Column="4" Width="80" Margin="10,2,0,2" HorizontalAlignment="Left"               Text="{Binding Path=EXT1a, StringFormat=N2}" HorizontalContentAlignment="Right" FontSize="11" IsEnabled="False" />
+                        <xctk:IntegerUpDown x:Name="Qty1b"
+						                    Grid.Row="1"
+						                    Grid.Column="1"
+						                    Width="85"
+						                    Margin="10,2,0,2"
+						                    HorizontalAlignment="Left"
+						                    FontSize="11"
+						                    Text="{Binding Path=QTY1a}"
+						                    ValueChanged="Qty1b_LostFocus" />
+                        <TextBox x:Name="CPM1"
+						         Grid.Row="1"
+						         Grid.Column="2"
+						         Width="80"
+						         Margin="3,2,0,2"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=CPM1a, StringFormat=N2}"
+						         TextChanged="Qty1b_LostFocus" />
+                        <TextBox x:Name="Markup1"
+						         Grid.Row="1"
+						         Grid.Column="3"
+						         Width="50"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=MAR1a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
+						         TextChanged="Qty1b_LostFocus" />
+                        <Label Grid.Row="1"
+						       Grid.Column="3"
+						       Width="13"
+						       Height="21"
+						       Margin="93,0,0,0"
+						       Padding="0"
+						       HorizontalAlignment="Left"
+						       VerticalContentAlignment="Center"
+						       Content="%"
+						       FontSize="9" />
+                        <TextBox x:Name="Ext1"
+						         Grid.Row="1"
+						         Grid.Column="4"
+						         Width="80"
+						         Margin="10,2,0,2"
+						         HorizontalAlignment="Left"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         IsEnabled="False"
+						         Text="{Binding Path=EXT1a, StringFormat=N2}" />
 
-                        <xctk:IntegerUpDown x:Name="Qty2b"   Grid.Row="2" Grid.Column="1" Width="85" Margin="10,2,0,2" HorizontalAlignment="Left" FontSize="11" Text="{Binding Path=QTY2a}" ValueChanged="Qty2b_LostFocus" />
-                        <TextBox            x:Name="CPM2"    Grid.Row="2" Grid.Column="2" Width="80" Margin="10,2,0,2" HorizontalAlignment="Left" Text="{Binding Path=CPM2a,  StringFormat=N2}" HorizontalContentAlignment="Right" TextChanged="Qty2b_LostFocus" FontSize="11" />
-                        <TextBox            x:Name="Markup2" Grid.Row="2" Grid.Column="3" Width="50" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=MAR2a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" TextChanged="Qty2b_LostFocus" FontSize="11" />
-                        <Label              FontSize="9"     Grid.Row="2" Grid.Column="3" Margin="93,0,0,0" Padding="0" HorizontalAlignment="Left" Content="%" Height="21" Width="13" VerticalContentAlignment="Center" />
-                        <TextBox            x:Name="Ext2"    Grid.Row="2" Grid.Column="4" Width="80" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=EXT2a, StringFormat=N2}" HorizontalContentAlignment="Right" FontSize="11" IsEnabled="False"/>
+                        <xctk:IntegerUpDown x:Name="Qty2b"
+						                    Grid.Row="2"
+						                    Grid.Column="1"
+						                    Width="85"
+						                    Margin="10,2,0,2"
+						                    HorizontalAlignment="Left"
+						                    FontSize="11"
+						                    Text="{Binding Path=QTY2a}"
+						                    ValueChanged="Qty2b_LostFocus" />
+                        <TextBox x:Name="CPM2"
+						         Grid.Row="2"
+						         Grid.Column="2"
+						         Width="80"
+						         Margin="10,2,0,2"
+						         HorizontalAlignment="Left"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=CPM2a, StringFormat=N2}"
+						         TextChanged="Qty2b_LostFocus" />
+                        <TextBox x:Name="Markup2"
+						         Grid.Row="2"
+						         Grid.Column="3"
+						         Width="50"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=MAR2a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
+						         TextChanged="Qty2b_LostFocus" />
+                        <Label Grid.Row="2"
+						       Grid.Column="3"
+						       Width="13"
+						       Height="21"
+						       Margin="93,0,0,0"
+						       Padding="0"
+						       HorizontalAlignment="Left"
+						       VerticalContentAlignment="Center"
+						       Content="%"
+						       FontSize="9" />
+                        <TextBox x:Name="Ext2"
+						         Grid.Row="2"
+						         Grid.Column="4"
+						         Width="80"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         IsEnabled="False"
+						         Text="{Binding Path=EXT2a, StringFormat=N2}" />
 
-                        <xctk:IntegerUpDown x:Name="Qty3b"   Grid.Row="3" Grid.Column="1" Width="85" Margin="10,2,0,2" HorizontalAlignment="Left" FontSize="11" Text="{Binding Path=QTY3a}" ValueChanged="Qty3b_LostFocus" />
-                        <TextBox            x:Name="CPM3"    Grid.Row="3" Grid.Column="2" Width="80" Margin="10,2,0,2" HorizontalAlignment="Left" Text="{Binding Path=CPM3a,  StringFormat=N2}" HorizontalContentAlignment="Right" TextChanged="Qty3b_LostFocus" FontSize="11" />
-                        <TextBox            x:Name="Markup3" Grid.Row="3" Grid.Column="3" Width="50" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=MAR3a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" TextChanged="Qty3b_LostFocus" FontSize="11" />
-                        <Label              FontSize="9"     Grid.Row="3" Grid.Column="3" Margin="93,0,0,0" Padding="0" HorizontalAlignment="Left" Content="%" Height="21" Width="13" VerticalContentAlignment="Center" />
-                        <TextBox            x:Name="Ext3"    Grid.Row="3" Grid.Column="4" Width="80" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=EXT3a, StringFormat=N2}" HorizontalContentAlignment="Right" FontSize="11" IsEnabled="False"/>
+                        <xctk:IntegerUpDown x:Name="Qty3b"
+						                    Grid.Row="3"
+						                    Grid.Column="1"
+						                    Width="85"
+						                    Margin="10,2,0,2"
+						                    HorizontalAlignment="Left"
+						                    FontSize="11"
+						                    Text="{Binding Path=QTY3a}"
+						                    ValueChanged="Qty3b_LostFocus" />
+                        <TextBox x:Name="CPM3"
+						         Grid.Row="3"
+						         Grid.Column="2"
+						         Width="80"
+						         Margin="10,2,0,2"
+						         HorizontalAlignment="Left"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=CPM3a, StringFormat=N2}"
+						         TextChanged="Qty3b_LostFocus" />
+                        <TextBox x:Name="Markup3"
+						         Grid.Row="3"
+						         Grid.Column="3"
+						         Width="50"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=MAR3a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
+						         TextChanged="Qty3b_LostFocus" />
+                        <Label Grid.Row="3"
+						       Grid.Column="3"
+						       Width="13"
+						       Height="21"
+						       Margin="93,0,0,0"
+						       Padding="0"
+						       HorizontalAlignment="Left"
+						       VerticalContentAlignment="Center"
+						       Content="%"
+						       FontSize="9" />
+                        <TextBox x:Name="Ext3"
+						         Grid.Row="3"
+						         Grid.Column="4"
+						         Width="80"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         IsEnabled="False"
+						         Text="{Binding Path=EXT3a, StringFormat=N2}" />
 
-                        <xctk:IntegerUpDown x:Name="Qty4b"   Grid.Row="4" Grid.Column="1" Width="85" Margin="10,2,0,2" HorizontalAlignment="Left" FontSize="11" Text="{Binding Path=QTY4a}" ValueChanged="Qty4b_LostFocus" />
-                        <TextBox            x:Name="CPM4"    Grid.Row="4" Grid.Column="2" Width="80" Margin="10,2,0,2" HorizontalAlignment="Left" Text="{Binding Path=CPM4a,  StringFormat=N2}" HorizontalContentAlignment="Right" TextChanged="Qty4b_LostFocus" FontSize="11" />
-                        <TextBox            x:Name="Markup4" Grid.Row="4" Grid.Column="3" Width="50" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=MAR4a, StringFormat=N, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right" TextChanged="Qty4b_LostFocus" FontSize="11" />
-                        <Label              FontSize="9"     Grid.Row="4" Grid.Column="3" Margin="93,0,0,0" Padding="0" HorizontalAlignment="Left" Content="%" Height="21" Width="13" VerticalContentAlignment="Center" />
-                        <TextBox            x:Name="Ext4"    Grid.Row="4" Grid.Column="4" Width="80" Margin="0,2,0,2" HorizontalAlignment="Center" Text="{Binding Path=EXT4a, StringFormat=N2}" HorizontalContentAlignment="Right" FontSize="11" IsEnabled="False"/>
+                        <xctk:IntegerUpDown x:Name="Qty4b"
+						                    Grid.Row="4"
+						                    Grid.Column="1"
+						                    Width="85"
+						                    Margin="10,2,0,2"
+						                    HorizontalAlignment="Left"
+						                    FontSize="11"
+						                    Text="{Binding Path=QTY4a}"
+						                    ValueChanged="Qty4b_LostFocus" />
+                        <TextBox x:Name="CPM4"
+						         Grid.Row="4"
+						         Grid.Column="2"
+						         Width="80"
+						         Margin="10,2,0,2"
+						         HorizontalAlignment="Left"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=CPM4a, StringFormat=N2}"
+						         TextChanged="Qty4b_LostFocus" />
+                        <TextBox x:Name="Markup4"
+						         Grid.Row="4"
+						         Grid.Column="3"
+						         Width="50"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         Text="{Binding Path=MAR4a, StringFormat=N, UpdateSourceTrigger=PropertyChanged}"
+						         TextChanged="Qty4b_LostFocus" />
+                        <Label Grid.Row="4"
+						       Grid.Column="3"
+						       Width="13"
+						       Height="21"
+						       Margin="93,0,0,0"
+						       Padding="0"
+						       HorizontalAlignment="Left"
+						       VerticalContentAlignment="Center"
+						       Content="%"
+						       FontSize="9" />
+                        <TextBox x:Name="Ext4"
+						         Grid.Row="4"
+						         Grid.Column="4"
+						         Width="80"
+						         Margin="0,2,0,2"
+						         HorizontalAlignment="Center"
+						         HorizontalContentAlignment="Right"
+						         FontSize="11"
+						         IsEnabled="False"
+						         Text="{Binding Path=EXT4a, StringFormat=N2}" />
+
+                        <Label Grid.Row="5"
+						       Content="Move to here"
+						       FontSize="11" />
 
                         <DataGrid x:Name="dgElements"
-					          Grid.Row="5"
-					          Grid.RowSpan="8"
-					          Grid.ColumnSpan="6"
-					          Width="590"
-										FontSize="10"
-										RowHeight="18"
-					          Margin="5"
-					          AutoGenerateColumns="False"
-					          Background="lightBlue"
-					          ColumnWidth="auto"
-					          IsSynchronizedWithCurrentItem="True"
-					          ItemsSource="{Binding dtElements.DefaultView}"
-					          MouseDoubleClick="dgElements_MouseDoubleClick"
-					          SelectedCellsChanged="dgElements_SelectedCellsChanged">
+						          Grid.Row="6"
+						          Grid.RowSpan="8"
+						          Grid.ColumnSpan="6"
+						          Width="590"
+						          Margin="5"
+						          AutoGenerateColumns="False"
+						          Background="lightBlue"
+						          ColumnWidth="auto"
+						          FontSize="10"
+						          IsSynchronizedWithCurrentItem="True"
+						          ItemsSource="{Binding dtElements.DefaultView}"
+						          MouseDoubleClick="dgElements_MouseDoubleClick"
+						          RowHeight="18"
+						          SelectedCellsChanged="dgElements_SelectedCellsChanged">
 
                             <DataGrid.Columns>
 
                                 <DataGridTextColumn Width="60" Binding="{Binding Path=SEQ}">
                                     <DataGridTextColumn.Header>
-                                        <Label HorizontalAlignment="Right" Content="SEQ#" FontSize="12" />
+                                        <Label HorizontalAlignment="Right"
+										       Content="SEQ#"
+										       FontSize="12" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
                                 <DataGridTextColumn Width="250" Binding="{Binding Path=ITEM}">
                                     <DataGridTextColumn.Header>
-                                        <Label HorizontalAlignment="Left" Content="Item" FontSize="12" />
+                                        <Label HorizontalAlignment="Left"
+										       Content="Item (MasterInventory.Description)"
+										       FontSize="11" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
                                 <DataGridTextColumn x:Name="gdPrice"
-							                    Width="90"
-							                    Binding="{Binding Path=PRICE, StringFormat=N2}">
+								                    Width="90"
+								                    Binding="{Binding Path=PRICE, StringFormat=N2}">
                                     <DataGridTextColumn.Header>
-                                        <Label HorizontalAlignment="Right" Content="Price" FontSize="12" />
+                                        <Label HorizontalAlignment="Right"
+										       Content="Price"
+										       FontSize="12" />
                                     </DataGridTextColumn.Header>
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
@@ -1032,7 +1404,9 @@
 
                                 <DataGridTextColumn Width="90" Binding="{Binding Path=MULT, StringFormat=N0}">
                                     <DataGridTextColumn.Header>
-                                        <Label HorizontalAlignment="Right" Content="Mult" FontSize="12" />
+                                        <Label HorizontalAlignment="Right"
+										       Content="Mult"
+										       FontSize="12" />
                                     </DataGridTextColumn.Header>
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
@@ -1043,7 +1417,9 @@
 
                                 <DataGridTextColumn Width="90" Binding="{Binding Path=EXT, StringFormat=N2}">
                                     <DataGridTextColumn.Header>
-                                        <Label HorizontalAlignment="Right" Content="Ext" FontSize="12" />
+                                        <Label HorizontalAlignment="Right"
+										       Content="Ext"
+										       FontSize="12" />
                                     </DataGridTextColumn.Header>
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
@@ -1065,46 +1441,57 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Grid.Row="9"
-							       Grid.Column="4"
-										 Grid.ColumnSpan="4"
-							       Width="auto"
-							       Margin="40,0,0,0"
-							       HorizontalAlignment="Left"
-							       Content="Lookup" />
+								       Grid.Column="4"
+								       Grid.ColumnSpan="4"
+								       Width="auto"
+								       Margin="40,0,0,0"
+								       HorizontalAlignment="Left"
+								       Content="Lookup" />
                                 <Label Grid.Row="8"
-							       Grid.Column="3"
-							       Width="auto"
-							       HorizontalAlignment="Left"
-							       Content="Paper" />
+								       Grid.Column="3"
+								       Width="auto"
+								       HorizontalAlignment="Left"
+								       Content="Paper" />
                                 <Label Grid.Row="8"
-							       Grid.Column="4"
-							       Width="auto"
-							       HorizontalAlignment="Left"
-							       Content="Color" />
+								       Grid.Column="4"
+								       Width="auto"
+								       HorizontalAlignment="Left"
+								       Content="Color" />
                                 <Label Grid.Row="8"
-							       Grid.Column="5"
-							       Width="auto"
-							       HorizontalAlignment="Left"
-							       Content="Type" />
+								       Grid.Column="5"
+								       Width="auto"
+								       HorizontalAlignment="Left"
+								       Content="Type" />
                                 <Label Grid.Row="8"
-							       Grid.Column="6"
-							       Width="auto"
-							       HorizontalAlignment="Left"
-							       Content="Basis" />
+								       Grid.Column="6"
+								       Width="auto"
+								       HorizontalAlignment="Left"
+								       Content="Basis" />
                                 <Label Grid.Row="8"
-							       Grid.Column="7"
-							       Width="auto"
-							       HorizontalAlignment="Left"
-							       Content="Width"
-							       FontWeight="Bold"
-							       Foreground="Red" />
+								       Grid.Column="7"
+								       Width="auto"
+								       HorizontalAlignment="Left"
+								       Content="Width"
+								       FontWeight="Bold"
+								       Foreground="Red" />
                             </StackPanel>
 
                         </Grid>
-                        <Button x:Name="btnPressCalc" Click="btnPressCalc_Click" Content="Press Calc" Padding="10 2 10 2" HorizontalAlignment="center" Grid.Row="15"/>
+                        <Button x:Name="btnPressCalc"
+						        Grid.Row="15"
+						        Padding="10,2,10,2"
+						        HorizontalAlignment="center"
+						        Click="btnPressCalc_Click"
+						        Content="Press Calc" />
 
                     </Grid>
 
+                </TabItem>
+
+                <TabItem x:Name="Page4"
+				         Width="400"
+				         Header="Page 4">
+                    <Label Content="Summary goes here" />
                 </TabItem>
 
             </TabControl>

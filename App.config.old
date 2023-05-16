@@ -3,7 +3,7 @@
 	<connectionStrings>
 		<add 
 		 name="connectionString" 
-		 connectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=PROVISIONDEV;Data Source=PDS-SQL\XMPIE;Trusted_Connection=False;User ID=lespinter;PWD=RememberMe$;" 
+		 connectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ProDocument;Data Source=DESKTOP-RBSQSAF" 
 		 providerName="System.Data.SqlClient"/>
 	</connectionStrings>
 

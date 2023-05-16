@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using Telerik.Windows.Controls.Spreadsheet.Dialogs;
 
 //TODO: Change all "Material" references to "Description".
 
@@ -19,8 +21,8 @@ namespace ProDocEstimate.Views
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? cn = new();
         public SqlDataAdapter? da;
-        public DataSet ds;
-        public DataTable dt;
+        public DataSet? ds;
+        public DataTable? dt;
 
         double x1, x2, y1, y2, m, b, amt, docs, cost = 0.0D;
 
@@ -32,10 +34,10 @@ namespace ProDocEstimate.Views
         private int?     numUp;          public int?     NumUp          { get { return numUp;           } set { numUp           = value; OnPropertyChanged(); } }
 
         private decimal? materialLbs;    public decimal? MaterialLbs    { get { return materialLbs;     } set { materialLbs     = value; OnPropertyChanged(); } }
-        private decimal? productionRate; public decimal? ProductionRate { get { return productionRate;  } set { productionRate  = value; OnPropertyChanged(); } }
+        private double?  productionRate; public double?  ProductionRate { get { return productionRate;  } set { productionRate  = value; OnPropertyChanged(); } }
         private decimal? productionTime; public decimal? ProductionTime { get { return productionTime;  } set { productionTime  = value; OnPropertyChanged(); } }
-        private decimal? linearFeet;     public decimal? LinearFeet     { get { return linearFeet;      } set { linearFeet      = value; OnPropertyChanged(); } }
-        private decimal? materialCost;   public decimal? MaterialCost   { get { return materialCost;    } set { materialCost    = value; OnPropertyChanged(); } }
+        private double?  linearFeet;     public double?  LinearFeet     { get { return linearFeet;      } set { linearFeet      = value; OnPropertyChanged(); } }
+        private double?  materialCost;   public double?  MaterialCost   { get { return materialCost;    } set { materialCost    = value; OnPropertyChanged(); } }
         #endregion
 
         public PressCalc()
@@ -69,9 +71,15 @@ namespace ProDocEstimate.Views
 
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
-            docs = (((double.Parse(Waste.ToString()) / 100 + 1) * (double.Parse(Documents.ToString()) / double.Parse(NumUp.ToString())) * double.Parse(Press.ToString()) / 12));
-            LinearFeet = decimal.Parse(docs.ToString());
-            amt = LinearFt_LBS(docs, Material);
+            double dWaste = double.Parse(Waste.ToString());
+            double dDocs  = double.Parse(Documents.ToString());
+            double dUp    = double.Parse(NumUp.ToString());
+            double dPress = double.Parse(Press.ToString());
+
+            dDocs = ( ( ( dWaste / 100 + 1 ) * ( dDocs / dUp ) ) * dPress ) / 12;
+
+            LinearFeet = dDocs;
+            amt = LinearFt_LBS(dDocs, Material);
 
             GetX2();
             GetY2();
@@ -85,16 +93,17 @@ namespace ProDocEstimate.Views
             b = y2 - (x2 * m);
 
             double x = double.Parse(Documents.ToString());
-            ProductionRate = decimal.Parse(((x * m) + b).ToString());
+            ProductionRate = (x * m) + b;
             ProductionRate = Documents / ProductionRate;
-            MaterialCost = decimal.Parse(cost.ToString());
+            MaterialCost = double.Parse(cost.ToString());
         }
 
         private void GetX2()
         {
             string cmd = "SELECT TOP 1 Documents FROM EquipmentProductionRates WHERE Documents >= " + Documents.ToString() + " ORDER BY Documents";
             SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-            DataSet ds = new("Material"); da.Fill(ds); DataTable dt = ds.Tables[0];
+            DataSet? ds = new("Material"); da.Fill(ds); 
+            DataTable? dt = ds.Tables[0];
             x2 = double.Parse(dt.DefaultView[0][0].ToString());
         }
 
@@ -125,6 +134,9 @@ namespace ProDocEstimate.Views
         private double CostPerFactor()
         {
             string cmd = "SELECT CostPerFactor from MasterInventory WHERE Description = '" + cmbMaterial.Text.TrimEnd() + "'";
+            MessageBox.Show(cmd);
+            Clipboard.SetText(cmd);
+//            Debugger.Break();
             SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
             DataSet ds = new("Cost"); da.Fill(ds); DataTable dt = ds.Tables[0];
             cost = double.Parse(dt.DefaultView[0][0].ToString());
