@@ -27,8 +27,19 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="pink" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize"   Value="14" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Blue" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize"   Value="14" />
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CellRightAlign">
+            <Setter Property="Control.HorizontalAlignment" Value="Right" />
         </Style>
 
     </Window.Resources>
@@ -87,7 +98,8 @@
 			            SelectedIndex="0"
 			            SelectionChanged="Tabs_SelectionChanged">
 
-                <TabItem FontSize="16" Header="    Page 1    ">
+                <TabItem x:Name="Page1"
+                         FontSize="16" Header="    Page 1    ">
 
                     <Grid Height="570">
 
@@ -260,6 +272,7 @@
                             <ComboBoxItem Content="15/16" />
                             <ComboBoxItem Content="31/32" />
                         </ComboBox>
+
                         <Label Grid.Row="3"
 						       Grid.Column="2"
 						       Margin="156,0,0,0"
@@ -428,7 +441,7 @@
                         <ComboBox x:Name="cmbPaperType"
 						          Grid.Row="5"
 						          Grid.Column="2"
-						          Width="100"
+						          Width="90"
 						          Margin="4,4,0,4"
 						          IsSynchronizedWithCurrentItem="True"
 						          SelectionChanged="cmbPaperType_SelectionChanged"
@@ -436,15 +449,6 @@
 
                         <!--  SelectedValuePath="Abbreviation"  -->
                         <!--  DisplayMemberPath="Abbreviation"  -->
-
-                        <Label Grid.Row="5"
-						       Grid.Column="3"
-						       Width="170"
-						       Margin="3,0,0,0"
-						       HorizontalAlignment="Left"
-						       FontSize="11">
-                            BOND, CRBNLS, ELEC
-                        </Label>
 
                         <Button x:Name="btnLoadGrid"
 						        Grid.Row="6" Height="24" Margin="0"
@@ -481,18 +485,17 @@
                         <ComboBox x:Name="cmbPressSize"
 						          Grid.Row="7"
 						          Grid.Column="2"
-						          Width="170"
+						          Width="45"
 						          Margin="4,4,0,4"
 						          SelectionChanged="cmbPressSize_SelectionChanged"
 						          Text="{Binding PRESSSIZE}" />
 
                         <Label Grid.Row="7"
-						       Grid.Column="3"
-						       Width="170"
-						       Margin="3,0,0,0"
+						       Grid.Column="2"
+						       Margin="134,0,0,0"
 						       HorizontalAlignment="Left"
 						       FontSize="11">
-                            Cylinders
+                            (Cylinders)
                         </Label>
 
                         <Label Grid.Row="8"
@@ -511,15 +514,27 @@
                         <ComboBox x:Name="cmbCollatorCut"
 						          Grid.Row="9"
 						          Grid.Column="2"
-						          Width="100"
+						          Width="90"
 						          Margin="4,4,0,4"
+                                  SelectionChanged="cmbCollatorCut_SelectionChanged"
 						          Text="{Binding Path=COLLATORCUT}" />
 
-
-                        <Label Grid.Row="9"
-						       Grid.Column="3"
-						       Margin="4,0,0,0"
+                        <Label x:Name="lblUp"
+							   Grid.Row="9"
+						       Grid.Column="2"
+						       Margin="132,0,0,0"
 						       Padding="0"
+						       HorizontalAlignment="Left"
+						       Content="1"
+						       FontSize="11" />
+
+
+                        <Label x:Name="lblUpMessage"
+                               Grid.Row="9"
+						       Grid.Column="2"
+						       Margin="144,0,0,0"
+						       Padding="0"
+                               Grid.ColumnSpan="2"
 						       HorizontalAlignment="Left"
 						       Content="UP = press size / cut size:"
 						       FontSize="11" />
@@ -575,7 +590,7 @@
 						       HorizontalAlignment="Left"
 						       Content="Num:" />
                         <TextBox x:Name="txtCustomerNum"
-						         Grid.Row="11"
+                                 Grid.Row="11"
 						         Grid.Column="4"
 						         Width="65"
 						         Margin="60,5,0,5"
@@ -685,12 +700,18 @@
 
                         <RadioButton Grid.Row="8"
 						             Grid.Column="2"
-						             Margin="4,0,4,0"
+                                     FontSize="11"
+                                     Width="40"
+                                     HorizontalAlignment="Left"
+						             Margin="4,0,0,0"
 						             VerticalAlignment="Center"
 						             Content="Yes" />
                         <RadioButton Grid.Row="8"
 						             Grid.Column="2"
-						             Margin="60,4,4,4"
+                                     FontSize="11"
+                                     Width="40"
+                                     HorizontalAlignment="Left"
+						             Margin="46,4,4,4"
 						             Content="No"
 						             IsChecked="True" />
 
@@ -698,7 +719,8 @@
 						          Grid.Row="8"
 						          Grid.Column="2"
 						          Width="40"
-						          Margin="140,0,0,0"
+                                  Height="20"
+						          Margin="97,0,0,0"
 						          VerticalAlignment="Center">
                             <ComboBoxItem Content="1" />
                             <ComboBoxItem Content="2" />
@@ -706,9 +728,13 @@
                             <ComboBoxItem Content="4" />
                         </ComboBox>
                         <Label Grid.Row="8"
-						       Grid.Column="3"
+						       Grid.Column="2"
+                               FontSize="11"
 						       HorizontalAlignment="Left"
-						       Content="wide" />
+                               VerticalAlignment="Center"
+                               Height="18" Padding="0"
+						       Content="Wide" 
+                               Margin="142,4,0,0" />
 
                         <Button x:Name="btnBaseCharge"
 						        Grid.Row="17"
@@ -955,26 +981,29 @@
                                  Height="22" Margin="4 2" Padding="1"
 						         VerticalAlignment="Center" />
 
- <!--
+                        <!--
     Lbs Needed"(column 2) is calculated when the grid is displayed, and again if a row is changed.
     Base this on the calculations in the PaperCalc program.
   -->
-                        
                         <DataGrid x:Name="dgSheetsOfPaper"
 						          Grid.Row="10"
 						          Grid.RowSpan="2"
-						          Grid.Column="1"
-						          Grid.ColumnSpan="7"
-						          Width="660"
+						          Grid.Column="0"
+						          Grid.ColumnSpan="9"
+						          Width="725"
 						          Height="195"
+                                  Margin="2 0"
+                                  CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
                                   CanUserAddRows="False"
 						          HorizontalAlignment="Left"
+                                  IsSynchronizedWithCurrentItem="True"
 						          VerticalAlignment="Top"
+                                  CellEditEnding="dgSheetsOfPaper_CellEditEnding"
                                   SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged">
 
                             <DataGrid.Columns>
 
-                                <DataGridTextColumn Width="210" Binding="{Binding Path=Description}">
+                                <DataGridTextColumn Width="175" Binding="{Binding Path=Description}" >
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Description"
@@ -982,7 +1011,7 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=Needed}">
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=Pounds}" ElementStyle="{StaticResource CellRightAlign}" >
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Lbs Needed"
@@ -990,7 +1019,7 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=LastPO}">
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=LastPOCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Last P/O"
@@ -998,7 +1027,7 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=AvgCost}">
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=AverageCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Avg Cost"
@@ -1006,7 +1035,7 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=MastCost}">
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=MastInvCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Mast Cost"
@@ -1014,7 +1043,15 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=Extended}">
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=SelectedCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
+										       Content="Use this"
+										       FontSize="10" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Width="90" Binding="{Binding Path=PaperCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Paper Cost"
@@ -1489,7 +1526,7 @@
                 </TabItem>
 
                 <TabItem x:Name="Page4"
-				         Width="400"
+				         FontSize="16"
 				         Header="Page 4">
                     <Label Content="Summary goes here" />
                 </TabItem>
