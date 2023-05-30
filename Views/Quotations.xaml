@@ -36,13 +36,13 @@
                     <Setter Property="FontSize"   Value="14" />
                 </Trigger>
             </Style.Triggers>
+            <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="dtgTest_PreviewMouseDown"/>-->
         </Style>
 
         <Style x:Key="CellRightAlign">
             <Setter Property="Control.HorizontalAlignment" Value="Right" />
         </Style>
 
-        <!--<sys:String x:Key="CommaFormat">{0:#,0}</sys:String>-->
 
     </Window.Resources>
 
@@ -179,7 +179,7 @@
                         <ComboBox x:Name="cmbProjectType"
 						          Grid.Row="2"
 						          Grid.Column="2"
-						          Width="170"
+						          Width="145"
 						          Margin="4,4,0,4"
 						          Foreground="Black"
 						          Text="{Binding ProjectType}" />
@@ -446,6 +446,7 @@
                                   VerticalAlignment="Center"
 						          Width="90"
 						          Margin="4,4,0,4"
+                                  SelectionChanged="cmbPaperType_SelectionChanged_1"
 						          IsSynchronizedWithCurrentItem="True"
 						          Text="{Binding Path=PAPERTYPE}" />
 
@@ -473,7 +474,7 @@
 
                         <Label Grid.Row="6"
 						       Grid.Column="3"
-									 Grid.ColumnSpan="3"
+							   Grid.ColumnSpan="3"
 						       Margin="3,0,0,0"
 						       HorizontalAlignment="Left"
 						       FontSize="11">
@@ -940,6 +941,10 @@
 						                          NumberDecimalDigits="0"
 						                          Value="{Binding Path=WastePct}" />
 
+                        <Label x:Name="Msg2" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="Click to start ==>" 
+                               Foreground="White" Background="Red" FontWeight="Bold" Margin="-10 0 0 0"
+                               HorizontalAlignment="Left" FontSize="9"  />
+
                         <Label Grid.Row="0" Grid.Column="2" Content="%" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="76 0 0 0" />
 
                         <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" Content="Qty 1" FontSize="10" FontWeight="Bold" />
@@ -962,45 +967,51 @@
 								 GotFocus="txtQty4_GotFocus"
                                  Text="{Binding Path=Qty4}" x:Name="txtQty4" PreviewMouseDown="txtQty4_PreviewMouseDown" />
 
-                        <Border CornerRadius="20" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" >
+                        <Border CornerRadius="20" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" Margin="30 0 0 0" >
                             <Label Foreground="Red" FontWeight="Bold" Content="{Binding SelectedQty, StringFormat=N0}"
-                                   FontSize="10" Margin="0 0 15 0" BorderThickness="1" BorderBrush="Red" />
+                                   FontSize="10" BorderThickness="1" BorderBrush="Red" HorizontalAlignment="Right" />
                         </Border>
 
-                        <Label x:Name="Msg1" Grid.Row="2" Grid.Column="1" 
-                               HorizontalAlignment="Left"
+                        <Label x:Name="Msg1" Grid.Row="1" Grid.Column="7" 
+                               HorizontalAlignment="Left" Margin="40 0 0 0"
                                Foreground="White" Background="Green" Content="Recalculating..." FontSize="9" Visibility="Hidden" Grid.ColumnSpan="2"  />
 
-                        <Label Grid.Row="1"
-						       Grid.Column="3"
-						       HorizontalAlignment="Left"
-                               Margin="-30 0 0 0"
-						       Content="Item Types" />
+                        <Label Grid.Row="1" Grid.Column="1"
+						       Content="ItemType" HorizontalAlignment="Left" Margin="19,0,0,0" Grid.ColumnSpan="2" />
 
-                        <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" x:Name="lblItemType" FontSize="9" Background="Red" Foreground="White" Margin="65 0 0 0" />
+                        <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Content="Paper Type" Margin="113,0,0,0" Grid.ColumnSpan="2" />
+
+                        <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" 
+                               x:Name="lblItemType" FontSize="9" Background="Red" 
+                               Foreground="White" Margin="62,0,0,0" />
+
+                        <Label Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" 
+                               x:Name="lblPaperType" FontSize="9" Background="Red" 
+                               Foreground="White" Margin="85,0,0,0" />
 
                         <Label Grid.Row="1"
 						       Grid.Column="4"
 						       HorizontalAlignment="Left"
-						       Content="Basis" Margin="2,0,0,0" Grid.RowSpan="2" VerticalAlignment="Top" />
+						       Content="Basis" Margin="22,0,0,0" />
 
-                        <Label Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" x:Name="lblBasis" FontSize="9" Background="Red" Foreground="White" Margin="0 0 40 0" />
+                        <Label Grid.Row="1" Grid.Column="4" HorizontalAlignment="Left" x:Name="lblBasis" FontSize="9" Background="Red" Foreground="White" Margin="74,0,0,0" />
 
                         <Label Grid.Row="1"
 						       Grid.Column="5"
 						       HorizontalAlignment="Left"
-						       Content="Color" />
+						       Content="Color" Margin="6,0,0,0" />
 
-                        <Label Grid.Row="1" Grid.Column="5" HorizontalAlignment="Right" x:Name="lblColor" FontSize="9" Background="Red" Foreground="White" Margin="0 0 40 0" />
+                        <Label Grid.Row="1" Grid.Column="5" HorizontalAlignment="Left" x:Name="lblColor" FontSize="9" Background="Red" Foreground="White" Margin="73,0,0,0" />
 
                         <Label 
 						       Grid.Row="1"
 						       Grid.Column="6"
-							   Grid.ColumnSpan="2" Width="85"
+							   Grid.ColumnSpan="2" Width="85" Margin="-5 0 0 0"
 						       HorizontalAlignment="Left"
 						       Content="Roll Width" />
 
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="6" HorizontalAlignment="Left" x:Name="lblRollWidth" FontSize="9" Background="Red" Foreground="White" Margin="90 0 0 0" />
+                        <Label Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="6" HorizontalAlignment="Left" 
+                               x:Name="lblRollWidth" FontSize="9" Background="Red" Foreground="White" Margin="90 0 0 0" />
 
                         <!--
     Lbs Needed"(column 2) is calculated when the grid is displayed, and again if a row is changed.
@@ -1014,6 +1025,7 @@
 						          Width="775"
 						          Height="195"
                                   Margin="2 0"
+                                  PreviewMouseDown="dgSheetsOfPaper_PreviewMouseDown"
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
                                   CanUserAddRows="False"
 						          HorizontalAlignment="Left"
@@ -1085,25 +1097,37 @@
                         </DataGrid>
 
                         <ComboBox 
-                            Grid.Row="2"
+                            Grid.Row="2" Grid.Column="2"
 							x:Name="txtItemType"
                             FontSize="10" Width="60"
-						    Grid.Column="3" Padding="2 0"
-                            Height="22" Margin="14 2" 
+                            Height="22"   Padding="2 0"
+                            MouseDown="txtItemType_MouseDown"
+                            DropDownOpened="txtItemType_DropDownOpened"
                             SelectionChanged="txtItemType_SelectionChanged"
 							DisplayMemberPath="ItemType"
                             SelectedValue="{Binding ItemType}"
-						    VerticalAlignment="Center" />
+						    VerticalAlignment="Center" Margin="56,0,0,0" />
 
-                        <!--TODO: Reload Basis, Color and RollWidth if ItemType changes here-->
+                        <!--TODO: Reload Basis, Color and RollWidth whenever ItemType changes (use ItemType setter) -->
+
+                        <ComboBox x:Name="txtPaperType"
+						         Grid.Row="2" Grid.Column="3"
+                                 FontSize="10"
+                                 Width="50" Padding="2 0"
+                                 Height="22" Margin="65,0,0,0"
+						         VerticalAlignment="Center" >
+                            <ComboBoxItem Content="BOND" />
+                            <ComboBoxItem Content="CB" />
+                            <ComboBoxItem Content="CF" />
+                            <ComboBoxItem Content="CFB" />
+                        </ComboBox>
 
                         <ComboBox x:Name="txtBasis"
 						         Grid.Row="2"
                                  FontSize="10"
-                                 Width="60" Padding="2 0"
+                                 Width="50" Padding="2 0"
 						         Grid.Column="4"
-                                 Height="22" Margin="14 2" 
-                                 HorizontalAlignment="Left"
+                                 Height="22" Margin="65,0,0,0"
                                  DisplayMemberPath="SubWT"
 						         VerticalAlignment="Center" />
 
@@ -1111,7 +1135,7 @@
 						         Grid.Row="2" Padding="2 0"
                                  FontSize="10"
 						         Grid.Column="5"
-                                 Height="22" Margin="14 2" Width="60"
+                                 Height="22" Margin="43,0,0,0" Width="50"
                                  DisplayMemberPath="Color"
 						         VerticalAlignment="Center" />
 
@@ -1119,17 +1143,17 @@
 						         Grid.Row="2"
                                  FontSize="10"
 						         Grid.Column="6"
-                                 Width="60" Padding="2 0"
-                                 Height="22" Margin="14 2"
-                                 DisplayMemberPath="RollWidth"
-						         VerticalAlignment="Center">
-                        </ComboBox>
+                                 Grid.ColumnSpan="2"
+                                 Width="64" Padding="2 0"
+                                 Height="22" Margin="68,0,0,0"
+                                 DisplayMemberPath="Size"
+						         VerticalAlignment="Center"/>
 
                         <Button x:Name="btnUpdate"
 						         Grid.Row="2"
 						         Grid.Column="7"
 						         Width="70"
-						         Margin="4"
+						         Margin="25 0 0 0"
                                  Click="btnUpdate_Click"
                                  Height="24"
 						         Padding="0"

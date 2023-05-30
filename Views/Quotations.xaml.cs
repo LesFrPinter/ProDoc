@@ -1,17 +1,18 @@
 ﻿using ProDocEstimate.Views;
+using SharpDX;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Telerik.Windows.Controls.Charting;
+using System.Windows.Media;
 
 namespace ProDocEstimate
 {
@@ -39,7 +40,7 @@ namespace ProDocEstimate
         private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
         private int? parts; public int? PARTS { get { return parts; } set { parts = value; OnPropertyChanged(); } }
 
-        private string? papertype; public string? PAPERTYPE { get { return papertype; } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); } }
+        private string? papertype; public string? PAPERTYPE { get { return papertype; } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
         private string? rollwidth; public string? ROLLWIDTH { get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
         private string? presssize; public string? PRESSSIZE { get { return presssize; } set { presssize = value; OnPropertyChanged(); LoadCollator(); } }
         private bool?   lineholes; public bool?   LINEHOLES  { get { return lineholes; } set { lineholes = value; OnPropertyChanged(); } }
@@ -85,17 +86,17 @@ namespace ProDocEstimate
         private int? qty4 = 100000;   public int? Qty4    { get { return qty4;  } set { qty4  = value; OnPropertyChanged(); } }
 
         private int? wastePct = 5; public int? WastePct {  get { return wastePct; } set {  wastePct = value; OnPropertyChanged(); } }
-        private string? itemType;  public string? ItemType {  get { return itemType; } set { itemType = value; OnPropertyChanged(); } } 
+        private string? itemType;  public string? ItemType {  get { return itemType; } set { itemType = value; OnPropertyChanged(); LoadPage2Combos(); } }
 
         private int? selectedQty; public int? SelectedQty { get { return selectedQty; } set { selectedQty = value; OnPropertyChanged(); PaperCalc(); } }
         private string? calcMsg; public string? CalcMsg {  get { return calcMsg;  } set { calcMsg = value; OnPropertyChanged(); } }
 
         private DataTable?   features; public DataTable? Features   { get { return features;   } set { features   = value; OnPropertyChanged(); } }
         private DataTable?   elements; public DataTable? Elements   { get { return elements;   } set { elements   = value; OnPropertyChanged(); } }
-        private DataTable?  projTypes; public DataTable? ProjTypes  { get { return projTypes;  } set { projTypes  = value; OnPropertyChanged(); } }
-
+        private DataTable?  formTypes; public DataTable? FormTypes  { get { return formTypes;  } set { formTypes  = value; OnPropertyChanged(); } }
         private DataTable? papertypes; public DataTable? PaperTypes { get { return papertypes; } set { papertypes = value; OnPropertyChanged(); } }
         private DataTable? rollwidths; public DataTable? RollWidths { get { return rollwidths; } set { rollwidths = value; OnPropertyChanged(); } }
+        private DataTable?      sizes; public DataTable? Sizes      { get { return sizes;      } set { sizes      = value; OnPropertyChanged(); } }
         private DataTable?     colors; public DataTable? Colors     { get { return colors;     } set { colors     = value; OnPropertyChanged(); } }
         private DataTable?    basisWT; public DataTable? BasisWT    { get { return basisWT;    } set { basisWT    = value; OnPropertyChanged(); } }
         private DataTable?  itemTypes; public DataTable? ItemTypes  { get { return itemTypes;  } set { itemTypes  = value; OnPropertyChanged(); } }
@@ -110,16 +111,14 @@ namespace ProDocEstimate
         {
             InitializeComponent();
             DataContext = this;
+
             LoadPressSizes();
-//            LoadElements();
-            LoadProjTypes();
-            LoadPaperTypes();  // hard-coded to three values for now
-            LoadSubWT();
-            LoadColors();
-
-
-// Can't load RollWidth table until PaperType has been selected
-//          LoadRollWidths();
+//            LoadElements();   // What was this used for?
+            LoadFormTypes();
+            LoadPaperTypes();
+            //LoadSubWT();
+            //LoadColors();
+            //LoadRollWidths();
 
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
@@ -144,6 +143,9 @@ namespace ProDocEstimate
             Page2.IsEnabled = true;
             Page3.IsEnabled = true;
             Page2.Focus();
+            // call dgSheetsOfPaper_SelectedCellsChanged
+            dgSheetsOfPaper.RaiseEvent(new RoutedEventArgs(DataGrid.SelectedEvent));
+
         }
 
         private void btnCopy_Click(object sender, RoutedEventArgs e)
@@ -152,8 +154,6 @@ namespace ProDocEstimate
             ql.ShowDialog();
             QUOTE_NUM = ql.SelQuote; ql.Close();
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
-
-            // Retrieve selected quote and populate bindings
 
             GetQuote();
         }
@@ -272,7 +272,8 @@ namespace ProDocEstimate
             this.Colors = new DataTable("Colors");
             this.Colors.Columns.Add("Color");
 
-            string str = "SELECT Color FROM [ProVisionDev].[dbo].[Colors] ORDER BY Color";
+            string str = "SELECT DISTINCT Color FROM [ProVisionDev].[dbo].MasterInventory WHERE ReportType = '" + PAPERTYPE + "' AND ItemType = '" + ItemType + "' ORDER BY Color";
+
             SqlConnection cn = new(ConnectionString);
             cn.Open(); if (cn.State != ConnectionState.Open) { MessageBox.Show("Couldn't open SQL Connection"); return; }
 
@@ -322,26 +323,24 @@ namespace ProDocEstimate
 
         private void LoadRollWidths()
         {
-            //if (txtPaperType.SelectedValue is null) return;
-            //string? val = txtPaperType.SelectedValue.ToString();
+            if (PAPERTYPE is null) return;
 
-            string val = PAPERTYPE.ToString();
+            this.Sizes = new DataTable("Sizes");
+            this.Sizes.Columns.Add("RollWidth");
 
-            this.RollWidths = new DataTable("RollWidths");
-            this.RollWidths.Columns.Add("RollWidth");
+            string str = "SELECT RollWidth FROM RollWidth WHERE Abbreviation = '" + PAPERTYPE + "'";
 
-            string str = "SELECT RollWidth FROM [ProVisionDev].[dbo].RollWidth WHERE Abbreviation = '" + val + "'";
             SqlConnection cn = new(ConnectionString);
             cn.Open(); if (cn.State != ConnectionState.Open) { MessageBox.Show("Couldn't open SQL Connection"); return; }
 
             SqlDataAdapter da = new(str, cn);
-            da.Fill(RollWidths);
+            da.Fill(Sizes);
 
-            cmbRollWidth.ItemsSource = RollWidths.DefaultView;
+            cmbRollWidth.ItemsSource = Sizes.DefaultView;
             cmbRollWidth.DisplayMemberPath = "RollWidth";
             cmbRollWidth.SelectedValuePath = "RollWidth";
 
-            txtRollWidth.ItemsSource = RollWidths.DefaultView;
+            txtRollWidth.ItemsSource = Sizes.DefaultView;
             txtRollWidth.DisplayMemberPath = "RollWidth";
             txtRollWidth.SelectedValuePath = "RollWidth";
         }
@@ -365,22 +364,34 @@ namespace ProDocEstimate
             cmbRollWidth.SelectedValuePath = "RollWidth";
         }
 
-        private void LoadProjTypes()
-        {   // Load this from ESTFORMTYPE.FORM_ID
-            cmbProjectType.Items.Add("SNAP-OUT");       // SHT
-            cmbProjectType.Items.Add("CONTINUOUS");     // ROLL
+        private void LoadFormTypes()
+        {
+            FormTypes = new DataTable("FormTypes");
+            FormTypes.Columns.Add("Form");
+
+            string str = "SELECT Form FROM [ESTIMATING].[dbo].[ESTFormType] ORDER BY Form";
+
+            SqlConnection cn = new(ConnectionString);
+            SqlDataAdapter da = new(str, cn);
+            da.Fill(FormTypes);
+
+            cmbProjectType.ItemsSource = FormTypes.DefaultView;
+            cmbProjectType.DisplayMemberPath = "Form";
+            cmbProjectType.SelectedValuePath = "Form";
         }
 
         private void LoadPressSizes()
         {
             // load distinct Cylinder values from the PressSizes table
-            string str = "SELECT DISTINCT Cylinder FROM PressSizes ORDER BY Cylinder";
+//            string str = "SELECT DISTINCT Cylinder FROM PressSizes ORDER BY Cylinder";
+            string str = "SELECT PRESS FROM CYLCUTSIZES GROUP BY PRESS, SEQ ORDER BY SEQ";
             SqlConnection cn = new(ConnectionString);
             cn.Open();
             if (cn.State != ConnectionState.Open)
             { MessageBox.Show("Couldn't open SQL Connection"); return; }
             SqlDataAdapter da = new(str, cn);
             DataSet ds = new("PressSizes"); da.Fill(ds); DataTable dt = ds.Tables[0];
+            cmbPressSize.Items.Clear();
             for (int r = 0; r < dt.Rows.Count; r++)
             { cmbPressSize.Items.Add(dt.Rows[r][0].ToString()); }
         }
@@ -516,24 +527,27 @@ namespace ProDocEstimate
 
         private void LoadCollator()
         {
-            DataSet CollCuts = new DataSet();
-            CollCuts.Columns.Add("CollatorCut");
+            DataTable CollCuts = new DataTable("CollCuts");
+            CollCuts.Columns.Add("CutSize");
 
-            string cmd =
-                    "SELECT FormSize FROM PressSizes WHERE cylinder = '" + PRESSSIZE
-                + "'  ORDER BY CASE WHEN CHARINDEX(' ', FormSize) > 0 "
-                + "                 THEN CONVERT(int, SUBSTRING(FormSize,0, charindex(' ', FormSize))) "
-                + "                 ELSE FormSize END";
-            // Load into the ComboBoxItems of cmbCollatorCut
+            //string cmd =
+            //        "SELECT FormSize FROM PressSizes WHERE cylinder = '" + PRESSSIZE
+            //    + "'  ORDER BY CASE WHEN CHARINDEX(' ', FormSize) > 0 "
+            //    + "                 THEN CONVERT(int, SUBSTRING(FormSize,0, charindex(' ', FormSize))) "
+            //    + "                 ELSE FormSize END";
+
+            string cmd = "SELECT CutSize FROM CylCutSizes WHERE Press = '" + PRESSSIZE + "'";
+
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
-            DataSet ds = new("CollatorCuts"); da.Fill(ds); DataTable dt = ds.Tables[0];
+
+            da.Fill(CollCuts);
             cmbCollatorCut.Items.Clear();
 
-            for (int r = 0; r < dt.DefaultView.Count; r++)
-            { cmbCollatorCut.Items.Add(dt.DefaultView[r][0].ToString()); }
-            cmbCollatorCut.SelectedIndex = -1;
-
+            this.cmbCollatorCut.DataContext = this;
+            this.cmbCollatorCut.ItemsSource = CollCuts.DefaultView;
+            this.cmbCollatorCut.DisplayMemberPath = "CutSize";
+            this.cmbCollatorCut.SelectedValuePath = "CutSize";
         }
 
 
@@ -568,98 +582,136 @@ namespace ProDocEstimate
         private void btnLoadGrid_Click(object sender, RoutedEventArgs e)
         {
             int setNum = int.Parse(PartsSpinner.Value.ToString());
-            string formType = ProjectType.Substring(0, 1);
+            string formType  = ProjectType.Substring(0, 1);
             string paperType = PAPERTYPE.Substring(0, 1);
+            string rollWidth = ROLLWIDTH.ToString();
 
-            string cmd =
-                 "SELECT SetNum, FormType, PaperType, Paper, Color, Weight,PType, " +
-                 "CONVERT(VarChar(20),NULL) AS Description, " +
-                 "000000 AS Pounds, " + 
-                 "00.00 AS LastPOCost, " + 
-                 "00.00 AS AverageCost, " +
-                 "00.00 AS MastInvCost, " +
-                 "00.00 AS SelectedCost, " + 
-                 "000000.00 AS PaperCost " +
-                 "FROM [ESTIMATING].[dbo].ESTPAPER " +
-                $"WHERE PaperType='{paperType}' " +
-                $"  AND FormType LIKE '{formType}%' " +
-                $"  AND SetNum={setNum}";
+            //string cmd =
+            //     "SELECT SetNum, FormType, PaperType, Paper, Color, Weight,PType, " +
+            //     "CONVERT(VarChar(20),NULL) AS Description, " +
+            //     "000000 AS Pounds, " + 
+            //     "00.00 AS LastPOCost, " + 
+            //     "00.00 AS AverageCost, " +
+            //     "00.00 AS MastInvCost, " +
+            //     "00.00 AS SelectedCost, " + 
+            //     "000000.00 AS PaperCost " +
+            //     "FROM [ESTIMATING].[dbo].ESTPAPER " +
+            //    $"WHERE PaperType='{paperType}' " +
+            //    $"  AND FormType LIKE '{formType}%' " +
+            //    $"  AND SetNum={setNum}";
+
+            string cmd = "SELECT M.Description," +
+                "M.ItemType," +
+                "M.SubWT," +
+                "M.COLOR AS MCOLOR," +
+                "E.PAPER," +
+                "E.SETNUM," +
+                "E.SEQ," +
+                "E.PTYPE," +
+                "E.COLOR," +
+                "E.FORMTYPE," +
+                "E.PAPERTYPE," +
+                " 0.00 AS Pounds," +
+                " 0.00 AS LastPOCost," +
+                " 0.00 AS AverageCost," +
+                "M.COSTPERFACTOR AS MastInvCost," +
+                " 0.00 AS SelectedCost," +
+                " 0.00 AS PaperCost" +
+                            " FROM PROVISIONDEV.DBO.MasterInventory M" +
+                " RIGHT OUTER JOIN PROVISIONDEV.DBO.ESTPAPER E" +
+                " ON M.ITEMTYPE     = E.PTYPE"       +
+                " AND M.COLOR       = E.COLOR"       +
+                " AND M.SubWT       = E.WEIGHT"      +
+                " WHERE E.FORMTYPE  = '"  + formType  + "'" +
+                "   AND E.PAPERTYPE = '"  + paperType + "'" +
+                "   AND M.SIZE      = '"  + rollWidth + "'" +
+                "   AND E.SETNUM    = "   + setNum    +
+                " AND Inventoryable = 1"              +
+                " ORDER BY E.SETNUM, E.SEQ";
+
+            Clipboard.SetText(cmd);
+//            MessageBox.Show(cmd);
+//            Debugger.Break();
 
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
             DataSet ds = new("Papers");
             da.Fill(ds);
-            DataTable dt = ds.Tables[0];
+            DataTable? dt = ds.Tables[0];
 
             for (int r = 0; r < dt.DefaultView.Count; r++)
             {
-                string clr  = dt.Rows[r]["Color"].ToString();
-                string wt   = dt.Rows[r]["Weight"].ToString();
-                string it   = dt.Rows[r]["PType"].ToString().Substring(0, 1) + "%";
-                string size = cmbRollWidth.SelectedValue.ToString();
+// These are already in the table; all we need is average and most recent cost for each paper 
+                string? clr  = dt.Rows[r]["Color"].ToString();
+                string? wt   = dt.Rows[r]["SubWT"].ToString();
+                string? it   = dt.Rows[r]["PType"].ToString();
+                it = (it == null) ? "" : it.Substring(0, 1) + "%";
+                string? size = cmbRollWidth.SelectedValue.ToString();
+                size = (size is null) ? "" : size.TrimEnd();
 
-                string projType = cmbProjectType.SelectedValue.ToString();
+                string? projType = cmbProjectType.SelectedValue.ToString();
                 projType = (projType == "SHEET") ? "SHT" : "ROLL";   // Sheet or Continuous
 
-                string cmd2 = "SELECT Description, CostPerFactor AS MastInvCost " +
-                    " FROM [ProVisionDev].[dbo].MasterInventory " +
-                    " WHERE Color = '" + clr + "'" +
-                    "  AND ProdType = '" + projType + "'" +
-                    "  AND SubWT = '" + wt + "'" +
-                    "  AND LEFT(ItemType,1) = '" + ItemType.Substring(0, 1) + "'" +
-                    "  AND Size  = '" + size + "'";
+                //string cmd2 = "SELECT Description, CostPerFactor AS MastInvCost " +
+                //    " FROM [ProVisionDev].[dbo].MasterInventory " +
+                //    " WHERE Color   = '" + clr      + "'" +
+                //    "  AND ProdType = '" + projType + "'" +
+                //    "  AND SubWT    = '" + wt.TrimEnd()   + "'" +
+                //    "  AND ItemType LIKE '" + it    + "'" +
+                //    "  AND Size     = '" + size     + "'";     // TODO Should this be the next size up?
 
-                SqlDataAdapter da2 = new(cmd2, cn);
-                DataTable dt2 = new("Desc");
+                //SqlDataAdapter da2 = new(cmd2, cn);
+                //DataTable dt2 = new("Desc");
+                //da2.Fill(dt2);
 
-                da2.Fill(dt2);
-                if (dt2 is null) return;
+                //if (dt2 is null) return;
 
-                string desc = "";
-                if (dt2.Rows.Count == 0)
-                { desc = "Not found"; }
-                else
-                { 
-                  desc = dt2.Rows[0][0].ToString().TrimEnd();
-                }
+                //string? desc = "";
+                //if  (dt2.Rows.Count == 0) { MessageBox.Show(cmd2, "Description not found" ); return;  } 
+                //  else 
+                //    { desc = dt2.Rows[0][0].ToString(); }
+                //desc = (desc is null) ? null : desc.TrimEnd();
 
+                // Examine table dt here:
 
-                dt.Rows[r][4] = clr;
-                dt.Rows[r][5] = wt;
-                dt.Rows[r][6] = it.Replace("%", "");
-                dt.Rows[r][7] = desc;
-                dt.Rows[r]["Pounds"] = (r+1) * 1000;    // Temporary until PaperCalc is implemented
-                dt.Rows[r][11] = dt2.Rows[0][1];        // MasterInventory.CostPerFactor
+                //              dt.Rows[r][4] = clr;
+                //              dt.Rows[r][5] = wt.TrimEnd();
+                //              dt.Rows[r][6] = it.Replace("%", "");
+                //              dt.Rows[r][7] = desc;
+                //              dt.Rows[r][11] = dt2.Rows[0][1];        // MasterInventory.CostPerFactor
 
-                // Get the average and most recent costs for this paper type
+                dt.Rows[r]["Pounds"] = (r + 1) * 1000;    // Temporary until PaperCalc is implemented
+
+                // Get the most recent and the average costs for this paper type:
                 SqlDataAdapter da4 = new SqlDataAdapter("MostRecentCost", ConnectionString);
                 da4.SelectCommand.CommandType = CommandType.StoredProcedure;
-                da4.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = desc; 
+                da4.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = dt.Rows[r][0]; //desc; 
                 DataTable dtRec = new("Rec");
                 da4.Fill( dtRec);
-                if (dtRec.Rows.Count > 0)
-                { 
-                    dt.Rows[r][9] = dtRec.Rows[0][0].ToString();
-                }
+                if (dtRec.Rows.Count > 0) 
+                    {  dt.Rows[r]["LastPOCost"] = dtRec.Rows[0][0].ToString(); }
 
                 SqlDataAdapter da5 = new SqlDataAdapter("AverageCost", ConnectionString);
                 da5.SelectCommand.CommandType = CommandType.StoredProcedure;
-                da5.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = desc;
+                da5.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = dt.Rows[r][0]; // desc;
                 DataTable dtAvg = new("Avg");
                 da5.Fill(dtAvg);
                 if(dtAvg.Rows.Count>0) 
-                { 
-                    dt.Rows[r][10] = dtAvg.Rows[0][0].ToString();   // I rewrote the query to return just one column (average cost)
-                    dt.Rows[r][12] = dtAvg.Rows[0][0].ToString();   // SelectedCost defaults to average cost
-                }
-
+                    {  dt.Rows[r]["AverageCost"] = dtAvg.Rows[0][0].ToString();   // I rewrote the query to return just one column (average cost)
+                       dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();   // SelectedCost defaults to average cost
+                    }
             }
 
             dgSheetsOfPaper.ItemsSource = dt.DefaultView;
 
+            // TODO: Select the first description and populate the comboboxes above the grid
+
             Page2.IsEnabled = true;
             Page3.IsEnabled = true;
             Page2.Focus();
+
+            dgSheetsOfPaper.SelectedIndex = -1;     // Force loading of labels 
+            dgSheetsOfPaper.SelectedIndex = 0;      //  using the first row description
 
         }
 
@@ -678,57 +730,60 @@ namespace ProDocEstimate
             //for (int r = 0; r < dt3.Rows.Count; r++)
             //{ cmbRollWidth.Items.Add(dt3.Rows[r][0].ToString()); }
             //cmbRollWidth.SelectedIndex = 0;
-
 //            LoadRollWidths();
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgSheetsOfPaper_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             int rownum = dgSheetsOfPaper.SelectedIndex;
             SelRowIdx = rownum;             // Needed for the Update button code
             if (rownum < 0) return;
-
             if(Tabs.SelectedIndex  == 0) { return; }
-
-//            MessageBox.Show("Row " + SelRowIdx.ToString(), "651");
 
             DataRowView dataRow = (DataRowView)dgSheetsOfPaper.SelectedItem;
             DRV = dataRow;
+            if (DRV is null) return;
 
             // Pull out four key values and display them in editable comboboxes, above.
 
-            //string tmpPaperType = dataRow[2].ToString();
-            //switch (tmpPaperType) { case "B": tmpPaperType = "BOND"; break; case "C": tmpPaperType = "CRBNLS"; break; case "E": tmpPaperType = "ELEC"; break; }
+            string  tmpPaperType = dataRow[7].ToString().Substring(0,1); // Should this be column 10 instead of 7?
+            switch (tmpPaperType) { case "B": tmpPaperType = "BOND"; break; case "C": tmpPaperType = "CRBNLS"; break; case "E": tmpPaperType = "ELEC"; break; }
 
-            //txtPaperType.Text = tmpPaperType;
-            //txtColor.SelectedValue = dataRow[4].ToString();     // Should this set SelectedItem instead?
-            //txtBasis.SelectedValue = dataRow[5].ToString();
+            txtItemType.Text = tmpPaperType;
+            txtColor.SelectedValue = dataRow[8].ToString();     // Should this set SelectedItem instead?
+            txtBasis.SelectedValue = dataRow[2].ToString().TrimEnd();
 
-            //lblPaper.Content = tmpPaperType;
-            //lblColor.Content = dataRow[4].ToString();
-            //lblBasis.Content = dataRow[5].ToString();
+            lblItemType.Content = tmpPaperType;
+            lblColor.Content = dataRow[8].ToString();
+            lblBasis.Content = dataRow[2].ToString().TrimEnd();
+            lblPaperType.Content = dataRow[7].ToString().TrimEnd();  //  tmpPaperType;
 
-            // Look just to the right of "COLOR" in Description (dataRow[7])
-            string col = lblColor.Content.ToString();
-            string Desc = dataRow[7].ToString();
+            // RollWidth (size) is just to the right of "COLOR" in Description (dataRow[7])
+            string col  = lblColor.Content.ToString();
+            string Desc = dataRow[0].ToString();
             int ColorAt = Desc.IndexOf(col) + 4;
-            string RW = Desc.Substring(ColorAt);
+            string RW   = Desc.Substring(ColorAt);  // RollWidth
 
-            lblRollWidth.Content = RW;
+            lblRollWidth.Content = RW.ToString().TrimEnd();
 
             // Insert the value in the selected column into the "SelectedCost" column (#12)
             DataGridColumn chosen = dgSheetsOfPaper.CurrentColumn;
 
             var x = (chosen == null) ? "" : chosen.ToString();
             if (chosen != null)
-              { int idx = chosen.DisplayIndex + 7;
-                if (idx < 9 || idx > 11) return;    // Which three columns are the ones to use
-                dataRow[12] = dataRow[idx];
+              { int idx = chosen.DisplayIndex + 10;
+                if (idx < 12 || idx > 14) return;    // Only three of the columns should be clickable
+                dataRow[15] = dataRow[idx];         // Use the value they clicked as the "cost to use"
               }
 
-            double a = double.Parse(dataRow[8].ToString()) * double.Parse(dataRow[12].ToString());
-            dataRow[13] = a;
+            double a = double.Parse(dataRow[11].ToString()) * double.Parse(dataRow[15].ToString());
+            dataRow[16] = a;
+            //MessageBox.Show(a.ToString("C"));
 
             dgSheetsOfPaper.SelectedIndex = -1;
 
@@ -738,31 +793,35 @@ namespace ProDocEstimate
         {
             // Do they want to change anything on the current row?
 
-  //          MessageBox.Show("Row " + SelRowIdx.ToString(), "Line 700");
+            if (   txtRollWidth.Text.Length == 0
+                && txtPaperType.Text.Length == 0
+                && txtColor.Text.Length     == 0
+                && txtBasis.Text.Length     == 0)
+                { MessageBox.Show("No changes to make."); return; }
 
-            if (txtRollWidth.Text.Length == 0
-                && txtColor.Text.Length == 0
-                && txtBasis.Text.Length == 0)
-                { MessageBox.Show("No change has been specified"); return; }
+            string                              WhereClause  = " WHERE ReportType = '" + PAPERTYPE + "'";
+            if (txtRollWidth.Text.Length > 0) { WhereClause +=   " AND Size = '"       + lblRollWidth.Content.ToString().TrimEnd() + "'"; }
+            if (txtColor.Text.Length     > 0) { WhereClause +=   " AND Color = '"      + lblColor.Content.ToString().TrimEnd() + "'"; }
+            if (txtBasis.Text.Length     > 0) { WhereClause +=   " AND SubWT = '"      + lblBasis.Content.ToString().TrimEnd() + "'"; }
 
-            string WhereClause =
-                  " WHERE ReportType = '" + PAPERTYPE + "'"
-                + "   AND SubWT      = '" + lblBasis.Content.ToString().TrimEnd() + "'"
-                + "   AND Color      = '" + lblColor.Content.ToString().TrimEnd() + "'"
-                + "   AND Size       = '" + lblRollWidth.Content.ToString().TrimEnd() + "'";
+            //    + "   AND SubWT      = '" + lblBasis.Content.ToString().TrimEnd() + "'"
+            //    + "   AND Color      = '" + lblColor.Content.ToString().TrimEnd() + "'"
+            //    + "   AND Size       = '" + lblRollWidth.Content.ToString().TrimEnd() + "'";
 
             string cmd = "SELECT COUNT(*) FROM MasterInventory " + WhereClause;
-
             System.Windows.Clipboard.SetText(cmd);
-
-//            if (MessageBox.Show("Continue to SQL?", "Run query?", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.OK) != MessageBoxResult.OK) return;
 
             SqlConnection cn = new(ConnectionString);
             SqlDataAdapter da2 = new(cmd, cn); DataTable dt3 = new("CT"); da2.Fill(dt3);
+
             if (dt3.Rows.Count == 0) { MessageBox.Show("Paper not found in MasterInventory"); return; }
 
-            if (lblItemType.Content.ToString().Length > 0)
+            // if(txtItemType.Text.TrimEnd() == "BND") { txtItemType.Text = "BOND";  }
+
+            if (lblItemType.Content.ToString().Length > 0 && txtItemType.Text.ToString().TrimEnd().Length > 0 && lblItemType.Content != txtItemType.Text ) 
             { 
+                // We have to change "BND" to "BOND", among other problems...
+
                 //DRV[7] = DRV[7].ToString().Replace(lblPaper.Content.ToString().TrimEnd(), txtPaperType.Text.ToString().TrimEnd());
                 //string p = txtPaperType.Text.ToString().TrimEnd();
                 //if (p == "BOND") { p = "B"; }
@@ -771,45 +830,38 @@ namespace ProDocEstimate
                 //DRV[6] = p;
                 //DRV[2] = p;
             }
-            if (lblBasis.Content.ToString().Length > 0) 
-            { 
-                DRV[7] = DRV[7].ToString().Replace(lblBasis.Content.ToString().TrimEnd(), txtBasis.Text.ToString().TrimEnd());
-                DRV[5] = txtBasis.Text.ToString().TrimEnd();
+
+            if (lblPaperType.Content.ToString().Length > 0 && txtPaperType.Text.ToString().TrimEnd().Length > 0)
+            {
+                DRV[0] = DRV[0].ToString().Replace(lblPaperType.Content.ToString().TrimEnd(), txtPaperType.Text.ToString().TrimEnd());
+                DRV[7] = txtPaperType.Text.ToString().TrimEnd();
             }
-            if (lblColor.Content.ToString().Length > 0) 
+
+            if (lblBasis.Content.ToString().Length > 0 && txtBasis.Text.ToString().TrimEnd().Length > 0) 
             { 
-                DRV[7] = DRV[7].ToString().Replace(lblColor.Content.ToString().TrimEnd(), txtColor.Text.ToString().TrimEnd());
-                DRV[4] = txtColor.Text.ToString().TrimEnd();
+                DRV[0] = DRV[0].ToString().Replace(lblBasis.Content.ToString().TrimEnd(), txtBasis.Text.ToString().TrimEnd());
+                DRV[4] = DRV[4].ToString().Replace(lblBasis.Content.ToString().TrimEnd(), txtBasis.Text.ToString().TrimEnd());
+                DRV[2] = txtBasis.Text.ToString().TrimEnd();
             }
-            if (lblRollWidth.Content.ToString().Length > 0) 
+
+            if (lblColor.Content.ToString().Length > 0 && txtColor.Text.ToString().TrimEnd().Length > 0) 
             { 
-                DRV[7] = DRV[7].ToString().Replace(lblRollWidth.Content.ToString().TrimEnd(), txtRollWidth.Text.ToString().TrimEnd());
+                DRV[0] = DRV[0].ToString().Replace(lblColor.Content.ToString().TrimEnd(), txtColor.Text.ToString().TrimEnd());
+                DRV[4] = DRV[4].ToString().Replace(lblColor.Content.ToString().TrimEnd(), txtColor.Text.ToString().TrimEnd());
+                DRV[3] = txtColor.Text.ToString().TrimEnd();
+                DRV[8] = txtColor.Text.ToString().TrimEnd();
+            }
+
+            if (lblRollWidth.Content.ToString().Length > 0 && txtRollWidth.Text.ToString().TrimEnd().Length > 0) 
+            { 
+                DRV[0] = DRV[0].ToString().Replace(lblRollWidth.Content.ToString().TrimEnd(), txtRollWidth.Text.ToString().TrimEnd());
                 // There is no RollWidth column in DRV, because DRV comes from Estimating.dbo.ESTPAPER; should we add one?
             }
 
             return;
-
-            //cmd = "UPDATE MasterInventory SET "
-            //    + " ReportType = '" + txtPaperType.Text.TrimEnd() + "'"
-            //    + " SubWT      = '" + txtBasis.Text.TrimEnd() + "'"
-            //    + " Color      = '" + txtColor.Text.TrimEnd() + "'"
-            //    + " Size       = '" + txtRollWidth.Text.TrimEnd() + "'"
-            //    + WhereClause;
-            //try { 
-            //    cn.Open();
-            //    SqlCommand sc = new(cmd, cn); sc.ExecuteNonQuery();
-            //    if (dt3.Rows.Count == 0) { MessageBox.Show("Record not found in inventory"); return; }
-            //}
-            //catch ( SqlException ex )
-            //{
-            //    MessageBox.Show(ex.Message, "Error trying to update row in MasterInventory", MessageBoxButton.OK, MessageBoxImage.Stop);
-            //}
-
         }
 
-        private void txtPaperType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        { 
-        }
+//        private void txtPaperType_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
 
         private void dgSheetsOfPaper_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {   // Recalculate cost
@@ -817,9 +869,15 @@ namespace ProDocEstimate
             string prop1 = (e.Row.Item as DataRowView).Row[1].ToString();
         }
 
-        private void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
+        private async void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
         {
-//          dgSheetsOfPaper.Columns[e.ColumnIndex].DefaultCellStyle.BackColor = Color.Aqua;
+            txtItemType.Focus();        // TODO: How do I suggest that they pick an ItemType so that the other comboboxes will be populated?
+//            txtItemType.IsDropDownOpen = true;
+
+            Msg2.Visibility = Visibility.Visible;
+            //Task delay = Task.Delay(1000);
+            //await delay;
+            //Msg2.Visibility = Visibility.Hidden;
         }
 
         private void cmbCollatorCut_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -843,7 +901,9 @@ namespace ProDocEstimate
             val2 = CalcFraction(sval2);
             float totval = val1 + val2;
 
-            lblUp.Content = float.Parse(PRESSSIZE) / totval;
+            string intPart = String.Join("", PRESSSIZE.Where(char.IsDigit));    // Might end in a 3-char press name...
+            
+            lblUp.Content = float.Parse(intPart) / totval;    // remove text characters from PRESSSIZE before calculating...
             lblUpMessage.Content = "up";
 
         }
@@ -862,7 +922,7 @@ namespace ProDocEstimate
 
         private void txtPaperType_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            LoadSubWT();
+        //    LoadSubWT();
         }
 
         private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e) { SelectedQty = int.Parse(txtQty1.Text); Msg1.Visibility = Visibility.Visible; }
@@ -884,5 +944,32 @@ namespace ProDocEstimate
         {
             // Reload the two dropdowns to the right of ItemType on Page 2
         }
+
+        private void LoadPage2Combos()
+        {
+            LoadSubWT();
+            LoadColors();
+            LoadRollWidths();
+        }
+
+        private void txtItemType_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void txtItemType_DropDownOpened(object sender, System.EventArgs e)
+        {
+            Msg2.Visibility = Visibility.Hidden;
+        }
+
+        private void dgSheetsOfPaper_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+//            MessageBox.Show(e.Source.ToString());
+        }
+
+        private void cmbPaperType_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            LoadRollWidths(); 
+        }
+
     }
 }
