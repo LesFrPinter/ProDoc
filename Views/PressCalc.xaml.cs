@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Data;
-using System.Windows;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.ComponentModel;
-using System.Windows.Controls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Diagnostics;
-using Telerik.Windows.Controls.Spreadsheet.Dialogs;
+using System.Windows;
 
 //TODO: Change all "Material" references to "Description".
 
@@ -16,219 +13,160 @@ namespace ProDocEstimate.Views
     public partial class PressCalc : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-        public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-        public SqlConnection? cn = new();
-        public SqlDataAdapter? da;
-        public DataSet? ds;
-        public DataTable? dt;
-
-        double x1, x2, y1, y2, m, b, amt, docs, cost = 0.0D;
-
-        #region Property Declarations
-        private string?  press;          public string?  Press          { get { return press;           } set { press           = value; OnPropertyChanged(); } }
-        private int?     documents;      public int?     Documents      { get { return documents;       } set { documents       = value; OnPropertyChanged(); } }
-        private int?     waste;          public int?     Waste          { get { return waste;           } set { waste           = value; OnPropertyChanged(); } }
-        private string?  material;       public string?  Material       { get { return material;        } set { material        = value; OnPropertyChanged(); } }
-        private int?     numUp;          public int?     NumUp          { get { return numUp;           } set { numUp           = value; OnPropertyChanged(); } }
-
-        private decimal? materialLbs;    public decimal? MaterialLbs    { get { return materialLbs;     } set { materialLbs     = value; OnPropertyChanged(); } }
-        private double?  productionRate; public double?  ProductionRate { get { return productionRate;  } set { productionRate  = value; OnPropertyChanged(); } }
-        private decimal? productionTime; public decimal? ProductionTime { get { return productionTime;  } set { productionTime  = value; OnPropertyChanged(); } }
-        private double?  linearFeet;     public double?  LinearFeet     { get { return linearFeet;      } set { linearFeet      = value; OnPropertyChanged(); } }
-        private double?  materialCost;   public double?  MaterialCost   { get { return materialCost;    } set { materialCost    = value; OnPropertyChanged(); } }
+        #region Property declarations
+        [MaybeNull]
+        private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; } }
+        [MaybeNull]
+        private int numDocs; public int NumDocs { get { return numDocs; } set { numDocs = value; } }
+        [MaybeNull]
+        private int wastePct; public int WastePct { get { return wastePct; } set { wastePct = value; } }
+        [MaybeNull]
+        private string material; public string Material { get { return material; } set { material = value; } }
+        [MaybeNull]
+        private int up; public int Up { get { return up; } set { up = value; } }
+        [MaybeNull]
+        private int pounds; public int Pounds { get { return pounds; } set { pounds = value; } }
+        [MaybeNull]
+        private int prodRate; public int ProdRate { get { return prodRate; } set { prodRate = value; } }
+        [MaybeNull]
+        private double prodTime; public double ProdTime { get { return prodTime; } set { prodTime = value; } }
+        [MaybeNull]
+        private int linearFt; public int LinearFt { get { return linearFt; } set { linearFt = value; } }
+        [MaybeNull]
+        private double matlCost; public double MatlCost { get { return matlCost; } set { matlCost = value; } }
         #endregion
 
-        public PressCalc()
-        { InitializeComponent(); DataContext = this; LoadDummyData(); LoadPresses(); LoadDescriptions(); }
+        double y1 = 0.0D;
+        double y2 = 0.0D;
+        double x1 = 0.0D;
+        double x2 = 0.0D;
 
-        private void LoadPresses()
-        { string cmd = "SELECT distinct Press FROM EquipmentProductionRates";
-          SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-          DataSet ds = new("CollatorCuts"); da.Fill(ds); DataTable dt = ds.Tables[0];
-          for (int r = 0; r < dt.DefaultView.Count; r++) { cmbPress.Items.Add(dt.DefaultView[r][0].ToString()); }
-          cmbPress.SelectedIndex = 0;
-        }
+        double m = 0.0D;
+        double b = 0.0D;
+        double Documents = 0.0D;
+        double Cost = 0.0D;
+        double Amt = 0.0D;
 
-        private void LoadDescriptions()
-        { 
-          string cmd = "SELECT Description FROM MasterInventory ORDER BY Description";
-          SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-          DataSet ds = new("Material"); da.Fill(ds); DataTable dt = ds.Tables[0];
-           for (int r = 0; r < dt.DefaultView.Count; r++) 
-               { cmbMaterial.Items.Add(dt.DefaultView[r][0].ToString()); }
-        }
-
-        private void LoadDummyData()
+        public void MainWindow()
         {
-            Press = "28";
-            Documents = 150000;
-            Waste = 5;
-            Material = "100# WHT TAG BOND 16";
-            NumUp = 2;
+            InitializeComponent();
+
+            PressSize = "28";
+            NumDocs = 150000;
+            WastePct = 5;
+            Material = "BOND 15# GRN 22";
+            Up = 2;
+            Pounds = 3892;
+            ProdRate = 12000;
+            ProdTime = 12.5D;
+            LinearFt = 183750;
+            MatlCost = 3463.88D;
+
+            PressSize = "";
+            NumDocs = 0;
+            WastePct = 0;
+            Material = "";
+            Up = 0;
+            Pounds = 0;
+            ProdRate = 0;
+            ProdTime = 0.0D;
+            LinearFt = 0;
+            MatlCost = 0.00D;
+
+            this.DataContext = this;
         }
 
-        private void btnCalculate_Click(object sender, RoutedEventArgs e)
+        public void Calc()
         {
-            double dWaste = double.Parse(Waste.ToString());
-            double dDocs  = double.Parse(Documents.ToString());
-            double dUp    = double.Parse(NumUp.ToString());
-            double dPress = double.Parse(Press.ToString());
+            Documents = (((double.Parse(WastePct.ToString()) / 100.0D + 1) * (double.Parse(NumDocs.ToString()) / double.Parse(Up.ToString())) * double.Parse(PressSize) / 12.0D));
+            LinearFt = Convert.ToInt32(Documents);
+            Amt = LinearFt_LBS(LinearFt, Material);
+            Pounds = int.Parse(Amt.ToString());
 
-            dDocs = ( ( ( dWaste / 100 + 1 ) * ( dDocs / dUp ) ) * dPress ) / 12;
-
-            LinearFeet = dDocs;
-            amt = LinearFt_LBS(dDocs, Material);
-
-            GetX2();
-            GetY2();
-            GetX1();
-            GetY1();
-
-            cost = CostPerFactor();
-            cost *= amt;
-
-            m = (y2 - y1) / (x2 - x1);
-            b = y2 - (x2 * m);
-
-            double x = double.Parse(Documents.ToString());
-            ProductionRate = (x * m) + b;
-            ProductionRate = Documents / ProductionRate;
-            MaterialCost = double.Parse(cost.ToString());
-        }
-
-        private void GetX2()
-        {
-            string cmd = "SELECT TOP 1 Documents FROM EquipmentProductionRates WHERE Documents >= " + Documents.ToString() + " ORDER BY Documents";
-            SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-            DataSet? ds = new("Material"); da.Fill(ds); 
-            DataTable? dt = ds.Tables[0];
-            x2 = double.Parse(dt.DefaultView[0][0].ToString());
-        }
-
-        private void GetY2()
-        {
-            string cmd = "SELECT TOP 1 Rate FROM EquipmentProductionRates WHERE Documents >= " + Documents.ToString() + " ORDER BY Documents";
-            SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-            DataSet ds = new("Material"); da.Fill(ds); DataTable dt = ds.Tables[0];
-            y2 = double.Parse(dt.DefaultView[0][0].ToString());
-        }
-
-        private void GetX1()
-        {
-            string cmd = "SELECT TOP 1 Documents FROM EquipmentProductionRates WHERE Documents < " + Documents.ToString() + " ORDER BY Documents";
-            SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-            DataSet ds = new("Material"); da.Fill(ds); DataTable dt = ds.Tables[0];
-            x1 = double.Parse(dt.DefaultView[0][0].ToString());
-        }
-
-        private void GetY1()
-        {
-            string cmd = "SELECT TOP 1 Rate FROM EquipmentProductionRates WHERE Documents < " + Documents.ToString() + " ORDER BY Documents";
-            SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-            DataSet ds = new("Material"); da.Fill(ds); DataTable dt = ds.Tables[0];
-            y1 = double.Parse(dt.DefaultView[0][0].ToString());
-        }
-
-        private double CostPerFactor()
-        {
-            string cmd = "SELECT CostPerFactor from MasterInventory WHERE Description = '" + cmbMaterial.Text.TrimEnd() + "'";
-            MessageBox.Show(cmd);
-            Clipboard.SetText(cmd);
-//            Debugger.Break();
-            SqlConnection cn = new(ConnectionString); cn.Open(); SqlDataAdapter da = new(cmd, cn);
-            DataSet ds = new("Cost"); da.Fill(ds); DataTable dt = ds.Tables[0];
-            cost = double.Parse(dt.DefaultView[0][0].ToString());
-            return cost;
-        }
-
-        private double LinearFt_LBS(double iDocs, string MasterId)
-        {
-            string PaperType, Size, Stock;
-            int CylSize;
-            double BasicArea, BasisWT, PaperWD, Amt;
-
-            string cmd = "Select ProdType from MasterInventory where Description = '" + MasterId + "'";
-            cn = new(ConnectionString);
-            da = new SqlDataAdapter(cmd, cn);
-            ds = new DataSet("Stock"); 
-            da.Fill(ds); 
-            dt = ds.Tables[0];
-            Stock = dt.DefaultView[0][0].ToString().TrimEnd();
-
-            if(Stock == "ROLL")
+            try
             {
-                cmd = "Select ItemType from MasterInventory where Description = '" + MasterId + "'";
-                SqlConnection cn = new(ConnectionString);
-                SqlDataAdapter da = new SqlDataAdapter(cmd, cn);
-                DataSet ds = new("PaperType");
-                da.Fill(ds);
-                DataTable dt = ds.Tables[0];
-                PaperType = dt.DefaultView[0][0].ToString().TrimEnd();
-
-                //  Size = sqlExist("Select Size from MasterInventory where Description = '" & MasterId & "'")
-                cmd = "Select Size from MasterInventory where Description = '" + MasterId + "'";
-                cn = new(ConnectionString); cn.Open();
-                da.SelectCommand = new SqlCommand(cmd);
-                ds = new("Size");
-                da.SelectCommand.Connection = cn;
-                da.Fill(ds);
-                dt = ds.Tables[0];
-                Size = dt.DefaultView[0][0].ToString();
-
-                //  BasicArea = sqlExist("Select Decimal from ItemTypes where ItemType = '" & PaperType & "'")
-                cmd = "Select Decimal from ItemTypes where ItemType = '" + PaperType + "'";
-                cn = new(ConnectionString); cn.Open();
-                da.SelectCommand = new SqlCommand(cmd);
-                da.SelectCommand.Connection = cn;
-                ds = new("BasicArea");
-                da.Fill(ds);
-                dt = ds.Tables[0];
-                BasicArea = double.Parse(dt.DefaultView[0][0].ToString());
-
-                //  BasisWT = sqlExist("Select SubWT from MasterInventory where Description = '" & MasterId & "'")
-                cmd = "Select SubWT from MasterInventory where Description = '" + MasterId + "'";
-                cn = new(ConnectionString); cn.Open();
-                da.SelectCommand = new SqlCommand(cmd);
-                da.SelectCommand.Connection = cn;
-                ds = new("BasisWT");
-                da.Fill(ds);
-                dt = ds.Tables[0];
-                BasisWT = double.Parse(dt.DefaultView[0][0].ToString());
-
-                //  PaperWD = sqlExist("Select Decimal from Sizes where Size = '" & Size & "'")
-                cmd = "Select Decimal from Sizes where Size = '" + Size + "'";
-                cn = new(ConnectionString); cn.Open();
-                da.SelectCommand = new SqlCommand(cmd);
-                da.SelectCommand.Connection = cn;
-                ds = new("PaperWD");
-                da.Fill(ds);
-                dt = ds.Tables[0];
-                PaperWD = double.Parse(dt.DefaultView[0][0].ToString());
-
-                Amt = Math.Ceiling(double.Parse(iDocs.ToString())
-                                 * (BasisWT) 
-                                 * (PaperWD * 12.0D)
-                                 / (BasicArea) * 500.0D);
+                x2 = double.Parse(SqlHandler("Select top 1 Documents from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents"));
+                y2 = double.Parse(SqlHandler("Select top 1 Rate      from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents"));
+                x1 = double.Parse(SqlHandler("Select top 1 Documents from EquipmentProductionRates where Documents  < '" + NumDocs.ToString() + "' order by documents desc"));
+                y1 = double.Parse(SqlHandler("Select top 1 Rate      from EquipmentProductionRates where Documents  < '" + NumDocs.ToString() + "' order by documents desc"));
+                Cost = double.Parse(SqlHandler("Select costperfactor from MasterInventory          where Description = '" + Material + "'"));
+                Cost *= Amt;
             }
-            else
+            catch (Exception ex)
             {
-                Amt = iDocs;
+                MessageBox.Show(ex.Message);
             }
 
+            double m = (y2 - y1) / (x2 - x1);
+            double b = y2 - (x2 * m);
+
+            double pRate = (Documents * m) + b;
+            ProdRate = Convert.ToInt32(pRate); // lblrate.Text = (txtDocuments.Text * m) + b
+            ProdTime = Documents / pRate; //  lblProduction.Text = txtDocuments.Text / lblrate.Text
+            MatlCost = Cost; //  lblCost.Text = Cost
+
+            OnPropertyChanged("Pounds");
+            OnPropertyChanged("ProdRate");
+            OnPropertyChanged("ProdTime");
+            OnPropertyChanged("LinearFt");
+            OnPropertyChanged("MatlCost");
+
+        }
+
+        private void btnCalc_Click(object sender, RoutedEventArgs e)
+        {
+            Calc();
+        }
+
+        string SqlHandler(string cmd)
+        {
+            string cs = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=PROVISIONDEV;Data Source=PDS-SQL\XMPIE;Trusted_Connection=False;User ID=lespinter;PWD=RememberMe$;";
+            SqlConnection cn = new(cs);
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand sc = new SqlCommand();
+            sc.CommandText = cmd; cn.ConnectionString = cs; cn.Open();
+            sc.Connection = cn;
+            da.SelectCommand = sc;
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            string s = dt.Rows[0][0].ToString().TrimEnd();
+            return s;
+        }
+
+        double LinearFt_LBS(int Documents, string MasterId)
+        {
+            string PaperType = "";
+            string Size = "";
+            //       int CylSize = 0;
+            double BasicArea = 0.0D;
+            double BasisWT = 0.0D;
+            double PaperWD = 0.0D;
+            double Amt = 0.0D;
+            string Stock = "";
+
+            try
+            { Stock = SqlHandler("Select ProdType from MasterInventory where Description = '" + MasterId.TrimEnd() + "'"); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+            switch (Stock)
+            {
+                case "ROLL":
+                    PaperType = SqlHandler("Select ItemType from MasterInventory where Description = '" + MasterId + "'");
+                    Size = SqlHandler("Select Size     from MasterInventory where Description = '" + MasterId + "'");
+                    BasicArea = double.Parse(SqlHandler("Select Decimal  from ItemTypes where ItemType = '" + PaperType + "'"));
+                    BasisWT = double.Parse(SqlHandler("Select SubWT    from MasterInventory where Description = '" + MasterId + "'"));
+                    PaperWD = double.Parse(SqlHandler("Select Decimal  from Sizes where Size = '" + Size + "'"));
+                    Amt = Math.Ceiling((Documents * (BasisWT * (PaperWD * 12))) / (BasicArea * 500));
+                    break;
+                case "SHT":
+                    Amt = double.Parse(Documents.ToString());
+                    break;
+            }
             return Amt;
 
         }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        { Close(); }
-
-        private void txtMaterial_GotFocus(object sender, RoutedEventArgs e)
-        { (sender as TextBox)?.SelectAll(); }
-
-        private void txtPress_GotFocus(object sender, RoutedEventArgs e)
-        { (sender as TextBox)?.SelectAll(); }
-
     }
 }

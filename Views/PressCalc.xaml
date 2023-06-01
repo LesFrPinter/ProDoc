@@ -84,9 +84,9 @@
             Grid.Row="9" Grid.Column="2" HorizontalAlignment="Left" />
 
         <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0">
-            <Button x:Name="btnCalculate" Click="btnCalculate_Click" Height="24"
+            <Button x:Name="btnCalculate" Click="btnCalc_Click" Height="24"
               Content="Calculate" Grid.ColumnSpan="3" HorizontalAlignment="Center" />
-            <Button x:Name="btnClose" Content="Close" Grid.Row="11" Click="btnClose_Click" Height="24" Margin="10 0"/>
+            <!--<Button x:Name="btnClose" Content="Close" Grid.Row="11" Click="btnClose_Click" Height="24" Margin="10 0"/>-->
         </StackPanel>
 
     </Grid>

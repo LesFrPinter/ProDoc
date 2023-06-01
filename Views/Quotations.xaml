@@ -1163,6 +1163,11 @@
                         <RadioButton Margin="3,29,65,1" Content="Yes" Grid.Column="4" Grid.RowSpan="2" Grid.Row="4" />
                         <RadioButton Margin="55,29,15,1" Content="No" Grid.Column="4" Grid.RowSpan="2" Grid.Row="4" />
 
+                        <TextBox Grid.Row="4" Grid.Column="7" 
+                                 Margin="0 -75 10 0" Height="24"
+                                 Width="100" Text="{Binding QuoteTotal, StringFormat=C2}" 
+                                 HorizontalAlignment="Right" HorizontalContentAlignment="Right" />
+
                         <telerik:RadNumericUpDown x:Name="Spin11"
                             Grid.Row="4"
                             Grid.Column="3"
