@@ -15,8 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Customers.xaml.cs" />
     <Compile Remove="Views\CustomerSearch.xaml.cs" />
     <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
+    <Compile Remove="Views\NewCustomer.xaml.cs" />
     <Compile Remove="Views\PV01.xaml.cs" />
     <Compile Remove="Views\PV02.xaml.cs" />
     <Compile Remove="Views\Tests.xaml.cs" />
@@ -29,8 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Views\Customers.xaml" />
     <Page Remove="Views\CustomerSearch.xaml" />
     <Page Remove="Views\CustSearchTreeView.xaml" />
+    <Page Remove="Views\NewCustomer.xaml" />
     <Page Remove="Views\PV01.xaml" />
     <Page Remove="Views\PV02.xaml" />
     <Page Remove="Views\Tests.xaml" />

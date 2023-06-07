@@ -7,113 +7,113 @@
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         Title="Customers"
         Width="900"
-        Height="570"
+        Height="470"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
 
-	<Window.Resources>
+    <Window.Resources>
 
-		<Style TargetType="Label">
-			<Setter Property="FontSize" Value="12" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-		</Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
 
-		<Style TargetType="Button">
-			<Setter Property="Height" Value="28" />
-			<Setter Property="Background" Value="LightGreen" />
-			<Setter Property="Foreground" Value="White" />
-			<Setter Property="FontSize" Value="16" />
-			<Setter Property="Margin" Value="3" />
-			<Setter Property="Padding" Value="5,0" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Border Background="Green"
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Background" Value="LightGreen" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="Padding" Value="5,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Green"
 						        BorderBrush="#ccc"
 						        BorderThickness="0,1,1,0"
 						        CornerRadius="8">
-							<Border.Effect>
-								<DropShadowEffect Direction="305"
+                            <Border.Effect>
+                                <DropShadowEffect Direction="305"
 								                  ShadowDepth="4"
 								                  Color="DarkGray" />
-							</Border.Effect>
-							<ContentPresenter x:Name="contentPresenter"
+                            </Border.Effect>
+                            <ContentPresenter x:Name="contentPresenter"
 							                  Margin="{TemplateBinding Padding}"
 							                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 							                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 							                  Content="{TemplateBinding Content}"
 							                  ContentTemplate="{TemplateBinding ContentTemplate}" />
-						</Border>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-			<Style.Triggers>
-				<Trigger Property="IsEnabled" Value="False">
-					<Setter Property="Background" Value="LightGray" />
-					<Setter Property="Foreground" Value="Red" />
-				</Trigger>
-			</Style.Triggers>
-		</Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="LightGray" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-		<Style TargetType="TextBox" x:Key="TextField">
-			<Setter Property="IsEnabled" Value="False" />
-			<Setter Property="FontSize" Value="11" />
-			<Setter Property="Height" Value="24" />
-			<Style.Triggers>
-				<Trigger Property="IsFocused" Value="True">
-					<Setter Property="Background" Value="Red" />
-					<Setter Property="Foreground" Value="White" />
-				</Trigger>
-			</Style.Triggers>
-		</Style>
+        <Style TargetType="TextBox" x:Key="TextField">
+            <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Height" Value="24" />
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Red" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-	</Window.Resources>
+    </Window.Resources>
 
-	<Viewbox>
+    <Viewbox>
 
-		<Grid Background="LightGray">
+        <Grid Background="LightGray">
 
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-			<TabControl x:Name="tabPage"
+            <TabControl x:Name="tabPage"
 			            Grid.Row="0"
-			            Height="720"
+			            Height="550"
 			            Margin="5"
 			            VerticalAlignment="Top"
 			            FontSize="18">
 
-				<TabItem Header="_Details">
+                <TabItem Header="_Details">
 
-					<Grid Width="1200">
+                    <Grid Width="1200">
 
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-						<Grid Grid.Row="0" Background="#CCCEAD">
+                        <Grid Grid.Row="0" Background="#CCCEAD">
 
-							<Grid.RowDefinitions>
-								<RowDefinition Height="40" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-							</Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
 
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-							<Border Grid.Column="0"
+                            <Border Grid.Column="0"
 							        Width="auto"
 							        Height="40"
 							        Margin="10,0"
@@ -124,7 +124,7 @@
 							        BorderThickness="2"
 							        CornerRadius="10">
 
-								<Label Margin="2,0,0,0"
+                                <Label Margin="2,0,0,0"
 								       Padding="5"
 								       HorizontalAlignment="Left"
 								       VerticalAlignment="Center"
@@ -133,48 +133,48 @@
 								       FontSize="14"
 								       Foreground="White" />
 
-							</Border>
+                            </Border>
 
-							<StackPanel Grid.Column="1"
+                            <StackPanel Grid.Column="1"
 							            Grid.ColumnSpan="5"
 							            Orientation="Horizontal">
-								<Button x:Name="btnCompAdd" Click="btnCompAdd_Click"       IsEnabled="{Binding NotEditingComp}">
-									<AccessText>_Add</AccessText>
-								</Button>
-								<Button x:Name="btnCompEdit" Click="btnCompEdit_Click"     IsEnabled="{Binding NotEditingComp}">
-									<AccessText>_Edit</AccessText>
-								</Button>
-								<Button x:Name="btnCompSave" Click="btnCompSave_Click"     IsEnabled="{Binding EditingComp}">
-									<AccessText>_Save</AccessText>
-								</Button>
-								<Button x:Name="btnCompCancel" Click="btnCompCancel_Click" IsEnabled="{Binding EditingComp}">
-									<AccessText>_Cancel</AccessText>
-								</Button>
-								<Button x:Name="btnDelete"
+                                <Button x:Name="btnCompAdd" Click="btnCompAdd_Click"       IsEnabled="{Binding NotEditingComp}">
+                                    <AccessText>_Add</AccessText>
+                                </Button>
+                                <Button x:Name="btnCompEdit" Click="btnCompEdit_Click"     IsEnabled="{Binding NotEditingComp}">
+                                    <AccessText>_Edit</AccessText>
+                                </Button>
+                                <Button x:Name="btnCompSave" Click="btnCompSave_Click"     IsEnabled="{Binding EditingComp}">
+                                    <AccessText>_Save</AccessText>
+                                </Button>
+                                <Button x:Name="btnCompCancel" Click="btnCompCancel_Click" IsEnabled="{Binding EditingComp}">
+                                    <AccessText>_Cancel</AccessText>
+                                </Button>
+                                <Button x:Name="btnDelete"
 								        Click="btnDelete_Click"
 								        IsEnabled="{Binding NotEditingComp}">
-									<AccessText>_Delete</AccessText>
-								</Button>
-							</StackPanel>
+                                    <AccessText>_Delete</AccessText>
+                                </Button>
+                            </StackPanel>
 
-							<Label Grid.Row="1"
+                            <Label Grid.Row="1"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="Name" />
-							<Label Grid.Row="2"
+                            <Label Grid.Row="2"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="Address" />
-							<Label Grid.Row="3"
+                            <Label Grid.Row="3"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="City, State, ZIP" />
-							<Label Grid.Row="4"
+                            <Label Grid.Row="4"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="Phone" />
 
-							<TextBox x:Name="txtCustomerName"
+                            <TextBox x:Name="txtCustomerName"
 											 IsEnabled="{Binding Path=EditingComp}"
 							         Grid.Row="1"
 							         Grid.Column="2"
@@ -183,7 +183,7 @@
 							         HorizontalAlignment="Left"
 							         Style="{StaticResource TextField}"
 							         Text="" />
-							<TextBox x:Name="txtAddress"
+                            <TextBox x:Name="txtAddress"
 											 IsEnabled="{Binding Path=EditingComp}"
 							         Grid.Row="2"
 							         Grid.Column="2"
@@ -191,7 +191,7 @@
 							         Width="550"
 							         Style="{StaticResource TextField}"
 							         Text="" />
-							<TextBox x:Name="txtCity"
+                            <TextBox x:Name="txtCity"
 											 IsEnabled="{Binding Path=EditingComp}"
 							         Grid.Row="3"
 							         Grid.Column="2"
@@ -200,8 +200,8 @@
 							         HorizontalAlignment="Left"
 							         Style="{StaticResource TextField}"
 							         Text="" />
-							<TextBox x:Name="txtState"
-											 IsEnabled="{Binding Path=EditingComp}"
+                            <TextBox x:Name="txtState"
+									  IsEnabled="{Binding Path=EditingComp}"
 							          Grid.Row="3"
 							          Grid.Column="3"
 							          Width="40"
@@ -210,46 +210,46 @@
 							          Style="{StaticResource TextField}"
 							          Text="" />
 
-							<TextBox x:Name="txtZIP"
-											 IsEnabled="{Binding Path=EditingComp}"
+                            <TextBox x:Name="txtZIP"
+									 IsEnabled="{Binding Path=EditingComp}"
 							         Grid.Row="3"
 							         Grid.Column="3"
 							         Grid.ColumnSpan="2"
 							         Width="95"
-							         Margin="35,0,0,0"
+							         Margin="92,3,113,3"
 							         Style="{StaticResource TextField}"
 							         Text="" />
-							<TextBox x:Name="txtPhone"
-											 IsEnabled="{Binding Path=EditingComp}"
+                            <TextBox x:Name="txtPhone"
+									 IsEnabled="{Binding Path=EditingComp}"
 							         Grid.Row="4"
 							         Grid.Column="2"
 							         Width="135"
-											 HorizontalAlignment="Left"
+									 HorizontalAlignment="Left"
 							         Style="{StaticResource TextField}"
 							         Text="" />
 
-						</Grid>
+                        </Grid>
 
-						<Grid Grid.Row="1" Background="#CCCEBE">
+                        <Grid Grid.Row="1" Background="#CCCEBE">
 
-							<Grid.RowDefinitions>
-								<RowDefinition Height="40" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-							</Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
 
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-							<Border Grid.Column="0"
+                            <Border Grid.Column="0"
 							        Width="auto"
 							        Height="40"
 							        Margin="10 0"
@@ -260,7 +260,7 @@
 							        BorderThickness="2"
 							        CornerRadius="10">
 
-								<Label Margin="2,0,0,0"
+                                <Label Margin="2,0,0,0"
 								       Padding="5"
 								       HorizontalAlignment="Left"
 								       VerticalAlignment="Center"
@@ -269,89 +269,89 @@
 								       FontSize="14"
 								       Foreground="White" />
 
-							</Border>
+                            </Border>
 
-							<StackPanel Grid.Column="1"
+                            <StackPanel Grid.Column="1"
 							            Grid.ColumnSpan="5"
 							            Orientation="Horizontal">
-								<Button x:Name="btnAddLoc" Click="btnAddLoc_Click" IsEnabled="{Binding NotEditingLoc}">
-									<AccessText>_Add</AccessText>
-								</Button>
-								<Button x:Name="btnEditLoc" Click="btnEditLoc_Click" IsEnabled="{Binding NotEditingLoc}">
-									<AccessText>_Edit</AccessText>
-								</Button>
-								<Button x:Name="btnSaveLoc" Click="btnSaveLoc_Click" IsEnabled="{Binding EditingLoc}">
-									<AccessText>_Save</AccessText>
-								</Button>
-								<Button x:Name="btnCancLoc" Click="btnCancLoc_Click" IsEnabled="{Binding EditingLoc}">
-									<AccessText>_Cancel</AccessText>
-								</Button>
-								<Button x:Name="btnDelete2"
+                                <Button x:Name="btnAddLoc" Click="btnAddLoc_Click" IsEnabled="{Binding NotEditingLoc}">
+                                    <AccessText>_Add</AccessText>
+                                </Button>
+                                <Button x:Name="btnEditLoc" Click="btnEditLoc_Click" IsEnabled="{Binding NotEditingLoc}">
+                                    <AccessText>_Edit</AccessText>
+                                </Button>
+                                <Button x:Name="btnSaveLoc" Click="btnSaveLoc_Click" IsEnabled="{Binding EditingLoc}">
+                                    <AccessText>_Save</AccessText>
+                                </Button>
+                                <Button x:Name="btnCancLoc" Click="btnCancLoc_Click" IsEnabled="{Binding EditingLoc}">
+                                    <AccessText>_Cancel</AccessText>
+                                </Button>
+                                <Button x:Name="btnDelete2"
 								        Click="btnDelete_Click"
 								        IsEnabled="{Binding NotEditingLoc}">
-									<AccessText>_Delete</AccessText>
-								</Button>
-							</StackPanel>
+                                    <AccessText>_Delete</AccessText>
+                                </Button>
+                            </StackPanel>
 
-							<Label Grid.Row="1"
+                            <Label Grid.Row="1"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="Name" />
-							<Label Grid.Row="2"
+                            <Label Grid.Row="2"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="Address" />
-							<Label Grid.Row="3"
+                            <Label Grid.Row="3"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="City, State, ZIP" />
-							<Label Grid.Row="4"
+                            <Label Grid.Row="4"
 							       Grid.Column="1"
 							       HorizontalAlignment="Right"
 							       Content="Phone" />
 
-							<TextBox x:Name="txtLocationName" Grid.Row="1" Grid.Column="2" Width="447"
+                            <TextBox x:Name="txtLocationName" Grid.Row="1" Grid.Column="2" Width="447"
 											 IsEnabled="{Binding Path=EditingLoc}"
 											 Style="{StaticResource TextField}"
 											 HorizontalAlignment="Left" Grid.ColumnSpan="3" />
-							<TextBox x:Name="txtLocationAddress"      Style="{StaticResource TextField}"
+                            <TextBox x:Name="txtLocationAddress"      Style="{StaticResource TextField}"
 											 IsEnabled="{Binding Path=EditingLoc}"
 											 Grid.Row="2" Grid.Column="2" Width="550" Grid.ColumnSpan="3" />
-							<TextBox x:Name="txtLocationCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left"
+                            <TextBox x:Name="txtLocationCity"         Style="{StaticResource TextField}" HorizontalAlignment="Left"
 											 IsEnabled="{Binding Path=EditingLoc}"
 											 Grid.Row="3" Grid.Column="2" Width="170"  Grid.ColumnSpan="2"  />
-							<TextBox x:Name="txtLocationState"       Grid.Row="3" Grid.Column="3" Width="40"  Style="{StaticResource TextField}"
+                            <TextBox x:Name="txtLocationState"       Grid.Row="3" Grid.Column="3" Width="40"  Style="{StaticResource TextField}"
 											 IsEnabled="{Binding Path=EditingLoc}"
 											 Margin="35,2,0,2" HorizontalAlignment="Left" />
-							<TextBox x:Name="txtLocationZIP"          Style="{StaticResource TextField}"
+                            <TextBox x:Name="txtLocationZIP"          Style="{StaticResource TextField}"
 											 IsEnabled="{Binding Path=EditingLoc}"
-											 Grid.Row="3" Grid.Column="3" Width="95" Margin="35 0 0 0"  Grid.ColumnSpan="2" />
-							<TextBox x:Name="txtLocationPhone"        Style="{StaticResource TextField}" HorizontalAlignment="Left"
+											 Grid.Row="3" Grid.Column="3" Width="95" Margin="92,3,113,3"  Grid.ColumnSpan="2" />
+                            <TextBox x:Name="txtLocationPhone"        Style="{StaticResource TextField}" HorizontalAlignment="Left"
 											 IsEnabled="{Binding Path=EditingLoc}"
 											 Grid.Row="4" Grid.Column="2" Width="135"  Grid.ColumnSpan="2" />
 
-						</Grid>
+                        </Grid>
 
-						<Grid Grid.Row="2" Background="#CCCECF">
+                        <!--<Grid Grid.Row="2" Background="#CCCECF">
 
-							<Grid.RowDefinitions>
-								<RowDefinition Height="40" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-							</Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
 
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="150" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-							<Border Grid.Column="0"
+                            <Border Grid.Column="0"
 							        Width="auto"
 							        Height="40"
 							        Margin="10 0"
@@ -362,7 +362,7 @@
 							        BorderThickness="2"
 							        CornerRadius="10">
 
-								<Label Margin="2,0,0,0"
+                                <Label Margin="2,0,0,0"
 								       Padding="5"
 								       HorizontalAlignment="Left"
 								       VerticalAlignment="Center"
@@ -371,106 +371,106 @@
 								       FontSize="14"
 								       Foreground="White" />
 
-							</Border>
+                            </Border>
 
-							<StackPanel Grid.Column="1" Grid.ColumnSpan="5" Orientation="Horizontal">
-								<Button x:Name="btnAddCont" Click="btnAddCont_Click" IsEnabled="{Binding NotEditingCont}">
-									<AccessText>_Add</AccessText>
-								</Button>
-								<Button x:Name="btnEditCont" Click="btnEditCont_Click" IsEnabled="{Binding NotEditingCont}">
-									<AccessText>_Edit</AccessText>
-								</Button>
-								<Button x:Name="btnSaveCont" Click="btnSaveCont_Click" IsEnabled="{Binding EditingCont}">
-									<AccessText>_Save</AccessText>
-								</Button>
-								<Button x:Name="btnCancCont" Click="btnCancCont_Click" IsEnabled="{Binding EditingCont}">
-									<AccessText>_Cancel</AccessText>
-								</Button>
-								<Button x:Name="btnDelete3"
+                            <StackPanel Grid.Column="1" Grid.ColumnSpan="5" Orientation="Horizontal">
+                                <Button x:Name="btnAddCont" Click="btnAddCont_Click" IsEnabled="{Binding NotEditingCont}">
+                                    <AccessText>_Add</AccessText>
+                                </Button>
+                                <Button x:Name="btnEditCont" Click="btnEditCont_Click" IsEnabled="{Binding NotEditingCont}">
+                                    <AccessText>_Edit</AccessText>
+                                </Button>
+                                <Button x:Name="btnSaveCont" Click="btnSaveCont_Click" IsEnabled="{Binding EditingCont}">
+                                    <AccessText>_Save</AccessText>
+                                </Button>
+                                <Button x:Name="btnCancCont" Click="btnCancCont_Click" IsEnabled="{Binding EditingCont}">
+                                    <AccessText>_Cancel</AccessText>
+                                </Button>
+                                <Button x:Name="btnDelete3"
 								        Click="btnDelete_Click"
 								        IsEnabled="{Binding NotEditingCont}">
-									<AccessText>_Delete</AccessText>
-								</Button>
-							</StackPanel>
+                                    <AccessText>_Delete</AccessText>
+                                </Button>
+                            </StackPanel>
 
-							<Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Content="Name" />
-							<TextBox x:Name="txtContactName"  Grid.Row="1" Grid.Column="2" Width="447" Style="{StaticResource TextField}" HorizontalAlignment="Left" Grid.ColumnSpan="3" IsEnabled="{Binding Path=EditingCont}"/>
+                            <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Content="Name" />
+                            <TextBox x:Name="txtContactName"  Grid.Row="1" Grid.Column="2" Width="447" Style="{StaticResource TextField}" HorizontalAlignment="Left" Grid.ColumnSpan="3" IsEnabled="{Binding Path=EditingCont}"/>
 
-							<Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Content="Phone" />
-							<TextBox x:Name="txtContactPhone" Style="{StaticResource TextField}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="2" Width="135" IsEnabled="{Binding Path=EditingCont}"/>
+                            <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Content="Phone" />
+                            <TextBox x:Name="txtContactPhone" Style="{StaticResource TextField}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="2" Width="135" IsEnabled="{Binding Path=EditingCont}"/>
 
-							<Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Content="Email" />
-							<TextBox x:Name="txtContactEmail" Style="{StaticResource TextField}" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="2" Width="235" Grid.ColumnSpan="2" IsEnabled="{Binding Path=EditingCont}"/>
+                            <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Content="Email" />
+                            <TextBox x:Name="txtContactEmail" Style="{StaticResource TextField}" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="2" Width="235" Grid.ColumnSpan="2" IsEnabled="{Binding Path=EditingCont}"/>
 
-						</Grid>
+                        </Grid>-->
 
-					</Grid>
+                    </Grid>
 
-				</TabItem>
+                </TabItem>
 
-				<TabItem Header="_Search" HorizontalAlignment="Left" Width="65">
+                <TabItem Header="_Search" HorizontalAlignment="Left" Width="65">
 
-					<Grid Width="1200" Background="LightGoldenrodYellow">
+                    <Grid Width="1200" Background="LightGoldenrodYellow">
 
-						<Grid.RowDefinitions>
-							<RowDefinition Height="40" />
-							<RowDefinition Height="40" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-						<Label Grid.Row="0"
+                        <Label Grid.Row="0"
 						       Margin="10,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="FILTERS"
 						       FontWeight="Bold"
 						       Foreground="Green" />
 
-						<StackPanel Grid.Row="1"
+                        <StackPanel Grid.Row="1"
 						            Margin="10,0,0,0"
 						            Orientation="Horizontal">
-							<Label Content="Customer name: " />
-							<TextBox x:Name="txtSearchCustomer"
+                            <Label Content="Customer name: " />
+                            <TextBox x:Name="txtSearchCustomer"
 							         Style="{StaticResource TextField}"
 											 IsEnabled="True"
 											 FontSize="14"
 							         Width="150"
 							         Margin="0,6,0,6"
 							         Text="{Binding Path=SearchCustomer}" />
-							<Label Margin="20,6,0,6" Content="Contact: " />
-							<TextBox x:Name="txtSearchContact"
+                            <Label Margin="20,6,0,6" Content="Contact: " />
+                            <TextBox x:Name="txtSearchContact"
 							         Style="{StaticResource TextField}"
 							         Width="150"
 											 FontSize="14"
 											 IsEnabled="True"
 							         Margin="10,6,0,6"
 							         Text="{Binding Path=SearchContact}" />
-							<Label Margin="20,6,0,6" Content="Other: " />
-							<TextBox x:Name="txtSearchOther"
+                            <Label Margin="20,6,0,6" Content="Other: " />
+                            <TextBox x:Name="txtSearchOther"
 							         Style="{StaticResource TextField}"
 							         Width="100"
 											 FontSize="14"
 											 IsEnabled="True"
 							         Margin="10,6,0,6"
 							         Text="{Binding Path=SearchOther}" />
-							<Button x:Name="btnApply"
+                            <Button x:Name="btnApply"
 							        Width="90"
 							        Margin="320,3,10,3"
 							        Click="btnApply_Click"
 							        FontSize="14"
 							        FontWeight="Bold" >
-								<AccessText>_Apply filter</AccessText>
-							</Button>
-							<Button x:Name="btnClear"
+                                <AccessText>_Apply filter</AccessText>
+                            </Button>
+                            <Button x:Name="btnClear"
 							        Width="90"
 							        Margin="0,3,110,3"
 							        Click="btnClear_Click"
 							        FontSize="14"
 							        FontWeight="Bold" >
-								<AccessText>_Clear filter</AccessText>
-							</Button>
-						</StackPanel>
+                                <AccessText>_Clear filter</AccessText>
+                            </Button>
+                        </StackPanel>
 
-						<DataGrid x:Name="dgSearch"
+                        <DataGrid x:Name="dgSearch"
 						          Grid.Row="2"
 						          Width="1180"
 						          Margin="10"
@@ -480,43 +480,43 @@
 						          IsSynchronizedWithCurrentItem="True"
 						          ItemsSource="{Binding Custs.DefaultView}"
 						          MouseDoubleClick="dgSearch_MouseDoubleClick">
-							<DataGrid.Columns>
-								<DataGridTextColumn Width="Auto"
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto"
 								                    Binding="{Binding Path=CUST_NAME}"
 								                    Header="Customer" />
-								<DataGridTextColumn Width="Auto"
+                                <DataGridTextColumn Width="Auto"
 								                    Binding="{Binding Path=LOCATION}"
 								                    Header="Location" />
-								<DataGridTextColumn Width="Auto"
+                                <DataGridTextColumn Width="Auto"
 								                    Binding="{Binding Path=CITY}"
 								                    Header="City" />
-								<DataGridTextColumn Width="50"
+                                <DataGridTextColumn Width="50"
 								                    Binding="{Binding Path=STATE}"
 								                    Header="State" />
-								<DataGridTextColumn Width="Auto"
+                                <DataGridTextColumn Width="Auto"
 								                    Binding="{Binding Path=CorpPhone}"
 								                    Header="Corp.Phone" />
-								<DataGridTextColumn Width="Auto"
+                                <DataGridTextColumn Width="Auto"
 								                    Binding="{Binding Path=ContPhone}"
 								                    Header="Cont.Phone" />
-								<DataGridTextColumn Width="Auto"
+                                <DataGridTextColumn Width="Auto"
 								                    Binding="{Binding Path=ContactName}"
 								                    Header="Contact" />
-								<DataGridCheckBoxColumn Width="100" Header="Credit Hold" />
-								<DataGridTextColumn Binding="{Binding Path=Notes}" Header="Notes" />
-								<DataGridTextColumn Binding="{Binding CustID}" Visibility="Hidden" />
-								<DataGridTextColumn Binding="{Binding LocID}" Visibility="Hidden" />
-								<DataGridTextColumn Binding="{Binding ContID}" Visibility="Hidden" />
-							</DataGrid.Columns>
-						</DataGrid>
-					</Grid>
+                                <DataGridCheckBoxColumn Width="100" Header="Credit Hold" />
+                                <DataGridTextColumn Binding="{Binding Path=Notes}" Header="Notes" />
+                                <DataGridTextColumn Binding="{Binding CustID}" Visibility="Hidden" />
+                                <DataGridTextColumn Binding="{Binding LocID}" Visibility="Hidden" />
+                                <DataGridTextColumn Binding="{Binding ContID}" Visibility="Hidden" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
 
-				</TabItem>
+                </TabItem>
 
-			</TabControl>
+            </TabControl>
 
-		</Grid>
+        </Grid>
 
-	</Viewbox>
+    </Viewbox>
 
 </Window>

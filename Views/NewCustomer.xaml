@@ -1,0 +1,303 @@
+﻿<Window x:Class="ProDocEstimate.Views.NewCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Customers" Height="650" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="TabControl">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="FontFamily" Value="Comic Sans MS" />
+            <Setter Property="FontSize"   Value="12" />
+            <Setter Property="Margin"     Value="5 0 0 0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border>
+                            <Grid>
+                                <Grid>
+                                    <Border x:Name="border" 
+                                            CornerRadius="3,3,0,0"
+                                            Background="WhiteSmoke"/>
+                                </Grid>
+                                <ContentPresenter ContentSource="Header"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Pink" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightBlue" />
+                                <Setter Property="Padding" Value="5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Label" >
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="FontFamily" Value="Lucida Sans" />
+            <Setter Property="FontSize"   Value="12" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="TextBox" >
+            <Setter Property="HorizontalAlignment"          Value="Left" />
+            <Setter Property="FontFamily"                   Value="Courier New" />
+            <Setter Property="FontSize"                     Value="11" />
+            <Setter Property="VerticalContentAlignment"     Value="Center" />
+            <Setter Property="Height"                       Value="22" />
+            <Setter Property="Padding"                      Value="2" />
+            <Setter Property="Margin"                       Value="2" />
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Red" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" >
+            <Setter Property="Padding"    Value="5 0" />
+            <Setter Property="Margin"     Value="4 0" />
+            <Setter Property="Height"     Value="24" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="True" >
+                    <Setter Property="Background" Value="Green" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True" >
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Viewbox>
+
+        <Grid Background="LightCyan" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TabControl Background="LightCyan" Grid.Row="0" x:Name="TabCtrl" >
+
+                <TabItem Header="Customers" >
+
+                    <TabControl Background="LightCyan" Height="290" Width="800" x:Name="CustDetailPage"  >
+
+                        <TabItem Header="    Details    " x:Name="CustDetlPage"  Padding="5 0" >
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="1"
+							            Grid.ColumnSpan="5"
+							            Orientation="Horizontal">
+                                    <Button x:Name="btnAddCust" IsEnabled="{Binding NotEditingCust}" Click="btnAddCust_Click">
+                                        <AccessText>_Add</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnEditCust" IsEnabled="{Binding NotEditingCust}" Click="btnEditCust_Click">
+                                        <AccessText>_Edit</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnSaveCust" IsEnabled="{Binding EditingCust}" Click="btnSaveCust_Click">
+                                        <AccessText>_Save</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnCancCust" IsEnabled="{Binding EditingCust}" Click="btnCancCust_Click">
+                                        <AccessText>_Cancel</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnDeleteCust" IsEnabled="{Binding NotEditingCust}" Click="btnDeleteCust_Click">
+                                        <AccessText>_Delete</AccessText>
+                                    </Button>
+                                </StackPanel>
+
+                                <Label Content="Customer No." Grid.Row="1" />
+                                <TextBox Width="54"  Text="{Binding Path=CUST_NUMB}" Grid.Row="1" Grid.Column="1" Margin="2,4,0,4" />
+
+                                <Label Content="Company Name" Grid.Row="2" />
+                                <TextBox Width="276" Text="{Binding Path=CUST_NAME}" Grid.Row="2" Grid.Column="2" />
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem Header="    Customer Search      " Height="24" VerticalAlignment="Top" Padding="5 0">
+
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Label Content="Any part of name: " HorizontalAlignment="Left" Width="125" HorizontalContentAlignment="Left" />
+                                <TextBox Grid.Row="1" Width="150" Margin="2 0 0 0" Text="{Binding CustName2Search4, Mode=TwoWay}" FontSize="16" Padding="2 0 0 0" />
+
+                                <Label Grid.Row="1" Margin="200 0 0 0" Content="{Binding Msg}" HorizontalAlignment="Left" />
+
+                                <Button x:Name="btnShowCusts"  HorizontalAlignment="Right" Margin="0 0 60 0" Grid.Row="1" Content="Show matches" Click="btnShowCusts_Click" />
+                                <Button x:Name="btnClearCusts" HorizontalAlignment="Right" Margin="0 0 10 0" Grid.Row="1" Content="Clear"        Click="btnClearCusts_Click" />
+
+                                <DataGrid x:Name="grdCustomers" Grid.Row="2" Grid.ColumnSpan="2" Height="210" IsSynchronizedWithCurrentItem="True" SelectedCellsChanged="grdCustomers_SelectedCellsChanged" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Path=CUST_NUMB}" Header="Cust #" Width="70" />
+                                        <DataGridTextColumn Binding="{Binding Path=CUST_NAME}" Header="Name" Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                    </TabControl>
+
+                </TabItem>
+
+            </TabControl>
+
+
+            <TabControl Background="LightCyan" Grid.Row="1" x:Name="TabCtrls" >
+
+                <TabItem Header="Contacts" >
+
+                    <TabControl Background="LightCyan" Height="290" Width="800" x:Name="ContDetailPage"  >
+
+                        <TabItem Header="    Details    " x:Name="ContDetlPage"  Padding="5 0" >
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="28" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="285" />
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="285" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="1"
+							            Grid.ColumnSpan="5"
+							            Orientation="Horizontal">
+                                    <Button x:Name="btnAddCont" IsEnabled="{Binding NotEditingCont}" Click="btnAddCont_Click">
+                                        <AccessText>_Add</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnEditCont" IsEnabled="{Binding NotEditingCont}" Click="btnEditCont_Click">
+                                        <AccessText>_Edit</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnSaveCont" IsEnabled="{Binding EditingCont}" Click="btnSaveCont_Click">
+                                        <AccessText>_Save</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnCancCont" IsEnabled="{Binding EditingCont}" Click="btnCancCont_Click">
+                                        <AccessText>_Cancel</AccessText>
+                                    </Button>
+                                    <Button x:Name="btnDeleteCont" IsEnabled="{Binding NotEditingCont}" Click="btnDeleteCont_Click">
+                                        <AccessText>_Delete</AccessText>
+                                    </Button>
+                                </StackPanel>
+
+                                <Label Content="Customer No." Grid.Row="1" />
+                                <TextBox Width="54"  Text="{Binding Path=CUST_NUMB}" Grid.Row="1" Grid.Column="1" Margin="2,4,0,4" />
+
+                                <Label Content="Contact Name" Grid.Row="2" />
+                                <TextBox Width="276" Text="{Binding Path=CONT_NAME}" Grid.Row="2" Grid.Column="1" />
+
+                                <Label Content="Address" Grid.Row="3" />
+                                <TextBox Width="276" Text="{Binding Path=ADDRESS1}" Grid.Row="3" Grid.Column="1" />
+
+                                <TextBox Width="276" Text="{Binding Path=ADDRESS2}" Grid.Row="4" Grid.Column="1" />
+
+                                <Label Content="City" Grid.Row="5" />
+                                <TextBox Width="100" Text="{Binding Path=CITY}" Grid.Row="5" Grid.Column="1" />
+
+                                <Label Content="State" Grid.Row="5" Grid.Column="1" Margin="102 0 0 0" HorizontalAlignment="Left" />
+                                <TextBox Width="30" Text="{Binding Path=STATE}" Grid.Row="5" Grid.Column="1" Margin="140 0 0 0"  />
+
+                                <Label Content="ZIP" Grid.Row="5" Grid.Column="1" Margin="170 0 0 0" HorizontalAlignment="Left" />
+                                <TextBox Width="75" Text="{Binding Path=ZIP}" Grid.Row="5" Grid.Column="1" Margin="205 0 0 0"  />
+
+                                <Label Content="Phone" Grid.Row="6" />
+                                <TextBox Width="120" Text="{Binding Path=PHONE}" Grid.Row="6" Grid.Column="1" />
+
+                                <Label Content="Fax" Grid.Row="6" Grid.Column="1" Margin="140 0 0 0" HorizontalAlignment="Left" />
+                                <TextBox Width="100" Text="{Binding Path=FAX}" Grid.Row="6" Grid.Column="1" Margin="180 0 0 0" HorizontalAlignment="Left" />
+
+                                <Label Content="Email" Grid.Row="7" />
+                                <TextBox Width="120" Text="{Binding Path=E_MAIL}" Grid.Row="7" Grid.Column="1" />
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem Header="    Contact Search      " Height="24" VerticalAlignment="Top" Padding="5 0">
+
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="27*"/>
+                                    <ColumnDefinition Width="767*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Label Content="Any part of name: " HorizontalAlignment="Left" Width="125" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" />
+                                <TextBox Grid.Row="1" Width="150" Margin="2,4,0,4" Text="{Binding ContName2Search4, Mode=TwoWay}" FontSize="16" Padding="2 0 0 0" Grid.ColumnSpan="2" />
+
+                                <Label Grid.Row="1" Margin="173,0,0,0" Content="{Binding Msg}" HorizontalAlignment="Left" Grid.Column="1" />
+
+                                <Button x:Name="btnShowContacts"  HorizontalAlignment="Left" Margin="615,3,0,3" Grid.Row="1" Content="Show matches" Grid.Column="1" />
+                                <Button x:Name="btnClearContacts" HorizontalAlignment="Left" Margin="716,3,0,3" Grid.Row="1" Content="Clear"        Grid.Column="1" />
+
+                                <DataGrid x:Name="grdContomers" Grid.Row="2" Grid.ColumnSpan="2" Height="210" IsSynchronizedWithCurrentItem="True" SelectedCellsChanged="grdContomers_SelectedCellsChanged" Margin="0,0,0,-6" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Path=CUST_NUMB}" Header="Cont #" Width="70" />
+                                        <DataGridTextColumn Binding="{Binding Path=CONT_NAME}" Header="Name" Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                    </TabControl>
+
+                </TabItem>
+
+            </TabControl>
+
+        </Grid>
+
+    </Viewbox>
+
+</Window>

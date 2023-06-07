@@ -16,7 +16,7 @@ namespace ProDocEstimate
 
 		private void mnuCustomers_Click(object sender, RoutedEventArgs e)
 		{ 
-			Window customers = new Customers();
+			Window customers = new CustCont();
 			customers.Owner = this;
 			customers.ShowDialog();
 		}

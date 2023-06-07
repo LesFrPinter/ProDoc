@@ -27,6 +27,7 @@ namespace ProDocEstimate {
 
 		private bool? noteditingLoc  = true; public bool? NotEditingLoc  { get { return noteditingLoc;  } set { noteditingLoc  = value; OnPropertyChanged(); } }
 		private bool? editingLoc;            public bool? EditingLoc     { get { return editingLoc;     } set { editingLoc     = value; NotEditingLoc  = !EditingLoc; OnPropertyChanged(); } }
+		private bool? editingLoc;            public bool? EditingLoc     { get { return editingLoc;     } set { editingLoc     = value; NotEditingLoc  = !EditingLoc; OnPropertyChanged(); } }
 
 		private bool? newCustomer; public bool?   NewCustomer            { get { return newCustomer;    } set { newCustomer    = value; OnPropertyChanged(); } }
 		private string? selcust;   public string? SelectedCustomer       { get { return selcust;        } set { selcust        = value; OnPropertyChanged(); } }
@@ -59,14 +60,23 @@ namespace ProDocEstimate {
 		}
 
 		private void btnApply_Click(object sender, RoutedEventArgs e) {
-			string cmd = "SELECT" +
-				" CUSTOMERS.CUST_NAME, LOCATIONS.ADDRESS AS LOCATION, LOCATIONS.CITY, LOCATIONS.STATE, " +
-				" CUSTOMERS.PHONE AS CorpPhone, CONTACTS.PHONE AS ContPhone, CONTACTS.ContactName, CONTACTS.Notes," +
-				" CUSTOMERS.ID AS CustID, lOCATIONS.ID AS LocID, CONTACTS.ID AS ContID" +
-				" FROM CUSTOMERS, LOCATIONS, CONTACTS WHERE" +
-				" CUSTOMERS.ID = LOCATIONS.CUSTOMERID   AND" +
-				" LOCATIONS.ID = CONTACTS.LOCATIONID    AND" +
-				" CUST_NAME LIKE '%" + SearchCustomer + "%' ";
+			string cmd = 
+				"SELECT" +
+				"   CUSTOMERS.CUST_NAME, " +
+				"   LOCATIONS.ADDRESS AS LOCATION, " +
+				"   LOCATIONS.CITY, " +
+				"   LOCATIONS.STATE, " +
+				"   CUSTOMERS.PHONE   AS CorpPhone, " +
+				"   CONTACTS.PHONE    AS ContPhone, " +
+				"   CONTACTS.ContactName, " +
+				"   CONTACTS.Notes," +
+				"   CUSTOMERS.ID      AS CustID, " +
+				"   LOCATIONS.ID      AS LocID, " +
+				"   CONTACTS.ID       AS ContID" +
+				"  FROM CUSTOMERS, LOCATIONS, CONTACTS " +
+				" WHERE CUSTOMERS.ID = LOCATIONS.CUSTOMERID " +
+				"   AND LOCATIONS.ID = CONTACTS.LOCATIONID  " +
+				"   AND CUST_NAME LIKE '%" + SearchCustomer + "%' ";
 
 			if(txtSearchContact.Text.TrimEnd().Length > 0 ) { cmd += " AND ContactName like '%" + txtSearchContact.Text.TrimEnd() + "%'"; }
 			
@@ -106,8 +116,8 @@ namespace ProDocEstimate {
 				cmd = "SELECT * FROM CONTACTS WHERE ID = '" + ContID + "'";
 				cn = new(ConnectionString); da = new(cmd, cn);
 				dt.Clear(); da.Fill(dt);
-				txtContactName.Text = dt.Rows[0]["ContactName"].ToString();
-				txtContactPhone.Text = dt.Rows[0]["Phone"].ToString();
+				//txtContactName.Text = dt.Rows[0]["ContactName"].ToString();
+				//txtContactPhone.Text = dt.Rows[0]["Phone"].ToString();
 
 				tabPage.SelectedIndex = 0;
 

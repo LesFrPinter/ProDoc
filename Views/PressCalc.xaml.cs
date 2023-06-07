@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -85,35 +86,47 @@ namespace ProDocEstimate.Views
             LinearFt = Convert.ToInt32(Documents);
             Amt = LinearFt_LBS(LinearFt, Material);
             Pounds = int.Parse(Amt.ToString());
+            string str = "";
 
             try
             {
-                x2 = double.Parse(SqlHandler("Select top 1 Documents from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents"));
-                y2 = double.Parse(SqlHandler("Select top 1 Rate      from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents"));
-                x1 = double.Parse(SqlHandler("Select top 1 Documents from EquipmentProductionRates where Documents  < '" + NumDocs.ToString() + "' order by documents desc"));
-                y1 = double.Parse(SqlHandler("Select top 1 Rate      from EquipmentProductionRates where Documents  < '" + NumDocs.ToString() + "' order by documents desc"));
-                Cost = double.Parse(SqlHandler("Select costperfactor from MasterInventory          where Description = '" + Material + "'"));
+                str = "Select top 1 Documents from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents";
+                x2 = double.Parse(SqlHandler(str));
+
+                str = "Select top 1 Rate      from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents";
+                y2 = double.Parse(SqlHandler(str));
+
+                str = "Select top 1 Documents from EquipmentProductionRates where Documents   < '" + NumDocs.ToString() + "' order by documents desc";
+                x1 = double.Parse(SqlHandler(str));
+
+                str = "Select top 1 Rate      from EquipmentProductionRates where Documents   < '" + NumDocs.ToString() + "' order by documents desc";
+                y1 = double.Parse(SqlHandler(str));
+
+                str = "Select costperfactor from MasterInventory          where Description = '" + Material + "'";
+                Cost = double.Parse(SqlHandler(str));
+
                 Cost *= Amt;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch (Exception ex) 
+            { 
+                MessageBox.Show(ex.Message,str);
+                Clipboard.SetText(str);
+                Debugger.Break();  // Load into SQL Server Management Console
             }
 
             double m = (y2 - y1) / (x2 - x1);
             double b = y2 - (x2 * m);
 
             double pRate = (Documents * m) + b;
-            ProdRate = Convert.ToInt32(pRate); // lblrate.Text = (txtDocuments.Text * m) + b
-            ProdTime = Documents / pRate; //  lblProduction.Text = txtDocuments.Text / lblrate.Text
-            MatlCost = Cost; //  lblCost.Text = Cost
+            ProdRate = Convert.ToInt32(pRate);  // lblrate.Text = (txtDocuments.Text * m) + b
+            ProdTime = Documents / pRate;       // lblProduction.Text = txtDocuments.Text / lblrate.Text
+            MatlCost = Cost;                    // lblCost.Text = Cost
 
             OnPropertyChanged("Pounds");
             OnPropertyChanged("ProdRate");
             OnPropertyChanged("ProdTime");
             OnPropertyChanged("LinearFt");
             OnPropertyChanged("MatlCost");
-
         }
 
         private void btnCalc_Click(object sender, RoutedEventArgs e)
@@ -146,19 +159,25 @@ namespace ProDocEstimate.Views
             double PaperWD = 0.0D;
             double Amt = 0.0D;
             string Stock = "";
+            string qry = "";
 
             try
-            { Stock = SqlHandler("Select ProdType from MasterInventory where Description = '" + MasterId.TrimEnd() + "'"); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            {
+                qry = "Select ProdType from MasterInventory where Description = '" + MasterId.TrimEnd() + "'";
+                Stock = SqlHandler(qry); 
+            }
+            catch (Exception ex) 
+            {   MessageBox.Show("Description not found",qry.Substring(43));
+            }
 
             switch (Stock)
             {
                 case "ROLL":
-                    PaperType = SqlHandler("Select ItemType from MasterInventory where Description = '" + MasterId + "'");
-                    Size = SqlHandler("Select Size     from MasterInventory where Description = '" + MasterId + "'");
-                    BasicArea = double.Parse(SqlHandler("Select Decimal  from ItemTypes where ItemType = '" + PaperType + "'"));
-                    BasisWT = double.Parse(SqlHandler("Select SubWT    from MasterInventory where Description = '" + MasterId + "'"));
-                    PaperWD = double.Parse(SqlHandler("Select Decimal  from Sizes where Size = '" + Size + "'"));
+                    PaperType = SqlHandler(               "Select ItemType from MasterInventory where Description = '" + MasterId  + "'");
+                    Size = SqlHandler(                    "Select Size     from MasterInventory where Description = '" + MasterId  + "'");
+                    BasicArea = double.Parse(SqlHandler  ("Select Decimal  from ItemTypes       where ItemType = '"    + PaperType + "'"));
+                    BasisWT   = double.Parse(SqlHandler  ("Select SubWT    from MasterInventory where Description = '" + MasterId  + "'"));
+                    PaperWD   = double.Parse(SqlHandler  ("Select Decimal  from Sizes           where Size = '"        + Size      + "'"));
                     Amt = Math.Ceiling((Documents * (BasisWT * (PaperWD * 12))) / (BasicArea * 500));
                     break;
                 case "SHT":

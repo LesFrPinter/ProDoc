@@ -1,0 +1,60 @@
+ private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            // Do they want to change anything on the current row?
+            if (   txtRollWidth.Text.Length == 0
+                && txtPaperType.Text.Length == 0
+                && txtColor.Text.Length     == 0
+                && txtBasis.Text.Length     == 0)
+                { MessageBox.Show("No changes to make."); return; }
+
+            string                              WhereClause  = " WHERE ReportType = '" + PAPERTYPE + "'";
+            if (txtRollWidth.Text.Length > 0) { WhereClause +=   " AND Size = '"       + lblRollWidth.Content.ToString().TrimEnd() + "'"; }
+            if (txtColor.Text.Length     > 0) { WhereClause +=   " AND Color = '"      + lblColor.Content.ToString().TrimEnd() + "'"; }
+            if (txtBasis.Text.Length     > 0) { WhereClause +=   " AND SubWT = '"      + lblBasis.Content.ToString().TrimEnd() + "'"; }
+
+            string cmd = "SELECT COUNT(*) FROM MasterInventory " + WhereClause;
+            System.Windows.Clipboard.SetText(cmd);
+
+            SqlConnection cn = new(ConnectionString);
+            SqlDataAdapter da2 = new(cmd, cn); DataTable dt3 = new("CT"); da2.Fill(dt3);
+
+            if (dt3.Rows.Count == 0) { MessageBox.Show("Paper not found in MasterInventory"); return; }
+
+            // if(txtItemType.Text.TrimEnd() == "BND") { txtItemType.Text = "BOND";  }
+
+            if (lblItemType.Content.ToString().Length > 0 && txtItemType.Text.ToString().TrimEnd().Length > 0 && lblItemType.Content != txtItemType.Text ) 
+            { 
+                // No longer used
+            }
+
+            if (lblPaperType.Content.ToString().Length > 0 && txtPaperType.Text.ToString().TrimEnd().Length > 0)
+            {
+                DRV[0] = DRV[0].ToString().Replace(lblPaperType.Content.ToString().TrimEnd(), txtPaperType.Text.ToString().TrimEnd());
+                DRV[7] = txtPaperType.Text.ToString().TrimEnd();
+            }
+
+            if (lblBasis.Content.ToString().Length > 0 && txtBasis.Text.ToString().TrimEnd().Length > 0)
+            {
+                DRV[0] = DRV[0].ToString().Replace(lblBasis.Content.ToString().TrimEnd() + "#", txtBasis.Text.ToString().TrimEnd() + "#");
+                DRV[4] = DRV[4].ToString().Replace(lblBasis.Content.ToString().TrimEnd() + "#", txtBasis.Text.ToString().TrimEnd() + "#");
+                DRV[2] = txtBasis.Text.ToString().TrimEnd();    // What is this?
+            }
+
+            if (lblColor.Content.ToString().Length > 0 && txtColor.Text.ToString().TrimEnd().Length > 0) 
+            { 
+                DRV[0] = DRV[0].ToString().Replace(lblColor.Content.ToString().TrimEnd(), txtColor.Text.ToString().TrimEnd());
+                DRV[4] = DRV[4].ToString().Replace(lblColor.Content.ToString().TrimEnd(), txtColor.Text.ToString().TrimEnd());
+                DRV[3] = txtColor.Text.ToString().TrimEnd();
+                DRV[8] = txtColor.Text.ToString().TrimEnd();
+            }
+
+            if (lblRollWidth.Content.ToString().Length > 0 && txtRollWidth.Text.ToString().TrimEnd().Length > 0) 
+            { 
+                DRV[0] = DRV[0].ToString().Replace(lblRollWidth.Content.ToString().TrimEnd(), txtRollWidth.Text.ToString().TrimEnd());
+                // There is no RollWidth column in DRV, because DRV comes from Estimating.dbo.ESTPAPER; should we add one?
+            }
+
+            MessageBox.Show("Select quantity to recalculate paper cost");
+
+            return;
+        }

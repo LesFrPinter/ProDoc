@@ -1,0 +1,28 @@
+Public Function LinearFt_LBS(ByVal Documents As Integer, ByVal MasterId As String)
+
+        ' Used for Press Calc
+        Dim PaperType As String = ""
+        Dim Size As String = ""
+        Dim CylSize As Integer = 0
+        Dim BasicArea As Double = 0.0
+        Dim BasisWT As Double = 0.0
+        Dim PaperWD As Double = 0.0
+        Dim AMT As Double = 0.0
+        Dim Stock As String = ""
+        Try
+            Stock = sqlExist("Select ProdType from MasterInventory where Description = '"         & MasterId & "'")
+        Catch ex As Exception
+        End Try
+         Select Case Stock
+           Case "ROLL"
+                PaperType = sqlExist("Select ItemType from MasterInventory where Description = '" & MasterId  & "'")
+                Size      = sqlExist("Select Size     from MasterInventory where Description = '" & MasterId  & "'")
+                BasicArea = sqlExist("Select Decimal  from ItemTypes where ItemType = '"          & PaperType & "'")
+                BasisWT   = sqlExist("Select SubWT    from MasterInventory where Description = '" & MasterId  & "'")
+                PaperWD   = sqlExist("Select Decimal  from Sizes where Size = '"                  & Size      & "'")
+                AMT       = Math.Ceiling((Documents * (BasisWT * (PaperWD * 12))) / (BasicArea * 500))
+            Case "SHT"
+                AMT = Documents
+        End Select
+        Return AMT
+    End Function

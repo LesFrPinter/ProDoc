@@ -1,0 +1,83 @@
+Public Class frmPressCalc
+
+    Private Sub txtPress_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtPress.DoubleClick
+
+        Dim Press As String = ""
+        Try
+            Press = SqlHandler.GridSelect("Select Press", "Select distinct Press from EquipmentProductionRates order by Press", "Press", 0).ToString.Trim(" ")
+            txtPress.Text = Press
+        Catch ex As Exception
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub btn_calc_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_calc.Click
+        If txtDocuments.Text = "" Then Exit Sub
+
+        Dim y2 As Double = 0.0
+        Dim y1 As Double = 0.0
+        Dim x2 As Double = 0.0
+        Dim x1 As Double = 0.0
+        Dim m As Double = 0.0
+        Dim b As Double = 0.0
+        Dim AMT As Double = 0.0
+        Dim Documents As Double = 0.0
+        Dim Cost As Double = 0
+        If Not IsNumeric(txtWaste.Text) Then
+            MsgBox("Your waste figure is not a number")
+            Exit Sub
+        End If
+
+        If Not IsNumeric(txtDocuments.Text) Then
+            MsgBox("Your Documents figure is not a number")
+            Exit Sub
+        End If
+
+        If Not IsNumeric(txtUp.Text) Then
+            MsgBox("Your UP figure is not a number")
+            Exit Sub
+        End If
+
+        If Not IsNumeric(txtPress.Text) Then
+            MsgBox("Your Press figure is not a number")
+            Exit Sub
+        End If
+
+        If txtDescription.Text = "" Then Exit Sub
+
+        Documents = (((txtWaste.Text / 100 + 1) * (txtDocuments.Text / txtUp.Text)) * txtPress.Text) / 12
+        lbllnrFT.Text = Documents
+        AMT = SqlHandler.LinearFt_LBS(Documents, txtDescription.Text)
+        lblLbs.Text = AMT
+
+        Try
+            x2 = SqlHandler.sqlExist("Select top 1 Documents from EquipmentProductionRates where Documents >= '" & txtDocuments.Text & "' order by Documents")
+            y2 = SqlHandler.sqlExist("Select top 1 Rate      From EquipmentProductionRates where Documents >= '" & txtDocuments.Text & "' order by Documents")
+            x1 = SqlHandler.sqlExist("Select top 1 Documents From EquipmentProductionRates where Documents < '" & txtDocuments.Text & "' order by documents desc")
+            y1 = SqlHandler.sqlExist("Select top 1 Rate      From EquipmentProductionRates where Documents < '" & txtDocuments.Text & "' order by documents desc")
+            Cost = SqlHandler.sqlExist("Select costperfactor from MasterInventory          where Description = '" & txtDescription.Text & "'")
+            Cost *= AMT
+        Catch ex As Exception
+            Exit Sub
+        End Try
+
+        m = (y2 - y1) / (x2 - x1)
+        b = y2 - (x2 * m)
+        lblrate.Text = (txtDocuments.Text * m) + b
+        lblProduction.Text = txtDocuments.Text / lblrate.Text
+        lblCost.Text = Cost
+    End Sub
+
+    Private Sub PressCalc_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        lblrate.Text = ""
+        lblProduction.Text = ""
+    End Sub
+
+    Private Sub txtDescription_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtDescription.DoubleClick
+
+        Dim Desc As String = ""
+        Desc = SqlHandler.GridSelect("Select Material", "Select Description from MasterInventory Order by Description , ProdType , ItemType , Color , Size , SubWT", "Description", 0).ToString.Trim(" ")
+        txtDescription.Text = Desc
+    End Sub
+
+End Class
