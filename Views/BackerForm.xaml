@@ -1,0 +1,65 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="ProDocEstimate.Views.BackerForm"
+        mc:Ignorable="d"
+        FontSize="16"
+        WindowStartupLocation="CenterScreen"
+        Title="Backer" Height="170" Width="700">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="20 0 0 0" >
+            <RadioButton GroupName="Bak" Margin="20 0 0 0" Content="Backer"      IsChecked="{Binding One, Mode=TwoWay}"   Width="145" />
+            <RadioButton GroupName="Bak" Margin="20 0 0 0" Content="Backer Std"  IsChecked="{Binding Two, Mode=TwoWay}"   Width="145"/>
+            <RadioButton GroupName="Bak" Margin="20 0 0 0" Content="Backer PMS"  IsChecked="{Binding Three, Mode=TwoWay}" Width="145"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="20 0 0 0" >
+            <Label Content="{Binding Path=Button1, Mode=TwoWay}" HorizontalContentAlignment="Left"  Margin="20 0 0 0" Width="145"/>
+            <Label Content="{Binding Path=Button2, Mode=TwoWay}" HorizontalContentAlignment="Left"  Margin="20 0 0 0" Width="145"/>
+            <Label Content="{Binding Path=Button3, Mode=TwoWay}" HorizontalContentAlignment="Left"  Margin="20 0 0 0" Width="145"/>
+        </StackPanel>
+        
+        <Label Content="Changes" Grid.Column="3" HorizontalAlignment="Center" />
+        <telerik:RadNumericUpDown 
+            Grid.Row="1" Grid.Column="3" 
+            NumberDecimalDigits="0"
+            Width="60" Minimum="0" Maximum="10" 
+            FontSize="16" Height="28"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" >
+            <Button x:Name="btnSave"   Grid.Row="3" Grid.Column="3" Content="Save"   FontSize="16" Padding="4 2" Click="btnSave_Click" />
+            <Button x:Name="btnCancel" Grid.Row="3" Grid.Column="3" Content="Cancel" FontSize="16" Padding="4 2" Click="btnCancel_Click"/>
+        </StackPanel>
+        
+
+    </Grid>
+
+</Window>

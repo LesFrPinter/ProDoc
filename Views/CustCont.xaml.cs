@@ -15,6 +15,8 @@ namespace ProDocEstimate.Views
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
+        #region Properties
+
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
         public SqlDataAdapter? da;
@@ -46,25 +48,40 @@ namespace ProDocEstimate.Views
         private string? e_mail;     public string? E_MAIL       { get { return e_mail;          } set { e_mail          = value; OnPropertyChanged(); } }
 
         // Save current CONTACT values
-        private string? scguid;     public string? SCGUID        { get { return scguid;          } set { scguid          = value; OnPropertyChanged(); } }
-        //TODO: Add other on-screen CONTACTS values here
+        private string? scguid;     public string? SCGUID       { get { return scguid;          } set { scguid          = value; OnPropertyChanged(); } }
+        private string? scont_name; public string? SCONTACT_NAME { get { return scont_name;     } set { scont_name      = value; OnPropertyChanged(); } }
+        private string? saddress1;  public string? SADDRESS1    { get { return saddress1;       } set { saddress1       = value; OnPropertyChanged(); } }
+        private string? saddress2;  public string? SADDRESS2    { get { return saddress2;       } set { saddress2       = value; OnPropertyChanged(); } }
+        private string? scity;      public string? SCITY        { get { return scity;           } set { scity           = value; OnPropertyChanged(); } }
+        private string? sstate;     public string? SSTATE       { get { return sstate;          } set { sstate          = value; OnPropertyChanged(); } }
+        private string? szip;       public string? SZIP         { get { return szip;            } set { szip            = value; OnPropertyChanged(); } }
+        private string? sphone;     public string? SPHONE       { get { return sphone;          } set { sphone          = value; OnPropertyChanged(); } }
+        private string? sfax;       public string? SFAX         { get { return sfax;            } set { sfax            = value; OnPropertyChanged(); } }
+        private string? se_mail;    public string? SE_MAIL      { get { return se_mail;         } set { se_mail         = value; OnPropertyChanged(); } }
 
         private bool trick;          public bool TRICK          { get { return trick;           } set { trick           = value; OnPropertyChanged(); } }
         private bool notEditingCust; public bool NotEditingCust { get { return notEditingCust;  } set { notEditingCust  = value; OnPropertyChanged(); } }
-        private bool editingCust;    public bool EditingCust    { get { return editingCust;     } set { editingCust     = value; OnPropertyChanged(); NotEditingCust = !EditingCust; } }
-        private bool addingCust;     public bool AddingCust     { get { return addingCust;      } set { addingCust      = value; OnPropertyChanged(); } }
+        private bool editingCust;    public bool EditingCust    { get { return editingCust;     } set { editingCust     = value; OnPropertyChanged(); NotEditingCust = !EditingCust; OnPropertyChanged("AorE"); } }
+        private bool addingCust;     public bool AddingCust     { get { return addingCust;      } set { addingCust      = value; OnPropertyChanged(); OnPropertyChanged("AorE"); } }
 
         private bool notEditingCont; public bool NotEditingCont { get { return notEditingCont;  } set { notEditingCont  = value; OnPropertyChanged(); } }
-        private bool editingCont;    public bool EditingCont    { get { return editingCont;     } set { editingCont     = value; OnPropertyChanged(); NotEditingCont = !EditingCont; } }
-        private bool addingCont;     public bool AddingCont     { get { return addingCont;      } set { addingCont      = value; OnPropertyChanged(); } }
-
-        private bool canEditCont;    public bool CanEditCont    { get { return EditingCont && (CONTACT_NAME != ""); } }
+        private bool editingCont;    public bool EditingCont    { get { return editingCont;     } set { editingCont     = value; OnPropertyChanged(); NotEditingCont = !EditingCont; OnPropertyChanged("AorECont"); } }
+        private bool addingCont;     public bool AddingCont     { get { return addingCont;      } set { addingCont      = value; OnPropertyChanged(); OnPropertyChanged("AorECont"); } }
 
         private bool? one;           public bool? One           { get { return one;             } set { one             = value; OnPropertyChanged(); } }
         private bool? all;           public bool? All           { get { return all;             } set { all             = value; OnPropertyChanged(); } }
 
         private string? guid;        public string? GUID        { get { return guid;            } set { guid            = value; OnPropertyChanged(); } }
         private string? cguid;       public string? CGUID       { get { return cguid;           } set { cguid           = value; OnPropertyChanged(); } }
+
+        public bool AorE { get { return (AddingCust || EditingCust); } }        // "Adding or Editing"
+        public bool AorECont { get { return (AddingCont || EditingCont); } }        // "Adding or Editing Contacts"
+
+        public bool CustLoaded {  get {  return CUST_NAME.ToString().Length > 0; } }
+
+        private DataTable dtStates;  public DataTable DtStates  { get { return dtStates;        } set { dtStates        = value; OnPropertyChanged(); } }
+
+        #endregion
 
         public CustCont()
         {
@@ -77,6 +94,19 @@ namespace ProDocEstimate.Views
             AddingCont = false;
             CustName2Search4 = "";
             All = true; One = false;
+            DataContext = this;
+            LoadStates();
+        }
+
+        private void LoadStates()
+        {
+            dtStates = new DataTable("States");
+            string cmd = "SELECT Abbreviation, FullName FROM [ESTIMATING].[dbo].[STATES] ORDER BY Abbreviation";
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn);
+            da.Fill(DtStates);
+            cmbStates.ItemsSource = DtStates.DefaultView;
+            conn.Close();
         }
 
         private void btnShowCusts_Click(object sender, RoutedEventArgs e)
@@ -97,6 +127,9 @@ namespace ProDocEstimate.Views
                 CUST_NUMB = dt.Rows[0]["CUST_NUMB"].ToString();
                 CUST_NAME = dt.Rows[0]["CUST_NAME"].ToString();
                 CustDetlPage.IsSelected = true;
+
+                LoadContacts();
+
                 return;
             }
         }
@@ -108,35 +141,66 @@ namespace ProDocEstimate.Views
             CustName2Search4 = "";
         }
 
-        private async void grdCustomers_SelectedCellsChanged(object sender, System.Windows.Controls.SelectedCellsChangedEventArgs e)
+        private void grdCustomers_SelectedCellsChanged(object sender, System.Windows.Controls.SelectedCellsChangedEventArgs e)
         {
-            // If only one row matched, just return it.
-
-            if (TRICK == true) { TRICK = false; return; }       // So that it doesn't automatically return the first row
             if (grdCustomers.SelectedIndex == -1) return;       // In case they just clicked the CLEAR button
 
             DataRowView dataRow = (DataRowView)grdCustomers.SelectedItem;
 
-            GUID      = dataRow["GUID"].ToString();
+            GUID = dataRow["GUID"].ToString();
             CUST_NUMB = dataRow["CUST_NUMB"].ToString();
             CUST_NAME = dataRow["CUST_NAME"].ToString();
 
-            await Task.Delay(500);                              // Wait half a second...
+            Task.Delay(500);                              // Wait half a second...
             CustDetlPage.IsSelected = true;
+
+            LoadContacts();
+        }
+
+        private void LoadContacts()
+        {   string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[CUSTOMER_CONTACT] WHERE CUST_NUMB = '{CUST_NUMB}'";
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn);
+            dt = new DataTable(); da.Fill(dt);
+            conn.Close();
+            grdContactsList.ItemsSource = dt.DefaultView;
+            tabContList.IsSelected = true;
         }
 
         private void btnAddCust_Click(object sender, RoutedEventArgs e)
         {
+            SGUID = GUID;
+            SCUST_NUMB = CUST_NUMB;
+            SCUST_NAME = CUST_NAME;
+
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            SqlCommand scmd = new SqlCommand();
+            scmd.Connection = conn;
+            scmd.CommandType = CommandType.Text;
+            scmd.CommandText = "SELECT MAX(CUST_NUMB) FROM [ESTIMATING].[dbo].[CUSTOMER]";
+            string NextCustNum = (string)scmd.ExecuteScalar();
+            int nextNum = int.Parse(NextCustNum.ToString().TrimEnd());
+            nextNum += 1;
+            CUST_NUMB = nextNum.ToString() + " ";
+
             EditingCust = true;
             AddingCust = true;
-            SGUID = GUID; SCUST_NAME = CUST_NAME; SCUST_NUMB = CUST_NUMB; GUID = ""; CUST_NUMB = ""; CUST_NAME = "";
+            CUST_NAME = "";
             tabCustSearch.IsEnabled = false;
+
+            txtCUSTNAME.Focus();
         }
 
         private void btnEditCust_Click(object sender, RoutedEventArgs e)
         {
             EditingCust = true;
             tabCustSearch.IsEnabled = false;
+
+            SGUID = GUID;
+            SCUST_NUMB = CUST_NUMB;
+            SCUST_NAME = CUST_NAME;
+
+            txtCUSTNAME.Focus();
         }
 
         private void btnSaveCust_Click(object sender, RoutedEventArgs e)
@@ -167,44 +231,106 @@ namespace ProDocEstimate.Views
         {
             EditingCust = false;
             AddingCust = false;
-            if(SGUID != "") { GUID = SGUID; CUST_NAME = SCUST_NAME; CUST_NUMB = SCUST_NUMB; SGUID = ""; SCUST_NUMB = ""; SCUST_NAME = ""; }
+            
+            if (SGUID != "") 
+            {   GUID = SGUID; 
+                CUST_NAME = SCUST_NAME; 
+                CUST_NUMB = SCUST_NUMB; 
+                SGUID = ""; 
+                SCUST_NUMB = ""; 
+                SCUST_NAME = ""; 
+            }
+            
             tabCustSearch.IsEnabled = true;
         }
 
         private void btnDeleteCust_Click(object sender, RoutedEventArgs e)
         {
-            var confirmResult =
-                MessageBox.Show("Delete customer?", "Confirm delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmResult = MessageBox.Show("Delete customer?", "Confirm delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (confirmResult == MessageBoxResult.Yes)
-            {
-                string cmd = $"DELETE [ESTIMATING].[dbo].[CUSTOMER] WHERE GUID = '{GUID}'";
-                Clipboard.SetText(cmd);
+            {   string cmd = $"DELETE [ESTIMATING].[dbo].[CUSTOMER] WHERE GUID = '{GUID}'";
+                Clipboard.SetText(cmd); // In case I want to look at it in SQL Management Console
                 SqlConnection conn = new(ConnectionString); conn.Open();
                 scmd = new SqlCommand(cmd, conn);
                 int Result = scmd.ExecuteNonQuery();
-                conn.Close();
+                scmd = null;
+                
+                if (conn.State == System.Data.ConnectionState.Closed) conn.Open();
+                cmd = $"DELETE [ESTIMATING].[dbo].[CUSTOMER_CONTACT] WHERE CUST_NUMB = '{CUST_NUMB}'";
+                scmd = new SqlCommand(cmd, conn); Result = scmd.ExecuteNonQuery(); conn.Close();
+                
                 grdCustomers.ItemsSource = null;
-                Msg = ""; CustName2Search4 = ""; CUST_NUMB = ""; CUST_NAME = "";
+                grdContacts.ItemsSource = null;
+                grdContactsList.ItemsSource = null;
+
+                Msg = ""; 
+                CustName2Search4 = ""; 
+                CUST_NUMB = ""; 
+                CUST_NAME = "";
             }
         }
 
         private void btnAddCont_Click(object sender, RoutedEventArgs e)
         {
+
+            if (CUST_NUMB == null || CUST_NUMB == "")
+            {
+                MessageBox.Show("Please select or add a customer first.");
+                return;
+            }
+
             EditingCont = true;
             AddingCont = true;
-            //TODO: Save contents of all textboxes
-            //      SCUST_ID = CUST_ID; SCUST_NAME = CUST_NAME; SCUST_NUMB = CUST_NUMB; CUST_ID = ""; CUST_NUMB = ""; CUST_NAME = "";
-            ContactSearchTab.IsEnabled = false;
+            tabContSearch.IsEnabled = false;
+
+            SCGUID = CGUID;
+            SCUST_NUMB = CUST_NUMB;  // Do I need to do this?
+            SCONTACT_NAME = CONTACT_NAME;
+            SADDRESS1 = ADDRESS1;
+            SADDRESS2 = ADDRESS2;
+            SCITY = CITY;
+            SSTATE = STATE;
+            SZIP = ZIP;
+            SPHONE = PHONE;
+            SFAX = FAX;
+            SE_MAIL = E_MAIL;
+
+            CONTACT_NAME = "";
+            ADDRESS1 = "";
+            ADDRESS2 = "";
+            CITY = "";
+            STATE = "";
+            ZIP = "";
+            PHONE = "";
+            FAX = "";
+            E_MAIL = "";
+
+            txtCONTACTNAME.Focus();
+
         }
 
         private void btnEditCont_Click(object sender, RoutedEventArgs e)
         {
+            txtCUSTNUMB.IsEnabled = false;
             EditingCont = true;
             AddingCont = false;
-            //TODO: Save contents of all textboxes
-            //      SCUST_ID = CUST_ID; SCUST_NAME = CUST_NAME; SCUST_NUMB = CUST_NUMB;
-            //      CUST_ID = ""; CUST_NUMB = ""; CUST_NAME = "";
-            ContactSearchTab.IsEnabled = false;
+            
+            tabContSearch.IsEnabled = false;
+
+            SCGUID = CGUID;
+            SCONTACT_NAME = CONTACT_NAME;
+            SADDRESS1 = ADDRESS1;
+            SADDRESS2 = ADDRESS2;
+            SCITY = CITY;
+            SSTATE = STATE;
+            SZIP = ZIP;
+            SPHONE = PHONE;
+            SFAX = FAX;
+            SE_MAIL = E_MAIL;
+
+            txtCUSTNUMB.IsEnabled = false;
+            txtCONTACT_NAME.Focus();
         }
 
         private void btnSaveCont_Click(object sender, RoutedEventArgs e)
@@ -247,24 +373,36 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(cmd, conn);
             scmd.ExecuteNonQuery(); conn.Close();
 
-            EditingCust = false;
-            AddingCust = false;
-            SGUID = ""; SCUST_NAME = ""; SCUST_NUMB = "";
-            tabCustSearch.IsEnabled = true;
+            EditingCont = false;
+            AddingCont = false;
+
+            tabContSearch.IsEnabled = true;
+            LoadContacts();
+            ContDetlPage.IsEnabled = true;
         }
 
         private void btnCancCont_Click(object sender, RoutedEventArgs e)
         {
-            EditingCust = false;
-            AddingCust = false;
+            EditingCont = false;
+            AddingCont = false;
 
-            // TODO: restore saved contents of all CONTACTS textboxes
+            CGUID = SCGUID;
+            CONTACT_NAME = SCONTACT_NAME;
+            ADDRESS1 = SADDRESS1;
+            ADDRESS2 = SADDRESS2;
+            CITY = SCITY;
+            STATE = SSTATE;
+            ZIP = SZIP;
+            PHONE = SPHONE;
+            FAX = SFAX;
+            E_MAIL = SE_MAIL;
+
+            tabContSearch.IsEnabled = true;
         }
 
         private void btnDeleteCont_Click(object sender, RoutedEventArgs e)
         {
-            var confirmResult =
-                MessageBox.Show("Delete contact?", "Confirm delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmResult = MessageBox.Show("Delete contact?", "Confirm delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmResult == MessageBoxResult.Yes)
             {   string cmd = $"DELETE [ESTIMATING].[dbo].[CUSTOMER_CONTACT] WHERE CGUID = '{CGUID}'";
@@ -276,6 +414,11 @@ namespace ProDocEstimate.Views
                 grdContacts.ItemsSource = null;
                 Msg2 = "";
                 ContName2Search4 = "";
+
+                //TODO: Blank all of the string properties for the Contacts page...
+
+                LoadContacts();
+
             }
         }
 
@@ -286,7 +429,7 @@ namespace ProDocEstimate.Views
 
             DataRowView dataRow = (DataRowView)grdContacts.SelectedItem;
 
-            GUID = dataRow["GUID"].ToString();
+            CGUID = dataRow["CGUID"].ToString();
             CUST_NUMB = dataRow["CUST_NUMB"].ToString();
             CONTACT_NAME = dataRow["CONTACT_NAME"].ToString();
             ADDRESS1 = dataRow["ADDRESS1"].ToString();
@@ -301,7 +444,13 @@ namespace ProDocEstimate.Views
             Task.Delay(500);                              // Wait half a second...
             ContDetlPage.IsSelected = true;
 
-            // Retrieve the customer name as well
+            if(CUST_NAME.ToString().Length==0) { GetCustName(); }
+            
+        }
+
+        private void GetCustName()
+        {
+            if (CUST_NUMB == null || CUST_NUMB.ToString().Length == 0) return;
             string cmd = "SELECT CUST_NAME FROM [ESTIMATING].[dbo].[CUSTOMER] WHERE CUST_NUMB = '" + CUST_NUMB + "'";
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);
@@ -360,10 +509,54 @@ namespace ProDocEstimate.Views
                 E_MAIL      = dt.Rows[0]["E_MAIL"].ToString();
 
                 CustDetlPage.IsSelected = true;
-                
+                GetCustName();
+
                 return;
             }
         }
 
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void grdContactsList_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (grdContactsList.SelectedIndex == -1) return;       // In case they just clicked the CLEAR button
+
+            DataRowView dataRow = (DataRowView)grdContactsList.SelectedItem;
+
+            CGUID = dataRow["CGUID"].ToString();
+            CONTACT_NAME = dataRow["CONTACT_NAME"].ToString();
+            ADDRESS1 = dataRow["ADDRESS1"].ToString();
+            ADDRESS2 = dataRow["ADDRESS2"].ToString();
+            CITY = dataRow["CITY"].ToString();
+            STATE = dataRow["STATE"].ToString();
+            ZIP = dataRow["ZIP"].ToString();
+            PHONE = dataRow["PHONE"].ToString();
+            FAX = dataRow["FAX"].ToString();
+            E_MAIL = dataRow["E_MAIL"].ToString();
+
+            Task.Delay(500);                              // Wait half a second...
+            ContDetlPage.IsSelected = true;
+
+        }
+
+        private void grdContactsList_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) { ActivatePage1(); }
+        private void grdContacts_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)     { ActivatePage1(); }
+
+        private void ActivatePage1() 
+        { 
+            ContDetlPage.IsSelected = true;
+            GetCustName();
+        }
+
+        private void grdCustomers_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ActivatePage1();
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e) { ((TextBox)sender).SelectAll(); }
+
     }
- }
+}

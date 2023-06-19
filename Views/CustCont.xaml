@@ -15,7 +15,8 @@
         </Style>
         <Style TargetType="TabItem">
             <Setter Property="FontFamily" Value="Comic Sans MS" />
-            <Setter Property="FontSize"   Value="12" />
+            <Setter Property="FontSize"   Value="14" />
+            <Setter Property="Foreground" Value="Blue" />
             <Setter Property="Margin"     Value="5 0 0 0" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -23,13 +24,12 @@
                         <Border>
                             <Grid>
                                 <Grid>
-                                    <Border x:Name="border" 
-                                            CornerRadius="3,3,0,0"
-                                            Background="WhiteSmoke"/>
+                                    <Border x:Name="border" CornerRadius="3,3,0,0" Background="WhiteSmoke"/>
                                 </Grid>
-                                <ContentPresenter ContentSource="Header"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <ContentPresenter 
+                                    ContentSource="Header"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -59,6 +59,8 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style TargetType="TextBox" >
+            <EventSetter Event="GotMouseCapture" Handler="TextBox_GotFocus"/>
+            <EventSetter Event="GotFocus"        Handler="TextBox_GotFocus"/>
             <Setter Property="HorizontalAlignment"          Value="Left" />
             <Setter Property="FontFamily"                   Value="Courier New" />
             <Setter Property="FontSize"                     Value="11" />
@@ -72,8 +74,8 @@
                     <Setter Property="Foreground" Value="White" />
                 </Trigger>
             </Style.Triggers>
+            
         </Style>
-
         <Style TargetType="Button" >
             <Setter Property="Padding"    Value="5 0" />
             <Setter Property="Margin"     Value="4 0" />
@@ -99,7 +101,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TabControl Background="LightCyan" Grid.Row="0" x:Name="TabCtrl" >
+            <TabControl x:Name="tabCustomers" Background="LightCyan" Grid.ColumnSpan="2" Margin="5,0,5,0" VerticalAlignment="Center" >
 
                 <TabItem Header="Customers" >
 
@@ -119,9 +121,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="1"
-							            Grid.ColumnSpan="5"
-							            Orientation="Horizontal">
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
                                     <Button x:Name="btnAddCust" IsEnabled="{Binding NotEditingCust}" Click="btnAddCust_Click">
                                         <AccessText>_Add</AccessText>
                                     </Button>
@@ -140,11 +140,12 @@
                                 </StackPanel>
 
                                 <Label Content="Customer No." Grid.Row="1" />
-                                <TextBox Width="54"  Text="{Binding Path=CUST_NUMB}" Grid.Row="1" Grid.Column="1" Margin="2,4,0,4" />
+                                <TextBox Width="54"  Text="{Binding Path=CUST_NUMB}" Grid.Row="1" Grid.Column="1" IsEnabled="False" />
 
                                 <Label Content="Company Name" Grid.Row="2" />
-                                <TextBox Width="276" Text="{Binding Path=CUST_NAME}" Grid.Row="2" Grid.Column="2" />
-
+                                <TextBox x:Name="txtCUSTNAME"
+                                         Width="276" Text="{Binding Path=CUST_NAME, UpdateSourceTrigger=PropertyChanged}" 
+                                         Grid.Row="2" Grid.Column="2" IsEnabled="{Binding Path=AorE}" />
                             </Grid>
 
                         </TabItem>
@@ -152,6 +153,7 @@
                         <TabItem x:Name="tabCustSearch" Header="    Customer Search      " Height="24" VerticalAlignment="Top" Padding="5 0">
 
                             <Grid >
+
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="24" />
                                     <RowDefinition Height="30" />
@@ -159,15 +161,18 @@
                                 </Grid.RowDefinitions>
 
                                 <Label Content="Any part of name: " HorizontalAlignment="Left" Width="125" HorizontalContentAlignment="Left" Margin="1,0,0,0" />
-                                <TextBox Grid.Row="1" Width="150" Margin="2 0 0 0" Text="{Binding CustName2Search4, Mode=TwoWay}" FontSize="16" Padding="2 0 0 0" />
+                                <TextBox Grid.Row="1" Width="150" Margin="2 0 0 0" 
+                                         Text="{Binding CustName2Search4, UpdateSourceTrigger=PropertyChanged}" 
+                                         FontSize="16" Padding="2 0 0 0" />
 
                                 <Label Grid.Row="1" Margin="200 0 0 0" Content="{Binding Msg}" HorizontalAlignment="Left" />
 
-                                <Button x:Name="btnShowCusts"  HorizontalAlignment="Right" Margin="0 0 60 0" Grid.Row="1" Content="Show matches" Click="btnShowCusts_Click" />
-                                <Button x:Name="btnClearCusts" HorizontalAlignment="Right" Margin="0 0 10 0" Grid.Row="1" Content="Clear"        Click="btnClearCusts_Click" />
+                                <Button x:Name="btnShowCusts"  HorizontalAlignment="Right" Margin="0 0 60 0" Grid.Row="1" Content="_Show matches" Click="btnShowCusts_Click" />
+                                <Button x:Name="btnClearCusts" HorizontalAlignment="Right" Margin="0 0 10 0" Grid.Row="1" Content="Clear"         Click="btnClearCusts_Click" />
 
                                 <DataGrid x:Name="grdCustomers" Grid.Row="2" Grid.ColumnSpan="2" Height="210" 
                                           CanUserAddRows="False"
+                                          PreviewMouseDoubleClick="grdCustomers_PreviewMouseDoubleClick"
                                           SelectedCellsChanged="grdCustomers_SelectedCellsChanged" >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Path=CUST_NUMB}" Header="Cust #" Width="70" />
@@ -185,8 +190,7 @@
 
             </TabControl>
 
-
-            <TabControl Background="LightCyan" Grid.Row="1" x:Name="TabCtrls" >
+            <TabControl x:Name="tabContacts" Background="LightCyan" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0" VerticalAlignment="Center" >
 
                 <TabItem Header="Contacts" >
 
@@ -208,13 +212,13 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="110" />
-                                    <ColumnDefinition Width="285" />
-                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="361" />
+                                    <ColumnDefinition Width="34" />
                                     <ColumnDefinition Width="285" />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="1"
-							            Grid.ColumnSpan="5"
+							            Grid.ColumnSpan="3"
 							            Orientation="Horizontal">
                                     <Button x:Name="btnAddCont" IsEnabled="{Binding NotEditingCont}" Click="btnAddCont_Click" >
                                         <AccessText>_Add</AccessText>
@@ -222,7 +226,7 @@
                                     <Button x:Name="btnEditCont" IsEnabled="{Binding NotEditingCont}" Click="btnEditCont_Click">
                                         <AccessText>_Edit</AccessText>
                                     </Button>
-                                    <Button x:Name="btnSaveCont" IsEnabled="{Binding Path=CanEditCont}" Click="btnSaveCont_Click">
+                                    <Button x:Name="btnSaveCont" IsEnabled="{Binding EditingCont}" Click="btnSaveCont_Click">
                                         <AccessText>_Save</AccessText>
                                     </Button>
                                     <Button x:Name="btnCancCont" IsEnabled="{Binding EditingCont}" Click="btnCancCont_Click">
@@ -233,43 +237,94 @@
                                     </Button>
                                 </StackPanel>
 
-                                <Label Content="Customer No." Grid.Row="1" />
-                                <TextBox Width="54"  Text="{Binding Path=CUST_NUMB}" Grid.Row="1" Grid.Column="1" />
+                                <Label Content="Customer No." Grid.Row="1" HorizontalAlignment="Left" Height="24" Margin="20,0,0,0" Width="90" />
+                                <TextBox x:Name="txtCUSTNUMB" Width="54"  Text="{Binding Path=CUST_NUMB}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="1" Grid.Column="1" LostFocus="TextBox_LostFocus" Margin="2,3,0,3" />
 
-                                <Label Content="Contact Name" Grid.Row="2" />
-                                <TextBox Width="276" Text="{Binding Path=CONTACT_NAME}" Grid.Row="2" Grid.Column="1" />
+                                <Label Content="Contact Name" Grid.Row="2" HorizontalAlignment="Left" Height="24" Margin="18,0,0,0" Width="92" />
+                                <TextBox x:Name="txtCONTACT_NAME" Width="276" Text="{Binding Path=CONTACT_NAME}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="2" Grid.Column="1" Margin="2,3,0,3" />
 
-                                <Label Content="Address" Grid.Row="3" />
-                                <TextBox Width="276" Text="{Binding Path=ADDRESS1}" Grid.Row="3" Grid.Column="1" />
+                                <Label Content="Address" Grid.Row="3" HorizontalAlignment="Left" Height="24" Margin="53,0,0,0" Width="57" />
+                                <TextBox Width="276" Text="{Binding Path=ADDRESS1, UpdateSourceTrigger=PropertyChanged}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="3" Grid.Column="1" Margin="2,3,0,3" />
 
-                                <TextBox Width="276" Text="{Binding Path=ADDRESS2}" Grid.Row="4" Grid.Column="1" />
+                                <TextBox x:Name="txtCONTACTNAME"
+                                         Width="276" Text="{Binding Path=ADDRESS2, UpdateSourceTrigger=PropertyChanged}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="4" Grid.Column="1" Margin="2,3,0,3" />
 
-                                <Label Content="City" Grid.Row="5" />
-                                <TextBox Width="100" Text="{Binding Path=CITY}" Grid.Row="5" Grid.Column="1" />
+                                <Label Content="City" Grid.Row="5" HorizontalAlignment="Left" Height="24" Margin="77,0,0,0" Width="33" />
+                                <TextBox Width="85" Text="{Binding Path=CITY,     UpdateSourceTrigger=PropertyChanged}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="5" Grid.Column="1" Margin="2,3,0,3" />
 
-                                <Label Content="State" Grid.Row="5" Grid.Column="1" Margin="102 0 0 0" HorizontalAlignment="Left" />
-                                <TextBox Width="30" Text="{Binding Path=STATE}" Grid.Row="5" Grid.Column="1" Margin="140 0 0 0"  />
+                                <Label Content="State" Grid.Row="5" Grid.Column="1" Margin="87,0,0,0" 
+                                       HorizontalAlignment="Left" Height="24" Width="39" />
 
-                                <Label Content="ZIP" Grid.Row="5" Grid.Column="1" Margin="177,0,0,0" HorizontalAlignment="Left" />
-                                <TextBox Width="75" Text="{Binding Path=ZIP}" Grid.Row="5" Grid.Column="1" Margin="205 0 0 0"  />
+                                <ComboBox x:Name="cmbStates"
+                                          Foreground="Blue"
+                                          Width="45" 
+                                          SelectedValue="{Binding STATE, UpdateSourceTrigger=PropertyChanged}"
+                                          IsEnabled="{Binding AorECont}"
+                                          SelectedValuePath="Abbreviation" 
+                                          DisplayMemberPath="Abbreviation"
+                                          Grid.Row="5" Grid.Column="1" Margin="125,0,0,0"  />
 
-                                <Label Content="Phone" Grid.Row="6" />
-                                <TextBox Width="146" Text="{Binding Path=PHONE}" Grid.Row="6" Grid.Column="1" Margin="2,3,0,3" />
+                                <Label Content="ZIP" Grid.Row="5" Grid.Column="1" Margin="174,0,0,0" HorizontalAlignment="Left" Height="24" Width="27" />
+                                <TextBox Width="76" Text="{Binding Path=ZIP,       UpdateSourceTrigger=PropertyChanged}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="5" Grid.Column="1" Margin="202,3,0,3"  />
 
-                                <Label Content="Fax" Grid.Row="6" Grid.Column="1" Margin="148,0,0,0" HorizontalAlignment="Left" />
-                                <TextBox Width="100" Text="{Binding Path=FAX}" Grid.Row="6" Grid.Column="1" Margin="180 0 0 0" HorizontalAlignment="Left" />
+                                <Label Content="Phone" Grid.Row="6" HorizontalAlignment="Left" Height="24" Margin="64,0,0,0" Width="46" />
+                                <TextBox Width="146" Text="{Binding Path=PHONE,    UpdateSourceTrigger=PropertyChanged}" 
+                                         CharacterCasing = "Upper"
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="6" Grid.Column="1" Margin="2,3,0,3" />
 
-                                <Label Content="Email" Grid.Row="7" />
-                                <TextBox Width="278" Text="{Binding Path=E_MAIL}" Grid.Row="7" Grid.Column="1" />
+                                <Label Content="Fax" Grid.Row="6" Grid.Column="1" Margin="148,0,0,0" HorizontalAlignment="Left" Height="24" Width="30" />
+                                <TextBox Width="100" Text="{Binding Path=FAX,      UpdateSourceTrigger=PropertyChanged}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="6" Grid.Column="1" Margin="180,3,0,3" />
+
+                                <Label Content="Email" Grid.Row="7" HorizontalAlignment="Left" Height="24" Margin="69,0,0,0" Width="41" />
+                                <TextBox Width="278" Text="{Binding Path=E_MAIL,   UpdateSourceTrigger=PropertyChanged}" 
+                                         IsEnabled="{Binding AorECont}"
+                                         Grid.Row="7" Grid.Column="1" Margin="2,3,0,3" />
 
                             </Grid>
 
                         </TabItem>
 
-                        <TabItem x:Name="ContactSearchTab" Height="24" VerticalAlignment="Top" Padding="5 0"  >
+                        <TabItem x:Name="tabContList" Height="24" VerticalAlignment="Top" Padding="5 0"  >
 
                             <TabItem.Header>
-                                <Label Content="    Contact Search    " PreviewMouseLeftButtonDown="Label_PreviewMouseLeftButtonDown"/>
+                                <Label Content="    Contacts List    " FontSize="14" Foreground="Blue" FontFamily="Comic Sans MS" Padding="2" />
+                            </TabItem.Header>
+
+                            <DataGrid x:Name="grdContactsList" 
+                                      CanUserAddRows="False"
+                                      PreviewMouseDoubleClick="grdContactsList_PreviewMouseDoubleClick"
+                                      SelectedCellsChanged="grdContactsList_SelectedCellsChanged" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Contact Name" Width="200" Binding="{Binding CONTACT_NAME}" />
+                                    <DataGridTextColumn Header="Address"      Width="200" Binding="{Binding ADDRESS1}" />
+                                    <DataGridTextColumn Header="City"         Width="120" Binding="{Binding CITY}" />
+                                    <DataGridTextColumn Header="Phone"        Width="100" Binding="{Binding PHONE}" />
+                                    <DataGridTextColumn Header="Email"        Width="200" Binding="{Binding E_MAIL}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </TabItem>
+
+                        <TabItem x:Name="tabContSearch" Height="24" VerticalAlignment="Top" Padding="5 0"  >
+
+                            <TabItem.Header>
+                                <Label Content="    Contact Search    " FontSize="14" Foreground="Blue" FontFamily="Comic Sans MS" Padding="2" 
+                                       PreviewMouseLeftButtonDown="Label_PreviewMouseLeftButtonDown"/>
                             </TabItem.Header>
 
                             <Grid >
@@ -282,7 +337,9 @@
 
                                 <Label Content="Any part of name: " HorizontalAlignment="Left" Width="125" HorizontalContentAlignment="Left" Height="24" />
 
-                                <TextBox Grid.Row="1" Width="150" Margin="0,4,0,4" Text="{Binding ContName2Search4, Mode=TwoWay}" FontSize="16" Padding="2 0 0 0" />
+                                <TextBox Grid.Row="1" Width="150" Margin="0,4,0,4" 
+                                         Text="{Binding ContName2Search4, UpdateSourceTrigger=PropertyChanged}" 
+                                         FontSize="16" Padding="2 0 0 0" />
 
                                 <Label Grid.Row="1" Margin="450 0 0 0" Content="{Binding Msg2}" HorizontalAlignment="Left" />
 
@@ -293,14 +350,18 @@
                                              HorizontalAlignment="Left"
                                              Grid.Row="1" GroupName="SearchAll" Margin="275,0,0,0" IsChecked="{Binding Path=One}" />
 
-                                <Button x:Name="btnShowContacts"  HorizontalAlignment="Right" Margin="0 0 60 0"  Grid.Row="1" Content="Show matches" Width="92" Click="btnShowContacts_Click" />
+                                <Button x:Name="btnShowContacts"  HorizontalAlignment="Right" Margin="0 0 60 0"  Grid.Row="1" Content="_Show matches" Width="92" Click="btnShowContacts_Click" />
                                 <Button x:Name="btnClearContacts" HorizontalAlignment="Right" Margin="0 0 10 0"  Grid.Row="1" Content="Clear"        Width="41" Grid.Column="1" />
 
                                 <DataGrid x:Name="grdContacts" Grid.Row="2" 
                                           FontSize="11"
                                           CanUserAddRows="False"
                                           IsSynchronizedWithCurrentItem="True" 
-                                          SelectedCellsChanged="grdContacts_SelectedCellsChanged" Margin="0,0,0,-6" Width="794" Grid.ColumnSpan="2" >
+                                          PreviewMouseDoubleClick="grdContacts_PreviewMouseDoubleClick"
+                                          SelectedCellsChanged="grdContacts_SelectedCellsChanged" 
+                                          Margin="0,0,0,-6" 
+                                          Width="794" 
+                                          Grid.ColumnSpan="2" >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Path=CUST_NUMB}"      Header="Cust #"  Width="50" />
                                         <DataGridTextColumn Binding="{Binding Path=CONTACT_NAME}"   Header="Contact" Width="155" />

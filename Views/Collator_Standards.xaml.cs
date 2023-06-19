@@ -16,11 +16,11 @@ namespace ProDocEstimate.Views
 		public event PropertyChangedEventHandler? PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-		private bool?   editing;		public bool? Editing		{ get { return editing;			} set { editing			= value; NotEditing = !editing; OnPropertyChanged(); } }
+		private bool?   editing;	public bool? Editing	{ get { return editing;		} set { editing		= value; NotEditing = !editing; OnPropertyChanged(); } }
 		private bool?   notediting; public bool? NotEditing { get { return notediting;	} set { notediting	= value; OnPropertyChanged(); } }
 
-		private string  id;					public string  ID { get { return id; } set { id = value; OnPropertyChanged(); } }
-		private DataSet ds;					public DataSet DS { get { return ds; } set { ds = value; OnPropertyChanged(); } }
+		private string  id;			public string  ID		{ get { return id;			} set { id			= value; OnPropertyChanged(); } }
+		private DataSet ds;			public DataSet DS		{ get { return ds;			} set { ds			= value; OnPropertyChanged(); } }
 
 		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
 		public SqlConnection cn = new SqlConnection();
@@ -105,10 +105,10 @@ namespace ProDocEstimate.Views
 			cn = new SqlConnection(ConnectionString);
 			cn.Open();
 			string str = txtSearch.Text.Trim();
-			string cmd =	"SELECT ID, COLLATOR_STANDARD, COLLATOR_NUM, COLLATOR_DESCRIPTION" +
-										" FROM COLLATOR_STANDARDS" +
-									  " WHERE COLLATOR_DESCRIPTION LIKE '%" + str + "%'" + 
-										" ORDER BY 1, 2";
+			string cmd = "SELECT ID, COLLATOR_STANDARD, COLLATOR_NUM, COLLATOR_DESCRIPTION" +
+						 " FROM COLLATOR_STANDARDS" +
+						 " WHERE COLLATOR_DESCRIPTION LIKE '%" + str + "%'" + 
+						 " ORDER BY 1, 2";
 			da = new SqlDataAdapter(cmd, cn);
 			ds = new DataSet();
 			da.Fill(ds);
@@ -121,14 +121,15 @@ namespace ProDocEstimate.Views
 			int selindex = dgCollators.SelectedIndex;
 			if (selindex >= 0 && selindex < ds.Tables[0].Rows.Count)
 			{ ID = DS.Tables[0].Rows[selindex][0].ToString();
-				string cmd =  "SELECT * FROM COLLATOR_STANDARDS" + 
-											" WHERE ID LIKE '" + ID + "%'" +
-											" ORDER BY 1, 2";
+				string cmd = "SELECT * FROM COLLATOR_STANDARDS" + 
+							 " WHERE ID LIKE '" + ID + "%'" +
+							 " ORDER BY 1, 2";
 				da = new SqlDataAdapter(cmd, cn);
 				DataSet ds = new DataSet();
 				da.Fill(ds);
 				DataContext = ds.Tables[0].DefaultView;
 			}
 		}
+
 	}
 }

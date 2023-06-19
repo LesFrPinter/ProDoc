@@ -9,7 +9,7 @@ namespace ProDocEstimate.Views
 {
 	public partial class Press_Standards : Window, INotifyPropertyChanged
 	{
-		private string id; public string ID { get { return id; } set { id = value; OnPropertyChanged(); } }
+		private string id;	public string  ID { get { return id; } set { id = value; OnPropertyChanged(); } }
 		private DataSet ds; public DataSet DS { get { return ds; } set { ds = value; OnPropertyChanged(); } }
 
 		public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;

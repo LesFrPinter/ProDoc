@@ -86,9 +86,10 @@
 				x:Name="dgQuotes"
 				Grid.Row="1"
 				Margin="10"
+                ToolTip="Double-click to select"
+                CanUserAddRows="False"
 				SelectedValue="{Binding QUOTE_NUM}"
-				MouseDoubleClick="dgQuotes_MouseDoubleClick"
-				IsSynchronizedWithCurrentItem="True">
+				MouseDoubleClick="dgQuotes_MouseDoubleClick" >
 				<DataGrid.Columns>
 					<DataGridTextColumn
 						Width="*"

@@ -61,8 +61,9 @@ namespace ProDocEstimate.Views
 
 			if (Auto==true) { MessageBox.Show("Autocomplete is not enabled..."); }
 
-      string cmd = "SELECT * FROM QUOTES LEFT JOIN CUSTOMERS"
-         + " ON QUOTES.CUST_NUM = CUSTOMERS.CUST_NUMB";
+      string cmd = "SELECT * FROM [ProVisionDev].[dbo].[QUOTES] " 
+				 + "    LEFT JOIN [ESTIMATING].[dbo].[CUSTOMER]"
+				 + " ON QUOTES.CUST_NUM = CUSTOMER.CUST_NUMB";
 
 			if (txtCustName.Text.Trim().Length > 0)
 			{
@@ -76,27 +77,27 @@ namespace ProDocEstimate.Views
 			{ cmd += " AND QUOTES.QUOTE_NUM = " + txtQuoteNum.Text.Trim(); }
 			else
 			if (txtCustNo.Text.Trim().Length > 0)
-			{ cmd += " AND QUOTES.CUST_NUM = " + txtCustNo.Text.Trim(); }
+			{ cmd += " AND QUOTES.CUST_NUMB = " + txtCustNo.Text.Trim(); }
 			else return;
 
 			cmd += " ORDER BY QUOTE_NUM";
 			if ( Descending == true ) { cmd += " DESC"; }
 
 			cn = new SqlConnection(ConnectionString);
-      da = new SqlDataAdapter(cmd, cn);
-      DataSet ds = new DataSet();
-      da.Fill(ds);
-      DataTable dt = new DataTable();
-      dt = ds.Tables[0];
-      dgQuotes.ItemsSource = dt.DefaultView;
-      this.DataContext = this;
+			da = new SqlDataAdapter(cmd, cn);
+			DataSet ds = new DataSet();
+			da.Fill(ds);
+			DataTable dt = new DataTable();
+			dt = ds.Tables[0];
+			dgQuotes.ItemsSource = dt.DefaultView;
+			this.DataContext = this;
 			Cust_Num = ""; Quote_Num = ""; Cust_Name = "";
 		}
 
 		private void dgQuotes_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{ DataRowView drv = (DataRowView)dgQuotes.SelectedItem;
-			SelQuote = (drv["QUOTE_NUM"]).ToString();
-			Hide(); 
+		  SelQuote = (drv["QUOTE_NUM"]).ToString();
+		  Hide(); 
 		}
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)

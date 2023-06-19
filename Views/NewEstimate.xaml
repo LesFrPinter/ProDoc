@@ -13,6 +13,8 @@
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
 
+    <Viewbox>
+    
 	<Grid>
 
 		<Grid Background="LightGray">
@@ -1262,5 +1264,7 @@
 		</Grid>
 
 	</Grid>
+
+    </Viewbox>
 
 </Window>

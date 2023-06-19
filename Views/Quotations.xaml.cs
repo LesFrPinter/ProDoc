@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using Telerik.Windows.Controls.SyntaxEditor.UI;
+using Windows.ApplicationModel.Appointments;
 
 namespace ProDocEstimate
 {
@@ -21,8 +23,9 @@ namespace ProDocEstimate
         protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-        public SqlConnection? cn = new();
+        public SqlConnection? conn;
         public SqlDataAdapter? da;
+        public SqlCommand? scmd;
 
         #region Property Declarations
 
@@ -114,9 +117,20 @@ namespace ProDocEstimate
             LoadFormTypes();
             LoadPaperTypes();
 
+            LoadAvailableCategories();
+
             // this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             // This also works:
             //	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
+
+        private void LoadAvailableCategories()
+        {
+            lstAvailable.Items.Add("Backer");
+            lstAvailable.Items.Add("Ink Color");
+            lstAvailable.Items.Add("MICR");
+            lstAvailable.Items.Add("Perfing");
+            lstAvailable.Items.Add("Punching");
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
@@ -154,7 +168,7 @@ namespace ProDocEstimate
         {
             SqlConnection cn = new(ConnectionString);
             if (QUOTE_NUM == null || QUOTE_NUM == "") QUOTE_NUM = txtQuoteNum.Text.ToString();
-            string str = "SELECT * FROM QUOTES WHERE QUOTE_NUM = " + QUOTE_NUM;
+            string str = "SELECT * FROM [ProVisionDev].[dbo].[QUOTES] WHERE QUOTE_NUM = " + QUOTE_NUM;
             SqlDataAdapter da = new(str, cn);
             DataSet ds = new();
             da.Fill(ds);
@@ -166,13 +180,15 @@ namespace ProDocEstimate
                 DataTable dt = ds.Tables[0]; DataRow dr = dt.Rows[0];
                 DataRow dr3 = dt.Rows[0];
                 CUST_NUM = dt.Rows[0]["CUST_NUM"].ToString();
-                ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();
-                FSINT1 = dt.Rows[0]["FSINT1"].ToString();  // dr3[6];
-                FSFRAC1 = dt.Rows[0]["FSFRAC1"].ToString();  // dr3[7];
-                FSINT2 = dt.Rows[0]["FSINT2"].ToString();  // dr3[8];
-                FSFRAC2 = dt.Rows[0]["FSFRAC2"].ToString();  // dr3[9];
-                PARTS = int.Parse(dt.Rows[0]["PARTS"].ToString());
 
+                // These columns need to be added:
+
+                ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();
+                //FSINT1 = dt.Rows[0]["FSINT1"].ToString();  // dr3[6];
+                //FSFRAC1 = dt.Rows[0]["FSFRAC1"].ToString();  // dr3[7];
+                //FSINT2 = dt.Rows[0]["FSINT2"].ToString();  // dr3[8];
+                //FSFRAC2 = dt.Rows[0]["FSFRAC2"].ToString();  // dr3[9];
+                PARTS = int.Parse(dt.Rows[0]["PARTS"].ToString());
                 PAPERTYPE = dt.Rows[0]["PAPERTYPE"].ToString();  // dr3[9];
                 ROLLWIDTH = dt.Rows[0]["ROLLWIDTH"].ToString();  // dr3[9];
                 PRESSSIZE = dt.Rows[0]["PRESSSIZE"].ToString();  // dr3[9];     "PressSize.Cylinder"
@@ -249,7 +265,7 @@ namespace ProDocEstimate
             this.PaperTypes = new DataTable("PaperTypes");
             this.PaperTypes.Columns.Add("PaperType");
 
-            string str = "SELECT DISTINCT ReportType AS PaperType FROM MasterInventory ORDER BY ReportType";
+            string str = "SELECT DISTINCT RTRIM(ReportType) AS PaperType FROM MasterInventory ORDER BY RTRIM(ReportType)";
 
             SqlConnection cn = new(ConnectionString);
             cn.Open(); if (cn.State != ConnectionState.Open) { MessageBox.Show("Couldn't open SQL Connection"); return; }
@@ -439,7 +455,7 @@ namespace ProDocEstimate
 
         private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("We need a Customers table...", "Waiting on tables"); return;
+            return;  // for now...
 
             int CustKey = int.Parse(txtCustomerNum.Text);
             SqlConnection cn = new(ConnectionString);
@@ -529,6 +545,9 @@ namespace ProDocEstimate
 
         private void LoadCollator()
         {
+
+            if(PRESSSIZE.Length == 0 ) { return; }      // needed if we look up a quote and blank any previous values on PAGE 1
+
             DataTable CollCuts = new DataTable("CollCuts");
             CollCuts.Columns.Add("CutSize");
 
@@ -538,7 +557,7 @@ namespace ProDocEstimate
             SqlDataAdapter da = new(cmd, cn);
 
             da.Fill(CollCuts);
-            cmbCollatorCut.Items.Clear();
+            if(cmbCollatorCut.ItemsSource == null) cmbCollatorCut.Items.Clear();
 
             this.cmbCollatorCut.DataContext = this;
             this.cmbCollatorCut.ItemsSource = CollCuts.DefaultView;
@@ -1054,5 +1073,51 @@ namespace ProDocEstimate
             LoadRollWidths(); 
         }
 
+        private void btnNewQuote_Click(object sender, RoutedEventArgs e)
+        {
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            SqlCommand scmd = new SqlCommand();
+            scmd.Connection = conn;
+            scmd.CommandType = CommandType.Text;
+            scmd.CommandText = "SELECT MAX(QUOTE_NUM) FROM [ProVisionDev].[dbo].[QUOTES]";
+            string NextQuoteNum = (string)scmd.ExecuteScalar();
+            int nextNum = int.Parse(NextQuoteNum.ToString().TrimEnd());
+            nextNum += 1;
+            QUOTE_NUM = nextNum.ToString() + " ";
+
+            ProjectType = "";
+            PAPERTYPE = "";
+            ROLLWIDTH = "";
+            PRESSSIZE = "";
+            LINEHOLES = false;
+            COLLATORCUT = "";
+        }
+
+        private void lstAvailable_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string x = lstAvailable.SelectedItem.ToString();
+            lstSelected.Items.Add(x);
+            lstAvailable.Items.Remove(x);
+        }
+
+        private void lstSelected_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string x = lstSelected.SelectedItem.ToString();
+            lstSelected.Items.Remove(x);
+            lstAvailable.Items.Add(x);
+        }
+
+        private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            string x = lstSelected.SelectedItem.ToString();
+            switch (x)
+            {
+                case "Backer":
+                    {
+                        BackerForm backer = new BackerForm(PRESSSIZE); backer.ShowDialog();
+                        break;
+                    }
+            }
+        }
     }
 }
