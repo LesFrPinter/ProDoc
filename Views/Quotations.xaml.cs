@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace ProDocEstimate
@@ -104,6 +106,8 @@ namespace ProDocEstimate
         private DataRowView? drv;      public DataRowView? DRV      { get { return drv;        } set { drv        = value; OnPropertyChanged(); } }
         private double quoteTotal;     public double QuoteTotal     { get { return quoteTotal; } set { quoteTotal = value; OnPropertyChanged(); } }
 
+        private int maxColors; public int MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
+
         #endregion
 
         public Quotations()
@@ -119,6 +123,8 @@ namespace ProDocEstimate
 
             QUOTE_NUM = "10001";
 
+            MaxColors = 5; // Get from the [Estimating].[dbo].[PressSizeColors] table
+
             // this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             // This also works:
             //	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
@@ -127,10 +133,14 @@ namespace ProDocEstimate
         private void LoadAvailableCategories()
         {
             lstAvailable.Items.Add("Backer");
-            lstAvailable.Items.Add("Ink Color");
+            lstAvailable.Items.Add("InkColor");
             lstAvailable.Items.Add("MICR");
             lstAvailable.Items.Add("Perfing");
             lstAvailable.Items.Add("Punching");
+
+            lstAvailable.Items.Remove("InkColor");
+            lstSelected.Items.Add("InkColor");
+
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
@@ -247,7 +257,7 @@ namespace ProDocEstimate
             this.Features.Columns.Add("SHOW");
             this.Features.Columns.Add("ITEM");
 
-            this.Features.Rows.Add(0, "Ink Color");
+            this.Features.Rows.Add(0, "InkColor");
             this.Features.Rows.Add(0, "Backer");
             this.Features.Rows.Add(0, "Punching");
             this.Features.Rows.Add(0, "Cross Perf");
@@ -275,10 +285,6 @@ namespace ProDocEstimate
             cmbPaperType.ItemsSource = PaperTypes.DefaultView;
             cmbPaperType.DisplayMemberPath = "PaperType";
             cmbPaperType.SelectedValuePath = "PaperType";
-
-            //this.PaperTypes.Rows.Add("BOND");
-            //this.PaperTypes.Rows.Add("CRBNLS");
-            //this.PaperTypes.Rows.Add("ELEC");
 
             this.cmbPaperType.DataContext = this;
 
@@ -400,6 +406,7 @@ namespace ProDocEstimate
 
         private void LoadPressSizes()
         {
+            // This is not the table to use for Press Sizes. See Tim
             string str = "SELECT PRESS FROM CYLCUTSIZES GROUP BY PRESS, SEQ ORDER BY SEQ";
             SqlConnection cn = new(ConnectionString);
             cn.Open();
@@ -410,11 +417,6 @@ namespace ProDocEstimate
             cmbPressSize.Items.Clear();
             for (int r = 0; r < dt.Rows.Count; r++)
             { cmbPressSize.Items.Add(dt.Rows[r][0].ToString()); }
-        }
-
-        private void btnShowHideFeaturesPicker_Click(object sender, RoutedEventArgs e)
-        {
-            // No longer used...
         }
 
         private void cmbFinalSizeFrac1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -545,7 +547,6 @@ namespace ProDocEstimate
 
         private void LoadCollator()
         {
-
             if(PRESSSIZE.Length == 0 ) { return; }      // needed if we look up a quote and blank any previous values on PAGE 1
 
             DataTable CollCuts = new DataTable("CollCuts");
@@ -630,7 +631,7 @@ namespace ProDocEstimate
                 " ORDER BY E.SETNUM, E.SEQ";
 
             Clipboard.SetText(cmd);
-//            Debugger.Break();  // Load into SQL Server Management Console
+//          Debugger.Break();  // Load into SQL Server Management Console
 
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
@@ -1093,32 +1094,19 @@ namespace ProDocEstimate
             COLLATORCUT = "";
         }
 
-        private void lstAvailable_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            string x = lstAvailable.SelectedItem.ToString();
-            lstSelected.Items.Add(x);
-            lstAvailable.Items.Remove(x);
-        }
-
-        private void lstSelected_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            string x = lstSelected.SelectedItem.ToString();
-            lstSelected.Items.Remove(x);
-            lstAvailable.Items.Add(x);
-        }
-
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string x = lstSelected.SelectedItem.ToString();
+//            Debugger.Break();
+
+            string? x = lstSelected.SelectedItem.ToString();
             if ( x.IndexOf(' ') > 0 ) { x = x.Substring(0, x.IndexOf(' ')); }
-//            MessageBox.Show(x);
 
             switch (x)
             {
                 case "Backer":
                     {
                         BackerForm backer = new BackerForm(PRESSSIZE, QUOTE_NUM); backer.ShowDialog();
-
+//                        return;     // Don't show dollar amount
                         // After the user closes the BackerForm, this happens:
                         float BackerTotal = backer.Total;
                         backer.Close();
@@ -1126,14 +1114,23 @@ namespace ProDocEstimate
                         string z = lstSelected.Items[lstSelected.SelectedIndex].ToString() + str.PadRight(50).Substring(0, 42) + BackerTotal.ToString("C2");
                         int idx = lstSelected.SelectedIndex;
                         lstSelected.Items[idx] = z;
-
                         break;
                     }
+
+                case "InkColor":
+                    { 
+                        InkColors Ink = new InkColors(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
+                        break;
+                    }
+
             }
         }
 
         private void Page3_GotFocus(object sender, RoutedEventArgs e)
         {
+
+            return;
+
             // Load any selected categories and remove them from the "Available" listbox
             string cmd = "SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QUOTE_NUM + "' AND CATEGORY = 'BACKER'";
             dt = new DataTable("Details");
@@ -1153,7 +1150,22 @@ namespace ProDocEstimate
                 }
             }
             conn.Close();
+        }
 
+        private void lstAvailable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string? x = lstAvailable.SelectedItem.ToString();
+            lstSelected.Items.Add(x);
+            lstAvailable.Items.Remove(x);
+            x = null;
+        }
+
+        private void lstSelected_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string? x = lstSelected.SelectedItem.ToString();
+            lstAvailable.Items.Add(x);
+            lstSelected.Items.Remove(x);
+            x = null;
         }
     }
 }

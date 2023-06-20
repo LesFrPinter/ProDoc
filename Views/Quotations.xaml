@@ -1094,7 +1094,8 @@
 
                             <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="5" 
                                      FontFamily="Courier New" FontSize="14"
-                                     PreviewMouseDoubleClick="lstAvailable_PreviewMouseDoubleClick" >
+                                     MouseDoubleClick="lstAvailable_MouseDoubleClick" >
+
                             </ListBox>
 
                             <Label Content="Selected"  
@@ -1104,13 +1105,18 @@
 
                             <ListBox x:Name="lstSelected" 
                                      FontFamily="Courier New" FontSize="14"
-                                     PreviewMouseDoubleClick="lstSelected_PreviewMouseDoubleClick"
+                                     Grid.Row="2" Grid.Column="2" Grid.RowSpan="5"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
-                                     Grid.Row="2" Grid.Column="2" Grid.RowSpan="5" >
-                            </ListBox>
+	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" >
 
+                                <!--PreviewMouseDoubleClick="lstSelected_PreviewMouseDoubleClick">-->
+
+                            </ListBox>
+                            
+                            
 
                         </Grid>
+
                     </Viewbox>
 
                 </TabItem>
