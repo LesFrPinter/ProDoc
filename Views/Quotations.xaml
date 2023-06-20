@@ -1061,9 +1061,13 @@
                 <TabItem x:Name="Page3"
 				         FontSize="16"
 				         Header="    Page 3    "
-				         IsEnabled="True">
+                         GotFocus="Page3_GotFocus"
+				         IsEnabled="True" Height="25" VerticalAlignment="Top">
+
                     <Viewbox>
+                    
                         <Grid Height="500" >
+                        
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="30" />
@@ -1074,9 +1078,9 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="520" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="565" />
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
@@ -1085,19 +1089,21 @@
 
                             <Label Content="Category" 
                                    Background="LightSalmon"
-								   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Width="145"
+								   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Width="115"
                                    HorizontalAlignment="Left" />
 
                             <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="5" 
+                                     FontFamily="Courier New" FontSize="14"
                                      PreviewMouseDoubleClick="lstAvailable_PreviewMouseDoubleClick" >
                             </ListBox>
 
                             <Label Content="Selected"  
                                    Background="LightSalmon"
-                                   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Width="520"
+                                   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Width="563"
                                    HorizontalAlignment="Left" />
 
                             <ListBox x:Name="lstSelected" 
+                                     FontFamily="Courier New" FontSize="14"
                                      PreviewMouseDoubleClick="lstSelected_PreviewMouseDoubleClick"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
                                      Grid.Row="2" Grid.Column="2" Grid.RowSpan="5" >

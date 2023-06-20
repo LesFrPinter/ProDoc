@@ -1,17 +1,14 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using ProDocEstimate.Views;
-using System.Configuration;
-using System.Data.SqlClient;
+﻿using ProDocEstimate.Views;
+using System;
 using System.ComponentModel;
-using System.Windows.Controls;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Diagnostics;
-using Telerik.Windows.Controls.SyntaxEditor.UI;
-using Windows.ApplicationModel.Appointments;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ProDocEstimate
 {
@@ -25,6 +22,7 @@ namespace ProDocEstimate
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
         public SqlDataAdapter? da;
+        public DataTable? dt;
         public SqlCommand? scmd;
 
         #region Property Declarations
@@ -119,6 +117,8 @@ namespace ProDocEstimate
 
             LoadAvailableCategories();
 
+            QUOTE_NUM = "10001";
+
             // this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             // This also works:
             //	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
@@ -178,7 +178,7 @@ namespace ProDocEstimate
             else
             {
                 DataTable dt = ds.Tables[0]; DataRow dr = dt.Rows[0];
-                DataRow dr3 = dt.Rows[0];
+//                DataRow dr3 = dt.Rows[0];
                 CUST_NUM = dt.Rows[0]["CUST_NUM"].ToString();
 
                 // These columns need to be added:
@@ -1110,14 +1110,50 @@ namespace ProDocEstimate
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             string x = lstSelected.SelectedItem.ToString();
+            if ( x.IndexOf(' ') > 0 ) { x = x.Substring(0, x.IndexOf(' ')); }
+//            MessageBox.Show(x);
+
             switch (x)
             {
                 case "Backer":
                     {
-                        BackerForm backer = new BackerForm(PRESSSIZE); backer.ShowDialog();
+                        BackerForm backer = new BackerForm(PRESSSIZE, QUOTE_NUM); backer.ShowDialog();
+
+                        // After the user closes the BackerForm, this happens:
+                        float BackerTotal = backer.Total;
+                        backer.Close();
+                        string str = "";
+                        string z = lstSelected.Items[lstSelected.SelectedIndex].ToString() + str.PadRight(50).Substring(0, 42) + BackerTotal.ToString("C2");
+                        int idx = lstSelected.SelectedIndex;
+                        lstSelected.Items[idx] = z;
+
                         break;
                     }
             }
+        }
+
+        private void Page3_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // Load any selected categories and remove them from the "Available" listbox
+            string cmd = "SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QUOTE_NUM + "' AND CATEGORY = 'BACKER'";
+            dt = new DataTable("Details");
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+            for ( int i = 0; i < dt.Rows.Count; i++ )
+            {
+                if (dt.Rows[i]["CATEGORY"].ToString() == "BACKER")
+                {
+                    string amt = dt.Rows[i]["AMOUNT"].ToString();
+                    double damt = double.Parse(amt);
+                    amt = damt.ToString("C2");
+                    string s = "BACKER";
+                    s = s.PadRight(54) + amt;
+                    lstSelected.Items.Add(s);
+                    lstAvailable.Items.Remove("Backer");
+                }
+            }
+            conn.Close();
+
         }
     }
 }
