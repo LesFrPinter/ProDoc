@@ -46,9 +46,9 @@
         </Label>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="20 0 0 0" >
-            <RadioButton GroupName="Bak" Margin="20 0 0 0" Content="Backer"      IsChecked="{Binding One, Mode=TwoWay}"   Width="145" />
-            <RadioButton GroupName="Bak" Margin="20 0 0 0" Content="Backer Std"  IsChecked="{Binding Two, Mode=TwoWay}"   Width="145"/>
-            <RadioButton GroupName="Bak" Margin="20 0 0 0" Content="Backer PMS"  IsChecked="{Binding Three, Mode=TwoWay}" Width="145"/>
+            <RadioButton x:Name="B1" GroupName="Bak" Margin="20 0 0 0" Content="Backer"      IsChecked="{Binding One, Mode=TwoWay}"   Width="145" Checked="B1_Checked"/>
+            <RadioButton x:Name="B2" GroupName="Bak" Margin="20 0 0 0" Content="Backer Std"  IsChecked="{Binding Two, Mode=TwoWay}"   Width="145" Checked="B2_Checked"/>
+            <RadioButton x:Name="B3" GroupName="Bak" Margin="20 0 0 0" Content="Backer PMS"  IsChecked="{Binding Three, Mode=TwoWay}" Width="145" Checked="B3_Checked"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="20 0 0 0" >

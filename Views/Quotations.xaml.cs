@@ -29,16 +29,15 @@ namespace ProDocEstimate
 
         #region Property Declarations
 
-        private string? quote_num = ""; public string? QUOTE_NUM { get { return quote_num; } set { quote_num = value; OnPropertyChanged(); } }
-        private string? cust_num; public string? CUST_NUM { get { return cust_num; } set { cust_num = value; OnPropertyChanged(); } }
-
+        private string? quote_num = "";   public string? QUOTE_NUM   { get { return quote_num;   } set { quote_num   = value; OnPropertyChanged(); } }
+        private string? cust_num;         public string? CUST_NUMB   { get { return cust_num;    } set { cust_num    = value; OnPropertyChanged(); } }
         private string? projectType = ""; public string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
 
-        private string? fsint1; public string? FSINT1 { get { return fsint1; } set { fsint1 = value; OnPropertyChanged(); } }
+        private string? fsint1;  public string? FSINT1  { get { return fsint1;  } set { fsint1  = value; OnPropertyChanged(); } }
         private string? fsfrac1; public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
-        private string? fsint2; public string? FSINT2 { get { return fsint2; } set { fsint2 = value; OnPropertyChanged(); } }
+        private string? fsint2;  public string? FSINT2  { get { return fsint2;  } set { fsint2  = value; OnPropertyChanged(); } }
         private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
-        private int? parts; public int? PARTS { get { return parts; } set { parts = value; OnPropertyChanged(); } }
+        private int?    parts;   public int?    PARTS   { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
 
         private string? papertype; public string? PAPERTYPE { get { return papertype; } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
         private string? rollwidth; public string? ROLLWIDTH { get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
@@ -47,13 +46,15 @@ namespace ProDocEstimate
         private string? collatorcut; public string? COLLATORCUT { get { return collatorcut; } set { collatorcut = value; OnPropertyChanged(); } }
 
         private string? customerName; public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
-        private string? address; public string? Address { get { return address; } set { address = value; OnPropertyChanged(); } }
-        private string? city; public string? City { get { return city; } set { city = value; OnPropertyChanged(); } }
-        private string? state; public string? State { get { return state; } set { state = value; OnPropertyChanged(); } }
-        private string? zip; public string? ZIP { get { return zip; } set { zip = value; OnPropertyChanged(); } }
-        private string? location; public string? Location { get { return location; } set { location = value; OnPropertyChanged(); } }
-        private string? phone; public string? Phone { get { return phone; } set { phone = value; OnPropertyChanged(); } }
-        private string? csz; public string? CSZ { get { return csz; } set { csz = value; OnPropertyChanged(); } }
+        private string? contactName;  public string? ContactName { get { return contactName; } set { contactName = value; OnPropertyChanged(); } }
+        private string? address;      public string? Address { get { return address; } set { address = value; OnPropertyChanged(); } }
+        private string? city;         public string? City { get { return city; } set { city = value; OnPropertyChanged(); } }
+        private string? state;        public string? State { get { return state; } set { state = value; OnPropertyChanged(); } }
+        private string? zip;          public string? ZIP { get { return zip; } set { zip = value; OnPropertyChanged(); } }
+        private string? location;     public string? Location { get { return location; } set { location = value; OnPropertyChanged(); } }
+        private string? phone;        public string? Phone { get { return phone; } set { phone = value; OnPropertyChanged(); } }
+        private string? csz;          public string? CSZ { get { return csz; } set { csz = value; OnPropertyChanged(); } }
+        private string? email;        public string? Email { get { return email; } set { email = value; OnPropertyChanged(); } }
 
         private string? activePage; public string? ActivePage { get { return activePage; } set { activePage = value; OnPropertyChanged(); } }
 
@@ -145,8 +146,8 @@ namespace ProDocEstimate
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox
-                .Show(" Customer Lookup screen here ");
+            //            System.Windows.MessageBox.Show(" Customer Lookup screen here ");
+            CustomerLookup cl = new(); cl.ShowDialog();
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -178,7 +179,7 @@ namespace ProDocEstimate
         {
             SqlConnection cn = new(ConnectionString);
             if (QUOTE_NUM == null || QUOTE_NUM == "") QUOTE_NUM = txtQuoteNum.Text.ToString();
-            string str = "SELECT * FROM [ProVisionDev].[dbo].[QUOTES] WHERE QUOTE_NUM = " + QUOTE_NUM;
+            string str = "SELECT * FROM [ESTIMATING].[dbo].[QUOTES] WHERE QUOTE_NUM = " + QUOTE_NUM;
             SqlDataAdapter da = new(str, cn);
             DataSet ds = new();
             da.Fill(ds);
@@ -189,7 +190,7 @@ namespace ProDocEstimate
             {
                 DataTable dt = ds.Tables[0]; DataRow dr = dt.Rows[0];
 //                DataRow dr3 = dt.Rows[0];
-                CUST_NUM = dt.Rows[0]["CUST_NUM"].ToString();
+                CUST_NUMB = dt.Rows[0]["CUST_NUM"].ToString();
 
                 // These columns need to be added:
 
@@ -457,11 +458,14 @@ namespace ProDocEstimate
 
         private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
         {
-            return;  // for now...
+//            return;  // for now...
 
             int CustKey = int.Parse(txtCustomerNum.Text);
+            string FixedCust = txtCustomerNum.Text.Trim();
+            FixedCust = FixedCust.PadRight(6);
             SqlConnection cn = new(ConnectionString);
-            string str = "SELECT *, RTRIM(CITY) + ', ' + STATE + ' ' + ZIP AS CSZ FROM CUSTOMERS WHERE CUST_NUMB = " + CustKey.ToString();
+            string str = "SELECT * FROM [ESTIMATING].[dbo].[CUSTOMER] C, [ESTIMATING].[dbo].[CUSTOMER_CONTACT] CC " +
+                " WHERE C.CUST_NUMB = '" + FixedCust + "' AND C.CUST_NUMB = CC.CUST_NUMB";
             SqlDataAdapter da = new(str, cn);
             DataSet ds = new();
             da.Fill(ds);
@@ -469,10 +473,13 @@ namespace ProDocEstimate
             {
                 DataTable dt = ds.Tables[0];
                 DataRow dr = dt.Rows[0];
-                CustomerName = dr[2].ToString();
-                Address = dr[3].ToString();
-                Phone = dr[9].ToString();
-                CSZ = dr[10].ToString();
+                DataRowView drv = dt.DefaultView[dt.Rows.IndexOf(dr)];
+                CustomerName = drv["CUST_NAME"].ToString();
+                ContactName  = drv["CONTACT_NAME"].ToString();
+                Address      = drv["ADDRESS1"].ToString();
+                Phone        = drv["PHONE"].ToString();
+                Email        = drv["E_MAIL"].ToString();
+                CSZ = drv["CITY"].ToString().TrimEnd() + ", " + drv["STATE"].ToString().TrimEnd() + " " + drv["ZIP"].ToString().TrimEnd();
             }
             else { MessageBox.Show("No match"); }
         }
@@ -1080,7 +1087,7 @@ namespace ProDocEstimate
             SqlCommand scmd = new SqlCommand();
             scmd.Connection = conn;
             scmd.CommandType = CommandType.Text;
-            scmd.CommandText = "SELECT MAX(QUOTE_NUM) FROM [ProVisionDev].[dbo].[QUOTES]";
+            scmd.CommandText = "SELECT MAX(QUOTE_NUMB) FROM [ESTIMATING].[dbo].[QUOTES]";
             string NextQuoteNum = (string)scmd.ExecuteScalar();
             int nextNum = int.Parse(NextQuoteNum.ToString().TrimEnd());
             nextNum += 1;

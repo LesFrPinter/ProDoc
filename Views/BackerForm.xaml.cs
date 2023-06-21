@@ -12,6 +12,9 @@ namespace ProDocEstimate.Views
 {
     public partial class BackerForm : Window, INotifyPropertyChanged
     {
+
+        #region Properties
+
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
         public SqlDataAdapter? da;
@@ -39,6 +42,8 @@ namespace ProDocEstimate.Views
         private int button3; public int Button3 { get { return button3; } set { button3 = value; OnPropertyChanged(); } }
 
         private string quoteNo; public string QuoteNo { get { return quoteNo; } set { quoteNo = value; OnPropertyChanged(); } }
+
+        #endregion
 
         public BackerForm(string PSize, string QUOTENUM)
         {
@@ -118,7 +123,8 @@ namespace ProDocEstimate.Views
             cmd += Total.ToString("N2") + " )";
 
             // Write to SQL
-//            conn = new SqlConnection(ConnectionString);
+
+            // conn = new SqlConnection(ConnectionString);
             scmd.CommandText = cmd; 
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
@@ -132,13 +138,19 @@ namespace ProDocEstimate.Views
         { this.Close(); }
 
         private void RadNumericUpDown_LostFocus(object sender, RoutedEventArgs e)
-        {
-            CalcTotal();
-        }
+        { CalcTotal(); }
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {
-            CalcTotal();
-        }
+        { CalcTotal(); }
+
+        private void B1_Checked(object sender, RoutedEventArgs e)
+        { CalcTotal(); }
+
+        private void B2_Checked(object sender, RoutedEventArgs e)
+        { CalcTotal(); }
+
+        private void B3_Checked(object sender, RoutedEventArgs e)
+        { CalcTotal(); }
+
     }
 }

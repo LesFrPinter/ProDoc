@@ -61,7 +61,7 @@ namespace ProDocEstimate.Views
 
 			if (Auto==true) { MessageBox.Show("Autocomplete is not enabled..."); }
 
-      string cmd = "SELECT * FROM [ProVisionDev].[dbo].[QUOTES] " 
+      string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTES] " 
 				 + "    LEFT JOIN [ESTIMATING].[dbo].[CUSTOMER]"
 				 + " ON QUOTES.CUST_NUM = CUSTOMER.CUST_NUMB";
 

@@ -13,7 +13,10 @@ namespace ProDocEstimate.Views
     public partial class InkColors : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+        protected void OnPropertyChanged([CallerMemberName] string? name = null) 
+         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+        #region Properties
 
         private int    maxColors; public int    MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
         private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
@@ -34,6 +37,8 @@ namespace ProDocEstimate.Views
         public SqlDataAdapter? da;
         public DataTable? dt;
         public SqlCommand? scmd;
+
+        #endregion
 
         public InkColors(string PRESSSIZE, string QUOTENUM)
         {
@@ -67,6 +72,7 @@ namespace ProDocEstimate.Views
                 case "PMS1":      { Std      = 0; BlackStd = 0; break; }
             }
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             // Validate inputs

@@ -616,7 +616,7 @@
 						         LostFocus="txtCustomerNum_LostFocus"
 						         MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
 						         Style="{StaticResource TextField}"
-						         Text="{Binding CUST_NUM}" />
+						         Text="{Binding CUST_NUMB}" />
                         <CheckBox x:Name="chkProspect"
 						          Grid.Row="11"
 						          Grid.Column="5"
