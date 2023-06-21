@@ -45,7 +45,7 @@ namespace ProDocEstimate.Views
             InitializeComponent();
             DataContext = this;
             PressSize = PSize;
-            Title = "PressSize: " + PressSize;      // passed in when the form is instantiated inside Quotations.xaml.cs.
+            Title = Title = "Quote #: " + QUOTENUM + "  PressSize: " + PressSize;  // passed in when the form is instantiated in Quotations.xaml.cs.
             Total = -1.00F;
             QuoteNo = QUOTENUM;
             LoadQuote();
@@ -53,7 +53,7 @@ namespace ProDocEstimate.Views
 
         private void LoadQuote()
         {
-            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNo + "' AND CATEGORY = 'BACKER'";
+            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNo + "' AND CATEGORY = 'Backer'";
             dt = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
@@ -98,29 +98,30 @@ namespace ProDocEstimate.Views
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if((Button1+Button2+Button3)==0) { MessageBox.Show("Please select an option."); return; }
-            // Save the calculated result.
+            // Delete current detail line
+            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNo + "' AND Category = 'Backer'";
+            conn = new SqlConnection(ConnectionString);
+            SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
 
             // Store in Quote_Detail table:
-            string cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( Quote_Num, Category, Param1, Param2, Value2, Amount ) VALUES ( ";
-
-            cmd += "'" + QuoteNo.ToString() + "', 'BACKER', ";
-
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( Quote_Num, Category, Sequence, Param1, Param2, Value2, Amount ) VALUES ( ";
+            cmd += "'" + QuoteNo.ToString() + "', 'Backer', 1, ";
             // Which radiobutton was selected?
             if (Button1 == 1) { cmd += "'BACKER',    "; }
             if (Button2 == 1) { cmd += "'BACKER STD',"; }
             if (Button3 == 1) { cmd += "'BACKER PMS',"; }
-
             // How many changes?
             cmd += " 'Changes', " + Changes.ToString().TrimEnd() + ", ";
-
             // Finally, the total charge for Backer:
             cmd += Total.ToString("N2") + " )";
 
-//          MessageBox.Show(cmd);
-
             // Write to SQL
-            conn = new SqlConnection(ConnectionString);
-            SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+//            conn = new SqlConnection(ConnectionString);
+            scmd.CommandText = cmd; 
+            conn.Open();
             try { scmd.ExecuteNonQuery(); }
             catch ( Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); scmd = null; conn = null; }
@@ -129,9 +130,7 @@ namespace ProDocEstimate.Views
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        { this.Close(); }
 
         private void RadNumericUpDown_LostFocus(object sender, RoutedEventArgs e)
         {

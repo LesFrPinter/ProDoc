@@ -669,8 +669,8 @@ namespace ProDocEstimate
                 DataTable dtAvg = new("Avg");
                 da5.Fill(dtAvg);
                 if(dtAvg.Rows.Count>0) 
-                    {  dt.Rows[r]["AverageCost"] = dtAvg.Rows[0][0].ToString();   // I rewrote the query to return just one column (average cost)
-                       dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();   // SelectedCost defaults to average cost
+                    {  dt.Rows[r]["AverageCost"] = dtAvg.Rows[0][0].ToString();     // I rewrote the query to return just one column (average cost)
+                       dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();    // SelectedCost defaults to average cost
                     }
                 else { dt.Rows[r]["SelectedCost"] = dt.Rows[r]["LastPOCost"]; }     // Default is AverageCost unless it was zero
             }
