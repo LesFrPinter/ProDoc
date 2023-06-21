@@ -74,8 +74,7 @@ namespace ProDocEstimate.Views
 
         private void CalcTotal()
         {
-
-            if (Total == -1.00F) { Total = 0.00F; return; }
+            if (Total == -1.00F) { Total = 0.00F; return; } // First time it's called is spurious
 
             if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
 
