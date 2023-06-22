@@ -1,16 +1,15 @@
-﻿using ProDocEstimate.Views;
-using System;
-using System.ComponentModel;
-using System.Configuration;
+﻿using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Configuration;
+using ProDocEstimate.Views;
 using System.Windows.Input;
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Windows.Controls;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace ProDocEstimate
 {
@@ -126,6 +125,16 @@ namespace ProDocEstimate
 
             MaxColors = 5; // Get from the [Estimating].[dbo].[PressSizeColors] table
 
+            // set some defaults for testing
+            ProjectType = "CONTINUOUS";
+            PARTS = 3;
+            PAPERTYPE = "BOND";
+            ROLLWIDTH = "10";
+            PRESSSIZE = "11";
+            COLLATORCUT = "11";
+
+            LoadDetails();  // For Page 3
+
             // this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             // This also works:
             //	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
@@ -134,13 +143,13 @@ namespace ProDocEstimate
         private void LoadAvailableCategories()
         {
             lstAvailable.Items.Add("Backer");
-            lstAvailable.Items.Add("InkColor");
+            lstAvailable.Items.Add("Ink Color");
             lstAvailable.Items.Add("MICR");
             lstAvailable.Items.Add("Perfing");
             lstAvailable.Items.Add("Punching");
 
-            lstAvailable.Items.Remove("InkColor");
-            lstSelected.Items.Add("InkColor");
+            //lstAvailable.Items.Remove("Ink Color");
+            //lstSelected.Items.Add("Ink Color");
 
         }
 
@@ -1103,30 +1112,36 @@ namespace ProDocEstimate
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-//            Debugger.Break();
+            //Debugger.Break();
 
             string? x = lstSelected.SelectedItem.ToString();
-            if ( x.IndexOf(' ') > 0 ) { x = x.Substring(0, x.IndexOf(' ')); }
+            if ( x.IndexOf(' ') > 0 ) { x = x.Substring(0, x.IndexOf(' ')); }  // Just the first word; needed if the dollar amount appears in the ListItem.
 
             switch (x)
             {
                 case "Backer":
                     {
                         BackerForm backer = new BackerForm(PRESSSIZE, QUOTE_NUM); backer.ShowDialog();
-//                        return;     // Don't show dollar amount
+                        //                        return;     // Don't show dollar amount
                         // After the user closes the BackerForm, this happens:
-                        float BackerTotal = backer.Total;
+                        //float BackerTotal = backer.Total;
                         backer.Close();
-                        string str = "";
-                        string z = lstSelected.Items[lstSelected.SelectedIndex].ToString() + str.PadRight(50).Substring(0, 42) + BackerTotal.ToString("C2");
-                        int idx = lstSelected.SelectedIndex;
-                        lstSelected.Items[idx] = z;
+                        //string str = "";
+                        //string z = lstSelected.Items[lstSelected.SelectedIndex].ToString() + str.PadRight(50).Substring(0, 42) + BackerTotal.ToString("C2");
+                        //int idx = lstSelected.SelectedIndex;
+                        //lstSelected.Items[idx] = z;
                         break;
                     }
 
-                case "InkColor":
+                case "Ink":
                     { 
                         InkColors Ink = new InkColors(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
+                        break;
+                    }
+
+                case "Perfing":
+                    {
+                        Perfing perf = new Perfing(PRESSSIZE, QUOTE_NUM); perf.ShowDialog();
                         break;
                     }
 
@@ -1135,26 +1150,31 @@ namespace ProDocEstimate
 
         private void Page3_GotFocus(object sender, RoutedEventArgs e)
         {
-
             return;
+        }
 
+        private void LoadDetails()
+        {
             // Load any selected categories and remove them from the "Available" listbox
-            string cmd = "SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QUOTE_NUM + "' AND CATEGORY = 'BACKER'";
+            string cmd = $"SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             dt = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
-            for ( int i = 0; i < dt.Rows.Count; i++ )
-            {
-                if (dt.Rows[i]["CATEGORY"].ToString() == "BACKER")
-                {
-                    string amt = dt.Rows[i]["AMOUNT"].ToString();
-                    double damt = double.Parse(amt);
-                    amt = damt.ToString("C2");
-                    string s = "BACKER";
-                    s = s.PadRight(54) + amt;
-                    lstSelected.Items.Add(s);
-                    lstAvailable.Items.Remove("Backer");
-                }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {   string s = dt.Rows[i]["CATEGORY"].ToString();
+                lstSelected.Items.Add(s);
+                lstAvailable.Items.Remove(s);
+
+                //if (dt.Rows[i]["CATEGORY"].ToString() == "Backer")
+                //{
+                //    string amt = dt.Rows[i]["AMOUNT"].ToString();
+                //    double damt = double.Parse(amt);
+                //    amt = damt.ToString("C2");
+                //    string s = "BACKER";
+                //    s = s.PadRight(54) + amt;
+                //    lstSelected.Items.Add(s);
+                //    lstAvailable.Items.Remove("Backer");
+                //}
             }
             conn.Close();
         }

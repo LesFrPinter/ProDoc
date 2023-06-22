@@ -29,7 +29,7 @@ namespace ProDocEstimate.Views
         private float flat;  public float Flat  { get { return flat;    } set { flat    = value; OnPropertyChanged(); } }
         private float chng;  public float Chng  { get { return chng;    } set { chng    = value; OnPropertyChanged(); } }
         private int changes; public int Changes { get { return changes; } set { changes = value; OnPropertyChanged(); } }
-        private float total; public float Total { get { return total;   } set { total   = value; OnPropertyChanged(); } }
+        private float? total; public float? Total { get { return total;   } set { total   = value; OnPropertyChanged(); } }
 
         private bool backer; public bool Backer { get { return backer;  } set { backer  = value; OnPropertyChanged(); } }
 
@@ -120,7 +120,7 @@ namespace ProDocEstimate.Views
             // How many changes?
             cmd += " 'Changes', " + Changes.ToString().TrimEnd() + ", ";
             // Finally, the total charge for Backer:
-            cmd += Total.ToString("N2") + " )";
+            cmd += Total.ToString() + " )";
 
             // Write to SQL
 

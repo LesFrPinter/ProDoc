@@ -8,14 +8,14 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Title="Ink Colors" Height="240" Width="800">
+        Title="Ink Colors" Height="240" Width="830">
 
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
-            <Setter Property="Margin" Value="2 0" />
-            <Setter Property="Padding" Value="2 0" />
+            <Setter Property="VerticalAlignment"   Value="Bottom" />
+            <Setter Property="Margin"              Value="2 0"    />
+            <Setter Property="Padding"             Value="2 0"    />
         </Style>
         <Style TargetType="telerik:RadNumericUpDown">
             <Setter Property="FontSize" Value="10" />
@@ -25,6 +25,7 @@
             <Setter Property="Grid.Row" Value="2" />
             <Setter Property="NumberDecimalDigits" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Minimum"  Value="0" />
         </Style>
     </Window.Resources>
     
@@ -65,18 +66,19 @@
             <Label Content="Thermo"       Grid.Row="1" Grid.Column="6" FontSize="10" />
             <Label Content="Backer"       Grid.Row="1" Grid.Column="7" FontSize="10" />
 
-            <Label Content="{Binding MaxColors}" Grid.Row="2" Foreground="red" Height="16"  />
-            <telerik:RadNumericUpDown Grid.Column="1" x:Name="Std1"     Minimum="0" Maximum="1" ValueChanged="RadNumericUpDown_ValueChanged" Value="{Binding Std,       UpdateSourceTrigger=PropertyChanged}" />
-            <telerik:RadNumericUpDown Grid.Column="2" x:Name="BlkStd1"  Minimum="0" Maximum="1" ValueChanged="RadNumericUpDown_ValueChanged" Value="{Binding BlackStd,  UpdateSourceTrigger=PropertyChanged}" />
-            <telerik:RadNumericUpDown Grid.Column="3" x:Name="PMS1"     Minimum="0" Maximum="1" ValueChanged="RadNumericUpDown_ValueChanged" Value="{Binding PMS,       UpdateSourceTrigger=PropertyChanged}" />
-            <telerik:RadNumericUpDown Grid.Column="4" Value="{Binding Desentized}"/>
-            <telerik:RadNumericUpDown Grid.Column="5" Value="{Binding Split}"     />
-            <telerik:RadNumericUpDown Grid.Column="6" Value="{Binding Thermo}"    />
-            <telerik:RadNumericUpDown Grid.Column="7" Value="{Binding Backer}"    />
+            <Label Content="{Binding MaxColors}" Grid.Row="2" Foreground="red" Height="16" VerticalAlignment="Center" />
+
+            <telerik:RadNumericUpDown Grid.Column="1" x:Name="Std1" Value="{Binding Std,      UpdateSourceTrigger=PropertyChanged}" ValueChanged="RadNumericUpDown_ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="2" x:Name="Blk1" Value="{Binding BlackStd, UpdateSourceTrigger=PropertyChanged}" ValueChanged="RadNumericUpDown_ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="3" x:Name="Pms1" Value="{Binding PMS,      UpdateSourceTrigger=PropertyChanged}" ValueChanged="RadNumericUpDown_ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="4" x:Name="Des1" Value="{Binding Desens,   UpdateSourceTrigger=PropertyChanged}" ValueChanged="RadNumericUpDown_ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="5" x:Name="Spl1" Value="{Binding Split,    UpdateSourceTrigger=PropertyChanged}" ValueChanged="RadNumericUpDown_ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="6" x:Name="The1" Value="{Binding Thermo,   UpdateSourceTrigger=PropertyChanged}" ValueChanged="RadNumericUpDown_ValueChanged" />
+
+            <Label Grid.Row="2" Grid.Column="7" Content="{Binding Backer}" VerticalAlignment="Center" />
 
             <Label Grid.Row="3" Grid.Column="2" Content="Total:" HorizontalAlignment="Right" />
             <Label Grid.Row="3" Grid.Column="3" Content="{Binding Total, StringFormat=C2}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" />
-
             
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="3" HorizontalAlignment="Center">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
