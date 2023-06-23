@@ -1145,6 +1145,12 @@ namespace ProDocEstimate
                         break;
                     }
 
+                case "MICR":
+                    {
+                        MICR micr = new MICR(PRESSSIZE, QUOTE_NUM); micr.ShowDialog();
+                        break;
+                    }
+
             }
         }
 
