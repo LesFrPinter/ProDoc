@@ -28,6 +28,8 @@ namespace ProDocEstimate
 
         #region Property Declarations
 
+        private bool isCalc; public bool IsCalc { get { return isCalc; } set { isCalc = value; OnPropertyChanged(); } }
+
         private string? quote_num = "";   public string? QUOTE_NUM   { get { return quote_num;   } set { quote_num   = value; OnPropertyChanged(); } }
         private string? cust_num;         public string? CUST_NUMB   { get { return cust_num;    } set { cust_num    = value; OnPropertyChanged(); } }
         private string? projectType = ""; public string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
@@ -914,7 +916,9 @@ namespace ProDocEstimate
         private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
         {
             SelectedQty = Qty1;
-            Calculating c = new Calculating(); c.Show();
+
+//            Calculating c = new Calculating(); c.Show();
+            IsCalc = true;
 
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
@@ -933,7 +937,9 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-            c.Close();
+            //          c.Close();
+            IsCalc = false;
+
             QTY1a = SelectedQty;
             CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString()) ;
             CPM1a = CPM1a * 1000.00F;

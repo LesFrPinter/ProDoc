@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        Title="" Height="50" Width="200">
+        WindowStyle="SingleBorderWindow"
+        Title="" Height="100" Width="200">
 
     <Grid>
-        <Label Content="Calculating..."  HorizontalAlignment="Center" Background="Yellow" Foreground="Red" />
+        <TextBlock Text="Calculating..."  HorizontalAlignment="Center" Background="Blue" Foreground="Yellow" />
     </Grid>
 
 </Window>
