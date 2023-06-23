@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProDocEstimate"
         mc:Ignorable="d"
+        Background="LightGray"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="750" Width="1020">
 
@@ -17,7 +18,7 @@
 
 	</Window.Resources>
 
-	<Grid Background="Beige" Margin="0,-3,0,3">
+	<Grid Background="LightGray" Margin="0,-3,0,3">
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="60" />

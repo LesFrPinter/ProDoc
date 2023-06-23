@@ -147,6 +147,7 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("MICR");
             lstAvailable.Items.Add("Perfing");
             lstAvailable.Items.Add("Punching");
+            lstAvailable.Items.Add("Press Numbering");
 
             //lstAvailable.Items.Remove("Ink Color");
             //lstSelected.Items.Add("Ink Color");
@@ -1148,6 +1149,18 @@ namespace ProDocEstimate
                 case "MICR":
                     {
                         MICR micr = new MICR(PRESSSIZE, QUOTE_NUM); micr.ShowDialog();
+                        break;
+                    }
+
+                case "Punching":
+                    {
+                        Punching punch = new Punching(PRESSSIZE, QUOTE_NUM); punch.ShowDialog();
+                        break;
+                    }
+
+                case "Press":
+                    {
+                        PressNum pressnum = new PressNum(PRESSSIZE, QUOTE_NUM); pressnum.ShowDialog();
                         break;
                     }
 
