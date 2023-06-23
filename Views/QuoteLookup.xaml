@@ -67,7 +67,7 @@
 					x:Name="cbAuto"
 					Margin="10,0,0,0"
 					VerticalContentAlignment="Center"
-					IsChecked="{Binding Path=Auto}"
+					IsChecked="{Binding Auto, UpdateSourceTrigger=PropertyChanged}"
 					Content="_AutoComplete"
 					FontSize="16" />
 
@@ -76,6 +76,7 @@
 					Width="40"
 					Height="26"
 					Margin="20,0"
+                    Visibility="{Binding AutoViz, UpdateSourceTrigger=PropertyChanged}"
 					Click="btnGo_Click">
 					<AccessText>_Go</AccessText>
 				</Button>

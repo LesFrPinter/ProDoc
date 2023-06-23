@@ -88,7 +88,7 @@ namespace ProDocEstimate
         private int?     wastePct = 5; public int? WastePct         { get { return wastePct;   } set {  wastePct  = value; OnPropertyChanged(); } }
         private string?     itemType;  public string? ItemType      { get { return itemType;   } set { itemType   = value; OnPropertyChanged(); LoadPage2Combos(); } }
         private int?           numUpp; public int? NumUpp           { get { return numUpp;     } set {  numUpp    = value; OnPropertyChanged(); } }
-        private int?      selectedQty; public int? SelectedQty      { get { return selectedQty;} set { selectedQty= value; OnPropertyChanged(); } }  // PaperCalc(); 
+        private int?      selectedQty; public int? SelectedQty      { get { return selectedQty;} set { selectedQty= value; OnPropertyChanged(); } }
         private string?       calcMsg; public string? CalcMsg       { get { return calcMsg;    } set { calcMsg    = value; OnPropertyChanged(); } }
 
         private DataTable?   features; public DataTable? Features   { get { return features;   } set { features   = value; OnPropertyChanged(); } }
@@ -113,19 +113,18 @@ namespace ProDocEstimate
         public Quotations()
         {
             InitializeComponent();
+
             DataContext = this;
 
             LoadPressSizes();
             LoadFormTypes();
             LoadPaperTypes();
-
             LoadAvailableCategories();
 
-            QUOTE_NUM = "10001";
-
+            // set some defaults for testing
             MaxColors = 5; // Get from the [Estimating].[dbo].[PressSizeColors] table
 
-            // set some defaults for testing
+            QUOTE_NUM = "10001";
             ProjectType = "CONTINUOUS";
             PARTS = 3;
             PAPERTYPE = "BOND";
@@ -133,7 +132,7 @@ namespace ProDocEstimate
             PRESSSIZE = "11";
             COLLATORCUT = "11";
 
-            LoadDetails();  // For Page 3
+            LoadDetails();  // For page 3
 
             // this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             // This also works:
@@ -149,6 +148,8 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Punching");
             lstAvailable.Items.Add("Press Numbering");
 
+            //TODO: Always load Ink Color on new quotes
+
             //lstAvailable.Items.Remove("Ink Color");
             //lstSelected.Items.Add("Ink Color");
 
@@ -156,24 +157,32 @@ namespace ProDocEstimate
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
         {
-            //            System.Windows.MessageBox.Show(" Customer Lookup screen here ");
             CustomerLookup cl = new(); cl.ShowDialog();
+            CUST_NUMB = cl.CustomerCode;
+            cl.Close();
+
+            string str = "SELECT C.CUST_NAME, CC.CONTACT_NAME, C.CUST_NUMB, CC.ADDRESS1, CC.CITY, CC.STATE, CC.ZIP, CC.PHONE, CC.E_MAIL "
+            + " FROM [ESTIMATING].[dbo].[CUSTOMER] C, [ESTIMATING].[dbo].[CUSTOMER_CONTACT] CC "
+            + $" WHERE C.CUST_NUMB = CC.CUST_NUMB AND C.CUST_NUMB = '{CUST_NUMB}'" ;
+
+            conn = new SqlConnection(ConnectionString);
+            SqlDataAdapter da = new(str, conn);
+            DataTable dt = new(); da.Fill(dt);
+            CustomerName = dt.Rows[0]["CUST_NAME"].ToString();
+            ContactName = dt.Rows[0]["CONTACT_NAME"].ToString();
+            Address = dt.Rows[0]["ADDRESS1"].ToString();
+            City = dt.Rows[0]["CITY"].ToString().TrimEnd();
+            State = dt.Rows[0]["STATE"].ToString().TrimEnd();
+            ZIP = dt.Rows[0]["ZIP"].ToString().TrimEnd();
+            CSZ = City.TrimEnd() + ", " + State + ", " + ZIP;
+            Phone = dt.Rows[0]["Phone"].ToString();
+            Email = dt.Rows[0]["E_MAIL"].ToString();
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox
-                .Show(" Do this in the Customer Lookup screen");
+            System.Windows.MessageBox.Show(" Do this in the Customer Lookup screen");
         }
-
-        //private void btnBaseCharge_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Page2.IsEnabled = true;
-        //    Page3.IsEnabled = true;
-        //    Page2.Focus();
-        //    // call dgSheetsOfPaper_SelectedCellsChanged
-        //    dgSheetsOfPaper.RaiseEvent(new RoutedEventArgs(DataGrid.SelectedEvent));
-        //}
 
         private void btnCopy_Click(object sender, RoutedEventArgs e)
         {
@@ -181,8 +190,8 @@ namespace ProDocEstimate
             ql.ShowDialog();
             QUOTE_NUM = ql.SelQuote; ql.Close();
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
-
             GetQuote();
+            btnAssignNewQuoteNum.Visibility = Visibility.Visible;
         }
 
         private void GetQuote()
@@ -262,24 +271,26 @@ namespace ProDocEstimate
             this.dgElements.ItemsSource = Elements.DefaultView;
         }
 
-        private void LoadFeatures()     // No longer used
-        {
-            this.Features = new DataTable("Features");
-            this.Features.Columns.Add("SHOW");
-            this.Features.Columns.Add("ITEM");
+        #region not used
+        //private void LoadFeatures()     // No longer used
+        //{
+        //    this.Features = new DataTable("Features");
+        //    this.Features.Columns.Add("SHOW");
+        //    this.Features.Columns.Add("ITEM");
 
-            this.Features.Rows.Add(0, "InkColor");
-            this.Features.Rows.Add(0, "Backer");
-            this.Features.Rows.Add(0, "Punching");
-            this.Features.Rows.Add(0, "Cross Perf");
-            this.Features.Rows.Add(0, "Booking");
-            this.Features.Rows.Add(0, "Fan a part");
-            this.Features.Rows.Add(0, "Shrink Wrap");
-            this.Features.Rows.Add(0, "Padding");
+        //    this.Features.Rows.Add(0, "InkColor");
+        //    this.Features.Rows.Add(0, "Backer");
+        //    this.Features.Rows.Add(0, "Punching");
+        //    this.Features.Rows.Add(0, "Cross Perf");
+        //    this.Features.Rows.Add(0, "Booking");
+        //    this.Features.Rows.Add(0, "Fan a part");
+        //    this.Features.Rows.Add(0, "Shrink Wrap");
+        //    this.Features.Rows.Add(0, "Padding");
 
-            //this.dgFeatures.DataContext = this;
-            //this.dgFeatures.ItemsSource = Features.DefaultView;
-        }
+        //    //this.dgFeatures.DataContext = this;
+        //    //this.dgFeatures.ItemsSource = Features.DefaultView;
+        //}
+        #endregion
 
         private void LoadPaperTypes()
         {
@@ -468,8 +479,6 @@ namespace ProDocEstimate
 
         private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
         {
-//            return;  // for now...
-
             int CustKey = int.Parse(txtCustomerNum.Text);
             string FixedCust = txtCustomerNum.Text.Trim();
             FixedCust = FixedCust.PadRight(6);
@@ -491,7 +500,10 @@ namespace ProDocEstimate
                 Email        = drv["E_MAIL"].ToString();
                 CSZ = drv["CITY"].ToString().TrimEnd() + ", " + drv["STATE"].ToString().TrimEnd() + " " + drv["ZIP"].ToString().TrimEnd();
             }
-            else { MessageBox.Show("No match"); }
+            //else 
+            //{ MessageBox.Show("No match");
+            //  Debugger.Break(); 
+            //}
         }
 
         private void dgElements_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -648,7 +660,6 @@ namespace ProDocEstimate
                 " ORDER BY E.SETNUM, E.SEQ";
 
             Clipboard.SetText(cmd);
-//          Debugger.Break();  // Load into SQL Server Management Console
 
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
@@ -658,7 +669,6 @@ namespace ProDocEstimate
 
             for (int r = 0; r < dt.DefaultView.Count; r++)
             {
-// These are already in the table; all we need is average and most recent cost for each paper 
                 string? clr  = dt.Rows[r]["Color"].ToString();
                 string? wt   = dt.Rows[r]["SubWT"].ToString();
                 string? it   = dt.Rows[r]["PType"].ToString();
@@ -703,11 +713,6 @@ namespace ProDocEstimate
             dgSheetsOfPaper.SelectedIndex = -1;     // Force loading of labels 
             dgSheetsOfPaper.SelectedIndex = 0;      //  using the first row description
 
-        }
-
-        private void cmbPaperType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // No longer used...
         }
 
         public void CalculateRowCost()
@@ -815,10 +820,8 @@ namespace ProDocEstimate
             if (int.Parse(dt4.Rows[0][0].ToString()) == 0) 
               { MessageBox.Show("Paper not found", TestDesc);
                 System.Windows.Clipboard.SetText(cmd); // In case I want to see what SQL sees...
-                //Debugger.Break();
                 return;
               }
-            // --------------------------------------------------------------------------
 
             string WhereClause  = " WHERE ReportType = '" + PAPERTYPE.ToString().TrimEnd() + "'";
             if (txtRollWidth.Text.Length > 0) { WhereClause +=   " AND Size = '"       + lblRollWidth.Content.ToString().TrimEnd() + "'"; }
@@ -828,15 +831,11 @@ namespace ProDocEstimate
             cmd = "SELECT COUNT(*) FROM MasterInventory " + WhereClause;
 
             System.Windows.Clipboard.SetText(cmd); // In case I want to see what SQL sees...
-            //MessageBox.Show(cmd);
-            //Debugger.Break();
 
-//            SqlConnection cn = new(ConnectionString);
             SqlDataAdapter da5 = new(cmd, cn); DataTable dt5 = new("CT"); da5.Fill(dt5);
 
             if (dt5.Rows.Count == 0) { MessageBox.Show("Paper not found in MasterInventory"); return; }
 
-            // if(txtItemType.Text.TrimEnd() == "BND") { txtItemType.Text = "BOND";  }
 
             if (lblItemType.Content.ToString().Length > 0 && txtItemType.Text.ToString().TrimEnd().Length > 0 && lblItemType.Content != txtItemType.Text ) 
             { 
@@ -846,7 +845,6 @@ namespace ProDocEstimate
             if (lblPaperType.Content.ToString().Length > 0 && txtPaperType.Text.ToString().TrimEnd().Length > 0)
             {
                 DRV[0] = DRV[0].ToString().Replace(lblPaperType.Content.ToString().TrimEnd(), ItemType.ToString().TrimEnd());
-                //  DRV[7] = txtPaperType.Text.ToString().TrimEnd();
                 DRV[7] = ItemType;
             }
 
@@ -871,8 +869,6 @@ namespace ProDocEstimate
                 // There is no RollWidth column in DRV, because DRV comes from Estimating.dbo.ESTPAPER; should we add one?
             }
 
-//            MessageBox.Show("Select a quantity to recalculate paper cost");
-
             return;
         }
 
@@ -882,7 +878,6 @@ namespace ProDocEstimate
             string prop1 = (e.Row.Item as DataRowView).Row[1].ToString();
         }
 
-        // was async previously...
         private void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
         {
             txtItemType.Focus();  // TODO: Provide a visual cue that combobox itemlists have been refreshed and they need to pick anything they want to change
@@ -894,8 +889,6 @@ namespace ProDocEstimate
         {
             if (cmbCollatorCut.SelectedValue == null) return;
  
-//            lblUpMessage.Content = "Calculating...";
-
             string? val = cmbCollatorCut.SelectedValue.ToString().TrimEnd();
             string sval1, sval2;
             sval1 = "";
@@ -916,29 +909,13 @@ namespace ProDocEstimate
             int intVal = (int)Math.Round(UpVal);
             lblUp.Content = UpVal.ToString();
             lblUpMessage.Content = "up";
-
-        }
-
-        private void PaperCalc()
-        {
-//            CalcMsg = "Recalculating paper weight...";
-        }
-
-        //private async void ToggleMsg()
-        //{
-        //    CalcMsg = "Recalculating...";
-        //    await Task.Delay(2000);
-        //    CalcMsg = "";
-        //}
-
-        private void txtPaperType_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            //    No longer used
         }
 
         private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty1;
-            CalcMsg = "Calculating...";
+        {
+            SelectedQty = Qty1;
+            Calculating c = new Calculating(); c.Show();
+
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
             pc.Up = int.Parse(lblUp.Content.ToString());
@@ -956,7 +933,7 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-            CalcMsg = "";
+            c.Close();
             QTY1a = SelectedQty;
             CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString()) ;
             CPM1a = CPM1a * 1000.00F;
@@ -964,7 +941,7 @@ namespace ProDocEstimate
 
         private void txtQty2_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
         {   SelectedQty = Qty2;
-            CalcMsg = "Calculating...";
+            Calculating c = new Calculating(); c.Show();    // Show the "busy" message...
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
             pc.Up = int.Parse(lblUp.Content.ToString());
@@ -982,7 +959,7 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-            CalcMsg = "";
+            c.Close();
             QTY2a = SelectedQty;
             CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM2a = CPM2a * 1000.00F;
@@ -990,7 +967,7 @@ namespace ProDocEstimate
 
         private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
         {   SelectedQty = Qty3;
-            CalcMsg = "Calculating...";
+            Calculating c = new Calculating(); c.Show();
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
             pc.Up = int.Parse(lblUp.Content.ToString());
@@ -1008,7 +985,7 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-            CalcMsg = "";
+            c.Close();
             QTY3a = SelectedQty;
             CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM3a = CPM3a * 1000.00F;
@@ -1016,7 +993,7 @@ namespace ProDocEstimate
 
         private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
         {   SelectedQty = Qty4;
-            CalcMsg = "Calculating...";
+            Calculating c = new Calculating(); c.Show();
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
             pc.Up = int.Parse(lblUp.Content.ToString());
@@ -1034,7 +1011,7 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-            CalcMsg = "";
+            c.Close();
             QTY4a = SelectedQty;
             CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM4a = CPM4a * 1000.00F;
@@ -1055,14 +1032,7 @@ namespace ProDocEstimate
         private void txtQty4_GotFocus(object sender, RoutedEventArgs e) { txtQty4.SelectAll(); }
 
         private void cmbProjectType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LoadRollWidths();   // What else needs to be done when Project Type changes?
-        }
-
-        private void txtItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // No longer used
-        }
+        { LoadRollWidths(); }
 
         private void LoadPage2Combos()
         {
@@ -1071,25 +1041,13 @@ namespace ProDocEstimate
             LoadRollWidths();
         }
 
-        private void txtItemType_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            // No longer used
-        }
-
         private void txtItemType_DropDownOpened(object sender, System.EventArgs e)
         {
             PickMsg.Visibility = Visibility.Hidden;
         }
 
-        private void dgSheetsOfPaper_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-//            No longer used
-        }
-
         private void cmbPaperType_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            LoadRollWidths(); 
-        }
+        { LoadRollWidths(); }
 
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
@@ -1097,7 +1055,7 @@ namespace ProDocEstimate
             SqlCommand scmd = new SqlCommand();
             scmd.Connection = conn;
             scmd.CommandType = CommandType.Text;
-            scmd.CommandText = "SELECT MAX(QUOTE_NUMB) FROM [ESTIMATING].[dbo].[QUOTES]";
+            scmd.CommandText = "SELECT MAX(QUOTE_NUM) FROM [ESTIMATING].[dbo].[QUOTES]";
             string NextQuoteNum = (string)scmd.ExecuteScalar();
             int nextNum = int.Parse(NextQuoteNum.ToString().TrimEnd());
             nextNum += 1;
@@ -1113,10 +1071,11 @@ namespace ProDocEstimate
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //Debugger.Break();
 
             string? x = lstSelected.SelectedItem.ToString();
             if ( x.IndexOf(' ') > 0 ) { x = x.Substring(0, x.IndexOf(' ')); }  // Just the first word; needed if the dollar amount appears in the ListItem.
+
+            //TODO: Something funny is happening with long category names; 
 
             switch (x)
             {
@@ -1158,7 +1117,7 @@ namespace ProDocEstimate
                         break;
                     }
 
-                case "Press":
+                case "PressNum":
                     {
                         PressNum pressnum = new PressNum(PRESSSIZE, QUOTE_NUM); pressnum.ShowDialog();
                         break;
@@ -1180,20 +1139,11 @@ namespace ProDocEstimate
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
-            {   string s = dt.Rows[i]["CATEGORY"].ToString();
+            {
+                string s = dt.Rows[i]["CATEGORY"].ToString();
                 lstSelected.Items.Add(s);
+                if(s=="PressNum") { s = "Press Numbering"; }        // Kludge to fix temporarily...
                 lstAvailable.Items.Remove(s);
-
-                //if (dt.Rows[i]["CATEGORY"].ToString() == "Backer")
-                //{
-                //    string amt = dt.Rows[i]["AMOUNT"].ToString();
-                //    double damt = double.Parse(amt);
-                //    amt = damt.ToString("C2");
-                //    string s = "BACKER";
-                //    s = s.PadRight(54) + amt;
-                //    lstSelected.Items.Add(s);
-                //    lstAvailable.Items.Remove("Backer");
-                //}
             }
             conn.Close();
         }
@@ -1212,6 +1162,11 @@ namespace ProDocEstimate
             lstAvailable.Items.Add(x);
             lstSelected.Items.Remove(x);
             x = null;
+        }
+
+        private void btnAssignNewQuoteNum_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

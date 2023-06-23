@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProDocEstimate.Views"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
@@ -16,12 +17,14 @@
             <Setter Property="Margin"              Value="2 0"    />
             <Setter Property="Padding"             Value="2 0"    />
         </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="Margin"   Value="4" />
-            <Setter Property="Height"   Value="20" />
-            <Setter Property="Width"    Value="20" />
-            <Setter Property="Grid.Row" Value="2" />
+        <Style TargetType="telerik:RadNumericUpDown">
+            <Setter Property="FontSize" Value="10"                />
+            <Setter Property="Margin"   Value="4"                 />
+            <Setter Property="Height"   Value="20"                />
+            <Setter Property="Width"    Value="20"                />
+            <Setter Property="Grid.Row" Value="2"                 />
+            <Setter Property="Minimum"  Value="0"                 />
+            <Setter Property="NumberDecimalDigits" Value="0"      />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
     </Window.Resources>
@@ -40,9 +43,10 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Label FontSize="22" Foreground="Red" Content="Press Numbering" Width="170" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
+            <Label FontSize="22" Foreground="Red" Content="Press Numbering" Width="170" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" VerticalAlignment="Top" Margin="0" >
                 <Label.BitmapEffect>
                     <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
                 </Label.BitmapEffect>
@@ -50,15 +54,17 @@
 
             <Label Grid.Row="1"                 Content="Red" />
             <Label Grid.Row="1" Grid.Column="1" Content="Black" />
+            <Label Grid.Row="1" Grid.Column="2" Content="Transparent" />
 
-            <ComboBox                 Width="60" Text="{Binding Red}"   x:Name="M1" />
-            <ComboBox Grid.Column="1" Width="60" Text="{Binding Black}" x:Name="M2"  />
+            <telerik:RadNumericUpDown                 Value="{Binding Red}" x:Name="M1" />
+            <telerik:RadNumericUpDown Grid.Column="1" Value="{Binding Blk}" x:Name="M2" />
+            <telerik:RadNumericUpDown Grid.Column="2" Value="{Binding Trn}" x:Name="M3" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
-
+            
         </Grid>
 
     </Viewbox>

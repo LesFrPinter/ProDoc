@@ -22,47 +22,52 @@
 			</Grid.RowDefinitions>
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
-				<Label HorizontalAlignment="Left" Content="Name: " />
+				<Label HorizontalAlignment="Left" Content="Company Name: " />
 				<TextBox
 					x:Name="txtCustName"
-					Width="240"
+					Width="150"
 					Margin="0,4"
 					VerticalContentAlignment="Center"
-					Text="{Binding CustName}"
+					Text="{Binding Cust_Name, UpdateSourceTrigger=PropertyChanged}"
 					TextChanged="txtCustName_TextChanged" />
-				<Button
-					x:Name="btnGo"
-					Width="40"
-					Height="26"
-					Margin="20,0"
-					Click="btnGo_Click">
-					<AccessText>_Go</AccessText>
-				</Button>
-				<Label HorizontalAlignment="Left" Content="Cust #: " />
+                <Label HorizontalAlignment="Left" Content="Contact Name: " />
+                <TextBox
+					x:Name="txtContactName"
+					Width="150"
+					Margin="0,4"
+					VerticalContentAlignment="Center"
+					Text="{Binding Cont_Name, UpdateSourceTrigger=PropertyChanged}"
+					TextChanged="txtCustName_TextChanged" />
+                <Label HorizontalAlignment="Left" Content="Cust #: " Margin="20 0 0 0" />
 				<TextBox
 					x:Name="txtCustNo"
-					Width="70"
+					Width="55"
 					Margin="0,4"
 					VerticalContentAlignment="Center" />
+                
+                 <!--TODO: Bind these checkboxes to properties and use the bound property values in the construction of the SELECT statement...-->
+                
 				<CheckBox
 					x:Name="cbPartial"
-					Margin="30,0,0,0"
+					Margin="40,0,0,0"
 					VerticalContentAlignment="Center"
 					Content="_Partial"
 					FontSize="16" />
 				<CheckBox
 					x:Name="cbDesc"
-					Margin="10,0,0,0"
+					Margin="20,0,0,0"
 					VerticalContentAlignment="Center"
+                    IsChecked="{Binding Descending, UpdateSourceTrigger=PropertyChanged}"
 					Content="_Descending"
 					FontSize="16" />
 				<CheckBox
 					x:Name="cbAuto"
-					Margin="10,0,0,0"
+                    IsChecked="{Binding Auto, UpdateSourceTrigger=PropertyChanged}"
+					Margin="20,0,0,0"
 					VerticalContentAlignment="Center"
 					Content="_AutoComplete"
 					FontSize="16" />
-				<Label
+				<!--<Label
 					x:Name="lblSearchType"
 					Width="200"
 					Height="22"
@@ -72,8 +77,17 @@
 					HorizontalContentAlignment="Right"
 					Content="{Binding Path=SearchType}"
 					FontSize="12"
-					FontWeight="Medium" />
-			</StackPanel>
+					FontWeight="Medium" />-->
+                <Button
+                    Visibility="{Binding GoButtonVisibility}"
+					x:Name="btnGo"
+					Width="40"
+					Height="26"
+					Margin="50,0"
+					Click="btnGo_Click">
+                    <AccessText>_Go</AccessText>
+                </Button>
+            </StackPanel>
 
 			<DataGrid
 				x:Name="dgCustomers"
@@ -84,23 +98,27 @@
 					<DataGridTextColumn
 						Width="2*"
 						Binding="{Binding Path=CUST_NAME}"
-						Header="CUSTOMER NAME" />
-					<DataGridTextColumn
+						Header="Customer" />
+                    <DataGridTextColumn
+						Width="2*"
+						Binding="{Binding Path=CONTACT_NAME}"
+						Header="Contact" />
+                    <DataGridTextColumn
 						Width="75"
 						Binding="{Binding Path=CUST_NUMB}"
-						Header="CODE" />
+						Header="Cust #" />
 					<DataGridTextColumn
 						Width="2*"
 						Binding="{Binding Path=ADDRESS1}"
-						Header="ADDRESS" />
+						Header="Address" />
 					<DataGridTextColumn
 						Width="*"
 						Binding="{Binding Path=CITY}"
-						Header="CITY" />
+						Header="City" />
 					<DataGridTextColumn
 						Width="50"
 						Binding="{Binding Path=STATE}"
-						Header="STATE" />
+						Header="State" />
 					<DataGridTextColumn
 						Width="75"
 						Binding="{Binding Path=ZIP}"
@@ -108,7 +126,7 @@
 					<DataGridTextColumn
 						Width="125"
 						Binding="{Binding Path=PHONE}"
-						Header="PHONE" />
+						Header="Phone" />
 					<DataGridTextColumn
 						Width="125"
 						Binding="{Binding Path=ATTENTION}"

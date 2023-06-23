@@ -125,9 +125,10 @@
 			x:Key="MainTitle"
 			x:Name="MainTitle"
 			TargetType="Label">
-			<Setter Property="FontSize" Value="64" />
-			<Setter Property="Foreground" Value="White" />
-			<Setter Property="Background" Value="red" />
+            <Setter Property="FontFamily" Value="Brush Script MT Italic" />
+            <Setter Property="FontSize" Value="48" />
+			<Setter Property="Foreground" Value="Black" />
+			<Setter Property="Background" Value="Gray" />
 			<Setter Property="VerticalAlignment" Value="Center" />
 			<Setter Property="HorizontalAlignment" Value="Center" />
 			<Setter Property="Padding" Value="0" />

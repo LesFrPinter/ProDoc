@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProDocEstimate.Views
 {
@@ -33,12 +22,13 @@ namespace ProDocEstimate.Views
         public DataTable? dt;
         public SqlCommand? scmd;
 
-        private int max; public int Max { get { return max; } set { max = value; OnPropertyChanged(); } }
+        private int max;          public int    Max       { get { return max;       } set { max       = value; OnPropertyChanged(); } }
         private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
-        private string quoteNum; public string QuoteNum { get { return quoteNum; } set { quoteNum = value; OnPropertyChanged(); } }
+        private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
 
-        private bool red; public bool Red { get { return red; } set { red = value; OnPropertyChanged(); } }
-        private bool blk; public bool Blk { get { return blk; } set { blk = value; OnPropertyChanged(); } }
+        private int red; public int Red { get { return red; } set { red = value; OnPropertyChanged(); } }
+        private int blk; public int Blk { get { return blk; } set { blk = value; OnPropertyChanged(); } }
+        private int trn; public int Trn { get { return trn; } set { trn = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -61,9 +51,10 @@ namespace ProDocEstimate.Views
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             DataView dv = new DataView(dt);
-            //dv.RowFilter = "F_TYPE='DIGITAL'"; M1.Maximum = int.Parse(dv[0]["Max"].ToString());
-            //dv.RowFilter = "F_TYPE='PACK2PACK'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
-            //dv.RowFilter = "F_TYPE='PRESS'"; M3.Maximum = int.Parse(dv[0]["Max"].ToString());
+            dv.RowFilter = "F_TYPE='RED'"; M1.Maximum = int.Parse(dv[0]["Max"].ToString());
+            dv.RowFilter = "F_TYPE='BLK'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
+            M3.Maximum = 1; // Temporary
+//            dv.RowFilter = "F_TYPE='TRN'"; M3.Maximum = int.Parse(dv[0]["Max"].ToString());
         }
 
         private void LoadData()
@@ -73,9 +64,9 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
             DataView dv = new DataView(dt);
-            //Digital = int.Parse(dv[0]["Value1"].ToString());
-            //Pack2Pack = int.Parse(dv[0]["Value2"].ToString());
-            //Press = int.Parse(dv[0]["Value3"].ToString());
+            Red = int.Parse(dv[0]["Value1"].ToString());
+            Blk = int.Parse(dv[0]["Value2"].ToString());
+            Trn = int.Parse(dv[0]["Value3"].ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -94,11 +85,11 @@ namespace ProDocEstimate.Views
             // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + " Quote_Num, Category, Sequence,"
-                + " Param1, Param2, "
-                + " Value1, Value2 ) VALUES ( "
+                + " Param1, Param2, Param3, "
+                + " Value1, Value2, Value3  ) VALUES ( "
                 + $"'{QuoteNum}', 'PressNum', 6, "
-                + " 'RED', 'BLK' "
-                + $" '{Red}', '{Blk}' )";
+                + " 'RED', 'BLK', 'TRN', "
+                + $" '{Red}', '{Blk}', '{Trn}' )";
 
             // Write to SQL
             //            conn = new SqlConnection(ConnectionString);

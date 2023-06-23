@@ -111,7 +111,6 @@ namespace ProDocEstimate.Views
             { 
                 MessageBox.Show(ex.Message,str);
                 Clipboard.SetText(str);
-                Debugger.Break();  // Load into SQL Server Management Console
             }
 
             double m = (y2 - y1) / (x2 - x1);

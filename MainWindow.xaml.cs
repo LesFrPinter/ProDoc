@@ -65,45 +65,45 @@ namespace ProDocEstimate
 
 		private void mnuEdit_Click(object sender, RoutedEventArgs e)
 		{
-			CustomerLookup cl = new CustomerLookup();
-			cl.SearchType = "Edit an existing quote";
-			cl.lblSearchType.Content = cl.SearchType;
-			cl.ShowDialog();
-			CustName = cl.CustomerName;
-			CustCode = cl.CustomerCode;
-			if(CustName?.Length!=0)
-			{ NewEstimate ne = new NewEstimate();
-				ne.Message = "Editing an existing quote";
-				ne.lblCustName.Content = CustName;
-				ne.txtCustNo.Text = CustCode;
-				ne.lblMessage.Content = "(" + CustCode + ") " + CustName;
-				ne.ShowDialog();
-			}
-				else
-			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
+			//CustomerLookup cl = new CustomerLookup();
+			//cl.SearchType = "Edit an existing quote";
+			//cl.lblSearchType.Content = cl.SearchType;
+			//cl.ShowDialog();
+			//CustName = cl.CustomerName;
+			//CustCode = cl.CustomerCode;
+			//if(CustName?.Length!=0)
+			//{ NewEstimate ne = new NewEstimate();
+			//	ne.Message = "Editing an existing quote";
+			//	ne.lblCustName.Content = CustName;
+			//	ne.txtCustNo.Text = CustCode;
+			//	ne.lblMessage.Content = "(" + CustCode + ") " + CustName;
+			//	ne.ShowDialog();
+			//}
+			//	else
+			//{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
 
-			cl.Close();
+			//cl.Close();
     }
 
 		private void mnuCopy_Click(object sender, RoutedEventArgs e)
 		{
-			CustomerLookup cl = new CustomerLookup();
-			cl.SearchType = "Copy an existing quote";
-			cl.lblSearchType.Content = cl.SearchType;
-			cl.ShowDialog();
-			CustName = cl.CustomerName;
-			CustCode = cl.CustomerCode;
-			if (CustName?.Length != 0)
-			{ NewEstimate ne = new NewEstimate();
-				ne.Message = "Copy of Quote # " + cl.CustomerCode + " with a new quote number";
-				ne.lblCustName.Content = CustName;
-				ne.txtCustNo.Text = CustCode;
-				ne.ShowDialog();
-			}
-			else
-			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
+			//CustomerLookup cl = new CustomerLookup();
+			//cl.SearchType = "Copy an existing quote";
+			//cl.lblSearchType.Content = cl.SearchType;
+			//cl.ShowDialog();
+			//CustName = cl.CustomerName;
+			//CustCode = cl.CustomerCode;
+			//if (CustName?.Length != 0)
+			//{ NewEstimate ne = new NewEstimate();
+			//	ne.Message = "Copy of Quote # " + cl.CustomerCode + " with a new quote number";
+			//	ne.lblCustName.Content = CustName;
+			//	ne.txtCustNo.Text = CustCode;
+			//	ne.ShowDialog();
+			//}
+			//else
+			//{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
 
-			cl.Close();
+			//cl.Close();
 		}
 
 		private void mnuBlank_Click(object sender, RoutedEventArgs e)

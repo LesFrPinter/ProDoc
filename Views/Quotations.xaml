@@ -147,16 +147,29 @@
 						        HorizontalAlignment="Left"
                                 Click="btnNewQuote_Click"
 						        Content="New quote" />
-                        <Button x:Name="btnCopy"
+
+                        <Button x:Name="btnLookup"
 						        Grid.Row="0"
 						        Grid.Column="2"
 						        Height="24"
 						        Margin="6,5,0,0"
-						        Padding="4,2"
+						        Padding="10,2"
 						        HorizontalAlignment="Left"
 						        VerticalAlignment="Top"
 						        Click="btnCopy_Click"
-						        Content="Copy a previous quote" />
+						        Content="Lookup" />
+
+                        <Button x:Name="btnAssignNewQuoteNum"
+						        Grid.Row="0"
+						        Grid.Column="2"
+						        Height="24"
+						        Margin="76,5,0,0"
+						        Padding="10,2"
+						        HorizontalAlignment="Left"
+						        VerticalAlignment="Top"
+                                Click="btnAssignNewQuoteNum_Click"
+                                Visibility="Hidden"
+						        Content="Assign a new Quote #" />
 
                         <Label Grid.Row="1"
 						       Grid.ColumnSpan="2"
@@ -568,6 +581,7 @@
 						       FontSize="18"
 						       FontWeight="bold"
 						       Foreground="blue" />
+
                         <Button x:Name="btnNew"
 						        Grid.Row="10"
 						        Grid.Column="2"
@@ -577,7 +591,13 @@
 						        HorizontalAlignment="Left"
 						        Click="btnNew_Click"
 						        Content="New" />
-                        <Button x:Name="btnLookup"
+
+                        <!--select substring(cust_numb,patindex('%[0-9]%', cust_numb),len(cust_numb)) from customer where cust_numb like 'P%'
+
+						    insert into customer ( cust_numb, cust_name ) values ( 'P00001', 'Test new customer')-->
+
+
+                        <Button x:Name="btnQuoteLookup"
 						        Grid.Row="10"
 						        Grid.Column="2"
 						        Height="24"
@@ -585,7 +605,7 @@
 						        Padding="10,0"
 						        HorizontalAlignment="Left"
 						        Click="btnLookup_Click"
-						        Content="Lookup or copy" />
+						        Content="Lookup" />
 
                         <Label Grid.Row="11"
 						       Grid.ColumnSpan="2"
@@ -641,7 +661,7 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding ContactName}" />
 
-                        <Label Grid.Row="13"
+                        <!--<Label Grid.Row="13"
 						       Grid.ColumnSpan="2"
 						       Margin="0,4,4,0"
 						       Padding="0"
@@ -655,7 +675,7 @@
 						         Margin="10,5,0,4"
 						         IsEnabled="False"
 						         Style="{StaticResource TextField}"
-						         Text="{Binding Location}" />
+						         Text="{Binding Location}" />-->
                         <Label Grid.Row="14"
 						       Grid.ColumnSpan="2"
 						       Margin="0,4,4,0"
@@ -767,7 +787,8 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page2" FontSize="16" Header="    Page 2    " IsEnabled="False">
+                <TabItem x:Name="Page2" 
+                         FontSize="16" Header="    Page 2    " IsEnabled="False">
 
                     <Grid Height="570">
 
@@ -784,7 +805,7 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
-                        <!--TODO These column definitions are wrong!-->
+                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -850,24 +871,20 @@
 								 GotFocus="txtQty4_GotFocus"
                                  Text="{Binding Path=Qty4,StringFormat=N0}" x:Name="txtQty4" PreviewMouseDown="txtQty4_PreviewMouseDown" />
 
-                        <!--<Border CornerRadius="20" HorizontalAlignment="Left" 
-                                Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" Margin="30 0 0 0" >-->
                         <TextBlock 
                                 Grid.Row="0" Grid.Column="8" Margin="10,5,0,5"
                                 Foreground="White" FontWeight="Bold" 
-                                Text="{Binding SelectedQty, StringFormat='0,0 chosen'}"
+                                Text="{Binding SelectedQty, StringFormat='0,0'}"
                                 FontSize="11" Height="20" Padding="10 2"
                                 Background="Red"
-                                HorizontalAlignment="Left" />
-                        <!--</Border>-->
-
+                                HorizontalAlignment="Left" >
+                        </TextBlock>
 
                         <!--Remove CalcMsg label if it still shows up-->
                         <Label x:Name="lblCalcMsg" Grid.Row="1" Grid.Column="8" 
                                HorizontalAlignment="Center"
                                Foreground="White" Background="Green" 
-                               Visibility="Hidden"
-                               Content="{Binding CalcMsg}" FontSize="9"  />
+                               Content="{Binding CalcMsg, UpdateSourceTrigger=PropertyChanged}" FontSize="9"  />
 
                         <Label Content="Paper Type" Grid.Row="2" Grid.Column="3" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -907,13 +924,14 @@
 						          Width="775"
 						          Height="310"
                                   Margin="2,0,0,0"
-                                  PreviewMouseDown="dgSheetsOfPaper_PreviewMouseDown"
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
                                   CanUserAddRows="False"
                                   IsSynchronizedWithCurrentItem="True"
 						          VerticalAlignment="Top"
                                   CellEditEnding="dgSheetsOfPaper_CellEditEnding"
                                   SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" Grid.RowSpan="3">
+
+                            <!--PreviewMouseDown="dgSheetsOfPaper_PreviewMouseDown"-->
 
                             <DataGrid.Columns>
 
@@ -990,14 +1008,13 @@
 							x:Name="txtItemType"
                             FontSize="10" Width="65"
                             Height="22"   Padding="2 0"
-                            MouseDown="txtItemType_MouseDown"
                             DropDownOpened="txtItemType_DropDownOpened"
-                            SelectionChanged="txtItemType_SelectionChanged"
 							DisplayMemberPath="ItemType"
                             SelectedValue="{Binding ItemType}"
 						    VerticalAlignment="Center" Margin="16,0,0,0" />
 
-                        <!--TODO: DONE: Reload Basis, Color and RollWidth whenever ItemType changes (uses ItemType setter) -->
+                        <!--MouseDown="txtItemType_MouseDown"-->
+                        <!--SelectionChanged="txtItemType_SelectionChanged"-->
 
                         <ComboBox x:Name="txtBasis"
 						         Grid.Row="4"
@@ -1078,9 +1095,9 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="160" />
                                 <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="565" />
+                                <ColumnDefinition Width="525" />
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
@@ -1089,7 +1106,7 @@
 
                             <Label Content="Category" 
                                    Background="LightSalmon"
-								   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Width="115"
+								   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Width="155"
                                    HorizontalAlignment="Left" />
 
                             <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="5" 
@@ -1109,12 +1126,8 @@
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
 	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" >
 
-                                <!--PreviewMouseDoubleClick="lstSelected_PreviewMouseDoubleClick">-->
-
                             </ListBox>
-                            
-                            
-
+                                                        
                         </Grid>
 
                     </Viewbox>
