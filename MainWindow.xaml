@@ -53,7 +53,7 @@
 
         <Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
 
-        <Label Grid.Row="2" Content="Pro Vision 2" Padding="20 5 20 5" Style="{StaticResource MainTitle}" RenderTransformOrigin="0.5,0.5"  >
+        <Label Grid.Row="2" Content="Pro Vision 2" Padding="20 5 20 5" Style="{StaticResource MainTitle}" RenderTransformOrigin="0.5,0.5" Foreground="Navy" >
             <Label.Effect>
                 <DropShadowEffect Direction="325" Color="black" ShadowDepth="12" BlurRadius="22" />
             </Label.Effect>

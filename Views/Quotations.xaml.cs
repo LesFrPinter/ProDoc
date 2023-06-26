@@ -917,8 +917,7 @@ namespace ProDocEstimate
         {
             SelectedQty = Qty1;
 
-//            Calculating c = new Calculating(); c.Show();
-            IsCalc = true;
+            Calculating c = new Calculating(); c.Show();    // Show the "busy" message...
 
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
@@ -937,8 +936,8 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-            //          c.Close();
-            IsCalc = false;
+
+            c.Close();
 
             QTY1a = SelectedQty;
             CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString()) ;

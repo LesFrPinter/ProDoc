@@ -6,11 +6,22 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="SingleBorderWindow"
-        Title="" Height="100" Width="200">
+        WindowStyle="ToolWindow"
+        Title="Calculating..."
+        Height="30" Width="150">
 
     <Grid>
-        <TextBlock Text="Calculating..."  HorizontalAlignment="Center" Background="Blue" Foreground="Yellow" />
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Calculating...">
+        </Label>
+
     </Grid>
 
 </Window>
