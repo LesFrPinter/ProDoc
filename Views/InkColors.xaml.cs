@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Telerik.Windows.Controls.DataServices;
 
 namespace ProDocEstimate.Views
 {
@@ -30,7 +29,7 @@ namespace ProDocEstimate.Views
 
         private int   max;      public int Max      { get { return max;      } set { max      = value; OnPropertyChanged(); } }
 
-        //private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
+        private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
         //private float run_charge;  public float RUN_CHARGE  { get { return run_charge;  } set { run_charge  = value; OnPropertyChanged(); } }
         //private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
         //private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
@@ -55,6 +54,8 @@ namespace ProDocEstimate.Views
             Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
+
+            FLAT_CHARGE = 123.45F;
 
             Total = 0.00F;     // Calculcate this based on user input
             Backer = "";

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Title="PrePress" Height="250" Width="800">
+        Title="PrePress" Height="350" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -29,46 +29,47 @@
         </Style>
     </Window.Resources>
 
-    <Viewbox>
+    <!--<Viewbox>-->
 
-        <Grid Width="400" Height="125">
+    <Grid Width="800" Height="245" VerticalAlignment="Top">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-            <Label FontSize="22" Foreground="Red" Content="PrePress" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
-                <Label.BitmapEffect>
-                    <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
-                </Label.BitmapEffect>
-            </Label>
+        <Label FontSize="22" Foreground="Red" Content="PrePress" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
+            <Label.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
+            </Label.BitmapEffect>
+        </Label>
 
-            <Label Grid.Row="1"                 Content="OE" />
-            <Label Grid.Row="1" Grid.Column="1" Content="Plate Charge" />
-            <Label Grid.Row="1" Grid.Column="2" Content="Pre-Press" />
+        <Label Grid.Row="1"                 Content="OE" />
+        <Label Grid.Row="1" Grid.Column="1" Content="Plate Charge" />
+        <Label Grid.Row="1" Grid.Column="2" Content="Pre-Press" />
 
-            <telerik:RadNumericUpDown                 Width="60" Value="{Binding OE}"       x:Name="M1" />
-            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding PlateChg}" x:Name="M2"  />
-            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PREPress}" x:Name="M3"/>
+        <telerik:RadNumericUpDown                 Width="60" Value="{Binding OE}"       x:Name="M1" />
+        <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding PlateChg}" x:Name="M2"  />
+        <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PREPress}" x:Name="M3"/>
 
-            <!--<telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Running}"   x:Name="R1" />-->
+        <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="4" Height="120" Width="800" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center">
-                <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
-                <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
-            </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
+            <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
+        </StackPanel>
 
-        </Grid>
+    </Grid>
 
-    </Viewbox>
+    <!--</Viewbox>-->
 
 </Window>

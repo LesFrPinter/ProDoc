@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Windows.Devices.AllJoyn;
 
 namespace ProDocEstimate.Views
 {
@@ -30,6 +29,8 @@ namespace ProDocEstimate.Views
 
         private int combo1; public int Combo1 { get { return combo1; } set { combo1 = value; OnPropertyChanged(); } }
 
+        private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
+
         public bool Removed = false;
 
         #endregion
@@ -43,6 +44,7 @@ namespace ProDocEstimate.Views
             Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
+            FlatCharge = 4.95F;
             LoadMaxima();
             LoadData();
         }

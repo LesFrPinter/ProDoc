@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Title="Perfing" Height="250" Width="800">
+        Title="Perfing" Height="260" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -29,14 +29,15 @@
         </Style>
     </Window.Resources>
 
-    <Viewbox>
+    <!--<Viewbox>-->
 
-        <Grid Width="400" Height="125">
+        <Grid Width="800" Height="235" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="30" />
+                <RowDefinition Height="*"  />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
 
@@ -63,13 +64,15 @@
             <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PartRun}"   x:Name="PR1"/>
             <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Running}"   x:Name="R1" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Top">
+            <local:DetailFeatures Height="120" Width="800" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="5" Grid.RowSpan="3" />
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Bottom" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click"   />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
 
         </Grid>
 
-    </Viewbox>
+    <!--</Viewbox>-->
 
 </Window>

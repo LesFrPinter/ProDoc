@@ -1107,9 +1107,16 @@
                                 <ColumnDefinition Width="525" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+                            <!--<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
                                 <Button Content="Delete" Padding="5 3" />
-                            </StackPanel>
+                            </StackPanel>-->
+
+                            <Label Grid.Column="2" HorizontalAlignment="Left"
+                                Content="(Double-click to move selection between columns)" />
+
+                            <!--<Label 
+                                Content="(Right-click to view/change)" 
+                                Grid.Column="2" />-->
 
                             <Label Content="Category" 
                                    Background="LightSalmon"
@@ -1118,22 +1125,38 @@
 
                             <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="5" 
                                      FontFamily="Courier New" FontSize="14"
+                                     Height="240" VerticalAlignment="Top"
                                      MouseDoubleClick="lstAvailable_MouseDoubleClick" >
 
                             </ListBox>
 
-                            <Label Content="Selected"  
+                            <Label Content="Selected                                                         (Right-click to view/change)"
                                    Background="LightSalmon"
-                                   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Width="563"
+                                   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Width="520"
                                    HorizontalAlignment="Left" />
 
                             <ListBox x:Name="lstSelected" 
-                                     FontFamily="Courier New" FontSize="14"
+                                     FontFamily="Courier New" FontSize="14" 
+                                     Width="180" HorizontalAlignment="Left"
+                                     Height="240" VerticalAlignment="Top"
                                      Grid.Row="2" Grid.Column="2" Grid.RowSpan="5"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
 	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" >
 
                             </ListBox>
+
+                            <DataGrid Grid.Row="5" Height="175" VerticalAlignment="Top" Margin="5,155,0,0" Grid.ColumnSpan="3" Width="685" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Type"		Width="100" />
+                                    <DataGridTextColumn Header="Flat chg"	Width="100" />
+                                    <DataGridTextColumn Header="Run chg"	Width="100" />
+                                    <DataGridTextColumn Header="Plate"		Width="100" />
+                                    <DataGridTextColumn Header="FinishMatl" Width="100" />
+                                    <!--<DataGridTextColumn Header="SetupTime"	Width="100" />
+                                    <DataGridTextColumn Header="Slowdown"	Width="100" />-->
+                                    <DataGridTextColumn Header="PressMatl"	Width="100" />
+                                </DataGrid.Columns>
+                            </DataGrid>
 
                         </Grid>
 
@@ -1144,7 +1167,9 @@
                 <TabItem x:Name="Page4"
 				         FontSize="16"
 				         Header="Page 4">
+
                     <Viewbox>
+
                         <Grid Height="580" Width="780">
 
                             <Grid.RowDefinitions>
@@ -1169,6 +1194,8 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="100" />
@@ -1419,25 +1446,22 @@
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT4a, StringFormat=N2}" />
 
-                            <Label Grid.Row="5"
-						       Content="Move to here"
-						       FontSize="11" />
-
                             <DataGrid x:Name="dgElements"
-						          Grid.Row="6"
-						          Grid.RowSpan="8"
-						          Grid.ColumnSpan="6"
-						          Width="590"
-						          Margin="5"
-						          AutoGenerateColumns="False"
-						          Background="lightBlue"
-						          ColumnWidth="auto"
-						          FontSize="10"
-						          IsSynchronizedWithCurrentItem="True"
-						          ItemsSource="{Binding dtElements.DefaultView}"
-						          MouseDoubleClick="dgElements_MouseDoubleClick"
-						          RowHeight="18"
-						          SelectedCellsChanged="dgElements_SelectedCellsChanged">
+						        Grid.Row="6"
+                                Grid.Column="0"
+						        Grid.RowSpan="11"
+						        Grid.ColumnSpan="7"
+                                Margin="30 0"
+						        Width="720"
+						        AutoGenerateColumns="False"
+						        Background="lightBlue"
+						        ColumnWidth="auto"
+						        FontSize="10"
+						        IsSynchronizedWithCurrentItem="True"
+						        ItemsSource="{Binding dtElements.DefaultView}"
+						        MouseDoubleClick="dgElements_MouseDoubleClick"
+						        RowHeight="18"
+						        SelectedCellsChanged="dgElements_SelectedCellsChanged">
 
                                 <DataGrid.Columns>
 
@@ -1449,7 +1473,7 @@
                                         </DataGridTextColumn.Header>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Width="250" Binding="{Binding Path=ITEM}">
+                                    <DataGridTextColumn Width="350" Binding="{Binding Path=ITEM}">
                                         <DataGridTextColumn.Header>
                                             <Label HorizontalAlignment="Left"
 										       Content="Item (MasterInventory.Description)"
@@ -1472,7 +1496,7 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Width="90" Binding="{Binding Path=MULT, StringFormat=N0}">
+                                    <DataGridTextColumn Width="80" Binding="{Binding Path=MULT, StringFormat=N0}">
                                         <DataGridTextColumn.Header>
                                             <Label HorizontalAlignment="Right"
 										       Content="Mult"
@@ -1548,9 +1572,12 @@
 
                             </Grid>
 
+                            <Button Grid.Row="17" Grid.ColumnSpan="7" HorizontalAlignment="Center" >Save Quote</Button>
+
                         </Grid>
 
                     </Viewbox>
+
                 </TabItem>
 
             </TabControl>

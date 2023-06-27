@@ -9,7 +9,7 @@
         Title="Finishing"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Height="250" Width="800">
+        Height="270" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -30,15 +30,16 @@
         </Style>
     </Window.Resources>
 
-    <Viewbox>
+    <!--<Viewbox>-->
 
-        <Grid Width="600" Height="145">
+        <Grid Width="800" Height="300" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="45" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -67,15 +68,15 @@
             <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Pad}"        x:Name="M4"/>
             <telerik:RadNumericUpDown Grid.Column="4" Width="60" Value="{Binding Trim}"       x:Name="M5"/>
 
-            <!--<telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Running}"   x:Name="R1" />-->
+        <local:DetailFeatures Grid.Row="3" Width="750" Grid.RowSpan="3" Grid.ColumnSpan="9" Height="120" VerticalAlignment="Top" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0 -50 0 0" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
 
         </Grid>
 
-    </Viewbox>
+    <!--</Viewbox>-->
 
 </Window>

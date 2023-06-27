@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
-        Title="Backer" Height="215" Width="700">
+        Title="Backer" Height="315" Width="800">
 
     <!--<WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="15" />
@@ -22,12 +22,13 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid VerticalAlignment="Top">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="55" />
             <RowDefinition Height="35" />
             <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="55" />
         </Grid.RowDefinitions>
 
@@ -72,7 +73,9 @@
             <TextBlock Text="{Binding Path=Total, StringFormat={}{0:C2}}" FontSize="18" Foreground="Purple" />
         </Label>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" >
+        <local:DetailFeatures Grid.ColumnSpan="4" Grid.Row="3" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Center" >
             <Button x:Name="btnSave"   Grid.Column="3" Content="Save"   FontSize="16" Padding="4 2" Click="btnSave_Click" />
             <Button x:Name="btnCancel" Grid.Column="3" Content="Cancel" FontSize="16" Padding="4 2" Click="btnCancel_Click"/>
         </StackPanel>

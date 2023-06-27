@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Title="Combo" Height="250" Width="800">
+        Title="Combo" Height="350" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -31,12 +31,13 @@
 
     <Viewbox>
 
-        <Grid Width="400" Height="125">
+        <Grid Width="800" Height="250">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
 
@@ -56,8 +57,13 @@
 
             <telerik:RadNumericUpDown  Width="60" Value="{Binding Combo1}"   x:Name="M1" />
 
-            <Button x:Name="btnDelete" Grid.Row="3"  Content="Delete" Padding="6 2" HorizontalAlignment="Left" Click="btnDelete_Click" />
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <!--<Button x:Name="btnDelete" Grid.Row="3"  Content="Delete" Padding="6 2" HorizontalAlignment="Left" Click="btnDelete_Click" />-->
+            
+            <!--Removing a detail line from "lstSelected" deletes it from the quote_detail file-->
+
+            <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="7" Height="120" />
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
