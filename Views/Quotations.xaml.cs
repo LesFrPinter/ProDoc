@@ -1,15 +1,15 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Windows;
-using System.Configuration;
-using ProDocEstimate.Views;
-using System.Windows.Input;
+﻿using ProDocEstimate.Views;
+using System;
 using System.ComponentModel;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Controls;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ProDocEstimate
 {
@@ -149,23 +149,31 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Perfing");
             lstAvailable.Items.Add("Punching");
             lstAvailable.Items.Add("Press Numbering");
+            lstAvailable.Items.Add("Finishing");
+            lstAvailable.Items.Add("Converting");
+            lstAvailable.Items.Add("PrePress");
+            lstAvailable.Items.Add("Combo");
 
             //TODO: Always load Ink Color on new quotes
 
             //lstAvailable.Items.Remove("Ink Color");
             //lstSelected.Items.Add("Ink Color");
-
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
         {
             CustomerLookup cl = new(); cl.ShowDialog();
             CUST_NUMB = cl.CustomerCode;
+
+//            Debugger.Break();
+
             cl.Close();
 
             string str = "SELECT C.CUST_NAME, CC.CONTACT_NAME, C.CUST_NUMB, CC.ADDRESS1, CC.CITY, CC.STATE, CC.ZIP, CC.PHONE, CC.E_MAIL "
             + " FROM [ESTIMATING].[dbo].[CUSTOMER] C, [ESTIMATING].[dbo].[CUSTOMER_CONTACT] CC "
             + $" WHERE C.CUST_NUMB = CC.CUST_NUMB AND C.CUST_NUMB = '{CUST_NUMB}'" ;
+
+            System.Windows.Clipboard.SetText(str);
 
             conn = new SqlConnection(ConnectionString);
             SqlDataAdapter da = new(str, conn);
@@ -272,27 +280,6 @@ namespace ProDocEstimate
             this.dgElements.DataContext = this;
             this.dgElements.ItemsSource = Elements.DefaultView;
         }
-
-        #region not used
-        //private void LoadFeatures()     // No longer used
-        //{
-        //    this.Features = new DataTable("Features");
-        //    this.Features.Columns.Add("SHOW");
-        //    this.Features.Columns.Add("ITEM");
-
-        //    this.Features.Rows.Add(0, "InkColor");
-        //    this.Features.Rows.Add(0, "Backer");
-        //    this.Features.Rows.Add(0, "Punching");
-        //    this.Features.Rows.Add(0, "Cross Perf");
-        //    this.Features.Rows.Add(0, "Booking");
-        //    this.Features.Rows.Add(0, "Fan a part");
-        //    this.Features.Rows.Add(0, "Shrink Wrap");
-        //    this.Features.Rows.Add(0, "Padding");
-
-        //    //this.dgFeatures.DataContext = this;
-        //    //this.dgFeatures.ItemsSource = Features.DefaultView;
-        //}
-        #endregion
 
         private void LoadPaperTypes()
         {
@@ -781,7 +768,7 @@ namespace ProDocEstimate
 
             dgSheetsOfPaper.SelectedIndex = -1;
 
-            // Calculate TotalCost here:
+            SumRowTotals();
 
         }
 
@@ -875,9 +862,10 @@ namespace ProDocEstimate
         }
 
         private void dgSheetsOfPaper_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {   // Recalculate cost
-            string? rowNum = e.Row.DataContext.ToString();
-            string prop1 = (e.Row.Item as DataRowView).Row[1].ToString();
+        {   // What is this?
+            // Recalculate cost
+            //string? rowNum = e.Row.DataContext.ToString();
+            //string prop1 = (e.Row.Item as DataRowView).Row[1].ToString();
         }
 
         private void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
@@ -913,19 +901,83 @@ namespace ProDocEstimate
             lblUpMessage.Content = "up";
         }
 
-        private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
+        private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SelectedQty = Qty1;
+            GridCalc();
+            QTY1a = SelectedQty;
+            CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM1a = CPM1a * 1000.00F;
+        }
+        private void txtQty2_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
+        {   SelectedQty = Qty2;
+            GridCalc();
+            QTY2a = SelectedQty;
+            CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM2a = CPM2a * 1000.00F;
+        }
+        private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
+        {   SelectedQty = Qty3;
+            GridCalc();
+            //Calculating c = new Calculating(); c.Show();
+            //PressCalc pc = new PressCalc();
+            //pc.WastePct = (int)WastePct;
+            //pc.Up = int.Parse(lblUp.Content.ToString());
+            //QuoteTotal = 0.00D;
+            //int r = 0;
+            //for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
+            //{
+            //    pc.NumDocs = (int)SelectedQty;
+            //    pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
+            //    pc.PressSize = PRESSSIZE;
+            //    dgSheetsOfPaper.SelectedIndex = r;
+            //    pc.Calc();
+            //    DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
+            //    dataRow[11] = pc.Pounds;
+            //    dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
+            //    QuoteTotal += double.Parse(dataRow[16].ToString());
+            //}
+            //c.Close();
+            QTY3a = SelectedQty;
+            CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM3a = CPM3a * 1000.00F;
+        }
+        private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
+        {   SelectedQty = Qty4;
+            //Calculating c = new Calculating(); c.Show();
+            //PressCalc pc = new PressCalc();
+            //pc.WastePct = (int)WastePct;
+            //pc.Up = int.Parse(lblUp.Content.ToString());
+            //QuoteTotal = 0.00D;
+            //int r = 0;
+            //for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
+            //{
+            //    pc.NumDocs = (int)SelectedQty;
+            //    pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
+            //    pc.PressSize = PRESSSIZE;
+            //    dgSheetsOfPaper.SelectedIndex = r;
+            //    pc.Calc();
+            //    DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
+            //    dataRow[11] = pc.Pounds;
+            //    dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
+            //    QuoteTotal += double.Parse(dataRow[16].ToString());
+            //}
+            //c.Close();
+            QTY4a = SelectedQty;
+            CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM4a = CPM4a * 1000.00F;
+        }
 
+        private void GridCalc()
+        {
             Calculating c = new Calculating(); c.Show();    // Show the "busy" message...
-
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
             pc.Up = int.Parse(lblUp.Content.ToString());
             QuoteTotal = 0.00D;
             int r = 0;
             for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            { 
+            {
                 pc.NumDocs = (int)SelectedQty;
                 pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
                 pc.PressSize = PRESSSIZE;
@@ -936,90 +988,8 @@ namespace ProDocEstimate
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
             }
-
             c.Close();
-
-            QTY1a = SelectedQty;
-            CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString()) ;
-            CPM1a = CPM1a * 1000.00F;
-        }
-
-        private void txtQty2_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty2;
-            Calculating c = new Calculating(); c.Show();    // Show the "busy" message...
-            PressCalc pc = new PressCalc();
-            pc.WastePct = (int)WastePct;
-            pc.Up = int.Parse(lblUp.Content.ToString());
-            QuoteTotal = 0.00D;
-            int r = 0;
-            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            {
-                pc.NumDocs = (int)SelectedQty;
-                pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
-                pc.PressSize = PRESSSIZE;
-                dgSheetsOfPaper.SelectedIndex = r;
-                pc.Calc();
-                DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
-                dataRow[11] = pc.Pounds;
-                dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
-                QuoteTotal += double.Parse(dataRow[16].ToString());
-            }
-            c.Close();
-            QTY2a = SelectedQty;
-            CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM2a = CPM2a * 1000.00F;
-        }
-
-        private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty3;
-            Calculating c = new Calculating(); c.Show();
-            PressCalc pc = new PressCalc();
-            pc.WastePct = (int)WastePct;
-            pc.Up = int.Parse(lblUp.Content.ToString());
-            QuoteTotal = 0.00D;
-            int r = 0;
-            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            {
-                pc.NumDocs = (int)SelectedQty;
-                pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
-                pc.PressSize = PRESSSIZE;
-                dgSheetsOfPaper.SelectedIndex = r;
-                pc.Calc();
-                DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
-                dataRow[11] = pc.Pounds;
-                dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
-                QuoteTotal += double.Parse(dataRow[16].ToString());
-            }
-            c.Close();
-            QTY3a = SelectedQty;
-            CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM3a = CPM3a * 1000.00F;
-        }
-
-        private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty4;
-            Calculating c = new Calculating(); c.Show();
-            PressCalc pc = new PressCalc();
-            pc.WastePct = (int)WastePct;
-            pc.Up = int.Parse(lblUp.Content.ToString());
-            QuoteTotal = 0.00D;
-            int r = 0;
-            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            {
-                pc.NumDocs = (int)SelectedQty;
-                pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
-                pc.PressSize = PRESSSIZE;
-                dgSheetsOfPaper.SelectedIndex = r;
-                pc.Calc();
-                DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
-                dataRow[11] = pc.Pounds;
-                dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
-                QuoteTotal += double.Parse(dataRow[16].ToString());
-            }
-            c.Close();
-            QTY4a = SelectedQty;
-            CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM4a = CPM4a * 1000.00F;
+            SumRowTotals();
         }
 
         private void SumRowTotals()
@@ -1076,9 +1046,8 @@ namespace ProDocEstimate
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-
             string? x = lstSelected.SelectedItem.ToString();
-            if ( x.IndexOf(' ') > 0 ) { x = x.Substring(0, x.IndexOf(' ')); }  // Just the first word; needed if the dollar amount appears in the ListItem.
+            if (x.IndexOf(' ') > 0) { x = x.Substring(0, x.IndexOf(' ')); }  // Just the first word; needed if the dollar amount appears in the ListItem.
 
             //TODO: Something funny is happening with long category names; 
 
@@ -1099,7 +1068,7 @@ namespace ProDocEstimate
                     }
 
                 case "Ink":
-                    { 
+                    {
                         InkColors Ink = new InkColors(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
                         break;
                     }
@@ -1128,6 +1097,32 @@ namespace ProDocEstimate
                         break;
                     }
 
+                case "Finishing":
+                    {
+                        MessageBox.Show("In progress..."); return;
+
+                        Finishing finishing = new Finishing(PRESSSIZE, QUOTE_NUM); finishing.ShowDialog();
+                        break;
+                    }
+
+                case "Converting":
+                    {
+                        Converting converting = new Converting(PRESSSIZE, QUOTE_NUM); converting.ShowDialog();
+                        break;
+                    }
+
+                case "PrePress":
+                    {
+                        PrePress prepress = new PrePress(PRESSSIZE, QUOTE_NUM); prepress.ShowDialog();
+                        break;
+                    }
+
+                case "Combo":
+                    {
+                        Combo combo = new Combo(PRESSSIZE, QUOTE_NUM); combo.ShowDialog(); 
+                        if (combo.Removed) { lstSelected_MouseDoubleClick(null, null); }
+                        break;
+                    }
             }
         }
 
@@ -1163,6 +1158,11 @@ namespace ProDocEstimate
 
         private void lstSelected_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            RemoveSelectedFeature();
+        }
+
+        private void RemoveSelectedFeature()
+        {
             string? x = lstSelected.SelectedItem.ToString();
             lstAvailable.Items.Add(x);
             lstSelected.Items.Remove(x);
@@ -1171,7 +1171,8 @@ namespace ProDocEstimate
 
         private void btnAssignNewQuoteNum_Click(object sender, RoutedEventArgs e)
         {
-
+            //TODO: Isn't this already happening somewhere?
         }
+
     }
 }

@@ -6,7 +6,6 @@
         xmlns:local2="clr-namespace:ProDocEstimate.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="Quotations"
         Width="900"
         Height="770"
@@ -858,7 +857,7 @@
                                  Text="{Binding Path=Qty1,StringFormat=N0}" x:Name="txtQty1" 
                                  PreviewMouseDown="txtQty1_PreviewMouseDown" />
 
-                        <Popup Grid.Row="7" 
+                        <!--<Popup Grid.Row="7" 
                                x:Name="CalcPopup"
 							   PlacementTarget="{Binding ElementName=txtQty1}"
                                Placement="Center" PlacementRectangle="0 0 30 30"
@@ -868,7 +867,7 @@
                                HorizontalAlignment="Center" 
                                IsOpen="{Binding Path=IsCalc}">
                             <TextBlock Text="Calculating..." Background="Yellow" Foreground="Red" FontSize="24" />
-                        </Popup>
+                        </Popup>-->
 
                         <Label Grid.Column="3" HorizontalAlignment="Center" Content="Qty 2" FontSize="10" FontWeight="Bold" VerticalAlignment="Top" />
                         <TextBox Grid.Row="1" Grid.Column="3" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
@@ -886,12 +885,12 @@
                                  Text="{Binding Path=Qty4,StringFormat=N0}" x:Name="txtQty4" PreviewMouseDown="txtQty4_PreviewMouseDown" />
 
                         <TextBlock 
-                                Grid.Row="1" Grid.Column="1" Margin="10,5,0,5"
+                                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 0 0 0"
                                 Foreground="White" FontWeight="Bold" 
                                 Text="{Binding SelectedQty, StringFormat='0,0'}"
                                 FontSize="11" Height="20" Padding="10 2"
                                 Background="Red"
-                                HorizontalAlignment="Left" >
+                                HorizontalAlignment="Left" VerticalAlignment="Center" >
                         </TextBlock>
 
                         <!--Remove CalcMsg label if it still shows up-->
@@ -958,7 +957,9 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=Pounds}" ElementStyle="{StaticResource CellRightAlign}" >
+                                <DataGridTextColumn 
+                                    Width="90" 
+                                    Binding="{Binding Path=Pounds}" ElementStyle="{StaticResource CellRightAlign}" >
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Lbs Needed"
@@ -1211,7 +1212,7 @@
 						       Content="Extended"
 						       FontSize="11" />
 
-                            <xctk:IntegerUpDown x:Name="Qty1b"
+                            <telerik:RadNumericUpDown x:Name="Qty1b"
 						                    Grid.Row="1"
 						                    Grid.Column="1"
 						                    Width="85"
@@ -1219,8 +1220,8 @@
 						                    HorizontalAlignment="Left"
                                             VerticalContentAlignment="Center"
 						                    FontSize="14"
-						                    Text="{Binding Path=QTY1a}"
-						                    ValueChanged="Qty1b_LostFocus" />
+						                    Value="{Binding Path=QTY1a}"
+                                            LostFocus="Qty1b_LostFocus" />
                             <TextBox x:Name="CPM1"
 						         Grid.Row="1"
 						         Grid.Column="2"
@@ -1262,7 +1263,7 @@
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT1a, StringFormat=N2}" />
 
-                            <xctk:IntegerUpDown x:Name="Qty2b"
+                            <telerik:RadNumericUpDown x:Name="Qty2b"
 						                    Grid.Row="2"
 						                    Grid.Column="1"
 						                    Width="85"
@@ -1270,8 +1271,8 @@
 						                    HorizontalAlignment="Left"
                                             VerticalContentAlignment="Center"
 						                    FontSize="14"
-						                    Text="{Binding Path=QTY2a}"
-						                    ValueChanged="Qty2b_LostFocus" />
+						                    Value="{Binding Path=QTY2a}"
+						                    LostFocus="Qty2b_LostFocus" />
                             <TextBox x:Name="CPM2"
 						         Grid.Row="2"
 						         Grid.Column="2"
@@ -1314,7 +1315,7 @@
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT2a, StringFormat=N2}" />
 
-                            <xctk:IntegerUpDown x:Name="Qty3b"
+                            <telerik:RadNumericUpDown x:Name="Qty3b"
 						                    Grid.Row="3"
 						                    Grid.Column="1"
 						                    Width="85"
@@ -1322,8 +1323,8 @@
 						                    HorizontalAlignment="Left"
                                             VerticalContentAlignment="Center"
 						                    FontSize="14"
-						                    Text="{Binding Path=QTY3a}"
-						                    ValueChanged="Qty3b_LostFocus" />
+						                    Value="{Binding Path=QTY3a}"
+						                    LostFocus="Qty3b_LostFocus" />
                             <TextBox x:Name="CPM3"
 						         Grid.Row="3"
 						         Grid.Column="2"
@@ -1366,7 +1367,7 @@
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT3a, StringFormat=N2}" />
 
-                            <xctk:IntegerUpDown x:Name="Qty4b"
+                            <telerik:RadNumericUpDown x:Name="Qty4b"
 						                    Grid.Row="4"
 						                    Grid.Column="1"
 						                    Width="85"
@@ -1374,8 +1375,8 @@
 						                    HorizontalAlignment="Left"
                                             VerticalContentAlignment="Center"
 						                    FontSize="14"
-						                    Text="{Binding Path=QTY4a}"
-						                    ValueChanged="Qty4b_LostFocus" />
+						                    Value="{Binding Path=QTY4a}"
+						                    LostFocus="Qty4b_LostFocus" />
                             <TextBox x:Name="CPM4"
 						         Grid.Row="4"
 						         Grid.Column="2"

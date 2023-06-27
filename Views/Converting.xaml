@@ -1,0 +1,87 @@
+﻿<Window x:Class="ProDocEstimate.Views.Converting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="LightGray"
+        Title="MICR" Height="260" Width="700">
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment"   Value="Bottom" />
+            <Setter Property="Margin"              Value="2 0"    />
+            <Setter Property="Padding"             Value="2 0"    />
+        </Style>
+        <Style TargetType="telerik:RadNumericUpDown">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Margin"   Value="4" />
+            <Setter Property="Height"   Value="20" />
+            <Setter Property="Width"    Value="20" />
+            <Setter Property="NumberDecimalDigits" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Minimum"  Value="0" />
+        </Style>
+    </Window.Resources>
+
+    <Viewbox>
+
+        <Grid Width="600" Height="195">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label FontSize="22" Foreground="Red" Content="Converting" Width="120" Grid.ColumnSpan="8" 
+                   VerticalAlignment="Top" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
+                <Label.BitmapEffect>
+                    <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
+                </Label.BitmapEffect>
+            </Label>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="2 CRASH NUMB" />
+            <Label Grid.Row="1" Grid.Column="1" Content="BLACK NUMB" />
+            <Label Grid.Row="1" Grid.Column="2" Content="CONT GLUE 2-4" />
+            <Label Grid.Row="1" Grid.Column="3" Content="CONT GLUE 5-12" />
+
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="0" Width="60" Value="{Binding Crash}" x:Name="M1" />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="1" Width="60" Value="{Binding Black}" x:Name="M2"  />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="2" Width="60" Value="{Binding Cont2}" x:Name="M3"/>
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="3" Width="60" Value="{Binding Cont5}" x:Name="M4"/>
+
+            <Label Grid.Row="3" Grid.Column="0" Content="FOLDING" />
+            <Label Grid.Row="3" Grid.Column="1" Content="SNAP GLUE 2-4" />
+            <Label Grid.Row="3" Grid.Column="2" Content="SNAP GLUE 5-12" />
+            <Label Grid.Row="3" Grid.Column="3" Content="TRANSFER TAPE" />
+
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="0" Width="60" Value="{Binding Fold}"  x:Name="M5" />
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="1" Width="60" Value="{Binding Snap2}" x:Name="M6"  />
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="2" Width="60" Value="{Binding Snap5}" x:Name="M7"/>
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="3" Width="60" Value="{Binding Tape}"  x:Name="M8"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="30">
+                <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
+                <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
+            </StackPanel>
+
+        </Grid>
+
+    </Viewbox>
+
+</Window>

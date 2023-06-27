@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -35,25 +36,31 @@ namespace ProDocEstimate.Views
         {
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTES] "
                        + "    LEFT JOIN [ESTIMATING].[dbo].[CUSTOMER]"
-                       + " ON QUOTES.CUST_NUM = CUSTOMER.CUST_NUMB";
+                       + " ON QUOTES.CUST_NUM = CUSTOMER.CUST_NUMB"
+                       + " LEFT JOIN[ESTIMATING].[dbo].[CUSTOMER_CONTACT]"
+                       + " ON [ESTIMATING].[dbo].[CUSTOMER].CUST_NUMB " 
+                       + "  = [ESTIMATING].[dbo].[CUSTOMER_CONTACT].CUST_NUMB";
 
             if (txtCustName.Text.Trim().Length > 0)
-            {
-                if (Partial == true)
+            {   if (Partial == true)
                 { cmd += " AND CUST_NAME LIKE '%" + txtCustName.Text.Trim() + "%'"; }
                 else
                 { cmd += " AND CUST_NAME LIKE '" + txtCustName.Text.Trim() + "%'"; }
-            }
-            else
+            };
+            
             if (txtQuoteNum.Text.Trim().Length > 0)
             { cmd += " AND QUOTES.QUOTE_NUM = " + txtQuoteNum.Text.Trim(); }
             else
             if (txtCustNo.Text.Trim().Length > 0)
-            { cmd += " AND QUOTES.CUST_NUMB = " + txtCustNo.Text.Trim(); }
-            else return;
+            { cmd += " AND QUOTES.CUST_NUMB = " + txtCustNo.Text.Trim(); };
+
+//            else return;
 
             cmd += " ORDER BY QUOTE_NUM";
             if (Descending == true) { cmd += " DESC"; }
+
+            System.Windows.Clipboard.SetText(cmd);
+//            Debugger.Break();
 
             cn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, cn);
@@ -62,7 +69,6 @@ namespace ProDocEstimate.Views
             DataTable dt = new DataTable();
             dt = ds.Tables[0];
             dgQuotes.ItemsSource = dt.DefaultView;
-            this.DataContext = this;
             Cust_Num = ""; Quote_Num = ""; Cust_Name = "";
         }
 

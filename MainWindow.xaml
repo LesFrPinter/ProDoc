@@ -12,48 +12,42 @@
     <Window.Resources>
 
         <Style TargetType="MenuItem">
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize"   Value="18"    />
             <Setter Property="Foreground" Value="Blue" />
+            <Setter Property="Padding"    Value="4"     />
         </Style>
 
     </Window.Resources>
 
-    <Grid Background="LightGray" Margin="0,-3,0,3">
+    <Grid Background="LightGray" Margin="5">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!--Set MenuDropAlignment to 0 in RegEdit-->
 
         <Menu HorizontalContentAlignment="Left">
-            <MenuItem Header="_File" Height="40">
-                <MenuItem  FlowDirection="RightToLeft" x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" />
+            <MenuItem Header="_File"  VerticalAlignment="Center">
+                <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
             </MenuItem>
-            <MenuItem Header="_Demos">
-                <MenuItem x:Name="mnuQuotations"  Header="_Quotations" Height="40" Click="mnuQuotations_Click" />
-                <MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
-                <MenuItem x:Name="mnuCustomers"   Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
-                <MenuItem x:Name="mnuStandards"   Header="Standards" Height="40" >
-                    <MenuItem x:Name="mnuPressStandards"	  Header="Press Standards"    Click="mnuPressStandards_Click"	   />
-                    <MenuItem x:Name="mnuCollatorStandards" Header="Collator Standards" Click="mnuCollatorStandards_Click" />
-                    <MenuItem x:Name="mnuFeatureStandards"  Header="Feature Standards"  Click="mnuFeatureStandards_Click"  />
-                </MenuItem>
+            <MenuItem Header="_Demos" VerticalAlignment="Center">
+                <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click"         />
+                <MenuItem x:Name="mnuNewEstimate"       Header="New Estimate"       Click="mnuNewEstimate_Click"        />
+                <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"          />
+                <MenuItem x:Name="mnuStandards"         Header="Standards" >
+                <MenuItem x:Name="mnuPressStandards"	Header="Press Standards"    Click="mnuPressStandards_Click"	    />
+                <MenuItem x:Name="mnuCollatorStandards" Header="Collator Standards" Click="mnuCollatorStandards_Click"  />
+                <MenuItem x:Name="mnuFeatureStandards"  Header="Feature Standards"  Click="mnuFeatureStandards_Click"   />
+            </MenuItem>
 
             </MenuItem>
-            <!--<MenuItem Header="_Current system" Height="40" >
-				<MenuItem x:Name="mnuEdit"  Header="_Edit an existing estimate" Click="mnuEdit_Click" />
-				<MenuItem x:Name="mnuCopy"  Header="_Copy an existing estimate" Click="mnuCopy_Click" />
-				<MenuItem x:Name="mnuBlank" Header="New _blank estimate"        Click="mnuBlank_Click" />
-				<MenuItem x:Name="mnuCombo" Header="New c_ombo estimate"        Click="mnuCombo_Click" />
-			</MenuItem>-->
         </Menu>
 
         <Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
 
-        <Label Grid.Row="2" Content="Pro Vision 2" Padding="20 5 20 5" Style="{StaticResource MainTitle}" RenderTransformOrigin="0.5,0.5" Foreground="Navy" >
+        <!--<Label Grid.Row="2" Content="Pro Vision 2" Padding="20 5 20 5" Style="{StaticResource MainTitle}" RenderTransformOrigin="0.5,0.5" Foreground="Navy" >
             <Label.Effect>
                 <DropShadowEffect Direction="325" Color="black" ShadowDepth="12" BlurRadius="22" />
             </Label.Effect>
@@ -75,7 +69,7 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Label.RenderTransform>
-        </Label>
+        </Label>-->
 
     </Grid>
 

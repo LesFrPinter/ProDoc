@@ -83,7 +83,7 @@
 		<Style x:Key="CellRightAlign">
 			<Setter Property="Control.HorizontalAlignment" Value="Right" />
 			<Setter Property="Control.Margin" Value="0 0 5 0" />
-		</Style>
+        </Style>
 
 		<Style x:Key="CellLeftAlign">
 			<Setter Property="Control.Margin" Value="5 0 0 0" />

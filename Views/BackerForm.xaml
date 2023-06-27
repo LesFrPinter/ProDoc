@@ -6,14 +6,13 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="ProDocEstimate.Views.BackerForm"
         mc:Ignorable="d"
-        FontSize="16"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
         Title="Backer" Height="215" Width="700">
 
-    <WindowChrome.WindowChrome>
+    <!--<WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="15" />
-    </WindowChrome.WindowChrome>
+    </WindowChrome.WindowChrome>-->
 
     <Window.Resources>
         <Style TargetType="{x:Type RadioButton}">
@@ -39,7 +38,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label FontSize="22" Foreground="Red" Content="Backer" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" HorizontalContentAlignment="Center" >
+        <Label FontSize="28" Foreground="Red" Content="Backer" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" HorizontalContentAlignment="Center" >
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
             </Label.BitmapEffect>
