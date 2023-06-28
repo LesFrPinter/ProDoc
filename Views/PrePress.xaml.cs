@@ -74,11 +74,11 @@ namespace ProDocEstimate.Views
             // e.g., if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
 
             // Delete current detail line
-            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'PrePress'";
+            string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QuoteNum}' AND Category = 'PrePress'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
 
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            try     { scmd.ExecuteNonQuery(); }
+            catch   (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
             // Store in Quote_Detail table:
@@ -94,9 +94,12 @@ namespace ProDocEstimate.Views
             //  conn = new SqlConnection(ConnectionString);
             scmd.CommandText = cmd;
             conn.Open();
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); scmd = null; conn = null; }
+            try     { scmd.ExecuteNonQuery(); }
+            catch   (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); 
+                      //scmd = null; 
+                      //conn = null; 
+            }
 
             this.Close();
         }

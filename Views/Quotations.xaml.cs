@@ -109,7 +109,8 @@ namespace ProDocEstimate
         private DataRowView? drv;      public DataRowView? DRV      { get { return drv;        } set { drv        = value; OnPropertyChanged(); } }
         private double quoteTotal;     public double QuoteTotal     { get { return quoteTotal; } set { quoteTotal = value; OnPropertyChanged(); } }
 
-        private int maxColors; public int MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
+        private int maxColors;         public int MaxColors         { get { return maxColors;  } set { maxColors  = value; OnPropertyChanged(); } }
+        private string? category;      public string? Category      { get { return category;   } set { category   = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -165,8 +166,6 @@ namespace ProDocEstimate
         {
             CustomerLookup cl = new(); cl.ShowDialog();
             CUST_NUMB = cl.CustomerCode;
-
-//            Debugger.Break();
 
             cl.Close();
 
@@ -920,25 +919,6 @@ namespace ProDocEstimate
         private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
         {   SelectedQty = Qty3;
             GridCalc();
-            //Calculating c = new Calculating(); c.Show();
-            //PressCalc pc = new PressCalc();
-            //pc.WastePct = (int)WastePct;
-            //pc.Up = int.Parse(lblUp.Content.ToString());
-            //QuoteTotal = 0.00D;
-            //int r = 0;
-            //for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            //{
-            //    pc.NumDocs = (int)SelectedQty;
-            //    pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
-            //    pc.PressSize = PRESSSIZE;
-            //    dgSheetsOfPaper.SelectedIndex = r;
-            //    pc.Calc();
-            //    DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
-            //    dataRow[11] = pc.Pounds;
-            //    dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
-            //    QuoteTotal += double.Parse(dataRow[16].ToString());
-            //}
-            //c.Close();
             QTY3a = SelectedQty;
             CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM3a = CPM3a * 1000.00F;
@@ -1137,8 +1117,6 @@ namespace ProDocEstimate
 
                 Title = dt.Rows[i]["Category"].ToString();
 
-//                if(Title=="PressNum") Debugger.Break();
-
                 string V1 = dt.Rows[i]["Value1"].ToString();
                 string V2 = dt.Rows[i]["Value2"].ToString();
                 string V3 = dt.Rows[i]["Value3"].ToString();
@@ -1176,19 +1154,19 @@ namespace ProDocEstimate
                 if (B7 == true) { RowTotal += I7; }
                 if (B8 == true) { RowTotal += I8; }
 
-//                MessageBox.Show("Row " + i.ToString() + " : " + RowTotal.ToString());
                 string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
 
-//                MessageBox.Show(Title, suffix);
-
                 if(lstSelected.Items[i].ToString().IndexOf(" ")>0)
-                {
-                    lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, lstSelected.Items[i].ToString().IndexOf(" "));
-                }
-                lstSelected.Items[i] = lstSelected.Items[i] + suffix;
+                 { lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, lstSelected.Items[i].ToString().IndexOf(" ")) + (" ").PadRight(20); }
+                else
+                 { lstSelected.Items[i] = lstSelected.Items[i].ToString()+ (" ").PadRight(20); }
+
+                lstSelected.Items[i]   = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
             }
+
             conn.Close();
         }
+        
         private void Page3_GotFocus(object sender, RoutedEventArgs e)
         {
             return;
@@ -1224,6 +1202,14 @@ namespace ProDocEstimate
 
         private void lstSelected_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            Category = lstSelected.SelectedItem.ToString().TrimEnd();
+            // Delete current detail line
+            string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QUOTE_NUM}' AND Category = '{Category}'";
+            conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
             RemoveSelectedFeature();
         }
 
