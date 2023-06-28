@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Title="Combo" Height="350" Width="800">
+        Title="Combo" Height="250" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -16,6 +16,8 @@
             <Setter Property="VerticalAlignment"   Value="Bottom" />
             <Setter Property="Margin"              Value="2 0"    />
             <Setter Property="Padding"             Value="2 0"    />
+            <Setter Property="FontSize"            Value="14"     />
+            <Setter Property="Foreground"          Value="Blue"  />
         </Style>
         <Style TargetType="telerik:RadNumericUpDown">
             <Setter Property="FontSize" Value="10" />
@@ -31,14 +33,13 @@
 
     <Viewbox>
 
-        <Grid Width="800" Height="250">
+        <Grid Width="800" Height="230" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="20" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -47,23 +48,19 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Label FontSize="22" Foreground="Red" Content="Combo" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
+            <Label FontSize="22" Foreground="Red" Content="Combo" Width="80" Padding="2 0" Grid.Column="1" Height="30" VerticalAlignment="Center" >
                 <Label.BitmapEffect>
                     <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
                 </Label.BitmapEffect>
             </Label>
 
-            <Label Grid.Row="1"        Content="Combo" />
+            <Label Grid.Row="1" VerticalAlignment="Center"       Content="Combo" />
 
-            <telerik:RadNumericUpDown  Width="60" Value="{Binding Combo1}"   x:Name="M1" />
+            <telerik:RadNumericUpDown Grid.Row="1" Width="60" Value="{Binding Combo1}" x:Name="M1" HorizontalAlignment="Left" Margin="182,0,0,0" />
 
-            <!--<Button x:Name="btnDelete" Grid.Row="3"  Content="Delete" Padding="6 2" HorizontalAlignment="Left" Click="btnDelete_Click" />-->
-            
-            <!--Removing a detail line from "lstSelected" deletes it from the quote_detail file-->
+            <local:DetailFeatures Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" />
 
-            <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="7" Height="120" />
-
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="22" HorizontalAlignment="Center">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>

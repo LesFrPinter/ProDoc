@@ -29,9 +29,9 @@
         </Style>
     </Window.Resources>
 
-    <!--<Viewbox>-->
+    <Viewbox>
 
-        <Grid Width="800" Height="235" VerticalAlignment="Top">
+        <Grid Width="800" Height="240" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -66,13 +66,13 @@
 
             <local:DetailFeatures Height="120" Width="800" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="5" Grid.RowSpan="3" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Bottom" >
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click"   />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
 
         </Grid>
 
-    <!--</Viewbox>-->
+    </Viewbox>
 
 </Window>

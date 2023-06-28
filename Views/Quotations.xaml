@@ -211,7 +211,7 @@
 						       FontSize="11">
                             Get from ESTFORMTYPE
                         </Label>-->
-
+                        
                         <Label Grid.Row="3"
 						       Grid.Column="0"
 						       Grid.ColumnSpan="2"
@@ -431,12 +431,14 @@
 						       VerticalContentAlignment="center"
 						       Content=")" />
 
+                        <WrapPanel Grid.Row="3" Width="600" Height="24" Background="LightGray" Grid.ColumnSpan="8" />
+
                         <Label Grid.Row="4"
 						       Grid.ColumnSpan="2"
 						       Margin="128,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="Parts:" />
-
+                        
                         <telerik:RadNumericUpDown x:Name="PartsSpinner"
 						                          Grid.Row="4"
 						                          Grid.Column="2"
@@ -475,8 +477,8 @@
                         <!--SelectionChanged="cmbPaperType_SelectionChanged"-->
 
                         <Button x:Name="btnLoadGrid"
-						        Grid.Row="9" Height="24" Margin="0"
-						        Grid.Column="3"
+						        Grid.Row="9" Height="24" 
+						        Grid.Column="3" Margin="-100 0 0 0"
 						        Click="btnLoadGrid_Click"
 						        Content="  Load Page 2 Grid  " />
 
@@ -522,7 +524,7 @@
 
                         <Label Grid.Row="7"
 						       Grid.Column="2"
-						       Margin="134,0,0,0"
+						       Margin="100,0,0,0"
 						       HorizontalAlignment="Left"
 						       FontSize="11">
                             (Cylinders)
@@ -624,8 +626,8 @@
 
                         <Label Grid.Row="11"
 						       Grid.Column="4"
-						       Margin="13,0,0,0"
-						       HorizontalAlignment="Left"
+						       Margin="10,0,0,0"
+						       HorizontalAlignment="Left" VerticalAlignment="Center"
 						       Content="Num:" />
                         <TextBox x:Name="txtCustomerNum"
                                  Grid.Row="11"

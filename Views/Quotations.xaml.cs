@@ -1,4 +1,5 @@
-﻿using ProDocEstimate.Views;
+﻿using Microsoft.OData.Client;
+using ProDocEstimate.Views;
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -1056,14 +1057,7 @@ namespace ProDocEstimate
                 case "Backer":
                     {
                         BackerForm backer = new BackerForm(PRESSSIZE, QUOTE_NUM); backer.ShowDialog();
-                        //                        return;     // Don't show dollar amount
-                        // After the user closes the BackerForm, this happens:
-                        //float BackerTotal = backer.Total;
                         backer.Close();
-                        //string str = "";
-                        //string z = lstSelected.Items[lstSelected.SelectedIndex].ToString() + str.PadRight(50).Substring(0, 42) + BackerTotal.ToString("C2");
-                        //int idx = lstSelected.SelectedIndex;
-                        //lstSelected.Items[idx] = z;
                         break;
                     }
 
@@ -1124,8 +1118,77 @@ namespace ProDocEstimate
                         break;
                     }
             }
+
+            CheckRows();
+
         }
 
+        private void CheckRows()
+        {
+            string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+
+            System.Windows.Clipboard.SetText(cmd);
+
+            dt = new DataTable("Details");
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                Title = dt.Rows[i]["Category"].ToString();
+
+//                if(Title=="PressNum") Debugger.Break();
+
+                string V1 = dt.Rows[i]["Value1"].ToString();
+                string V2 = dt.Rows[i]["Value2"].ToString();
+                string V3 = dt.Rows[i]["Value3"].ToString();
+                string V4 = dt.Rows[i]["Value4"].ToString();
+                string V5 = dt.Rows[i]["Value5"].ToString();
+                string V6 = dt.Rows[i]["Value6"].ToString();
+                string V7 = dt.Rows[i]["Value7"].ToString();
+                string V8 = dt.Rows[i]["Value8"].ToString();
+
+                Int32 I1 = 0;
+                Int32 I2 = 0;
+                Int32 I3 = 0;
+                Int32 I4 = 0;
+                Int32 I5 = 0;
+                Int32 I6 = 0;
+                Int32 I7 = 0;
+                Int32 I8 = 0;
+
+                bool B1 = int.TryParse(dt.Rows[i]["Value1"].ToString(), out I1);
+                bool B2 = int.TryParse(dt.Rows[i]["Value2"].ToString(), out I2);
+                bool B3 = int.TryParse(dt.Rows[i]["Value3"].ToString(), out I3);
+                bool B4 = int.TryParse(dt.Rows[i]["Value4"].ToString(), out I4);
+                bool B5 = int.TryParse(dt.Rows[i]["Value5"].ToString(), out I5);
+                bool B6 = int.TryParse(dt.Rows[i]["Value6"].ToString(), out I6);
+                bool B7 = int.TryParse(dt.Rows[i]["Value7"].ToString(), out I7);
+                bool B8 = int.TryParse(dt.Rows[i]["Value8"].ToString(), out I8);
+
+                Int32 RowTotal = 0;
+                if (B1 == true) { RowTotal += I1; }
+                if (B2 == true) { RowTotal += I2; }
+                if (B3 == true) { RowTotal += I3; }
+                if (B4 == true) { RowTotal += I4; }
+                if (B5 == true) { RowTotal += I5; }
+                if (B6 == true) { RowTotal += I6; }
+                if (B7 == true) { RowTotal += I7; }
+                if (B8 == true) { RowTotal += I8; }
+
+//                MessageBox.Show("Row " + i.ToString() + " : " + RowTotal.ToString());
+                string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
+
+//                MessageBox.Show(Title, suffix);
+
+                if(lstSelected.Items[i].ToString().IndexOf(" ")>0)
+                {
+                    lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, lstSelected.Items[i].ToString().IndexOf(" "));
+                }
+                lstSelected.Items[i] = lstSelected.Items[i] + suffix;
+            }
+            conn.Close();
+        }
         private void Page3_GotFocus(object sender, RoutedEventArgs e)
         {
             return;
@@ -1134,7 +1197,7 @@ namespace ProDocEstimate
         private void LoadDetails()
         {
             // Load any selected categories and remove them from the "Available" listbox
-            string cmd = $"SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+            string cmd = $"SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY Sequence";
             dt = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
@@ -1146,6 +1209,9 @@ namespace ProDocEstimate
                 lstAvailable.Items.Remove(s);
             }
             conn.Close();
+
+            CheckRows();        // Add a checkmark at the end for items that have been selected
+
         }
 
         private void lstAvailable_MouseDoubleClick(object sender, MouseButtonEventArgs e)

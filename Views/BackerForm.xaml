@@ -8,11 +8,11 @@
         mc:Ignorable="d"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
-        Title="Backer" Height="315" Width="800">
+        Title="Backer" Height="310" Width="800">
 
-    <!--<WindowChrome.WindowChrome>
+    <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="15" />
-    </WindowChrome.WindowChrome>-->
+    </WindowChrome.WindowChrome>
 
     <Window.Resources>
         <Style TargetType="{x:Type RadioButton}">
@@ -22,14 +22,16 @@
         </Style>
     </Window.Resources>
 
-    <Grid VerticalAlignment="Top">
+    <Viewbox>
+    
+    <Grid VerticalAlignment="Top" Height="270" Width="800">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="55" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="55" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -51,13 +53,13 @@
             <RadioButton x:Name="B3" GroupName="Bak" Margin="20 0 0 0" Content="Backer PMS"  IsChecked="{Binding Three, Mode=TwoWay}" Width="145" Checked="B3_Checked"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="20 0 0 0" >
-            <Label Content="{Binding Path=Button1, Mode=TwoWay}" HorizontalContentAlignment="Left"  Margin="20 0 0 0" Width="145"/>
-            <Label Content="{Binding Path=Button2, Mode=TwoWay}" HorizontalContentAlignment="Left"  Margin="20 0 0 0" Width="145"/>
-            <Label Content="{Binding Path=Button3, Mode=TwoWay}" HorizontalContentAlignment="Left"  Margin="20 0 0 0" Width="145"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="4" Background="WhiteSmoke" >
+            <Label Content="{Binding Path=Button1, Mode=TwoWay}" HorizontalContentAlignment="Right"  Margin="20 0 0 0" Width="145"/>
+            <Label Content="{Binding Path=Button2, Mode=TwoWay}" HorizontalContentAlignment="Right"  Margin="20 0 0 0" Width="145"/>
+            <Label Content="{Binding Path=Button3, Mode=TwoWay}" HorizontalContentAlignment="Right"  Margin="20 0 0 0" Width="145"/>
         </StackPanel>
         
-        <Label Content="Changes" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 -4" />
+        <Label Content="Changes" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0" />
 
         <telerik:RadNumericUpDown 
             Grid.Row="1" Grid.Column="3" 
@@ -67,13 +69,13 @@
             ValueChanged="RadNumericUpDown_ValueChanged"
             FontSize="16" Height="28"/>
 
-        <Label Grid.Row="3" Grid.Column="1" Content="Total: "  Foreground="Purple" FontSize="18" />
-
-        <Label Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" HorizontalContentAlignment="Right" FontSize="18" >
-            <TextBlock Text="{Binding Path=Total, StringFormat={}{0:C2}}" FontSize="18" Foreground="Purple" />
-        </Label>
-
         <local:DetailFeatures Grid.ColumnSpan="4" Grid.Row="3" />
+
+        <Label Grid.Row="4" Grid.Column="1" Content="Total: "  Foreground="Purple" FontSize="18" />
+
+        <Label Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" HorizontalContentAlignment="Right" FontSize="12" Height="30" Width="100" Background="WhiteSmoke" Margin="2" >
+            <TextBlock Text="{Binding Path=Total, StringFormat={}{0:C2}}" FontSize="12" Foreground="Purple" />
+        </Label>
 
         <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Center" >
             <Button x:Name="btnSave"   Grid.Column="3" Content="Save"   FontSize="16" Padding="4 2" Click="btnSave_Click" />
@@ -81,5 +83,7 @@
         </StackPanel>
 
     </Grid>
+
+    </Viewbox>
 
 </Window>

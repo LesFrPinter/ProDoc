@@ -30,9 +30,9 @@
         </Style>
     </Window.Resources>
 
-    <!--<Viewbox>-->
+    <Viewbox>
 
-        <Grid Width="800" Height="300" VerticalAlignment="Top">
+        <Grid Width="800" Height="250" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -68,15 +68,15 @@
             <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Pad}"        x:Name="M4"/>
             <telerik:RadNumericUpDown Grid.Column="4" Width="60" Value="{Binding Trim}"       x:Name="M5"/>
 
-        <local:DetailFeatures Grid.Row="3" Width="750" Grid.RowSpan="3" Grid.ColumnSpan="9" Height="120" VerticalAlignment="Top" />
+        <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Top" />
 
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0 -50 0 0" >
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" VerticalAlignment="Top" HorizontalAlignment="Center" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
 
         </Grid>
 
-    <!--</Viewbox>-->
+    </Viewbox>
 
 </Window>
