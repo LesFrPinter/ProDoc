@@ -261,25 +261,25 @@ namespace ProDocEstimate
             else { return float.Parse(parts[0]) / float.Parse(parts[1]); }
         }
 
-        private void LoadElements()     // No longer used
-        {
-            this.Elements = new DataTable("Elements");
-            this.Elements.Columns.Add("SEQ");
-            this.Elements.Columns.Add("ITEM");
-            this.Elements.Columns.Add("PRICE");
-            this.Elements.Columns.Add("MULT");
-            this.Elements.Columns.Add("EXT");
+        //private void LoadElements()     // No longer used
+        //{
+        //    this.Elements = new DataTable("Elements");
+        //    this.Elements.Columns.Add("SEQ");
+        //    this.Elements.Columns.Add("ITEM");
+        //    this.Elements.Columns.Add("PRICE");
+        //    this.Elements.Columns.Add("MULT");
+        //    this.Elements.Columns.Add("EXT");
 
-            this.Elements.Rows.Add("10", "Base Charge", 1.23F, 1.00F, 2.20F);
-            this.Elements.Rows.Add("11", "Order Entry", 0.00D, 0.00D, 0.00D);
-            this.Elements.Rows.Add("12", "Pre Press", 0.00D, 0.00D, 0.00D);
-            this.Elements.Rows.Add("13", @"Wht 11 5/8"" CB", 0.00D, 1.00D, 0.00D);
-            this.Elements.Rows.Add("14", @"Can 11 5/8"" CFB", 0.00D, 1.00D, 0.00D);
-            this.Elements.Rows.Add("15", @"Pink 11 5/8"" CF", 0.00D, 1.00D, 0.00D);
+        //    this.Elements.Rows.Add("10", "Base Charge", 1.23F, 1.00F, 2.20F);
+        //    this.Elements.Rows.Add("11", "Order Entry", 0.00D, 0.00D, 0.00D);
+        //    this.Elements.Rows.Add("12", "Pre Press", 0.00D, 0.00D, 0.00D);
+        //    this.Elements.Rows.Add("13", @"Wht 11 5/8"" CB", 0.00D, 1.00D, 0.00D);
+        //    this.Elements.Rows.Add("14", @"Can 11 5/8"" CFB", 0.00D, 1.00D, 0.00D);
+        //    this.Elements.Rows.Add("15", @"Pink 11 5/8"" CF", 0.00D, 1.00D, 0.00D);
 
-            this.dgElements.DataContext = this;
-            this.dgElements.ItemsSource = Elements.DefaultView;
-        }
+        //    this.dgElements.DataContext = this;
+        //    this.dgElements.ItemsSource = Elements.DefaultView;
+        //}
 
         private void LoadPaperTypes()
         {
@@ -1115,7 +1115,7 @@ namespace ProDocEstimate
             for (int i = 0; i < dt.Rows.Count; i++)
             {
 
-                Title = dt.Rows[i]["Category"].ToString();
+                //Title = dt.Rows[i]["Category"].ToString();
 
                 string V1 = dt.Rows[i]["Value1"].ToString();
                 string V2 = dt.Rows[i]["Value2"].ToString();

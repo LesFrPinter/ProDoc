@@ -22,13 +22,15 @@ namespace ProDocEstimate.Views
         public DataTable? dt;
         public SqlCommand? scmd;
 
-        private int    max;         public int    Max       { get { return max;         } set { max       = value; OnPropertyChanged(); } }
-        private string pressSize;   public string PressSize { get { return pressSize;   } set { pressSize = value; OnPropertyChanged(); } }
-        private string quoteNum;    public string QuoteNum  { get { return quoteNum;    } set { quoteNum  = value; OnPropertyChanged(); } }
+        private int     max;            public int    Max        { get { return max;        } set { max        = value; OnPropertyChanged(); } }
+        private string  pressSize;      public string PressSize  { get { return pressSize;  } set { pressSize  = value; OnPropertyChanged(); } }
+        private string  quoteNum;       public string QuoteNum   { get { return quoteNum;   } set { quoteNum   = value; OnPropertyChanged(); } }
 
-        private int digital;        public int Digital      { get { return digital;     } set { digital   = value; OnPropertyChanged(); } }
-        private int pack2pack;      public int Pack2Pack    { get { return pack2pack;   } set { pack2pack = value; OnPropertyChanged(); } }
-        private int press;          public int Press        { get { return press;       } set { press     = value; OnPropertyChanged(); } }
+        private int     digital;        public int    Digital    { get { return digital;    } set { digital    = value; OnPropertyChanged(); } }
+        private int     pack2pack;      public int    Pack2Pack  { get { return pack2pack;  } set { pack2pack  = value; OnPropertyChanged(); } }
+        private int     press;          public int    Press      { get { return press;      } set { press      = value; OnPropertyChanged(); } }
+
+        private float   flatCharge;     public float  FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -66,14 +68,13 @@ namespace ProDocEstimate.Views
             Digital    = int.Parse(dv[0]["Value1"].ToString());
             Pack2Pack  = int.Parse(dv[0]["Value2"].ToString());
             Press      = int.Parse(dv[0]["Value3"].ToString());
+
+            FlatCharge = float.Parse(dv[0]["FlatCharge"].ToString());       // Percentage markup to apply to the FlatCharge value stored in the Features table
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Validate inputs
-            // e.g., if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
-
-            // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'MICR'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
 
@@ -81,17 +82,14 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + " Quote_Num, Category, Sequence,"
                 + " Param1, Param2, Param3, "
-                + " Value1, Value2, Value3 ) VALUES ( "
+                + " Value1, Value2, Value3, FlatCharge ) VALUES ( "
                 + $"'{QuoteNum}', 'MICR', 4, "
                 + " 'Digital', 'Pack2Pack', 'Press', "
-                + $" '{Digital}', '{Pack2Pack}', '{Press}' )";
+                + $" '{Digital}', '{Pack2Pack}', '{Press}', {Details.FlatCharge} )";
 
-            // Write to SQL
-            //            conn = new SqlConnection(ConnectionString);
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

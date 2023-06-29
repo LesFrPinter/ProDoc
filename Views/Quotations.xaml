@@ -211,7 +211,7 @@
 						       FontSize="11">
                             Get from ESTFORMTYPE
                         </Label>-->
-                        
+
                         <Label Grid.Row="3"
 						       Grid.Column="0"
 						       Grid.ColumnSpan="2"
@@ -431,14 +431,14 @@
 						       VerticalContentAlignment="center"
 						       Content=")" />
 
-                        <WrapPanel Grid.Row="3" Width="600" Height="24" Background="LightGray" Grid.ColumnSpan="8" />
+                        <WrapPanel Grid.Row="3" Height="24" Background="LightGray" Grid.ColumnSpan="6" Margin="80 0 0 0" />
 
                         <Label Grid.Row="4"
 						       Grid.ColumnSpan="2"
 						       Margin="128,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="Parts:" />
-                        
+
                         <telerik:RadNumericUpDown x:Name="PartsSpinner"
 						                          Grid.Row="4"
 						                          Grid.Column="2"
@@ -626,14 +626,13 @@
 
                         <Label Grid.Row="11"
 						       Grid.Column="4"
-						       Margin="10,0,0,0"
 						       HorizontalAlignment="Left" VerticalAlignment="Center"
 						       Content="Num:" />
                         <TextBox x:Name="txtCustomerNum"
                                  Grid.Row="11"
 						         Grid.Column="4"
 						         Width="65"
-						         Margin="60,5,0,5"
+						         Margin="52,5,0,5"
 						         LostFocus="txtCustomerNum_LostFocus"
 						         MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
 						         Style="{StaticResource TextField}"
@@ -641,8 +640,8 @@
                         <CheckBox x:Name="chkProspect"
 						          Grid.Row="11"
 						          Grid.Column="5"
-						          Margin="10,5,0,0"
-						          VerticalAlignment="Top"
+						          Margin="10,0,0,0" FontSize="16"
+						          VerticalAlignment="Center"
 						          Content="Prospect"
 						          IsEnabled="False" />
 
@@ -740,7 +739,7 @@
 
                         <RadioButton Grid.Row="8"
 						             Grid.Column="2"
-                                     FontSize="11"
+                                     FontSize="14"
                                      Width="40"
                                      HorizontalAlignment="Left"
 						             Margin="4,0,0,0"
@@ -748,7 +747,7 @@
 						             Content="Yes" />
                         <RadioButton Grid.Row="8"
 						             Grid.Column="2"
-                                     FontSize="11"
+                                     FontSize="14"
                                      Width="40"
                                      HorizontalAlignment="Left"
 						             Margin="46,4,4,4"
@@ -769,7 +768,7 @@
                         </ComboBox>
                         <Label Grid.Row="8"
 						       Grid.Column="2"
-                               FontSize="11"
+                               FontSize="14"
 						       HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Height="18" Padding="0"
@@ -788,8 +787,7 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page2" 
-                         FontSize="16" Header="    Page 2    " IsEnabled="False">
+                <TabItem x:Name="Page2" FontSize="16" Header="    Page 2    " IsEnabled="False">
 
                     <Grid Height="570">
 
@@ -798,13 +796,9 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
                             <RowDefinition Height="*" />
-                            <!--  DataGrid goes here  -->
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                            <!--<RowDefinition Height="30" />-->
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -886,34 +880,51 @@
 								 GotFocus="txtQty4_GotFocus"
                                  Text="{Binding Path=Qty4,StringFormat=N0}" x:Name="txtQty4" PreviewMouseDown="txtQty4_PreviewMouseDown" />
 
-                        <TextBlock 
-                                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 0 0 0"
-                                Foreground="White" FontWeight="Bold" 
-                                Text="{Binding SelectedQty, StringFormat='0,0'}"
-                                FontSize="11" Height="20" Padding="10 2"
-                                Background="Red"
-                                HorizontalAlignment="Left" VerticalAlignment="Center" >
-                        </TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                            Foreground="White" FontWeight="Bold" 
+                            Text="{Binding SelectedQty, StringFormat='0,0'}"
+                            FontSize="11" Padding="10 2"
+                            Background="Red"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                        <!--Remove CalcMsg label if it still shows up-->
-                        <Label x:Name="lblCalcMsg" Grid.Row="1" Grid.Column="8" 
+                        <!--<Label x:Name="lblCalcMsg" Grid.Row="1" Grid.Column="8" 
                                HorizontalAlignment="Center"
                                Foreground="White" Background="Green" 
-                               Visibility="Collapsed"
-                               Content="{Binding CalcMsg, UpdateSourceTrigger=PropertyChanged}" FontSize="9"  />
+                               Visibility="Visible"
+                               Content="{Binding CalcMsg, UpdateSourceTrigger=PropertyChanged}" FontSize="9"  />-->
 
-                        <Label Content="Paper Type" Grid.Row="2" Grid.Column="3" 
+
+                        <Label Content="Paper Type" Grid.Row="2" Grid.Column="2" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                        <Label Content="ItemType" Grid.Row="2" Grid.Column="2" 
+                        <Label x:Name="lblPaperType" Grid.Row="3" Grid.Column="2" 
+                               HorizontalAlignment="Center" Background="Red" Foreground="White" />
+
+                        <ComboBox x:Name="txtPaperType"
+						         Grid.Row="4" Grid.Column="2"
+                                 FontSize="10" 
+                                 Width="70" Padding="2 0"
+                                 Height="22"
+                                 Text="{Binding Path=PAPERTYPE, UpdateSourceTrigger=PropertyChanged}"
+						         VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+
+                        <Label Content="ItemType" Grid.Row="2" Grid.Column="3" 
 						       HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                        <Label x:Name="lblItemType" Grid.Row="1" Grid.Column="4" 
-                               HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"
-                               Background="Blue" Foreground="White" />
+                        <Label x:Name="lblItemType" Grid.Row="2" Grid.Column="1" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible"
+                               Background="DarkOrange" Foreground="White" />
 
-                        <Label x:Name="lblPaperType" Grid.Row="3" Grid.Column="3" 
-                               HorizontalAlignment="Center" Background="Red" Foreground="White" />
+                        <ComboBox x:Name="txtItemType" Grid.Row="3" Grid.Column="3"
+							FontSize="10" Width="65"
+                            Height="22"   Padding="2 0"
+                            DropDownOpened="txtItemType_DropDownOpened"
+							DisplayMemberPath="ItemType"
+                            SelectedValue="{Binding ItemType}"
+						    VerticalAlignment="Center" Margin="16,0,0,0" />
+
+
 
                         <Label Content="Basis" Grid.Row="2" Grid.Column="4"
 						       HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -921,11 +932,21 @@
                         <Label x:Name="lblBasis" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" 
                                Background="Red" Foreground="White" VerticalAlignment="Center" />
 
+                        <ComboBox x:Name="txtBasis" Grid.Row="4"
+                                 FontSize="10" Width="50" Padding="2 0" Grid.Column="4" Height="22"
+                                 DisplayMemberPath="SubWT"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+
                         <Label Content="Color" Grid.Row="2" Grid.Column="5"
 						       HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                         <Label x:Name="lblColor" Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" 
                                HorizontalAlignment="Center" Background="Red" Foreground="White" />
+
+                        <ComboBox x:Name="txtColor" Grid.Row="4" Padding="2 0" FontSize="10" Grid.Column="5"
+                                 Height="22" Width="50" DisplayMemberPath="Color" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
 
                         <Label Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center"
 						       Content="Roll Width" Margin="0,28,0,0" Grid.RowSpan="2" VerticalAlignment="Center" />
@@ -933,12 +954,16 @@
                         <Label Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                x:Name="lblRollWidth" Background="Red" Foreground="White" />
 
+                        <ComboBox x:Name="txtRollWidth" Grid.Row="4" FontSize="10" Grid.Column="6" Width="64" Padding="2 0" Height="22" 
+                                 DisplayMemberPath="Size" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
                         <DataGrid x:Name="dgSheetsOfPaper"
-						          Grid.Row="5"
+						          Grid.Row="4"
 						          Grid.Column="0"
 						          Grid.ColumnSpan="9"
 						          Width="775"
-						          Height="300"
+						          Height="240"
                                   Margin="2,0,0,0"
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
                                   CanUserAddRows="False"
@@ -1013,62 +1038,10 @@
 
                         </DataGrid>
 
-                        <ComboBox x:Name="txtPaperType"
-						         Grid.Row="4" Grid.Column="3"
-                                 FontSize="10" 
-                                 Width="70" Padding="2 0"
-                                 Height="22"
-                                 Text="{Binding Path=PAPERTYPE}"
-						         VerticalAlignment="Center" HorizontalAlignment="Center" />
-
-                        <ComboBox 
-                            Grid.Row="3" Grid.Column="2"
-							x:Name="txtItemType"
-                            FontSize="10" Width="65"
-                            Height="22"   Padding="2 0"
-                            DropDownOpened="txtItemType_DropDownOpened"
-							DisplayMemberPath="ItemType"
-                            SelectedValue="{Binding ItemType}"
-						    VerticalAlignment="Center" Margin="16,0,0,0" />
-
-                        <!--MouseDown="txtItemType_MouseDown"-->
-                        <!--SelectionChanged="txtItemType_SelectionChanged"-->
-
-                        <ComboBox x:Name="txtBasis"
-						         Grid.Row="4"
-                                 FontSize="10"
-                                 Width="50" Padding="2 0"
-						         Grid.Column="4"
-                                 Height="22"
-                                 DisplayMemberPath="SubWT"
-                                 HorizontalAlignment="Center"
-						         VerticalAlignment="Center" />
-
-                        <ComboBox x:Name="txtColor"
-						         Grid.Row="4" Padding="2 0"
-                                 FontSize="10"
-						         Grid.Column="5"
-                                 Height="22" Width="50"
-                                 DisplayMemberPath="Color"
-						         VerticalAlignment="Center" HorizontalAlignment="Center" />
-
-                        <ComboBox x:Name="txtRollWidth"
-						         Grid.Row="4"
-                                 FontSize="10"
-						         Grid.Column="6"
-                                 Width="64" Padding="2 0"
-                                 Height="22" 
-                                 DisplayMemberPath="Size"
-                                 HorizontalAlignment="Center"
-						         VerticalAlignment="Center"/>
 
                         <Button x:Name="btnUpdate"
-						         Grid.Row="4"
-						         Grid.Column="7"
-						         Width="70"
-                                 Click="btnUpdate_Click"
-                                 Height="24"
-						         Padding="0"
+						         Grid.Row="4" Grid.Column="7" Width="70" Height="24" Padding="0"
+                                 Click="btnUpdate_Click" 
                                  Content="Update" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                         <TextBox Grid.Row="6" Grid.Column="7" 
@@ -1092,15 +1065,13 @@
 
                     <Viewbox>
 
-                        <Grid Height="500" >
+                        <Grid Height="500" VerticalAlignment="Top" >
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="40" />
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
-                                <RowDefinition Height="30" />
-                                <RowDefinition Height="30" />
-                                <RowDefinition Height="*"  />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
@@ -1109,56 +1080,50 @@
                                 <ColumnDefinition Width="525" />
                             </Grid.ColumnDefinitions>
 
-                            <!--<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
-                                <Button Content="Delete" Padding="5 3" />
-                            </StackPanel>-->
-
                             <Label Grid.Column="2" HorizontalAlignment="Left"
-                                Content="(Double-click to move selection between columns)" />
-
-                            <!--<Label 
-                                Content="(Right-click to view/change)" 
-                                Grid.Column="2" />-->
+                                Content="(Double-click to move selection between columns)" Height="32" Margin="2,0,0,0" Width="366" />
 
                             <Label Content="Category" 
                                    Background="LightSalmon"
-								   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Width="155"
-                                   HorizontalAlignment="Left" />
+								   Grid.Row="1" Width="154"
+                                   HorizontalAlignment="Center" Height="30" />
 
-                            <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="5" 
+                            <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="4" 
                                      FontFamily="Courier New" FontSize="14"
                                      Height="240" VerticalAlignment="Top"
-                                     MouseDoubleClick="lstAvailable_MouseDoubleClick" >
-
-                            </ListBox>
+                                     MouseDoubleClick="lstAvailable_MouseDoubleClick" />
 
                             <Label Content="Selected                                                         (Right-click to view/change)"
                                    Background="LightSalmon"
-                                   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Width="520"
-                                   HorizontalAlignment="Left" />
+                                   Grid.Row="1" Grid.Column="2" Width="520"
+                                   HorizontalAlignment="Left" Height="30" Margin="4,0,0,0" />
 
                             <ListBox x:Name="lstSelected" 
+                                     Grid.Row="2" Grid.Column="2" Grid.RowSpan="4"
                                      FontFamily="Courier New" FontSize="14" 
                                      Width="180" HorizontalAlignment="Left"
                                      Height="240" VerticalAlignment="Top"
-                                     Grid.Row="2" Grid.Column="2" Grid.RowSpan="5"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
 	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" >
 
                             </ListBox>
 
-                            <DataGrid Grid.Row="5" Height="175" VerticalAlignment="Top" Margin="5,155,0,0" Grid.ColumnSpan="3" Width="685" >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Type"		Width="100" />
-                                    <DataGridTextColumn Header="Flat chg"	Width="100" />
-                                    <DataGridTextColumn Header="Run chg"	Width="100" />
-                                    <DataGridTextColumn Header="Plate"		Width="100" />
-                                    <DataGridTextColumn Header="FinishMatl" Width="100" />
-                                    <!--<DataGridTextColumn Header="SetupTime"	Width="100" />
-                                    <DataGridTextColumn Header="Slowdown"	Width="100" />-->
-                                    <DataGridTextColumn Header="PressMatl"	Width="100" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            <Expander Grid.Row="3" Grid.ColumnSpan="4"
+                                      VerticalAlignment="Top" HorizontalAlignment="Left"
+                                      ExpandDirection="Right" >
+                                <DataGrid Height="180" VerticalAlignment="Top" Width="655" Margin="0 25 0 0" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Type"		Width="100" />
+                                        <DataGridTextColumn Header="Flat chg"	Width="100" />
+                                        <DataGridTextColumn Header="Run chg"	Width="100" />
+                                        <DataGridTextColumn Header="Plate"		Width="100" />
+                                        <DataGridTextColumn Header="FinishMatl" Width="100" />
+                                        <!--<DataGridTextColumn Header="SetupTime"	Width="100" />
+	                                        <DataGridTextColumn Header="Slowdown"	Width="100" />-->
+                                        <DataGridTextColumn Header="PressMatl"	Width="100" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Expander>
 
                         </Grid>
 
