@@ -54,6 +54,7 @@ namespace ProDocEstimate.Views
             Total = -1.00F;
             QuoteNo = QUOTENUM;
             LoadQuote();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void LoadQuote()

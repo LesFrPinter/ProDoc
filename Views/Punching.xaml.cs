@@ -44,6 +44,7 @@ namespace ProDocEstimate.Views
             PressSize = PRESSSIZE;
             LoadMaxima();
             LoadData();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void LoadMaxima()

@@ -22,6 +22,10 @@ namespace ProDocEstimate.Views
         public DataTable? dt;
         public SqlCommand? scmd;
 
+#if false
+
+        #region Properties and DependencyProperties
+
         private float calculatedFlatCharge; public float CalculatedFlatCharge { get { return calculatedFlatCharge; } set { calculatedFlatCharge = value; OnPropertyChanged(); } }
         private float baseFlatCharge;       public float BaseFlatCharge       { get { return baseFlatCharge;       } set { baseFlatCharge       = value; OnPropertyChanged(); } }
 
@@ -29,7 +33,7 @@ namespace ProDocEstimate.Views
         private float baseRunCharge;        public float BaseRunCharge       { get { return baseRunCharge;         } set { baseRunCharge        = value; OnPropertyChanged(); } }
 
         public static readonly DependencyProperty FlatChargeProperty  = 
-            DependencyProperty.Register("FlatCharge",    typeof(float), typeof(DetailFeatures));
+            DependencyProperty.Register("FlatCharge",    typeof(float), typeof(DetailFeatures), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public float FlatCharge  { get => (float)GetValue(FlatChargeProperty); set => SetValue(FlatChargeProperty,   value); }
 
         //, typeof(DetailFeatures), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
@@ -71,6 +75,10 @@ namespace ProDocEstimate.Views
         private string press_Size;  public string Press_Size { get { return press_Size; } set { press_Size = value; OnPropertyChanged(); } }
         private string f_Type;      public string F_Type     { get { return f_Type;     } set { f_Type     = value; OnPropertyChanged(); } }
 
+        #endregion
+
+#endif
+
         public DetailFeatures() 
         {   InitializeComponent();
 
@@ -98,8 +106,8 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             DataRow DRV = (DataRow)dt.Rows[0];
 
-            BaseFlatCharge = float.Parse(DRV["FLAT_CHARGE"].ToString());
-            BaseRunCharge  = float.Parse(DRV["RUN_CHARGE"].ToString());
+            //BaseFlatCharge = float.Parse(DRV["FLAT_CHARGE"].ToString());
+            //BaseRunCharge  = float.Parse(DRV["RUN_CHARGE"].ToString());
 
             //PlateCharge = 33.03F;
             //FinishMatl = 44.04F;
@@ -109,12 +117,12 @@ namespace ProDocEstimate.Views
 
         private void FlatChargePct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         { 
-            CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatCharge/100.00F);
+//            CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatCharge/100.00F);
         }
 
         private void RunChargePct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         { 
-            CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunCharge / 100.00F);
+//            CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunCharge / 100.00F);
         }
 
     }

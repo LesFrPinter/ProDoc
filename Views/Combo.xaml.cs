@@ -47,6 +47,7 @@ namespace ProDocEstimate.Views
             FlatCharge = 4.95F;
             LoadMaxima();
             LoadData();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void LoadMaxima()

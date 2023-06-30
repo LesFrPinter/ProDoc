@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Telerik.Windows.Controls.TimeBar;
 
 namespace ProDocEstimate.Views
 {
@@ -42,6 +41,7 @@ namespace ProDocEstimate.Views
             QuoteNum = QUOTENUM;
             GetMaxValues();
             GetSavedValues();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void GetMaxValues()
@@ -94,7 +94,7 @@ namespace ProDocEstimate.Views
                 + $" '{PartCross}', '{Cross}', '{PartRun}', '{Running}' )";
 
             // Write to SQL
-            //            conn = new SqlConnection(ConnectionString);
+            //  conn = new SqlConnection(ConnectionString);
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

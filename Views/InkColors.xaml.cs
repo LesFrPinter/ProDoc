@@ -62,6 +62,7 @@ namespace ProDocEstimate.Views
 
             LoadMaxColors();
             LoadSavedDetails();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void LoadSavedDetails()

@@ -1,10 +1,9 @@
 ﻿using ProDocEstimate.Views;
 using System.Windows;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
-	public partial class MainWindow : Window
+    public partial class MainWindow : Window
 	{
 		public MainWindow() { InitializeComponent(); }
 

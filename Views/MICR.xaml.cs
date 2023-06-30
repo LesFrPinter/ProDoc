@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ProDocEstimate.Views
 {
@@ -21,6 +23,7 @@ namespace ProDocEstimate.Views
         public SqlDataAdapter? da;
         public DataTable? dt;
         public SqlCommand? scmd;
+        public DataView? dv;
 
         private int     max;            public int    Max        { get { return max;        } set { max        = value; OnPropertyChanged(); } }
         private string  pressSize;      public string PressSize  { get { return pressSize;  } set { pressSize  = value; OnPropertyChanged(); } }
@@ -33,6 +36,9 @@ namespace ProDocEstimate.Views
         private int     press;          public int    Press      { get { return press;      } set { press      = value; OnPropertyChanged(); } }
 
         private float   flatCharge;     public float  FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
+        private float   baseflatCharge; public float  BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
+        private float   flatChargePct;  public float  FlatChargePct  { get { return flatChargePct;  } set { flatChargePct  = value; OnPropertyChanged(); } }
+        private float   calculatedflatCharge; public float CalculatedFlatCharge { get { return calculatedflatCharge; } set { calculatedflatCharge = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -52,6 +58,19 @@ namespace ProDocEstimate.Views
 
             LoadMaxima();
             LoadData();
+
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+
+            //            dv = new DataView();
+            //            LoadDataView();
+        }
+
+        private void LoadDataView()
+        {
+            string cmd = $"SELECT F_TYPE, FLAT_CHARGE, RUN_CHARGE, PRESS_SETUP_TIME, PRESS_SLOWDOWN FROM [ESTIMATING].[dbo].FEATURES WHERE CATEGORY='MICR' AND PRESS_SIZE = '{PressSize}' ORDER BY F_TYPE";
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
+            DataView dv = dt.AsDataView();
         }
 
         private void LoadMaxima()
@@ -73,13 +92,12 @@ namespace ProDocEstimate.Views
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
-            DataView dv = new DataView(dt);
-            Digital    = int.Parse(dv[0]["Value1"].ToString());
-            Pack2Pack  = int.Parse(dv[0]["Value2"].ToString());
-            Press      = int.Parse(dv[0]["Value3"].ToString());
+            DataView dv2 = new DataView(dt);
+            Digital    = int.Parse(dv2[0]["Value1"].ToString());
+            Pack2Pack  = int.Parse(dv2[0]["Value2"].ToString());
+            Press      = int.Parse(dv2[0]["Value3"].ToString());
 
-            FlatCharge = float.Parse(dv[0]["FlatCharge"].ToString());       // Percentage markup to apply to the FlatCharge value stored in the Features table
-
+            GetFlatCharge();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -99,7 +117,7 @@ namespace ProDocEstimate.Views
                 + " Value1, Value2, Value3, FlatCharge ) VALUES ( "
                 + $"'{QuoteNum}', 'MICR', 4, "
                 + " 'Digital', 'Pack2Pack', 'Press', "
-                + $" '{Digital}', '{Pack2Pack}', '{Press}', {Details.FlatCharge} )";
+                + $" '{Digital}', '{Pack2Pack}', '{Press}', {FlatCharge} )";
 
             scmd.CommandText = cmd;
             conn.Open();
@@ -110,10 +128,54 @@ namespace ProDocEstimate.Views
             this.Close();
         }
 
+        private void M1_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {   // Calculate Flat charge based on the selected NumericUpDowns and pass it to the DetailFeatures UserControl
+            // NOTE: Data could be returned and the dataview loaded just once when the MICR component is first opened...
+            string cmd = $"SELECT F_TYPE, FLAT_CHARGE, RUN_CHARGE, PRESS_SETUP_TIME, PRESS_SLOWDOWN FROM [ESTIMATING].[dbo].FEATURES WHERE CATEGORY='MICR' AND PRESS_SIZE = '{PressSize}' ORDER BY F_TYPE";
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable("Ftypes"); da.Fill(dt);
+            dv = dt.DefaultView;
+            GetFlatCharge();
+        }
+
+        private void M2_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            string cmd = $"SELECT F_TYPE, FLAT_CHARGE, RUN_CHARGE, PRESS_SETUP_TIME, PRESS_SLOWDOWN FROM [ESTIMATING].[dbo].FEATURES WHERE CATEGORY='MICR' AND PRESS_SIZE = '{PressSize}' ORDER BY F_TYPE";
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
+            dv = dt.DefaultView;
+            GetFlatCharge();
+        }
+
+        private void M3_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            string cmd = $"SELECT F_TYPE, FLAT_CHARGE, RUN_CHARGE, PRESS_SETUP_TIME, PRESS_SLOWDOWN FROM [ESTIMATING].[dbo].FEATURES WHERE CATEGORY='MICR' AND PRESS_SIZE = '{PressSize}' ORDER BY F_TYPE";
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
+            dv = dt.DefaultView;
+            GetFlatCharge();
+        }
+
+        private void GetFlatCharge()
+        {
+            if (dv == null) return;
+            dv.RowFilter = "F_TYPE='DIGITAL'";   float T1 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
+            dv.RowFilter = "F_TYPE='PACK2PACK'"; float T2 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
+            dv.RowFilter = "F_TYPE='PRESS'";     float T3 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
+            BaseFlatCharge       = (Digital * T1) + (Pack2Pack * T2) + (Press * T3);
+//            FlatCharge           = BaseFlatCharge * FlatChargePct;
+            CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatChargePct / 100.00F);
+        }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
+        private void FCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            GetFlatCharge() ;
+//            CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatChargePct / 100.00F);
+        }
     }
 }
