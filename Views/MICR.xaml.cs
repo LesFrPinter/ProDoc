@@ -25,6 +25,8 @@ namespace ProDocEstimate.Views
         private int     max;            public int    Max        { get { return max;        } set { max        = value; OnPropertyChanged(); } }
         private string  pressSize;      public string PressSize  { get { return pressSize;  } set { pressSize  = value; OnPropertyChanged(); } }
         private string  quoteNum;       public string QuoteNum   { get { return quoteNum;   } set { quoteNum   = value; OnPropertyChanged(); } }
+        private string  category;       public string Category   { get { return category;   } set { category   = value; OnPropertyChanged(); } }
+        private string  ftype;          public string FType      { get { return ftype;      } set { ftype      = value; OnPropertyChanged(); } }
 
         private int     digital;        public int    Digital    { get { return digital;    } set { digital    = value; OnPropertyChanged(); } }
         private int     pack2pack;      public int    Pack2Pack  { get { return pack2pack;  } set { pack2pack  = value; OnPropertyChanged(); } }
@@ -37,10 +39,17 @@ namespace ProDocEstimate.Views
         public MICR(string PRESSSIZE, string QUOTENUM)
         {
             InitializeComponent();
+
             this.DataContext = this;
+
             Title = "Quote #: " + QUOTENUM;
+
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
+
+            Category = "MICR";
+            FType = "DIGITAL";
+
             LoadMaxima();
             LoadData();
         }
@@ -82,6 +91,8 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
+            // Add flat charges for up to three F_TYPE values;
+
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + " Quote_Num, Category, Sequence,"
                 + " Param1, Param2, Param3, "
@@ -103,5 +114,6 @@ namespace ProDocEstimate.Views
         {
             Close();
         }
+
     }
 }
