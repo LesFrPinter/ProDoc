@@ -41,28 +41,30 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <Label FontSize="22" Foreground="Red" Content="Punching" Grid.Column="1" HorizontalAlignment="Center" >
+            <Label FontSize="22" Foreground="Red" Content="Punching" Grid.Column="2" HorizontalAlignment="Center" >
                 <Label.BitmapEffect>
                     <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
                 </Label.BitmapEffect>
             </Label>
 
-            <Label Grid.Row="1"                 Content="2 hole" />
-            <Label Grid.Row="1" Grid.Column="1" Content="3 hole" />
-            <Label Grid.Row="1" Grid.Column="2" Content="4-5 hole" />
+            <Label Grid.Row="1" Grid.Column="1" Content="2 hole" />
+            <Label Grid.Row="1" Grid.Column="2" Content="3 hole" />
+            <Label Grid.Row="1" Grid.Column="3" Content="4-5 hole" />
 
-            <telerik:RadNumericUpDown Grid.Row="2"                 Width="60" Value="{Binding Two}"   x:Name="M1" />
-            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="1" Width="60" Value="{Binding Three}" x:Name="M2"  />
-            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="2" Width="60" Value="{Binding Over3}" x:Name="M3"/>
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="1" Width="60" Value="{Binding Two}"   x:Name="M1" />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="2" Width="60" Value="{Binding Three}" x:Name="M2"  />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="3" Width="60" Value="{Binding Over3}" x:Name="M3"/>
 
-            <local:DetailFeatures Width="800" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top" />
+            <local:DetailFeatures Width="800" Grid.Row="3" Grid.ColumnSpan="5" VerticalAlignment="Top" Height="120" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>

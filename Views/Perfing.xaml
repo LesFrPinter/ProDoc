@@ -42,10 +42,12 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <Label FontSize="22" Foreground="Red" Content="Perfing" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
@@ -54,19 +56,19 @@
                 </Label.BitmapEffect>
             </Label>
 
-            <Label Grid.Row="1" Content="Part Cross" />
-            <Label Grid.Row="1" Grid.Column="1" Content="Cross" />
-            <Label Grid.Row="1" Grid.Column="2" Content="Part Run" />
-            <Label Grid.Row="1" Grid.Column="3" Content="Running" />
+            <Label Grid.Row="1" Grid.Column="1" Content="Part Cross" />
+            <Label Grid.Row="1" Grid.Column="2" Content="Cross" />
+            <Label Grid.Row="1" Grid.Column="3" Content="Part Run" />
+            <Label Grid.Row="1" Grid.Column="4" Content="Running" />
 
-            <telerik:RadNumericUpDown                 Width="60" Value="{Binding PartCross}" x:Name="PC1" />
-            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding Cross}"     x:Name="C1"  />
-            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PartRun}"   x:Name="PR1"/>
-            <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Running}"   x:Name="R1" />
+            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding PartCross}" x:Name="PC1" />
+            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding Cross}"     x:Name="C1"  />
+            <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PartRun}"   x:Name="PR1"/>
+            <telerik:RadNumericUpDown Grid.Column="4" Width="60" Value="{Binding Running}"   x:Name="R1" />
 
-            <local:DetailFeatures Height="120" Width="800" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="5" Grid.RowSpan="3" />
+            <local:DetailFeatures Height="120" Width="800" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="6" Grid.RowSpan="3" />
 
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click"   />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>

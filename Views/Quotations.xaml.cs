@@ -1065,7 +1065,7 @@ namespace ProDocEstimate
                         break;
                     }
 
-                case "PressNum":
+                case "Press":
                     {
                         PressNum pressnum = new PressNum(PRESSSIZE, QUOTE_NUM); pressnum.ShowDialog();
                         break;

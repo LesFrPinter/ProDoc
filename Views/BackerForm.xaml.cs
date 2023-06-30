@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 // The FEATURES table has the FLAT_CHARGE and PREP_DEPT_MATL (price per change) for each press size and F_TYPE. It's in an Excel spreadsheet now, but Tim is going to load it.
 

@@ -42,9 +42,11 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <Label FontSize="22" Foreground="Red" Content="PrePress" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
@@ -53,15 +55,15 @@
                 </Label.BitmapEffect>
             </Label>
 
-            <Label Grid.Row="1"                 Content="OE" />
-            <Label Grid.Row="1" Grid.Column="1" Content="Plate Charge" />
-            <Label Grid.Row="1" Grid.Column="2" Content="Pre-Press" />
+            <Label Grid.Row="1" Grid.Column="1" Content="OE" />
+            <Label Grid.Row="1" Grid.Column="2" Content="Plate Charge" />
+            <Label Grid.Row="1" Grid.Column="3" Content="Pre-Press" />
 
-            <telerik:RadNumericUpDown                 Width="60" Value="{Binding OE}"       x:Name="M1" />
-            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding PlateChg}" x:Name="M2"  />
-            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PREPress}" x:Name="M3"/>
+            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding OE}"       x:Name="M1" />
+            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PlateChg}" x:Name="M2"  />
+            <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PREPress}" x:Name="M3"/>
 
-            <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="4" />
+            <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="5" />
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />

@@ -54,11 +54,10 @@
                 </Label.BitmapEffect>
             </Label>
 
-            <Label Grid.Row="1" VerticalAlignment="Center"       Content="Combo" />
+            <Label                    Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  Content="Combo" HorizontalAlignment="Left" Margin="95 0 0 0" />
+            <telerik:RadNumericUpDown Grid.Row="1" Grid.Column="1" Width="60" Value="{Binding Combo1}" x:Name="M1" HorizontalAlignment="Left" Margin="150,0,0,0" />
 
-            <telerik:RadNumericUpDown Grid.Row="1" Width="60" Value="{Binding Combo1}" x:Name="M1" HorizontalAlignment="Left" Margin="182,0,0,0" />
-
-            <local:DetailFeatures Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" />
+            <local:DetailFeatures Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="140" />
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="22" HorizontalAlignment="Center">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
