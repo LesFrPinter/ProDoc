@@ -261,26 +261,6 @@ namespace ProDocEstimate
             else { return float.Parse(parts[0]) / float.Parse(parts[1]); }
         }
 
-        //private void LoadElements()     // No longer used
-        //{
-        //    this.Elements = new DataTable("Elements");
-        //    this.Elements.Columns.Add("SEQ");
-        //    this.Elements.Columns.Add("ITEM");
-        //    this.Elements.Columns.Add("PRICE");
-        //    this.Elements.Columns.Add("MULT");
-        //    this.Elements.Columns.Add("EXT");
-
-        //    this.Elements.Rows.Add("10", "Base Charge", 1.23F, 1.00F, 2.20F);
-        //    this.Elements.Rows.Add("11", "Order Entry", 0.00D, 0.00D, 0.00D);
-        //    this.Elements.Rows.Add("12", "Pre Press", 0.00D, 0.00D, 0.00D);
-        //    this.Elements.Rows.Add("13", @"Wht 11 5/8"" CB", 0.00D, 1.00D, 0.00D);
-        //    this.Elements.Rows.Add("14", @"Can 11 5/8"" CFB", 0.00D, 1.00D, 0.00D);
-        //    this.Elements.Rows.Add("15", @"Pink 11 5/8"" CF", 0.00D, 1.00D, 0.00D);
-
-        //    this.dgElements.DataContext = this;
-        //    this.dgElements.ItemsSource = Elements.DefaultView;
-        //}
-
         private void LoadPaperTypes()
         {
             this.PaperTypes = new DataTable("PaperTypes");
@@ -306,7 +286,6 @@ namespace ProDocEstimate
             this.txtPaperType.ItemsSource = PaperTypes.DefaultView;
             this.txtPaperType.DisplayMemberPath = "PaperType";
             this.txtPaperType.SelectedValuePath = "PaperType";
-
         }
 
         private void LoadColors()
@@ -467,7 +446,7 @@ namespace ProDocEstimate
         }
 
         private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
-        {
+        {   if(txtCustomerNum.Text.ToString().TrimEnd().Length == 0) { return; }   
             int CustKey = int.Parse(txtCustomerNum.Text);
             string FixedCust = txtCustomerNum.Text.Trim();
             FixedCust = FixedCust.PadRight(6);
@@ -1055,7 +1034,10 @@ namespace ProDocEstimate
 
                 case "MICR":
                     {
-                        MICR micr = new MICR(PRESSSIZE, QUOTE_NUM); micr.ShowDialog();
+                        MICR micr = new MICR(PRESSSIZE, QUOTE_NUM); 
+                        micr.QuoteNum = QUOTE_NUM; 
+                        micr.PressSize = PRESSSIZE; 
+                        micr.ShowDialog();
                         break;
                     }
 

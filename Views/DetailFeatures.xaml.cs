@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using Telerik.Windows.Controls;
 
 namespace ProDocEstimate.Views
 {
@@ -55,7 +56,7 @@ namespace ProDocEstimate.Views
         public float  PressMatl   { get => (float)GetValue(PressMatlProperty);   set => SetValue(PressMatlProperty,  value); }
 
         // ------------ THREE DEPENDENCY PROPERTIES PASSED IN WITHIN THE COMPONENT DECLARATION ------------
-        public static DependencyProperty QUOTENUMProperty    = 
+        public static readonly DependencyProperty QUOTENUMProperty = 
             DependencyProperty.RegisterAttached(
                 nameof(QUOTENUM),
                 typeof(string),
@@ -69,7 +70,7 @@ namespace ProDocEstimate.Views
                set =>         SetValue(QUOTENUMProperty, value); 
             }
 
-        public static DependencyProperty CATEGORYProperty    = 
+        public static readonly DependencyProperty CATEGORYProperty = 
             DependencyProperty.RegisterAttached(
                 nameof(CATEGORY),
                 typeof(string), 
@@ -83,7 +84,7 @@ namespace ProDocEstimate.Views
                set => SetValue(CATEGORYProperty,   value); 
             }
 
-        public static DependencyProperty PRESSSIZEProperty   = 
+        public static readonly DependencyProperty PRESSSIZEProperty = 
             DependencyProperty.Register(
                 nameof(PRESSSIZE),
                 typeof(string), 
@@ -100,28 +101,19 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
-        private string category;  public string Category  { get { return category;  } set { category  = value; OnPropertyChanged(); } }
-        private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
+        private string? quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
+        private string? category;  public string Category  { get { return category;  } set { category  = value; OnPropertyChanged(); } }
+        private string? pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
 
         public DetailFeatures() 
         {
             InitializeComponent();
-
             GetFeatureCosts();
-        }
-
-        private void Loaded()
-        {
-            QuoteNum = QUOTENUM.ToString();
-            Category = CATEGORY.ToString();
-            PressSize = PRESSSIZE.ToString();
         }
 
         private void GetFeatureCosts()
         {
-
-            if( CATEGORY.Length == 0 || PRESSSIZE.Length == 0 ) return;
+            if( this.CATEGORY.Length == 0 || this.PRESSSIZE.Length == 0 ) return;
 
             string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = '{CATEGORY}' AND Press_size = '{PRESSSIZE}'";
 
@@ -145,13 +137,13 @@ namespace ProDocEstimate.Views
         }
 
         private void FlatChargePct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { 
-//            CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatCharge/100.00F);
+        {
+            CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatCharge / 100.00F);
         }
 
         private void RunChargePct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { 
-//            CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunCharge / 100.00F);
+        {
+            CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunCharge / 100.00F);
         }
 
     }

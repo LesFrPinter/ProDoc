@@ -82,27 +82,24 @@
                     <ColumnDefinition Width="229*" />
                 </Grid.ColumnDefinitions>
 
-
 <!--Replacement code for "DetailFeatures"-->
                 
-                <!--<Label FontSize="20" Content="Material" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalContentAlignment="Top" Foreground="Blue" Background="Yellow" Padding="3" Width="100" />
+                <Label FontSize="20" Content="Material" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalContentAlignment="Top" Foreground="Blue" Background="Yellow" Padding="3" Width="100" />
 
-                <Label Content="Flat Charge:"           Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="103,0,0,0" />
+                <Label Content="Flat Charge:"           Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+                <Label Content="Run Charge:"            Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+                <Label Content="Plate:"                 Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+                <Label Content="Finish Material:"       Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
 
-                <Label Content="Run Charge:"            Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="101,0,0,0"/>
-
-                <Label Content="Plate:"                 Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Margin="8,0,0,0"/>
-                <Label Content="Finish Material:"       Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="86,0,0,0"/>
-
-                <Label Content="Converting Material:"   Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="58,0,0,0" />
-                <Label Content="Press Material:"        Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="89,0,0,0" />
+                <Label Content="Converting Material:"   Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                <Label Content="Press Material:"        Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" />
 
                 <TextBox Width="110" Height="24"        Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding CalculatedFlatCharge, StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="42,1,0,1" />
                 <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="24" Margin="134,1,0,1" Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" x:Name="FCPct" ValueChanged="FCPct_ValueChanged" />
                 <Label HorizontalAlignment="Left"      Grid.Row="1" Grid.Column="2" Content="%" VerticalAlignment="Center" Margin="210,0,0,0" />
 
                 <TextBox Width="110" Height="24"        Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding CalculatedRunCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="42,1,0,1" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="24" Margin="134,1,0,1" Value="{Binding RunCharge,  UpdateSourceTrigger=PropertyChanged}" x:Name="RunChargePct"  NumberDecimalDigits="0" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="24" Margin="134,1,0,1" Value="{Binding RunChargePct,  UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" x:Name="RCPct" ValueChanged="RCPct_ValueChanged" />
                 <Label HorizontalAlignment="Left"      Grid.Row="2" Grid.Column="2" Content="%" VerticalAlignment="Center" Margin="210,0,0,0" />
 
                 <TextBox Width="110" Height="24"        Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding PlateCharge,          StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="42,1,0,1" />
@@ -119,14 +116,14 @@
 
                 <TextBox Width="110" Height="24"        Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left"  Text="{Binding PressMatl,            StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="171,1,0,1" />
                 <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" Height="24" Margin="134,1,0,1" />
-                <Label HorizontalAlignment="Left"      Grid.Row="2" Grid.Column="4" Content="%" VerticalAlignment="Center" Margin="210,0,0,0" />-->
+                <Label HorizontalAlignment="Left"      Grid.Row="2" Grid.Column="4" Content="%" VerticalAlignment="Center" Margin="210,0,0,0" />
 
-                <local:DetailFeatures 
+                <!--<local:DetailFeatures 
                     Grid.RowSpan="4" 
                     Grid.ColumnSpan="6"
-                    QUOTENUM="{Binding QuoteNum}"
-                    CATEGORY="{Binding Category}"
-                    PRESSSIZE="{Binding PressSize}" />
+                    QUOTENUM  ="{Binding QuoteNum,  ElementName=MICR, UpdateSourceTrigger=PropertyChanged}"
+                    CATEGORY  ="{Binding Category,  ElementName=MICR, UpdateSourceTrigger=PropertyChanged}"
+                    PRESSSIZE ="{Binding PressSize, ElementName=MICR, UpdateSourceTrigger=PropertyChanged}" />-->
                 
             </Grid>
 
