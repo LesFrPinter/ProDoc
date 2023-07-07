@@ -26,8 +26,8 @@ namespace ProDocEstimate.Views
         public DataView? dv;
 
         private int     max;            public int    Max        { get { return max;        } set { max        = value; OnPropertyChanged(); } }
-        private string  pressSize;      public string PressSize  { get { return pressSize;  } set { pressSize  = value; OnPropertyChanged(); } }
         private string  quoteNum;       public string QuoteNum   { get { return quoteNum;   } set { quoteNum   = value; OnPropertyChanged(); } }
+        private string  pressSize;      public string PressSize  { get { return pressSize;  } set { pressSize  = value; OnPropertyChanged(); } }
         private string  category;       public string Category   { get { return category;   } set { category   = value; OnPropertyChanged(); } }
         private string  ftype;          public string FType      { get { return ftype;      } set { ftype      = value; OnPropertyChanged(); } }
 
@@ -42,18 +42,19 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        public MICR(string PRESSSIZE, string QUOTENUM)
+        public MICR(string _PRESSSIZE, string _QUOTENUM)
         {
+            // The next three are used by the DetailFeatures UserControl
+            QuoteNum = _QUOTENUM;
+            PressSize = _PRESSSIZE;
+            Category = "MICR";
+
             InitializeComponent();
 
-            this.DataContext = this;
+            DataContext = this;
 
-            Title = "Quote #: " + QUOTENUM;
+            Title = "Quote #: " + _QUOTENUM;
 
-            QuoteNum = QUOTENUM;
-            PressSize = PRESSSIZE;
-
-            Category = "MICR";
             FType = "DIGITAL";
 
             LoadMaxima();
@@ -67,7 +68,8 @@ namespace ProDocEstimate.Views
 
         private void LoadDataView()
         {
-            string cmd = $"SELECT F_TYPE, FLAT_CHARGE, RUN_CHARGE, PRESS_SETUP_TIME, PRESS_SLOWDOWN FROM [ESTIMATING].[dbo].FEATURES WHERE CATEGORY='MICR' AND PRESS_SIZE = '{PressSize}' ORDER BY F_TYPE";
+            string cmd =  "SELECT F_TYPE, FLAT_CHARGE, RUN_CHARGE, PRESS_SETUP_TIME, PRESS_SLOWDOWN FROM [ESTIMATING].[dbo].FEATURES" 
+                       + $" WHERE CATEGORY='MICR' AND PRESS_SIZE = '{PressSize}' ORDER BY F_TYPE";
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
             DataView dv = dt.AsDataView();
@@ -75,9 +77,9 @@ namespace ProDocEstimate.Views
 
         private void LoadMaxima()
         {
-            // Retrieve value for Backer if one was previously entered 
-            string str = $"SELECT F_TYPE, MAX(Number) AS Max"
-                + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'MICR' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
+            // Retrieve value for MICR if one was previously entered.
+            string str =  "SELECT F_TYPE, MAX(Number) AS Max"
+                       + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'MICR' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             DataView dv = new DataView(dt);
@@ -128,6 +130,8 @@ namespace ProDocEstimate.Views
             this.Close();
         }
 
+        //TODO: Each of these NumericUpDown controls calls the same SQL routine before calling GetFlatCharge; refactor?
+
         private void M1_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {   // Calculate Flat charge based on the selected NumericUpDowns and pass it to the DetailFeatures UserControl
             // NOTE: Data could be returned and the dataview loaded just once when the MICR component is first opened...
@@ -163,7 +167,6 @@ namespace ProDocEstimate.Views
             dv.RowFilter = "F_TYPE='PACK2PACK'"; float T2 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
             dv.RowFilter = "F_TYPE='PRESS'";     float T3 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
             BaseFlatCharge       = (Digital * T1) + (Pack2Pack * T2) + (Press * T3);
-//            FlatCharge           = BaseFlatCharge * FlatChargePct;
             CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatChargePct / 100.00F);
         }
 

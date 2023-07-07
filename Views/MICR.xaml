@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:local="clr-namespace:ProDocEstimate.Views" 
-        d:DataContext="{d:DesignInstance Type=local:DetailFeatures}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
@@ -83,10 +82,15 @@
                     <ColumnDefinition Width="229*" />
                 </Grid.ColumnDefinitions>
 
-                <Label FontSize="20" Content="Material" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalContentAlignment="Top" Foreground="Blue" Background="Yellow" Padding="3" Width="100" />
+
+<!--Replacement code for "DetailFeatures"-->
+                
+                <!--<Label FontSize="20" Content="Material" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalContentAlignment="Top" Foreground="Blue" Background="Yellow" Padding="3" Width="100" />
 
                 <Label Content="Flat Charge:"           Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="103,0,0,0" />
+
                 <Label Content="Run Charge:"            Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="101,0,0,0"/>
+
                 <Label Content="Plate:"                 Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Margin="8,0,0,0"/>
                 <Label Content="Finish Material:"       Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="86,0,0,0"/>
 
@@ -115,8 +119,15 @@
 
                 <TextBox Width="110" Height="24"        Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left"  Text="{Binding PressMatl,            StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="171,1,0,1" />
                 <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" Height="24" Margin="134,1,0,1" />
-                <Label HorizontalAlignment="Left"      Grid.Row="2" Grid.Column="4" Content="%" VerticalAlignment="Center" Margin="210,0,0,0" />
+                <Label HorizontalAlignment="Left"      Grid.Row="2" Grid.Column="4" Content="%" VerticalAlignment="Center" Margin="210,0,0,0" />-->
 
+                <local:DetailFeatures 
+                    Grid.RowSpan="4" 
+                    Grid.ColumnSpan="6"
+                    QUOTENUM="{Binding QuoteNum}"
+                    CATEGORY="{Binding Category}"
+                    PRESSSIZE="{Binding PressSize}" />
+                
             </Grid>
 
             <Grid Grid.Row="4" Height="160" Grid.ColumnSpan="5" VerticalAlignment="Center" >

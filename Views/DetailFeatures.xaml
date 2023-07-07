@@ -97,6 +97,11 @@
         <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Height="24" Margin="25 0" />
         <Label HorizontalAlignment="Right"      Grid.Row="2" Grid.Column="3" Content="%" VerticalAlignment="Center" />
 
+        <Label Grid.Row="3" Grid.Column="2" Content="{Binding QUOTENUM}"  Width="100" Background="Yellow" />
+        <Label Grid.Row="4" Grid.Column="2" Content="{Binding CATEGORY}"  Width="100" Background="Yellow" />
+        <Label Grid.Row="3" Grid.Column="3" Content="{Binding PRESSSIZE}" Width="100" Background="Yellow" />
+        <Label Grid.Row="4" Grid.Column="3" Content="{Binding FTYPE}"     Width="100" Background="Yellow" />
+
     </Grid>
 
 </UserControl>

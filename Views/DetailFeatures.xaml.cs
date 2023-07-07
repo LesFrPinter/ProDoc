@@ -22,8 +22,6 @@ namespace ProDocEstimate.Views
         public DataTable? dt;
         public SqlCommand? scmd;
 
-#if false
-
         #region Properties and DependencyProperties
 
         private float calculatedFlatCharge; public float CalculatedFlatCharge { get { return calculatedFlatCharge; } set { calculatedFlatCharge = value; OnPropertyChanged(); } }
@@ -33,10 +31,8 @@ namespace ProDocEstimate.Views
         private float baseRunCharge;        public float BaseRunCharge       { get { return baseRunCharge;         } set { baseRunCharge        = value; OnPropertyChanged(); } }
 
         public static readonly DependencyProperty FlatChargeProperty  = 
-            DependencyProperty.Register("FlatCharge",    typeof(float), typeof(DetailFeatures), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register("FlatCharge",    typeof(float), typeof(DetailFeatures));
         public float FlatCharge  { get => (float)GetValue(FlatChargeProperty); set => SetValue(FlatChargeProperty,   value); }
-
-        //, typeof(DetailFeatures), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
 
         public static readonly DependencyProperty RunChargeProperty   = 
             DependencyProperty.Register("RunCharge",     typeof(float), typeof(DetailFeatures));
@@ -58,61 +54,94 @@ namespace ProDocEstimate.Views
             DependencyProperty.Register("PressMatl",     typeof(float), typeof(DetailFeatures));
         public float  PressMatl   { get => (float)GetValue(PressMatlProperty);   set => SetValue(PressMatlProperty,  value); }
 
-        public static DependencyProperty QUOTENUMProperty    = DependencyProperty.Register("QUOTENUM",               typeof(float), typeof(DetailFeatures));
-        public float  QUOTENUM    { get => (float)GetValue(QUOTENUMProperty);    set => SetValue(QUOTENUMProperty,   value); }
+        // ------------ THREE DEPENDENCY PROPERTIES PASSED IN WITHIN THE COMPONENT DECLARATION ------------
+        public static DependencyProperty QUOTENUMProperty    = 
+            DependencyProperty.RegisterAttached(
+                nameof(QUOTENUM),
+                typeof(string),
+                typeof(DetailFeatures), 
+                new FrameworkPropertyMetadata(
+                    string.Empty, 
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public static DependencyProperty CATEGORYProperty    = DependencyProperty.Register("CATEGORY",               typeof(float), typeof(DetailFeatures));
-        public float  CATEGORY    { get => (float)GetValue(CATEGORYProperty);    set => SetValue(CATEGORYProperty,   value); }
+        public string QUOTENUM
+            {  get => (string)GetValue(QUOTENUMProperty);    
+               set =>         SetValue(QUOTENUMProperty, value); 
+            }
 
-        public static DependencyProperty PRESSSIZEProperty   = DependencyProperty.Register("PRESSSIZE",              typeof(float), typeof(DetailFeatures));
-        public float  PRESSSIZE   { get => (float)GetValue(PRESSSIZEProperty);   set => SetValue(PRESSSIZEProperty,  value); }
+        public static DependencyProperty CATEGORYProperty    = 
+            DependencyProperty.RegisterAttached(
+                nameof(CATEGORY),
+                typeof(string), 
+                typeof(DetailFeatures), 
+                new FrameworkPropertyMetadata(
+                    string.Empty, 
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public static DependencyProperty FTYPEProperty       = DependencyProperty.Register("FTYPE",                  typeof(float), typeof(DetailFeatures));
-        public float  FTYPE       { get => (float)GetValue(FTYPEProperty);       set => SetValue(FTYPEProperty,      value); }
+        public string CATEGORY
+            {  get => (string)GetValue(CATEGORYProperty);    
+               set => SetValue(CATEGORYProperty,   value); 
+            }
 
-        private string quote_Num;   public string Quote_Num  { get { return quote_Num;  } set { quote_Num  = value; OnPropertyChanged(); } }
-        private string category;    public string Category   { get { return category;   } set { category   = value; OnPropertyChanged(); } }
-        private string press_Size;  public string Press_Size { get { return press_Size; } set { press_Size = value; OnPropertyChanged(); } }
-        private string f_Type;      public string F_Type     { get { return f_Type;     } set { f_Type     = value; OnPropertyChanged(); } }
+        public static DependencyProperty PRESSSIZEProperty   = 
+            DependencyProperty.Register(
+                nameof(PRESSSIZE),
+                typeof(string), 
+                typeof(DetailFeatures), 
+                new FrameworkPropertyMetadata(
+                    string.Empty, 
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public string PRESSSIZE
+            {  get => (string)GetValue(PRESSSIZEProperty);
+               set => SetValue(PRESSSIZEProperty,  value); 
+            }
+        // ------------ THREE DEPENDENCY PROPERTIES PASSED IN WITHIN THE COMPONENT DECLARATION ------------
 
         #endregion
 
-#endif
+        private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
+        private string category;  public string Category  { get { return category;  } set { category  = value; OnPropertyChanged(); } }
+        private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
 
         public DetailFeatures() 
-        {   InitializeComponent();
-
-            //Quote_Num  = QUOTENUM.ToString();
-            //Category   = CATEGORY.ToString();
-            //Press_Size = PRESSSIZE.ToString();
-            //F_Type     = FTYPE.ToString();
-
-            this.DataContext = this;
+        {
+            InitializeComponent();
 
             GetFeatureCosts();
         }
 
+        private void Loaded()
+        {
+            QuoteNum = QUOTENUM.ToString();
+            Category = CATEGORY.ToString();
+            PressSize = PRESSSIZE.ToString();
+        }
+
         private void GetFeatureCosts()
         {
-            //string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = '{CATEGORY}' AND Press_size = '{PRESSSIZE}' AND F_TYPE = '{FTYPE}'";
-            //string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = '{Category}' AND Press_size = '{Press_Size}' AND F_TYPE = '{F_Type}'";
-            string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'MICR' AND Press_size = '11' AND F_TYPE = 'PRESS'";
 
-            //MessageBox.Show(cmd); Debugger.Break();
+            if( CATEGORY.Length == 0 || PRESSSIZE.Length == 0 ) return;
+
+            string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = '{CATEGORY}' AND Press_size = '{PRESSSIZE}'";
+
             SqlConnection conn = new(ConnectionString); 
             DataTable dt = new DataTable();
             SqlDataAdapter da = new(cmd, conn);
             try { da.Fill(dt); }
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
+
+            if(dt.Rows.Count == 0) { MessageBox.Show(cmd + " returned no data from SQL.", "In GetFeatureCosts of DetailFeatures"); Debugger.Break(); }
+
             DataRow DRV = (DataRow)dt.Rows[0];
 
-            //BaseFlatCharge = float.Parse(DRV["FLAT_CHARGE"].ToString());
-            //BaseRunCharge  = float.Parse(DRV["RUN_CHARGE"].ToString());
+            BaseFlatCharge = float.Parse(DRV["FLAT_CHARGE"].ToString());
+            BaseRunCharge  = float.Parse(DRV["RUN_CHARGE"].ToString());
 
-            //PlateCharge = 33.03F;
-            //FinishMatl = 44.04F;
-            //ConvertMatl = 55.05F;
-            //PressMatl = 66.06F;
+            PlateCharge = 33.03F;
+            FinishMatl  = 44.04F;
+            ConvertMatl = 55.05F;
+            PressMatl   = 66.06F;
         }
 
         private void FlatChargePct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)

@@ -1108,6 +1108,22 @@
 
                             </ListBox>
 
+                            <Label Content="{Binding QUOTE_NUM}" Foreground="White"
+                                   Margin="100 100 0 0" Width="100" Height="24" Padding="1" VerticalAlignment="Top"
+                                   Grid.Row="2" Grid.Column="2" Background="Green" />
+
+                            <Label Content="{Binding CATEGORY}" Foreground="White" 
+                                   Margin="100 130 0 0" Width="100" Height="24" Padding="1" VerticalAlignment="Top"
+                                   Grid.Row="2" Grid.Column="2" Background="Green" />
+
+                            <Label Content="{Binding PRESSSIZE}" Foreground="White" 
+                                   Margin="100 160 0 0" Width="100" Height="24" Padding="1" VerticalAlignment="Top"
+                                   Grid.Row="2" Grid.Column="2" Background="Green" />
+
+                            <Label Content="{Binding FTYPE}" Foreground="White" 
+                                   Margin="100 190 0 0" Width="100" Height="24" Padding="1" VerticalAlignment="Top"
+                                   Grid.Row="2" Grid.Column="2" Background="Green" />
+
                             <Expander Grid.Row="3" Grid.ColumnSpan="4"
                                       VerticalAlignment="Top" HorizontalAlignment="Left"
                                       ExpandDirection="Right" >
