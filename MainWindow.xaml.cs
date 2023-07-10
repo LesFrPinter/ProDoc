@@ -1,17 +1,20 @@
 ﻿using ProDocEstimate.Views;
+using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ProDocEstimate
 {
     public partial class MainWindow : Window
 	{
-		public MainWindow() { InitializeComponent(); }
+		public MainWindow() { InitializeComponent(); PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
 
-		private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
+        private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
 		private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
 
 		private void mnuFileExit_Click(object sender, RoutedEventArgs e)
-		{ Application.Current.Shutdown(); }
+		{ Application.Current.Shutdown(); Environment.Exit(Environment.ExitCode); }
 
 		private void mnuCustomers_Click(object sender, RoutedEventArgs e)
 		{ 

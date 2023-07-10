@@ -184,6 +184,8 @@ namespace ProDocEstimate.Views
             CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunChargePct / 100.00F);
         }
 
+        // Plates comes from "PREP_DEPT_MATL"; Finishing material comes from "BIND_MATL"; 
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();

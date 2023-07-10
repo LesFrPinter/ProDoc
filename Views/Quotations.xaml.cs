@@ -138,9 +138,7 @@ namespace ProDocEstimate
 
             LoadDetails();  // For page 3
 
-            // this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-            // This also works:
-            //	PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void LoadAvailableCategories()
