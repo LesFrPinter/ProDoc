@@ -444,7 +444,7 @@ namespace ProDocEstimate.Views
             Task.Delay(500);                              // Wait half a second...
             ContDetlPage.IsSelected = true;
 
-            if(CUST_NAME.ToString().Length==0) { GetCustName(); }
+            if(CUST_NAME != null && CUST_NAME.ToString().Length==0) { GetCustName(); }
             
         }
 
