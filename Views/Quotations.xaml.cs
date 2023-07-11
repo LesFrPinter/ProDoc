@@ -1,11 +1,9 @@
-﻿using Microsoft.OData.Client;
-using ProDocEstimate.Views;
+﻿using ProDocEstimate.Views;
 using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -1006,6 +1004,8 @@ namespace ProDocEstimate
         {
             string? x = lstSelected.SelectedItem.ToString();
             if (x.IndexOf(' ') > 0) { x = x.Substring(0, x.IndexOf(' ')); }  // Just the first word; needed if the dollar amount appears in the ListItem.
+
+            if (x =="PressNum") { x = "Press"; }
 
             //TODO: Something funny is happening with long category names; 
 

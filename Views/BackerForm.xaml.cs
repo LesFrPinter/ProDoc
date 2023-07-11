@@ -7,7 +7,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-// The FEATURES table has the FLAT_CHARGE and PREP_DEPT_MATL (price per change) for each press size and F_TYPE. It's in an Excel spreadsheet now, but Tim is going to load it.
+// The FEATURES table has the FLAT_CHARGE and PLATE_MATL (price per change) for each press size and F_TYPE. It's in an Excel spreadsheet now, but Tim is going to load it.
+
+// PLATE_MATL was PREP_DEPT_MATL previously...
 
 namespace ProDocEstimate.Views
 {
@@ -61,9 +63,9 @@ namespace ProDocEstimate.Views
         private void LoadQuote()
         {
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNo + "' AND CATEGORY = 'Backer'";
-            dt = new DataTable("Details");
+            dt   = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+            da   = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             if(dt.Rows.Count > 0 )
             {
                 string? F_TYPE = dt.Rows[0]["Param1"].ToString();
@@ -85,19 +87,19 @@ namespace ProDocEstimate.Views
 
             if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
 
-            string cmd = $"SELECT FLAT_CHARGE, PREP_DEPT_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
+            string cmd = $"SELECT FLAT_CHARGE, PLATE_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
             if (Button1 == 1) { cmd += "BACKER'"; }
             if (Button2 == 1) { cmd += "BACKER STD'"; }
             if (Button3 == 1) { cmd += "BACKER PMS'"; }
 
-            dt = new DataTable("Charges");
+            dt   = new DataTable("Charges");
             conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+            da   = new SqlDataAdapter(cmd, conn); da.Fill(dt);
 
             if(dt.Rows.Count == 0) { MessageBox.Show("No data"); return; }
 
             Flat = float.Parse(dt.Rows[0][0].ToString());
-            Chng = float.Parse(dt.Rows[0][1].ToString());
+            Chng = float.Parse(dt.Rows[0][1].ToString());   // I think this means the value returned from "PLATE_MATL".
             Total = Flat + Chng * Changes;
         }
 

@@ -17,28 +17,27 @@ namespace ProDocEstimate.Views
 
         #region Properties
 
-        private int    maxColors; public int    MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
-        private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
-        private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
+        private int     maxColors;  public int    MaxColors { get { return maxColors;   } set { maxColors   = value; OnPropertyChanged(); } }
+        private string  pressSize;  public string PressSize { get { return pressSize;   } set { pressSize   = value; OnPropertyChanged(); } }
+        private string  quoteNum;   public string QuoteNum  { get { return quoteNum;    } set { quoteNum    = value; OnPropertyChanged(); } }
 
-        private int desens;     public int Desens   { get { return desens;   } set { desens   = value; OnPropertyChanged(); } }
-        private int split;      public int Split    { get { return split;    } set { split    = value; OnPropertyChanged(); } }
-        private int thermo;     public int Thermo   { get { return thermo;   } set { thermo   = value; OnPropertyChanged(); } }
-        private int std;        public int Std      { get { return std;      } set { std      = value; OnPropertyChanged(); } }
-        private int blackStd;   public int BlackStd { get { return blackStd; } set { blackStd = value; OnPropertyChanged(); } }
-        private int pms;        public int PMS      { get { return pms;      } set { pms      = value; OnPropertyChanged(); } }
+        private int     std;        public int    Std       { get { return std;         } set { std         = value; OnPropertyChanged(); } }
+        private int     blackStd;   public int    BlackStd  { get { return blackStd;    } set { blackStd    = value; OnPropertyChanged(); } }
+        private int     pms;        public int    PMS       { get { return pms;         } set { pms         = value; OnPropertyChanged(); } }
+        private int     desens;     public int    Desens    { get { return desens;      } set { desens      = value; OnPropertyChanged(); } }
+        private int     split;      public int    Split     { get { return split;       } set { split       = value; OnPropertyChanged(); } }
+        private int     thermo;     public int    Thermo    { get { return thermo;      } set { thermo      = value; OnPropertyChanged(); } }
+        private int     fourColor;  public int    FourColor { get { return fourColor;   } set { fourColor   = value; OnPropertyChanged(); } }
+        private int     waterMark;  public int    WaterMark { get { return waterMark;   } set { waterMark   = value; OnPropertyChanged(); } }
+        private int     fluorSel;   public int    FluorSel  { get { return fluorSel;    } set { fluorSel    = value; OnPropertyChanged(); } }
 
-        private int   max;      public int Max      { get { return max;      } set { max      = value; OnPropertyChanged(); } }
+        private int     max;        public int    Max       { get { return max;         } set { max         = value; OnPropertyChanged(); } }
 
-        private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
-        //private float run_charge;  public float RUN_CHARGE  { get { return run_charge;  } set { run_charge  = value; OnPropertyChanged(); } }
-        //private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
-        //private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
+        private float  flat_charge; public float  FLAT_CHARGE{get {return flat_charge;  } set { flat_charge = value; OnPropertyChanged(); } }
+        private float   total;      public float  Total     { get { return total;       } set { total       = value; OnPropertyChanged(); } }
+        private string  cmd;        public string Cmd       { get { return cmd;         } set { cmd         = value; OnPropertyChanged(); } }
 
-        private float total;    public float  Total  { get { return total;  } set { total = value; OnPropertyChanged(); } }
-        private string cmd;     public string Cmd    { get { return cmd;    } set { cmd   = value; OnPropertyChanged(); } }
-
-        private string backer;  public string Backer { get { return backer; } set { backer = value; OnPropertyChanged(); } }  // read from Quote_Details
+        private string backer;      public string Backer    { get { return backer;      } set { backer      = value; OnPropertyChanged(); } }  // read from Quote_Details
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
@@ -52,17 +51,19 @@ namespace ProDocEstimate.Views
         {
             InitializeComponent();
             this.DataContext = this;
+
             Title = "Quote #: " + QUOTENUM;
-            QuoteNum = QUOTENUM;
+            QuoteNum  = QUOTENUM;
             PressSize = PRESSSIZE;
 
             FLAT_CHARGE = 123.45F;
 
-            Total = 0.00F;     // Calculcate this based on user input
-            Backer = "";
+            Total     = 0.00F;     // Calculcate this based on user input
+            Backer    = "";
 
             LoadMaxColors();
             LoadSavedDetails();
+
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
@@ -74,12 +75,15 @@ namespace ProDocEstimate.Views
             da = new SqlDataAdapter(str, conn); da.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                Std      = int.Parse(dt.Rows[0]["Value1"].ToString());
-                BlackStd = int.Parse(dt.Rows[0]["Value2"].ToString());
-                PMS      = int.Parse(dt.Rows[0]["Value3"].ToString());
-                Desens   = int.Parse(dt.Rows[0]["Value4"].ToString());
-                Split    = int.Parse(dt.Rows[0]["Value5"].ToString());
-                Thermo   = int.Parse(dt.Rows[0]["Value6"].ToString());
+                Std       = int.Parse(dt.Rows[0]["Value1"].ToString());
+                BlackStd  = int.Parse(dt.Rows[0]["Value2"].ToString());
+                PMS       = int.Parse(dt.Rows[0]["Value3"].ToString());
+                Desens    = int.Parse(dt.Rows[0]["Value4"].ToString());
+                Split     = int.Parse(dt.Rows[0]["Value5"].ToString());
+                Thermo    = int.Parse(dt.Rows[0]["Value6"].ToString());
+                FourColor = int.Parse(dt.Rows[0]["Value7"].ToString());
+                WaterMark = int.Parse(dt.Rows[0]["Value8"].ToString());
+                FluorSel  = int.Parse(dt.Rows[0]["Value9"].ToString());
             }
         }
 
@@ -103,55 +107,29 @@ namespace ProDocEstimate.Views
 
             DataView dv = new DataView(dt);
 
-            //Use E-F:
-            dv.RowFilter = "F_TYPE='STD'"; Std1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='BLK & STD'"; Blk1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='DESENSITIZED'"; Des1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='PMS'"; Pms1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='SPLIT FTN'"; Spl1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='THERMO'"; The1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='STD'";           Std1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='BLK & STD'";     Blk1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='DESENSITIZED'";  Des1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='PMS'";           Pms1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='SPLIT FTN'";     Spl1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='THERMO'";        The1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='ART WATERMARK'"; Wat1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='FLUOR SEL'";     Flo1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='4 CLR PRO'";     if (dv.Count > 0) { Fou1.Maximum = int.Parse(dv[0]["MaxColors"].ToString()); }
         }
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
+            if (backer == null) return;
             string chosen = ((System.Windows.FrameworkElement)sender).Name;
-
-            //This was written to force any one of these three values to be 1 and the other two to be 0
-            //switch (chosen)
-            //{   case "Std1": { BlackStd = 0; PMS      = 0; break; }
-            //    case "Blk1": { Std      = 0; PMS      = 0; break; }
-            //    case "Pms1": { Std      = 0; BlackStd = 0; break; }
-            //}
-
-            //switch (chosen)
-            //{
-            //    case "Std1":
-            //        {
-            //            cmd = $"SELECT FLAT_CHARGE, RUN_CHARGE, PREP_DEPT_MATL FROM FEATURES"
-            //              + $" WHERE CATEGORY = 'INK' AND F_TYPE = 'STD' AND Number = {Std}";
-            //            SqlConnection cn = new(ConnectionString);
-            //            SqlDataAdapter da = new(cmd, cn); DataTable dt = new DataTable(); da.Fill(dt);
-            //            FLAT_CHARGE = float.Parse(dt.Rows[0]["FLAT_CHARGE"].ToString());
-            //            MessageBox.Show(dt.ToString());
-
-            //            break;
-            //        }
-            //    default: { cmd = ""; break; }
-
-            //}
-
             int backercount = (Backer.ToString().Length > 0) ? 1 : 0;
-            int totalcount = Std + BlackStd + PMS + Desens + Split + Thermo + backercount;
-            if (totalcount > MaxColors)
-            {
-                MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString());
-            }
+            int totalcount = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + backercount;
+            if (totalcount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Validate inputs
-            // e.g., if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
+            // Validate inputs and return if not valid
 
             // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
@@ -161,17 +139,13 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally              { conn.Close();                }
 
-            // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + " Quote_Num, Category, Sequence,"
-                + " Param1, Param2, Param3, Param4, Param5, Param6,"
-                + " Value1, Value2, Value3, Value4, Value5, Value6) VALUES ( "
-                +$" {QuoteNum}, 'Ink Color', 2, "
-                + " 'Std', 'BlackStd', 'PMS', 'Desens', 'Split', 'Thermo',"
-                +$" '{Std}', '{BlackStd}', '{PMS}', '{Desens}', '{Split}', '{Thermo}')";
-
-            // Write to SQL
-            // conn = new SqlConnection(ConnectionString);
+                + " Param1, Param2, Param3, Param4, Param5, Param6, Param7, Param8,"
+                + " Value1, Value2, Value3, Value4, Value5, Value6, Value7, Value8) VALUES ( "
+                + $" {QuoteNum}, 'Ink Color', 2, "
+                + " 'Std', 'BlackStd', 'PMS', 'Desens', 'Split', 'Thermo', 'Watermark', 'Fluor',"
+                + $" '{Std}', '{BlackStd}', '{PMS}', '{Desens}', '{Split}', '{Thermo}', '{WaterMark}', '{FourColor}')";
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

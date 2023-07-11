@@ -75,9 +75,9 @@
                 Value="{Binding Changes}"
                 ValueChanged="RadNumericUpDown_ValueChanged"
                 FontSize="16" 
-                Height="28"/>
+                Height="26"/>
 
-            <local:DetailFeatures Grid.ColumnSpan="6" Grid.Row="3" />
+            <local:DetailFeatures Grid.ColumnSpan="6" Grid.Row="2" Grid.RowSpan="2" />
 
             <Label Grid.Row="4" Grid.Column="1" Content="Total: "  Foreground="Purple" FontSize="18" VerticalAlignment="Center" />
 
@@ -85,7 +85,7 @@
                 <TextBlock Text="{Binding Path=Total, StringFormat={}{0:C2}}" FontSize="12" Foreground="Purple" />
             </Label>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" Margin="10 0 0 0" >
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" HorizontalAlignment="Center" Margin="10 0 0 0" >
                 <Button x:Name="btnSave"   Grid.Column="3" Content="Save"   FontSize="16" Padding="4 2" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Grid.Column="3" Content="Cancel" FontSize="16" Padding="4 2" Click="btnCancel_Click"/>
             </StackPanel>

@@ -6,7 +6,7 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              xmlns:local="clr-namespace:ProDocEstimate.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="180" d:DesignWidth="800" >
+             d:DesignHeight="160" d:DesignWidth="800" >
 
     <UserControl.Resources>
         <Style TargetType="Label">
@@ -120,10 +120,10 @@
         <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Height="24" Margin="25 0" />
         <Label HorizontalAlignment="Right"      Grid.Row="2" Grid.Column="3" Content="%" VerticalAlignment="Center" />
 
-        <Label Grid.Row="3" Grid.Column="2" Content="{Binding QUOTENUM}"  Width="100" Background="Yellow" />
+        <!--<Label Grid.Row="3" Grid.Column="2" Content="{Binding QUOTENUM}"  Width="100" Background="Yellow" />
         <Label Grid.Row="4" Grid.Column="2" Content="{Binding CATEGORY}"  Width="100" Background="Yellow" />
         <Label Grid.Row="3" Grid.Column="3" Content="{Binding PRESSSIZE}" Width="100" Background="Yellow" />
-        <Label Grid.Row="4" Grid.Column="3" Content="{Binding FTYPE}"     Width="100" Background="Yellow" />
+        <Label Grid.Row="4" Grid.Column="3" Content="{Binding FTYPE}"     Width="100" Background="Yellow" />-->
 
     </Grid>
 
