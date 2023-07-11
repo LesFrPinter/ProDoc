@@ -1053,7 +1053,7 @@ namespace ProDocEstimate
 
                 case "Finishing":
                     {
-                        MessageBox.Show("In progress..."); return;
+                        //MessageBox.Show("In progress..."); return;
 
                         Finishing finishing = new Finishing(PRESSSIZE, QUOTE_NUM); finishing.ShowDialog();
                         break;

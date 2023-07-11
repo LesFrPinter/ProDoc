@@ -141,11 +141,11 @@ namespace ProDocEstimate.Views
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + " Quote_Num, Category, Sequence,"
-                + " Param1, Param2, Param3, Param4, Param5, Param6, Param7, Param8,"
-                + " Value1, Value2, Value3, Value4, Value5, Value6, Value7, Value8) VALUES ( "
+                + " Param1, Param2, Param3, Param4, Param5, Param6, Param7, Param8, Param9,"
+                + " Value1, Value2, Value3, Value4, Value5, Value6, Value7, Value8, Value9) VALUES ( "
                 + $" {QuoteNum}, 'Ink Color', 2, "
-                + " 'Std', 'BlackStd', 'PMS', 'Desens', 'Split', 'Thermo', 'Watermark', 'Fluor',"
-                + $" '{Std}', '{BlackStd}', '{PMS}', '{Desens}', '{Split}', '{Thermo}', '{WaterMark}', '{FourColor}')";
+                + "   'Std',   'BlackStd',   'PMS',   'Desens',   'Split',   'Thermo',   'Watermark',   'FluorSel',   'FourColor', "
+                + $" '{Std}', '{BlackStd}', '{PMS}', '{Desens}', '{Split}', '{Thermo}', '{WaterMark}', '{FluorSel}', '{FourColor}')";
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

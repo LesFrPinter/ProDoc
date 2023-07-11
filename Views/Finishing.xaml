@@ -18,15 +18,12 @@
             <Setter Property="Margin"              Value="2 0"    />
             <Setter Property="Padding"             Value="2 0"    />
         </Style>
-        <Style TargetType="telerik:RadNumericUpDown">
+        <Style TargetType="ComboBox">
             <Setter Property="FontSize" Value="10" />
             <Setter Property="Margin"   Value="4" />
             <Setter Property="Height"   Value="20" />
             <Setter Property="Width"    Value="20" />
             <Setter Property="Grid.Row" Value="2" />
-            <Setter Property="NumberDecimalDigits" Value="0" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="Minimum"  Value="0" />
         </Style>
     </Window.Resources>
 
@@ -62,15 +59,22 @@
             <Label Grid.Row="1" Grid.Column="3" Content="Pad" />
             <Label Grid.Row="1" Grid.Column="4" Content="Trim" />
 
-            <telerik:RadNumericUpDown                 Width="60" Value="{Binding Book}"       x:Name="M1" />
-            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding Cello}"      x:Name="M2"  />
-            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding DrillHoles}" x:Name="M3"/>
-            <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding Pad}"        x:Name="M4"/>
-            <telerik:RadNumericUpDown Grid.Column="4" Width="60" Value="{Binding Trim}"       x:Name="M5"/>
+            <ComboBox                 Width="60" SelectedValue="{Binding Book, Mode=TwoWay}"       x:Name="M1" SelectionChanged="M1_SelectionChanged" />
+            <ComboBox Grid.Column="1" Width="60" SelectedValue="{Binding Cello, Mode=TwoWay}"      x:Name="M2" SelectionChanged="M1_SelectionChanged" />
+            <ComboBox Grid.Column="2" Width="60" SelectedValue="{Binding DrillHoles, Mode=TwoWay}" x:Name="M3" SelectionChanged="M1_SelectionChanged" />
+            <ComboBox Grid.Column="3" Width="60" SelectedValue="{Binding Pad, Mode=TwoWay}"        x:Name="M4" SelectionChanged="M1_SelectionChanged" />
+            <ComboBox Grid.Column="4" Width="60" SelectedValue="{Binding Trim, Mode=TwoWay}"       x:Name="M5" SelectionChanged="M1_SelectionChanged" />
 
-        <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Top" />
+            <!--<local:DetailFeatures Grid.Row="3" Height="120" Grid.ColumnSpan="5" VerticalAlignment="Top" />-->
 
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" VerticalAlignment="Top" HorizontalAlignment="Center" >
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="10 0 0 0" Grid.ColumnSpan="2" >
+                <Label   Content="Flat total:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <TextBox IsReadOnly="true" Text="{Binding FlatTotal, StringFormat=C}" Width="70" Height="24" />
+                <Label   Content="Per thousand:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <TextBox IsReadOnly="true" Text="{Binding ThouTotal, StringFormat=C}" Width="70" Height="24" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
