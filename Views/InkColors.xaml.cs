@@ -17,27 +17,50 @@ namespace ProDocEstimate.Views
 
         #region Properties
 
-        private int     maxColors;  public int    MaxColors { get { return maxColors;   } set { maxColors   = value; OnPropertyChanged(); } }
-        private string  pressSize;  public string PressSize { get { return pressSize;   } set { pressSize   = value; OnPropertyChanged(); } }
-        private string  quoteNum;   public string QuoteNum  { get { return quoteNum;    } set { quoteNum    = value; OnPropertyChanged(); } }
+        private int     maxColors;   public int    MaxColors   { get { return maxColors;   } set { maxColors   = value; OnPropertyChanged(); } }
+        private string  pressSize;   public string PressSize   { get { return pressSize;   } set { pressSize   = value; OnPropertyChanged(); } }
+        private string  quoteNum;    public string QuoteNum    { get { return quoteNum;    } set { quoteNum    = value; OnPropertyChanged(); } }
 
-        private int     std;        public int    Std       { get { return std;         } set { std         = value; OnPropertyChanged(); } }
-        private int     blackStd;   public int    BlackStd  { get { return blackStd;    } set { blackStd    = value; OnPropertyChanged(); } }
-        private int     pms;        public int    PMS       { get { return pms;         } set { pms         = value; OnPropertyChanged(); } }
-        private int     desens;     public int    Desens    { get { return desens;      } set { desens      = value; OnPropertyChanged(); } }
-        private int     split;      public int    Split     { get { return split;       } set { split       = value; OnPropertyChanged(); } }
-        private int     thermo;     public int    Thermo    { get { return thermo;      } set { thermo      = value; OnPropertyChanged(); } }
-        private int     fourColor;  public int    FourColor { get { return fourColor;   } set { fourColor   = value; OnPropertyChanged(); } }
-        private int     waterMark;  public int    WaterMark { get { return waterMark;   } set { waterMark   = value; OnPropertyChanged(); } }
-        private int     fluorSel;   public int    FluorSel  { get { return fluorSel;    } set { fluorSel    = value; OnPropertyChanged(); } }
+        private int     std;         public int    Std         { get { return std;         } set { std         = value; OnPropertyChanged(); } }
+        private int     blackStd;    public int    BlackStd    { get { return blackStd;    } set { blackStd    = value; OnPropertyChanged(); } }
+        private int     pms;         public int    PMS         { get { return pms;         } set { pms         = value; OnPropertyChanged(); } }
+        private int     desens;      public int    Desens      { get { return desens;      } set { desens      = value; OnPropertyChanged(); } }
+        private int     split;       public int    Split       { get { return split;       } set { split       = value; OnPropertyChanged(); } }
+        private int     thermo;      public int    Thermo      { get { return thermo;      } set { thermo      = value; OnPropertyChanged(); } }
+        private int     fourColor;   public int    FourColor   { get { return fourColor;   } set { fourColor   = value; OnPropertyChanged(); } }
+        private int     waterMark;   public int    WaterMark   { get { return waterMark;   } set { waterMark   = value; OnPropertyChanged(); } }
+        private int     fluorSel;    public int    FluorSel    { get { return fluorSel;    } set { fluorSel    = value; OnPropertyChanged(); } }
 
-        private int     max;        public int    Max       { get { return max;         } set { max         = value; OnPropertyChanged(); } }
+        private float   stdCharge   = 0.00F; public float  StdCharge   { get { return stdCharge;   } set { stdCharge   = value; OnPropertyChanged(); } }
+        private float   blackstdChg = 0.00F; public float  BlackStdChg { get { return blackstdChg; } set { blackstdChg = value; OnPropertyChanged(); } }
+        private float   pmsChg      = 0.00F; public float  PMSChg      { get { return pmsChg;      } set { pmsChg      = value; OnPropertyChanged(); } }
+        private float   desChg      = 0.00F; public float  DesChg      { get { return desChg;      } set { desChg      = value; OnPropertyChanged(); } }
+        private float   splitChg    = 0.00F; public float  SplitChg    { get { return splitChg;    } set { splitChg    = value; OnPropertyChanged(); } }
+        private float   thermoChg   = 0.00F; public float  ThermoChg   { get { return thermoChg;   } set { thermoChg   = value; OnPropertyChanged(); } }
+        private float   fourChg     = 0.00F; public float  FourChg     { get { return fourChg;     } set { fourChg     = value; OnPropertyChanged(); } }
+        private float   waterChg    = 0.00F; public float  WaterChg    { get { return waterChg;    } set { waterChg    = value; OnPropertyChanged(); } }
+        private float   fluorChg    = 0.00F; public float  FluorChg    { get { return fluorChg;    } set { fluorChg    = value; OnPropertyChanged(); } }
 
-        private float  flat_charge; public float  FLAT_CHARGE{get {return flat_charge;  } set { flat_charge = value; OnPropertyChanged(); } }
-        private float   total;      public float  Total     { get { return total;       } set { total       = value; OnPropertyChanged(); } }
-        private string  cmd;        public string Cmd       { get { return cmd;         } set { cmd         = value; OnPropertyChanged(); } }
+        private float   totFlat = 0.00F;     public float  TotFlat     { get { return totFlat;     } set { totFlat     = value; OnPropertyChanged(); } }
 
-        private string backer;      public string Backer    { get { return backer;      } set { backer      = value; OnPropertyChanged(); } }  // read from Quote_Details
+        private float pt1; public float Pt1 { get { return pt1; } set { pt1 = value; OnPropertyChanged(); } }
+        private float pt2; public float Pt2 { get { return pt2; } set { pt2 = value; OnPropertyChanged(); } }
+        private float pt3; public float Pt3 { get { return pt3; } set { pt3 = value; OnPropertyChanged(); } }
+        private float pt4; public float Pt4 { get { return pt4; } set { pt4 = value; OnPropertyChanged(); } }
+        private float pt5; public float Pt5 { get { return pt5; } set { pt5 = value; OnPropertyChanged(); } }
+        private float pt6; public float Pt6 { get { return pt6; } set { pt6 = value; OnPropertyChanged(); } }
+        private float pt7; public float Pt7 { get { return pt7; } set { pt7 = value; OnPropertyChanged(); } }
+        private float pt8; public float Pt8 { get { return pt8; } set { pt8 = value; OnPropertyChanged(); } }
+        private float pt9; public float Pt9 { get { return pt9; } set { pt9 = value; OnPropertyChanged(); } }
+
+        private float totPT = 0.00F; public float TotPT { get { return totPT; } set { totPT = value; OnPropertyChanged(); } }
+
+        private int     max;         public int    Max         { get { return max;         } set { max         = value; OnPropertyChanged(); } }
+        private float   flat_charge; public float  FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
+        private float   total;       public float  Total       { get { return total;       } set { total       = value; OnPropertyChanged(); } }
+        private string  cmd;         public string Cmd         { get { return cmd;         } set { cmd         = value; OnPropertyChanged(); } }
+        private string  backer;      public string Backer      { get { return backer;      } set { backer      = value; OnPropertyChanged(); } }  // read from Quote_Details
+        private string  fieldList;   public string FieldList   { get { return fieldList;   } set { fieldList   = value; OnPropertyChanged(); } }
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
@@ -60,6 +83,8 @@ namespace ProDocEstimate.Views
 
             Total     = 0.00F;     // Calculcate this based on user input
             Backer    = "";
+
+            FieldList = "F_TYPE, FLAT_CHARGE, RUN_CHARGE, PLATE_MATL, FINISH_MATL, CONV_MATL, PRESS_MATL";
 
             LoadMaxColors();
             LoadSavedDetails();
@@ -121,10 +146,128 @@ namespace ProDocEstimate.Views
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
             if (backer == null) return;
-            string chosen = ((System.Windows.FrameworkElement)sender).Name;
+            string chosen   = ((System.Windows.FrameworkElement)sender).Name;
             int backercount = (Backer.ToString().Length > 0) ? 1 : 0;
-            int totalcount = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + backercount;
-            if (totalcount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); }
+            int totalcount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + backercount;
+            if (totalcount  > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); }
+            GetCharges(chosen);
+        }
+
+        private void GetCharges(string ctl)
+        {
+            switch (ctl)
+             {
+                case "Std1":
+                   if (Std > 0)
+                    { string cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'STD' AND NUMBER = '{Std}'";
+                        Clipboard.SetText(cmd);
+                        dt = new DataTable("Charges"); conn = new SqlConnection(ConnectionString); da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+                        if (dt.Rows.Count == 0) { MessageBox.Show("No data"); return; }
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result); StdCharge = result  * Std;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt1      = result2 * Std;
+                    }   else { StdCharge = 0.00F; Pt1 = 0.00F; }
+                break;
+
+                case "Blk1":
+                    if (BlackStd > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'BLK & STD' AND NUMBER = '{BlackStd}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+//                      BlackStdChg = float.Parse(dt.Rows[0][1].ToString()) * BlackStd;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  BlackStdChg = result * BlackStd;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt2 = result2 * BlackStd;
+                    }
+                    else { BlackStdChg = 0.00F; Pt2 = 0.00F; }
+                break;
+
+                case "Pms1":
+                    if (PMS > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'PMS' AND NUMBER = '{PMS}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+//                      PMSChg = float.Parse(dt.Rows[0][1].ToString()) * PMS;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  PMSChg = result * PMS;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt3 = result2 * PMS;
+                    }
+                    else { PMSChg = 0.00F; Pt3 = 0.00F; }
+                break;
+
+                case "Des1":
+                    if (Desens > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'DESENSITIZED' AND NUMBER = '{Desens}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+//                        DesChg = float.Parse(dt.Rows[0][1].ToString()) * Desens;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  DesChg = result * Desens;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt4    = result2 * Desens;
+                    }
+                    else { DesChg = 0.00F; Pt4 = 0.00F; }
+                break;
+
+                case "Spl1":
+                    if (Split > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'SPLIT FTN' AND NUMBER = '{Split}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+//                        SplitChg = float.Parse(dt.Rows[0][1].ToString()) * Split;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  SplitChg = result * Split;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt5 = result2 * Split;
+                    }
+                    else { SplitChg = 0.00F; Pt5 = 0.00F; }
+                break;
+
+                case "Fou1":
+                    if (FourColor > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '4 CLR PRO' AND NUMBER = '{FourColor}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+                        //                        FourChg = float.Parse(dt.Rows[0][1].ToString()) * FourColor;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  FourChg = result * FourColor;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt6 = result2 * FourColor;
+                    } else { FourChg = 0.00F; Pt6 = 0.00F; }
+                break;
+
+                case "The1":
+                    if (Thermo > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'THERMO' AND NUMBER = '{Thermo}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+                        //                        ThermoChg = float.Parse(dt.Rows[0][1].ToString()) * Thermo;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  ThermoChg = result * Thermo;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt7 = result2 * Thermo;
+                    }
+                    else { ThermoChg = 0.00F; Pt7 = 0.00F; }
+                    break;
+
+                case "Wat1":
+                    if (WaterMark > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'ART WATERMARK' AND NUMBER = '{WaterMark}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+                        //                      WaterChg = float.Parse(dt.Rows[0][1].ToString()) * WaterMark;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result); WaterChg = result * WaterMark;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt8 = result2 * WaterMark;
+                    }
+                    else { WaterChg = 0.00F; Pt8 = 0.00F; }
+                    break;
+
+                case "Flo1":
+                    if (FluorSel > 0)
+                    {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'FLUOR SEL' AND NUMBER = '{FluorSel}'";
+                        Clipboard.SetText(cmd);
+                        da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+                        //                        FluorChg = float.Parse(dt.Rows[0][1].ToString()) * FluorSel;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  FluorChg = result * FluorSel;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt9 = result2 * FluorSel;
+                    }
+                    else { FluorChg = 0.00F; Pt9 = 0.00F; }
+                    break;
+
+                default: break;
+             }
+
+            TotFlat = StdCharge + BlackStdChg + PMSChg + DesChg + SplitChg + ThermoChg + FourChg + WaterChg + FluorChg;
+            TotPT   = Pt1 + Pt2 + Pt3 + Pt4 + Pt5 + Pt6 + Pt7 + Pt8 + Pt9;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

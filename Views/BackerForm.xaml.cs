@@ -7,10 +7,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-// The FEATURES table has the FLAT_CHARGE and PLATE_MATL (price per change) for each press size and F_TYPE. It's in an Excel spreadsheet now, but Tim is going to load it.
-
-// PLATE_MATL was PREP_DEPT_MATL previously...
-
 namespace ProDocEstimate.Views
 {
     public partial class BackerForm : Window, INotifyPropertyChanged
@@ -46,6 +42,39 @@ namespace ProDocEstimate.Views
 
         private string quoteNo; public string QuoteNo { get { return quoteNo; } set { quoteNo = value; OnPropertyChanged(); } }
 
+        private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
+        private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
+        private float flatChargePct; public float FlatChargePct { get { return flatChargePct; } set { flatChargePct = value; OnPropertyChanged(); } }
+        private float calculatedflatCharge; public float CalculatedFlatCharge { get { return calculatedflatCharge; } set { calculatedflatCharge = value; OnPropertyChanged(); } }
+
+        private float runCharge; public float RunCharge { get { return runCharge; } set { runCharge = value; OnPropertyChanged(); } }
+        private float baserunCharge; public float BaseRunCharge { get { return baserunCharge; } set { baserunCharge = value; OnPropertyChanged(); } }
+        private float runChargePct; public float RunChargePct { get { return runChargePct; } set { runChargePct = value; OnPropertyChanged(); } }
+        private float calculatedrunCharge; public float CalculatedRunCharge { get { return calculatedrunCharge; } set { calculatedrunCharge = value; OnPropertyChanged(); } }
+
+        private float plateCharge; public float PlateCharge { get { return plateCharge; } set { plateCharge = value; OnPropertyChanged(); } }
+        private float baseplateCharge; public float BasePlateCharge { get { return baseplateCharge; } set { baseplateCharge = value; OnPropertyChanged(); } }
+        private float plateChargePct; public float PlateChargePct { get { return plateChargePct; } set { plateChargePct = value; OnPropertyChanged(); } }
+        private float calculatedplateCharge; public float CalculatedPlateCharge { get { return calculatedplateCharge; } set { calculatedplateCharge = value; OnPropertyChanged(); } }
+
+        private float finishCharge; public float FinishCharge { get { return finishCharge; } set { finishCharge = value; OnPropertyChanged(); } }
+        private float basefinishCharge; public float BaseFinishCharge { get { return basefinishCharge; } set { basefinishCharge = value; OnPropertyChanged(); } }
+        private float finishChargePct; public float FinishChargePct { get { return finishChargePct; } set { finishChargePct = value; OnPropertyChanged(); } }
+        private float calculatedfinishCharge; public float CalculatedFinishCharge { get { return calculatedfinishCharge; } set { calculatedfinishCharge = value; OnPropertyChanged(); } }
+
+        private float convCharge; public float ConvCharge { get { return convCharge; } set { convCharge = value; OnPropertyChanged(); } }
+        private float baseconvCharge; public float BaseConvCharge { get { return baseconvCharge; } set { baseconvCharge = value; OnPropertyChanged(); } }
+        private float convChargePct; public float ConvChargePct { get { return convChargePct; } set { convChargePct = value; OnPropertyChanged(); } }
+        private float calculatedconvCharge; public float CalculatedConvCharge { get { return calculatedconvCharge; } set { calculatedconvCharge = value; OnPropertyChanged(); } }
+
+        private float pressCharge; public float PressCharge { get { return pressCharge; } set { pressCharge = value; OnPropertyChanged(); } }
+        private float basepressCharge; public float BasePressCharge { get { return basepressCharge; } set { basepressCharge = value; OnPropertyChanged(); } }
+        private float pressChargePct; public float PressChargePct { get { return pressChargePct; } set { pressChargePct = value; OnPropertyChanged(); } }
+        private float calculatedpressCharge; public float CalculatedPressCharge { get { return calculatedpressCharge; } set { calculatedpressCharge = value; OnPropertyChanged(); GetGrandTotal(); } }
+
+        private float  flatTotal; public float  FlatTotal { get { return flatTotal; } set { flatTotal = value; OnPropertyChanged(); } }
+        private string fieldList; public string FieldList { get { return fieldList; } set { fieldList = value; OnPropertyChanged(); } }
+
         #endregion
 
         public BackerForm(string PSize, string QUOTENUM)
@@ -56,6 +85,8 @@ namespace ProDocEstimate.Views
             Title = Title = "Quote #: " + QUOTENUM + "  PressSize: " + PressSize;  // passed in when the form is instantiated in Quotations.xaml.cs.
             Total = -1.00F;
             QuoteNo = QUOTENUM;
+            FieldList = "F_TYPE, FLAT_CHARGE, RUN_CHARGE, PLATE_MATL, FINISH_MATL, CONV_MATL, PRESS_MATL";
+
             LoadQuote();
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
@@ -87,10 +118,12 @@ namespace ProDocEstimate.Views
 
             if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
 
-            string cmd = $"SELECT FLAT_CHARGE, PLATE_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
+            string cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
             if (Button1 == 1) { cmd += "BACKER'"; }
             if (Button2 == 1) { cmd += "BACKER STD'"; }
             if (Button3 == 1) { cmd += "BACKER PMS'"; }
+
+            Clipboard.SetText(cmd);
 
             dt   = new DataTable("Charges");
             conn = new SqlConnection(ConnectionString);
@@ -98,9 +131,18 @@ namespace ProDocEstimate.Views
 
             if(dt.Rows.Count == 0) { MessageBox.Show("No data"); return; }
 
-            Flat = float.Parse(dt.Rows[0][0].ToString());
-            Chng = float.Parse(dt.Rows[0][1].ToString());   // I think this means the value returned from "PLATE_MATL".
-            Total = Flat + Chng * Changes;
+            Flat                  = float.Parse(dt.Rows[0][1].ToString());
+            Chng                  = float.Parse(dt.Rows[0][2].ToString());
+            BasePlateCharge       = float.Parse(dt.Rows[0][3].ToString());
+            BaseFlatCharge        = Flat;
+            BaseRunCharge         = Chng;
+            CalculatedFlatCharge  = Flat;            FlatChargePct  = 0.00F;
+            CalculatedRunCharge   = Chng * Changes;  RunChargePct   = 0.00F;
+            CalculatedPlateCharge = BasePlateCharge; PlateChargePct = 0.00F;
+
+            // Add in any other flat charges; none show now because most of the columns in FieldList are empty...
+
+            Total = CalculatedFlatCharge + CalculatedPlateCharge;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -138,6 +180,16 @@ namespace ProDocEstimate.Views
             this.Close();
         }
 
+        private void GetGrandTotal()
+        {
+            FlatTotal =
+               CalculatedFlatCharge
+             + CalculatedPlateCharge
+             + CalculatedFinishCharge
+             + CalculatedConvCharge
+             + CalculatedPressCharge;
+        }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Close(); }
 
@@ -155,6 +207,24 @@ namespace ProDocEstimate.Views
 
         private void B3_Checked(object sender, RoutedEventArgs e)
         { CalcTotal(); }
+
+        private void FCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatChargePct / 100.00F); GetGrandTotal(); }
+
+        private void RCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunChargePct / 100.00F); GetGrandTotal(); }
+
+        private void PCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalculatedPlateCharge = (float)BasePlateCharge * (1.00F + (float)PlateChargePct / 100.00F); GetGrandTotal(); }
+
+        private void CFPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalculatedFinishCharge = (float)BaseFinishCharge * (1.00F + (float)FinishChargePct / 100.00F); GetGrandTotal(); }
+
+        private void CCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalculatedPressCharge = (float)BasePressCharge * (1.00F + (float)PressChargePct / 100.00F); GetGrandTotal(); }
+
+        private void SCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalculatedPressCharge = (float)BasePressCharge * (1.00F + (float)PressChargePct / 100.00F); GetGrandTotal(); }
 
     }
 }
