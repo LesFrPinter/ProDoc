@@ -466,10 +466,6 @@ namespace ProDocEstimate
                 Email        = drv["E_MAIL"].ToString();
                 CSZ = drv["CITY"].ToString().TrimEnd() + ", " + drv["STATE"].ToString().TrimEnd() + " " + drv["ZIP"].ToString().TrimEnd();
             }
-            //else 
-            //{ MessageBox.Show("No match");
-            //  Debugger.Break(); 
-            //}
         }
 
         private void dgElements_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
