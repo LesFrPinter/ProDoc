@@ -152,6 +152,7 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Converting");
             lstAvailable.Items.Add("PrePress");
             lstAvailable.Items.Add("Combo");
+            lstAvailable.Items.Add("Security");
 
             //TODO: Move selected categories to lstSelected
 
@@ -1074,6 +1075,12 @@ namespace ProDocEstimate
                     {
                         Combo combo = new Combo(PRESSSIZE, QUOTE_NUM); combo.ShowDialog(); 
                         if (combo.Removed) { lstSelected_MouseDoubleClick(null, null); }
+                        break;
+                    }
+
+                case "Security":
+                    {
+                        Security security = new Security(PRESSSIZE, QUOTE_NUM); security.ShowDialog();
                         break;
                     }
             }

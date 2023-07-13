@@ -64,7 +64,7 @@
             <telerik:RadNumericUpDown Grid.Column="3" Value="{Binding Inv}" x:Name="M3" Margin="0,4,0,4" Grid.Row="2" Width="60" />
             <telerik:RadNumericUpDown Grid.Column="4" Value="{Binding Flo}" x:Name="M4" Margin="0,4,0,4" Grid.Row="2" Width="60" />
 
-            <local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="6" VerticalAlignment="Center" Height="116" />
+            <!--<local:DetailFeatures Grid.Row="3" Grid.ColumnSpan="6" VerticalAlignment="Center" Height="116" />-->
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="22" Width="97">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
