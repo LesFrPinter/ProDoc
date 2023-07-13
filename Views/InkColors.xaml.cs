@@ -160,22 +160,19 @@ namespace ProDocEstimate.Views
                 case "Std1":
                    if (Std > 0)
                     { string cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'STD' AND NUMBER = '{Std}'";
-                        Clipboard.SetText(cmd);
-                        dt = new DataTable("Charges"); conn = new SqlConnection(ConnectionString); da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
-                        if (dt.Rows.Count == 0) { MessageBox.Show("No data"); return; }
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result); StdCharge = result  * Std;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt1      = result2 * Std;
+                        dt = new DataTable("Charges"); conn = new SqlConnection(ConnectionString); da = new SqlDataAdapter(cmd, conn); 
+                        da.Fill(dt); if (dt.Rows.Count == 0) { return; }
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result); StdCharge = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt1      = result2;
                     }   else { StdCharge = 0.00F; Pt1 = 0.00F; }
                 break;
 
                 case "Blk1":
                     if (BlackStd > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'BLK & STD' AND NUMBER = '{BlackStd}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-//                      BlackStdChg = float.Parse(dt.Rows[0][1].ToString()) * BlackStd;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  BlackStdChg = result * BlackStd;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt2 = result2 * BlackStd;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  BlackStdChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt2 = result2;
                     }
                     else { BlackStdChg = 0.00F; Pt2 = 0.00F; }
                 break;
@@ -183,11 +180,9 @@ namespace ProDocEstimate.Views
                 case "Pms1":
                     if (PMS > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'PMS' AND NUMBER = '{PMS}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-//                      PMSChg = float.Parse(dt.Rows[0][1].ToString()) * PMS;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  PMSChg = result * PMS;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt3 = result2 * PMS;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  PMSChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt3 = result2;
                     }
                     else { PMSChg = 0.00F; Pt3 = 0.00F; }
                 break;
@@ -195,11 +190,9 @@ namespace ProDocEstimate.Views
                 case "Des1":
                     if (Desens > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'DESENSITIZED' AND NUMBER = '{Desens}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-//                        DesChg = float.Parse(dt.Rows[0][1].ToString()) * Desens;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  DesChg = result * Desens;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt4    = result2 * Desens;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  DesChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt4    = result2;
                     }
                     else { DesChg = 0.00F; Pt4 = 0.00F; }
                 break;
@@ -207,11 +200,9 @@ namespace ProDocEstimate.Views
                 case "Spl1":
                     if (Split > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'SPLIT FTN' AND NUMBER = '{Split}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-//                        SplitChg = float.Parse(dt.Rows[0][1].ToString()) * Split;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  SplitChg = result * Split;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt5 = result2 * Split;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  SplitChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt5 = result2;
                     }
                     else { SplitChg = 0.00F; Pt5 = 0.00F; }
                 break;
@@ -219,22 +210,18 @@ namespace ProDocEstimate.Views
                 case "Fou1":
                     if (FourColor > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '4 CLR PRO' AND NUMBER = '{FourColor}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-                        //                        FourChg = float.Parse(dt.Rows[0][1].ToString()) * FourColor;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  FourChg = result * FourColor;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt6 = result2 * FourColor;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  FourChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt6 = result2;
                     } else { FourChg = 0.00F; Pt6 = 0.00F; }
                 break;
 
                 case "The1":
                     if (Thermo > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'THERMO' AND NUMBER = '{Thermo}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-                        //                        ThermoChg = float.Parse(dt.Rows[0][1].ToString()) * Thermo;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  ThermoChg = result * Thermo;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt7 = result2 * Thermo;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  ThermoChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt7 = result2;
                     }
                     else { ThermoChg = 0.00F; Pt7 = 0.00F; }
                     break;
@@ -242,11 +229,9 @@ namespace ProDocEstimate.Views
                 case "Wat1":
                     if (WaterMark > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'ART WATERMARK' AND NUMBER = '{WaterMark}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-                        //                      WaterChg = float.Parse(dt.Rows[0][1].ToString()) * WaterMark;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result); WaterChg = result * WaterMark;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt8 = result2 * WaterMark;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result); WaterChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt8 = result2;
                     }
                     else { WaterChg = 0.00F; Pt8 = 0.00F; }
                     break;
@@ -254,11 +239,9 @@ namespace ProDocEstimate.Views
                 case "Flo1":
                     if (FluorSel > 0)
                     {   cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'FLUOR SEL' AND NUMBER = '{FluorSel}'";
-                        Clipboard.SetText(cmd);
                         da.SelectCommand.CommandText = cmd; dt.Clear(); da.Fill(dt); if (dt.Rows.Count == 0) { return; }
-                        //                        FluorChg = float.Parse(dt.Rows[0][1].ToString()) * FluorSel;
-                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  FluorChg = result * FluorSel;
-                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt9 = result2 * FluorSel;
+                        float.TryParse(dt.Rows[0][1].ToString(), out float result);  FluorChg = result;
+                        float.TryParse(dt.Rows[0][2].ToString(), out float result2); Pt9 = result2;
                     }
                     else { FluorChg = 0.00F; Pt9 = 0.00F; }
                     break;
@@ -272,8 +255,6 @@ namespace ProDocEstimate.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Validate inputs and return if not valid
-
             // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
@@ -285,10 +266,12 @@ namespace ProDocEstimate.Views
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + " Quote_Num, Category, Sequence,"
                 + " Param1, Param2, Param3, Param4, Param5, Param6, Param7, Param8, Param9,"
-                + " Value1, Value2, Value3, Value4, Value5, Value6, Value7, Value8, Value9) VALUES ( "
+                + " Value1, Value2, Value3, Value4, Value5, Value6, Value7, Value8, Value9, TotalFlatChg, PerThousandChg) VALUES ( "
                 + $" {QuoteNum}, 'Ink Color', 2, "
                 + "   'Std',   'BlackStd',   'PMS',   'Desens',   'Split',   'Thermo',   'Watermark',   'FluorSel',   'FourColor', "
-                + $" '{Std}', '{BlackStd}', '{PMS}', '{Desens}', '{Split}', '{Thermo}', '{WaterMark}', '{FluorSel}', '{FourColor}')";
+                + $" '{Std}', '{BlackStd}', '{PMS}', '{Desens}', '{Split}', '{Thermo}', '{WaterMark}', '{FluorSel}', '{FourColor}', "
+                + $" '{TotFlat}', '{TotPT}' )";
+
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

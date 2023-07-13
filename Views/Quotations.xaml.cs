@@ -141,6 +141,7 @@ namespace ProDocEstimate
 
         private void LoadAvailableCategories()
         {
+            lstAvailable.Items.Clear();
             lstAvailable.Items.Add("Backer");
             lstAvailable.Items.Add("Ink Color");
             lstAvailable.Items.Add("MICR");
@@ -152,8 +153,9 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("PrePress");
             lstAvailable.Items.Add("Combo");
 
-            //TODO: Always load Ink Color on new quotes
+            //TODO: Move selected categories to lstSelected
 
+            //TODO: Always load Ink Color on new quotes
             //lstAvailable.Items.Remove("Ink Color");
             //lstSelected.Items.Add("Ink Color");
         }
@@ -1003,8 +1005,9 @@ namespace ProDocEstimate
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             string? x = lstSelected.SelectedItem.ToString();
-            if (x.IndexOf(' ') > 0) { x = x.Substring(0, x.IndexOf(' ')); }  // Just the first word; needed if the dollar amount appears in the ListItem.
-
+            string check = ((char)0x221A).ToString();
+            if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
+            
             if (x =="PressNum") { x = "Press"; }
 
             //TODO: Something funny is happening with long category names; 
@@ -1018,7 +1021,7 @@ namespace ProDocEstimate
                         break;
                     }
 
-                case "Ink":
+                case "Ink Color":
                     {
                         InkColors Ink = new InkColors(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
                         break;
@@ -1094,9 +1097,6 @@ namespace ProDocEstimate
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-
-                //Title = dt.Rows[i]["Category"].ToString();
-
                 string V1 = dt.Rows[i]["Value1"].ToString();
                 string V2 = dt.Rows[i]["Value2"].ToString();
                 string V3 = dt.Rows[i]["Value3"].ToString();
@@ -1125,6 +1125,15 @@ namespace ProDocEstimate
                 bool B8 = int.TryParse(dt.Rows[i]["Value8"].ToString(), out I8);
 
                 Int32 RowTotal = 0;
+
+                //TODO: Note that BackerForm is a little different...
+                string? CheckCategory = dt.Rows[i]["Category"].ToString(); 
+                if (CheckCategory.ToUpper().Contains("BACKER")) 
+                {
+                    RowTotal = 1;
+//                    Debugger.Break();
+                }
+
                 if (B1 == true) { RowTotal += I1; }
                 if (B2 == true) { RowTotal += I2; }
                 if (B3 == true) { RowTotal += I3; }
@@ -1136,12 +1145,13 @@ namespace ProDocEstimate
 
                 string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
 
-                if(lstSelected.Items[i].ToString().IndexOf(" ")>0)
-                 { lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, lstSelected.Items[i].ToString().IndexOf(" ")) + (" ").PadRight(20); }
-                else
-                 { lstSelected.Items[i] = lstSelected.Items[i].ToString()+ (" ").PadRight(20); }
-
-                lstSelected.Items[i]   = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
+                //if(lstSelected.Items[i].ToString().IndexOf(" ")>0)
+                // { lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, lstSelected.Items[i].ToString().IndexOf(" ")) + (" ").PadRight(20); }
+                //else
+                // { lstSelected.Items[i] = lstSelected.Items[i].ToString()+ (" ").PadRight(20); }
+                
+                lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
+                lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
             }
 
             conn.Close();
@@ -1160,10 +1170,12 @@ namespace ProDocEstimate
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                string s = dt.Rows[i]["CATEGORY"].ToString();
-                lstSelected.Items.Add(s);
-                if(s=="PressNum") { s = "Press Numbering"; }        // Kludge to fix temporarily...
+            {   string s = dt.Rows[i]["CATEGORY"].ToString();
+                if (s == "PressNum") { s = "Press Numbering"; }  // Is this Kludge still needed?
+                bool found = false;
+                if (lstSelected.Items.Count > 0)
+                 { for (int j = 0; j < lstSelected.Items.Count; j++) { if (lstSelected.Items[j].ToString().Contains(s)) { found = true; } } }
+                if(!found)lstSelected.Items.Add(s);
                 lstAvailable.Items.Remove(s);
             }
             conn.Close();
@@ -1177,28 +1189,36 @@ namespace ProDocEstimate
             string? x = lstAvailable.SelectedItem.ToString();
             lstSelected.Items.Add(x);
             lstAvailable.Items.Remove(x);
-            x = null;
         }
 
         private void lstSelected_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Category = lstSelected.SelectedItem.ToString().TrimEnd();
-            // Delete current detail line
-            string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QUOTE_NUM}' AND Category = '{Category}'";
+            string check = ((char)0x221A).ToString();
+
+            if (Category.Contains(check)) { Category = Category.Substring(0, Category.IndexOf(check)).TrimEnd(); }
+            // Delete current detail line;
+            string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QUOTE_NUM}' AND Category LIKE '{Category}%'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
             try { scmd.ExecuteNonQuery(); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
             RemoveSelectedFeature();
+
+            // Reload unselected features in the original order
+            LoadAvailableCategories();
+
+            // Determine which ones have already been selected
+            LoadDetails();
         }
 
         private void RemoveSelectedFeature()
         {
             string? x = lstSelected.SelectedItem.ToString();
-            lstAvailable.Items.Add(x);
+//            x = x.Substring(0, x.IndexOf(" "));
+//            lstAvailable.Items.Add(x); // No, reload the list, skipping categories already in lstSelected.Items
             lstSelected.Items.Remove(x);
-            x = null;
         }
 
         private void btnAssignNewQuoteNum_Click(object sender, RoutedEventArgs e)
@@ -1206,5 +1226,21 @@ namespace ProDocEstimate
             //TODO: Isn't this already happening somewhere?
         }
 
+
+        private void cmbPressSize_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if(lstSelected.Items.Count == 0) return;
+            if(cmbPressSize.Text == cmbPressSize.SelectedItem.ToString()) return;
+            //if (MessageBox.Show("This will delete any selected features; continue?", "Not undoable", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
+            {
+                string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
+                conn.Close();
+                lstSelected.Items.Clear(); LoadPressSizes();
+                MessageBox.Show("Features removed.", "All features depend on Press Size", MessageBoxButton.OK, MessageBoxImage.Information );
+            }
+        }
     }
 }

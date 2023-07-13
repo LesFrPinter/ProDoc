@@ -132,8 +132,10 @@ namespace ProDocEstimate.Views
             if(dt.Rows.Count == 0) { MessageBox.Show("No data"); return; }
 
             Flat                  = float.Parse(dt.Rows[0][1].ToString());
-            Chng                  = float.Parse(dt.Rows[0][2].ToString());
-            BasePlateCharge       = float.Parse(dt.Rows[0][3].ToString());
+            float ch = 0.00F; float.TryParse(dt.Rows[0][2].ToString(), out ch); 
+            Chng = ch;
+            float bp = 0.00F; float.TryParse(dt.Rows[0][3].ToString(), out bp); 
+            BasePlateCharge = bp;
             BaseFlatCharge        = Flat;
             BaseRunCharge         = Chng;
             CalculatedFlatCharge  = Flat;            FlatChargePct  = 0.00F;
