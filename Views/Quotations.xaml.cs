@@ -1234,7 +1234,7 @@ namespace ProDocEstimate
         {
             if(lstSelected.Items.Count == 0) return;
             if(cmbPressSize.Text == cmbPressSize.SelectedItem.ToString()) return;
-            //if (MessageBox.Show("This will delete any selected features; continue?", "Not undoable", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
+            if (MessageBox.Show("This will delete any selected features; continue?", "Not undoable", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
             {
                 string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
                 conn = new SqlConnection(ConnectionString);

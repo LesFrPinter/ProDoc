@@ -161,7 +161,9 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e) 
         { 
-            Startup = false; 
+            Startup = false;
+            this.Height = this.Height *= 2.0;
+            this.Width = this.Width *= 2.0;
         }
 
         public void LoadFtypes()
@@ -184,7 +186,7 @@ namespace ProDocEstimate.Views
             string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Security'";
             conn = new SqlConnection(ConnectionString); da = new SqlDataAdapter(cmd, conn);
             DataTable dt2 = new DataTable(); da.Fill(dt2); dv = dt2.DefaultView;
-
+            if(dt2.Rows.Count==0) { return; }
             // Iterate through the length of the string in "Value9"
             for(int i = 0; i < dv[0]["Value9"].ToString().Length; i++)
             {   string v = dv[0]["Value9"].ToString().Substring(i,1); chk[i] = (v=="1") ? true: false;
@@ -299,7 +301,24 @@ namespace ProDocEstimate.Views
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
-        { MessageBox.Show("Saving...", "In progress"); this.Close(); }
+        { 
+//            MessageBox.Show("Saving...", "In progress");
+            string Checked = ""; for(int i = 0; i < 21;  i++)  { Checked  += (Chk[i] ? "1" : "0"); }
+            MessageBox.Show(Checked.ToString(), "Which items are checked");
+            string Percents = ""; for (int i = 0; i < 21; i++) { Percents += (Chk[i] ? Mult[i].ToString() + "," : ""); }
+            MessageBox.Show(Percents.ToString(), "% markups");
+
+            string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Security'";
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
+
+            scmd.CommandText = $"INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( QUOTE_NUM, SEQUENCE, CATEGORY, VALUE9, VALUE10 ) VALUES ( '{QuoteNum}', 10, 'Security', '{Checked}', '{Percents}' )";
+            if(conn.State != ConnectionState.Open) conn.Open();
+            scmd.ExecuteNonQuery();
+            conn.Close();
+
+            this.Close(); 
+        }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Close(); }
