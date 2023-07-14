@@ -1005,7 +1005,7 @@ namespace ProDocEstimate
             string check = ((char)0x221A).ToString();
             if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
             
-            if (x =="PressNum") { x = "Press"; }
+//            if (x =="Press Num") { x = "Press"; }
 
             //TODO: Something funny is happening with long category names; 
 
@@ -1045,7 +1045,7 @@ namespace ProDocEstimate
                         break;
                     }
 
-                case "Press":
+                case "Press Numbering":
                     {
                         PressNum pressnum = new PressNum(PRESSSIZE, QUOTE_NUM); pressnum.ShowDialog();
                         break;

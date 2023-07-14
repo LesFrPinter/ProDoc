@@ -186,36 +186,50 @@ namespace ProDocEstimate.Views
             string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Security'";
             conn = new SqlConnection(ConnectionString); da = new SqlDataAdapter(cmd, conn);
             DataTable dt2 = new DataTable(); da.Fill(dt2); dv = dt2.DefaultView;
+
             if(dt2.Rows.Count==0) { return; }
+
             // Iterate through the length of the string in "Value9"
             for(int i = 0; i < dv[0]["Value9"].ToString().Length; i++)
-            {   string v = dv[0]["Value9"].ToString().Substring(i,1); chk[i] = (v=="1") ? true: false;
+            {   string v = dv[0]["Value9"].ToString().Substring(i,1); 
+                chk[i] = (v=="1") ? true: false;
                 switch (i)
                 {
-                    case 1: Chk01 = chk[i]; Calculate(i.ToString()); break;
-                    case 2: Chk02 = chk[i]; Calculate(i.ToString()); break;
-                    case 3: Chk03 = chk[i]; Calculate(i.ToString()); break;
-                    case 4: Chk04 = chk[i]; Calculate(i.ToString()); break;
-                    case 5: Chk05 = chk[i]; Calculate(i.ToString()); break;
-                    case 6: Chk06 = chk[i]; Calculate(i.ToString()); break;
-                    case 7: Chk07 = chk[i]; Calculate(i.ToString()); break;
-                    case 8: Chk08 = chk[i]; Calculate(i.ToString()); break;
-                    case 9: Chk09 = chk[i]; Calculate(i.ToString()); break;
+                    case 1:  Chk01 = chk[i]; Calculate(i.ToString()); break;
+                    case 2:  Chk02 = chk[i]; Calculate(i.ToString()); break;
+                    case 3:  Chk03 = chk[i]; Calculate(i.ToString()); break;
+                    case 4:  Chk04 = chk[i]; Calculate(i.ToString()); break;
+                    case 5:  Chk05 = chk[i]; Calculate(i.ToString()); break;
+                    case 6:  Chk06 = chk[i]; Calculate(i.ToString()); break;
+                    case 7:  Chk07 = chk[i]; Calculate(i.ToString()); break;
+                    case 8:  Chk08 = chk[i]; Calculate(i.ToString()); break;
+                    case 9:  Chk09 = chk[i]; Calculate(i.ToString()); break;
                     case 10: Chk10 = chk[i]; Calculate(i.ToString()); break;
                     case 11: Chk11 = chk[i]; Calculate(i.ToString()); break;
-                    case 12: Chk12 = chk[i]; break;
-                    case 13: Chk13 = chk[i]; break;
-                    case 14: Chk14 = chk[i]; break;
-                    case 15: Chk15 = chk[i]; break;
-                    case 16: Chk16 = chk[i]; break;
-                    case 17: Chk17 = chk[i]; break;
-                    case 18: Chk18 = chk[i]; break;
-                    case 19: Chk19 = chk[i]; break;
-                    case 20: Chk20 = chk[i]; break;
-                    case 21: Chk21 = chk[i]; break;
+                    case 12: Chk12 = chk[i]; Calculate(i.ToString()); break;
+                    case 13: Chk13 = chk[i]; Calculate(i.ToString()); break;
+                    case 14: Chk14 = chk[i]; Calculate(i.ToString()); break;
+                    case 15: Chk15 = chk[i]; Calculate(i.ToString()); break;
+                    case 16: Chk16 = chk[i]; Calculate(i.ToString()); break;
+                    case 17: Chk17 = chk[i]; Calculate(i.ToString()); break;
+                    case 18: Chk18 = chk[i]; Calculate(i.ToString()); break;
+                    case 19: Chk19 = chk[i]; Calculate(i.ToString()); break;
+                    case 20: Chk20 = chk[i]; Calculate(i.ToString()); break;
+                    case 21: Chk21 = chk[i]; Calculate(i.ToString()); break;
                 }
             }
 
+            string vals   = dv[0]["Value10"].ToString();      // CSV list of percentages
+            string[] pcts = vals.Split(",");                // Array of percentages. 
+            int counter   = 0;
+
+            string chosen = dv[0]["Value9"].ToString();
+            for (int i = 0; i < chosen.Length; i++)
+            { if (chosen.Substring(i,1) == "1") 
+              { Mult[i] = int.Parse(pcts[counter].ToString()); counter++; }
+            }
+
+            //TODO: Use the restored percentage markup values to extend each checked F_Type
         }
 
         private void NU01_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -302,11 +316,11 @@ namespace ProDocEstimate.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         { 
-//            MessageBox.Show("Saving...", "In progress");
             string Checked = ""; for(int i = 0; i < 21;  i++)  { Checked  += (Chk[i] ? "1" : "0"); }
-            MessageBox.Show(Checked.ToString(), "Which items are checked");
             string Percents = ""; for (int i = 0; i < 21; i++) { Percents += (Chk[i] ? Mult[i].ToString() + "," : ""); }
-            MessageBox.Show(Percents.ToString(), "% markups");
+            
+            //            MessageBox.Show(Checked.ToString(), "Which items are checked");
+            //            MessageBox.Show(Percents.ToString(), "% markups");
 
             string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Security'";
             conn = new SqlConnection(ConnectionString); conn.Open();
@@ -316,7 +330,6 @@ namespace ProDocEstimate.Views
             if(conn.State != ConnectionState.Open) conn.Open();
             scmd.ExecuteNonQuery();
             conn.Close();
-
             this.Close(); 
         }
 

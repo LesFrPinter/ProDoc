@@ -68,6 +68,8 @@
                    Grid.RowSpan="2" Height="22" VerticalContentAlignment="Top" Padding="5 0" />
         </Border>
 
+        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"  HorizontalAlignment="Right" Content="NOTE: This feature is not finished" Background="LightPink" Margin="0 0 20 0" Foreground="DarkBlue" Padding="2" />
+
         <Label Content="Flat Charge:"           Grid.Row="1" />
         <Label Content="Run Charge:"            Grid.Row="2" />
         <Label Content="Plate:"                 Grid.Row="3" />
