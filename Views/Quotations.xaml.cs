@@ -1001,7 +1001,7 @@ namespace ProDocEstimate
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string? x = lstSelected.SelectedItem.ToString();
+            string? x = lstSelected.SelectedItem.ToString().TrimEnd();
             string check = ((char)0x221A).ToString();
             if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
             
