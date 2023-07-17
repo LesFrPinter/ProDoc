@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        Loaded="OnLoad"
         Title="Ink Colors" Height="240" Width="800">
 
     <!--DataContext="{Binding RelativeSource={RelativeSource Self}}"-->

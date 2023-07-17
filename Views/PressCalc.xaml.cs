@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaFoundation;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -79,6 +80,13 @@ namespace ProDocEstimate.Views
 
             this.DataContext = this;
         }
+
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
+        }
+
 
         public void Calc()
         {

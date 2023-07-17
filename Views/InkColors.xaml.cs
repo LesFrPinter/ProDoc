@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaFoundation;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -111,6 +112,13 @@ namespace ProDocEstimate.Views
                 FluorSel  = int.Parse(dt.Rows[0]["Value9"].ToString());
             }
         }
+
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
+        }
+
 
         private void LoadMaxColors()
         {

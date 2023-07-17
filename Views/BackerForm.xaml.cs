@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Data;
-using System.Windows;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProDocEstimate.Views
@@ -89,6 +89,12 @@ namespace ProDocEstimate.Views
 
             LoadQuote();
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
+
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
         }
 
         private void LoadQuote()

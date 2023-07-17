@@ -27,6 +27,7 @@ namespace ProDocEstimate.Views
         private int    max;         public int    Max        { get { return max;        } set { max         = value; OnPropertyChanged(); } }
         private string pressSize;   public string PressSize  { get { return pressSize;  } set { pressSize   = value; OnPropertyChanged(); } }
         private string quoteNum;    public string QuoteNum   { get { return quoteNum;   } set { quoteNum    = value; OnPropertyChanged(); } }
+        private string str;         public string Str        { get { return str;        } set { str         = value; OnPropertyChanged(); } }
 
         private string book;        public string Book       { get { return book;       } set { book        = value; OnPropertyChanged(); } }
         private string cello;       public string Cello      { get { return cello;      } set { cello       = value; OnPropertyChanged(); } }
@@ -54,11 +55,18 @@ namespace ProDocEstimate.Views
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
+        }
+
         private void LoadDropDowns()
         {
+            M1.Items.Add(""); M2.Items.Add(""); M3.Items.Add(""); M4.Items.Add(""); M5.Items.Add("");   // allow them to leave any selection blank
+
             string str = $"SELECT F_TYPE, CONVERT(VARCHAR(10),CONVERT(INT,NUMBER)) AS NUMBER FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND NUMBER NOT LIKE '%-%'"
                        + $" UNION ALL SELECT F_TYPE,                                  NUMBER FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND (NUMBER LIKE '%-%') ORDER BY F_TYPE";
-
 //            Clipboard.SetText(str);
 
             SqlConnection conn = new(ConnectionString);
@@ -66,7 +74,6 @@ namespace ProDocEstimate.Views
             DataView dv = (dt.DefaultView as DataView) as DataView;
 
             //NOTE: If they need the ability to blank a value that was previously entered, add "" to the top of each ItemsList.
-
             dv.RowFilter = "F_TYPE='BOOK'";         for (int i = 0; i < dv.Count; i++) { M1.Items.Add(dv[i]["number"].ToString()); }
             dv.RowFilter = "F_TYPE='CELLO'";        for (int i = 0; i < dv.Count; i++) { M2.Items.Add(dv[i]["number"].ToString()); }
             dv.RowFilter = "F_TYPE='DRILL HOLES'";  for (int i = 0; i < dv.Count; i++) { M3.Items.Add(dv[i]["number"].ToString()); }
@@ -127,45 +134,68 @@ namespace ProDocEstimate.Views
             // TODO: Can you return all five values in a single SELECT?
 
             float Flat2 = 0.00F;
+
+            SqlConnection conn = new(ConnectionString);
+            da = new SqlDataAdapter();
+            da.SelectCommand = new SqlCommand();
+            conn.Open();
+            da.SelectCommand.Connection = conn;
+            
             dt = new();
-            string str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'BOOK' AND Number = '{Book}'";
-            SqlConnection conn = new(ConnectionString); SqlDataAdapter da = new(str, conn); da.Fill(dt);
-            dv = dt.DefaultView; string s = dv[0][0].ToString();
-            Flat = 0.00F; if (dv[0][0] != null) { if (float.TryParse(s, out Flat2)) { Flat = Flat2; } }
-            Run  = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
-            FlatTotal += Flat; ThouTotal += Run;
+            if(Book.ToString().Length > 0)
+            { 
+                Str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'BOOK' AND Number = '{Book}'";
+                da.SelectCommand.CommandText = Str;
+                da.Fill(dt);
+                dv = dt.DefaultView; string s = dv[0][0].ToString();
+                Flat = 0.00F; if (dv[0][0] != null) { if (float.TryParse(s, out Flat2)) { Flat = Flat2; } }
+                Run  = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
+                FlatTotal += Flat; ThouTotal += Run;
+            }
 
             dt.Clear(); 
-            str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'CELLO' AND Number = '{Cello}'";
-            da.SelectCommand.CommandText = str; da.Fill(dt);
-            dv = dt.DefaultView;
-            Flat = 0.00F; if (dv[0][0] != null) { if (float.TryParse(s, out Flat2)) { Flat = Flat2; } }
-            Run = 0.00F; if (dt.Rows[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
-            FlatTotal += Flat; ThouTotal += Run;
+            if(Cello != null && Cello.ToString().Length > 0)
+            { 
+                Str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'CELLO' AND Number = '{Cello}'";
+                da.SelectCommand.CommandText = Str; da.Fill(dt);
+                dv = dt.DefaultView;
+                Flat = 0.00F; if (dv[0]["FLAT_CHARGE"] != null) { if (float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out Flat2)) { Flat = Flat2; } }
+                Run = 0.00F; if (dt.Rows[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
+                FlatTotal += Flat; ThouTotal += Run;
+            }
 
             dt.Clear();
-            str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'DRILL HOLES' AND Number = '{DrillHoles}'";
-            da.SelectCommand.CommandText = str; da.Fill(dt);
-            dv = dt.DefaultView;
-            Flat = 0.00F; if (dv[0]["FLAT_CHARGE"] != null) { if (float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out Flat2)) { Flat = Flat2; } }
-            Run = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
-            FlatTotal += Flat; ThouTotal += Run;
+            if(DrillHoles != null && DrillHoles.ToString().Length > 0)
+            {
+                Str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'DRILL HOLES' AND Number = '{DrillHoles}'";
+                da.SelectCommand.CommandText = Str; da.Fill(dt);
+                dv = dt.DefaultView;
+                Flat = 0.00F; if (dv[0]["FLAT_CHARGE"] != null) { if (float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out Flat2)) { Flat = Flat2; } }
+                Run = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
+                FlatTotal += Flat; ThouTotal += Run;
+            }
 
             dt.Clear();
-            str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'PAD' AND Number = '{Pad}'";
-            da.SelectCommand.CommandText = str; da.Fill(dt);
-            dv = dt.DefaultView;
-            Flat = 0.00F; if (dv[0][0] != null) { if (float.TryParse(s, out Flat2)) { Flat = Flat2; } }
-            Run = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
-            FlatTotal += Flat; ThouTotal += Run;
+            if(Pad != null && Pad.ToString().Length > 0)
+            { 
+                Str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'PAD' AND Number = '{Pad}'";
+                da.SelectCommand.CommandText = Str; da.Fill(dt);
+                dv = dt.DefaultView;
+                Flat = 0.00F; if (dv[0]["FLAT_CHARGE"] != null) { if (float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out Flat2)) { Flat = Flat2; } }
+                Run = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
+                FlatTotal += Flat; ThouTotal += Run;
+            }
 
             dt.Clear();
-            str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'TRIM' AND Number = '{Trim}'";
-            da.SelectCommand.CommandText = str; da.Fill(dt);
-            dv = dt.DefaultView;
-            Flat = 0.00F; if (dv[0][0] != null) { if (float.TryParse(s, out Flat2)) { Flat = Flat2; } }
-            Run = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
-            FlatTotal += Flat; ThouTotal += Run;
+            if(Trim != null && Trim.ToString().Length > 0)
+            { 
+                Str = $"SELECT FLAT_CHARGE, RUN_CHARGE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = 'TRIM' AND Number = '{Trim}'";
+                da.SelectCommand.CommandText = Str; da.Fill(dt);
+                dv = dt.DefaultView;
+                Flat = 0.00F; if (dv[0]["FLAT_CHARGE"] != null) { if (float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out Flat2)) { Flat = Flat2; } }
+                Run = 0.00F; if (dv[0][1] != null) { Run  = float.Parse(dv[0][1].ToString()); }
+                FlatTotal += Flat; ThouTotal += Run;
+            }
         }
 
         private void M1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

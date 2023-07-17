@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        Loaded="OnLoad"
         Title="PrePress" Height="280" Width="800">
 
     <Window.Resources>

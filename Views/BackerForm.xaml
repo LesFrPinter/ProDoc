@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="ProDocEstimate.Views.BackerForm"
         mc:Ignorable="d"
+        Loaded="OnLoad"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
         Title="Backer" Height="350" Width="800">

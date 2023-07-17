@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        Loaded="OnLoad"
         Title="Perfing" Height="260" Width="800">
 
     <Window.Resources>

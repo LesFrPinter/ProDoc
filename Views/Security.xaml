@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Title="Security" Height="320" Width="800">
+        Title="Security" Height="520" Width="800">
 
     <Window.Resources>
         <Style TargetType="{x:Type Label}">
@@ -40,187 +40,259 @@
 
     <Viewbox>
 
-        <Grid Width="860" Height="340" VerticalAlignment="Top" >
+        <Grid Width="800" Height="510" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
-
-                <RowDefinition Height="40" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="38" />
-
+                <RowDefinition Height="4.3*" />
+                <RowDefinition Height="1.8*" />
+                <RowDefinition Height=".5*" />
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Height="320" VerticalAlignment="Top" Width="790" >
 
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <Grid Width="780" Height="450" VerticalAlignment="Top" >
 
-                <ColumnDefinition Width="1.5*"/>
+                    <Grid.RowDefinitions>
 
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
 
-            </Grid.ColumnDefinitions>
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="22" />
 
-            <Label 
-                Content="Security" 
-                Grid.Column="4"
-                FontSize="22" Foreground="Red" Padding="2 0" 
-                VerticalAlignment="Top"
-                HorizontalContentAlignment="Center"
-                Height="33" Grid.ColumnSpan="3" Margin="29,0,0,0" >
-                <Label.BitmapEffect>
-                    <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
-                </Label.BitmapEffect>
-            </Label>
+                        <RowDefinition Height="38" />
 
-            <CheckBox                   Grid.Row="2" Grid.Column="0" IsChecked="{Binding Chk  [0], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk01" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="2" Grid.Column="1" Content  ="{Binding Ftype[0]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="2" Grid.Column="2" Content  ="{Binding Flat [0]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="2" Grid.Column="3" Value    ="{Binding Mult [0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU01" ValueChanged="NU01_ValueChanged"/>
-            <TextBox                    Grid.Row="2" Grid.Column="4" Text     ="{Binding Ext01,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    </Grid.RowDefinitions>
 
-            <CheckBox                   Grid.Row="3" Grid.Column="0" IsChecked="{Binding Chk  [1], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk02" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="3" Grid.Column="1" Content  ="{Binding Ftype[1]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="3" Grid.Column="2" Content  ="{Binding Flat [1]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="3" Grid.Column="3" Value    ="{Binding Mult [1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU02" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="3" Grid.Column="4" Text     ="{Binding Ext02,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <Grid.ColumnDefinitions>
 
-            <CheckBox                   Grid.Row="4" Grid.Column="0" IsChecked="{Binding Chk  [2], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk03" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="4" Grid.Column="1" Content  ="{Binding Ftype[2]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="4" Grid.Column="2" Content  ="{Binding Flat [2]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="4" Grid.Column="3" Value    ="{Binding Mult [2], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU03" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="4" Grid.Column="4" Text     ="{Binding Ext03,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="2*"/>
 
-            <CheckBox                   Grid.Row="5" Grid.Column="0" IsChecked="{Binding Chk  [3], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk04" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="5" Grid.Column="1" Content  ="{Binding Ftype[3]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="5" Grid.Column="2" Content  ="{Binding Flat [3]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="5" Grid.Column="3" Value    ="{Binding Mult [3], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU04" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="5" Grid.Column="4" Text     ="{Binding Ext04,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                        <ColumnDefinition Width="0.5*"/>
 
-            <CheckBox                   Grid.Row="6" Grid.Column="0" IsChecked="{Binding Chk  [4], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk05" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="6" Grid.Column="1" Content  ="{Binding Ftype[4]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="6" Grid.Column="2" Content  ="{Binding Flat [4]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="6" Grid.Column="3" Value    ="{Binding Mult [4], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU05" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="6" Grid.Column="4" Text     ="{Binding Ext05,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="2*"/>
 
-            <CheckBox                   Grid.Row="7" Grid.Column="0" IsChecked="{Binding Chk  [5], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk06" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="7" Grid.Column="1" Content  ="{Binding Ftype[5]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="7" Grid.Column="2" Content  ="{Binding Flat [5]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="7" Grid.Column="3" Value    ="{Binding Mult [5], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU06" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="7" Grid.Column="4" Text     ="{Binding Ext06,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    </Grid.ColumnDefinitions>
 
-            <CheckBox                   Grid.Row="8" Grid.Column="0" IsChecked="{Binding Chk  [6], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk07" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="8" Grid.Column="1" Content  ="{Binding Ftype[6]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="8" Grid.Column="2" Content  ="{Binding Flat [6]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="8" Grid.Column="3" Value    ="{Binding Mult [6], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU07" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="8" Grid.Column="4" Text     ="{Binding Ext07,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <Label 
+                      Content="Security" 
+                      Grid.Column="0" Width="760"
+                      FontSize="22" Foreground="Red" Padding="2 0" 
+                      VerticalAlignment="Top"
+                      HorizontalContentAlignment="Center"
+                      Height="33" Grid.ColumnSpan="7" Margin="29,0,0,0" >
+                        <Label.BitmapEffect>
+                            <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
+                        </Label.BitmapEffect>
+                    </Label>
 
-            <CheckBox                   Grid.Row="9" Grid.Column="0" IsChecked="{Binding Chk  [7], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk08" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="9" Grid.Column="1" Content  ="{Binding Ftype[7]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="9" Grid.Column="2" Content  ="{Binding Flat [7]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="9" Grid.Column="3" Value    ="{Binding Mult [7], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU08" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="9" Grid.Column="4" Text     ="{Binding Ext08,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="2" Grid.Column="0" IsChecked="{Binding Chk  [0], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk01" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="2" Grid.Column="1" Content  ="{Binding Ftype[0]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="2" Grid.Column="2" Content  ="{Binding Flat [0]}"  />
 
-            <CheckBox                   Grid.Row="10" Grid.Column="0" IsChecked="{Binding Chk  [8], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk09" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="10" Grid.Column="1" Content  ="{Binding Ftype[8]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="10" Grid.Column="2" Content  ="{Binding Flat [8]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="10" Grid.Column="3" Value    ="{Binding Mult [8], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU09" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="10" Grid.Column="4" Text     ="{Binding Ext09,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="3" Grid.Column="0" IsChecked="{Binding Chk  [1], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk02" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="3" Grid.Column="1" Content  ="{Binding Ftype[1]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="3" Grid.Column="2" Content  ="{Binding Flat [1]}"  />
 
-            <CheckBox                   Grid.Row="11" Grid.Column="0" IsChecked="{Binding Chk  [9], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk10" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="11" Grid.Column="1" Content  ="{Binding Ftype[9]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="11" Grid.Column="2" Content  ="{Binding Flat [9]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="11" Grid.Column="3" Value    ="{Binding Mult [9], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU10" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="11" Grid.Column="4" Text     ="{Binding Ext10,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="4" Grid.Column="0" IsChecked="{Binding Chk  [2], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk03" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="4" Grid.Column="1" Content  ="{Binding Ftype[2]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="4" Grid.Column="2" Content  ="{Binding Flat [2]}"  />
 
-            <CheckBox                   Grid.Row="12" Grid.Column="0" IsChecked="{Binding Chk  [10], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk11" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="12" Grid.Column="1" Content  ="{Binding Ftype[10]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="12" Grid.Column="2" Content  ="{Binding Flat [10]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="12" Grid.Column="3" Value    ="{Binding Mult [10], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU11" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="12" Grid.Column="4" Text     ="{Binding Ext11,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="5" Grid.Column="0" IsChecked="{Binding Chk  [3], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk04" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="5" Grid.Column="1" Content  ="{Binding Ftype[3]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="5" Grid.Column="2" Content  ="{Binding Flat [3]}"  />
 
-<!--Second Column-->
-            
-            <CheckBox                   Grid.Row="2" Grid.Column="6"  IsChecked ="{Binding Chk  [11], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk12" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="2" Grid.Column="7"  Content   ="{Binding Ftype[11]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="2" Grid.Column="8"  Content   ="{Binding Flat [11]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="2" Grid.Column="9"  Value     ="{Binding Mult [11], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU12" ValueChanged="NU01_ValueChanged"/>
-            <TextBox                    Grid.Row="2" Grid.Column="10" Text      ="{Binding Ext12,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="6" Grid.Column="0" IsChecked="{Binding Chk  [4], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk05" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="6" Grid.Column="1" Content  ="{Binding Ftype[4]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="6" Grid.Column="2" Content  ="{Binding Flat [4]}"  />
 
-            <CheckBox                   Grid.Row="3" Grid.Column="6"  IsChecked ="{Binding Chk  [12], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk13" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="3" Grid.Column="7"  Content   ="{Binding Ftype[12]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="3" Grid.Column="8"  Content   ="{Binding Flat [12]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="3" Grid.Column="9"  Value     ="{Binding Mult [12], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU13" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="3" Grid.Column="10" Text      ="{Binding Ext13,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="7" Grid.Column="0" IsChecked="{Binding Chk  [5], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk06" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="7" Grid.Column="1" Content  ="{Binding Ftype[5]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="7" Grid.Column="2" Content  ="{Binding Flat [5]}"  />
 
-            <CheckBox                   Grid.Row="4" Grid.Column="6"  IsChecked ="{Binding Chk  [13], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk14" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="4" Grid.Column="7"  Content   ="{Binding Ftype[13]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="4" Grid.Column="8"  Content   ="{Binding Flat [13]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="4" Grid.Column="9"  Value     ="{Binding Mult [13], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU14" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="4" Grid.Column="10" Text      ="{Binding Ext14,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="8" Grid.Column="0" IsChecked="{Binding Chk  [6], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk07" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="8" Grid.Column="1" Content  ="{Binding Ftype[6]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="8" Grid.Column="2" Content  ="{Binding Flat [6]}"  />
 
-            <CheckBox                   Grid.Row="5" Grid.Column="6"  IsChecked ="{Binding Chk  [14], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk15" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="5" Grid.Column="7"  Content   ="{Binding Ftype[14]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="5" Grid.Column="8"  Content   ="{Binding Flat [14]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="5" Grid.Column="9"  Value     ="{Binding Mult [14], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU15" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="5" Grid.Column="10" Text      ="{Binding Ext15,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="9" Grid.Column="0" IsChecked="{Binding Chk  [7], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk08" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="9" Grid.Column="1" Content  ="{Binding Ftype[7]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="9" Grid.Column="2" Content  ="{Binding Flat [7]}"  />
 
-            <CheckBox                   Grid.Row="6" Grid.Column="6"  IsChecked ="{Binding Chk  [15], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk16" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="6" Grid.Column="7"  Content   ="{Binding Ftype[15]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="6" Grid.Column="8"  Content   ="{Binding Flat [15]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="6" Grid.Column="9"  Value     ="{Binding Mult [15], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU16" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="6" Grid.Column="10" Text      ="{Binding Ext16,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="10" Grid.Column="0" IsChecked="{Binding Chk  [8], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk09" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="10" Grid.Column="1" Content  ="{Binding Ftype[8]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="10" Grid.Column="2" Content  ="{Binding Flat [8]}"  />
 
-            <CheckBox                   Grid.Row="7" Grid.Column="6"  IsChecked ="{Binding Chk  [16], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk17" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="7" Grid.Column="7"  Content   ="{Binding Ftype[16]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="7" Grid.Column="8"  Content   ="{Binding Flat [16]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="7" Grid.Column="9"  Value     ="{Binding Mult [16], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU17" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="7" Grid.Column="10" Text      ="{Binding Ext17,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
+                    <CheckBox                   Grid.Row="11" Grid.Column="0" IsChecked="{Binding Chk  [9], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk10" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="11" Grid.Column="1" Content  ="{Binding Ftype[9]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="11" Grid.Column="2" Content  ="{Binding Flat [9]}"  />
 
-            <CheckBox                   Grid.Row="8" Grid.Column="6"  IsChecked ="{Binding Chk  [17], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk18" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="8" Grid.Column="7"  Content   ="{Binding Ftype[17]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="8" Grid.Column="8"  Content   ="{Binding Flat [17]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="8" Grid.Column="9"  Value     ="{Binding Mult [17], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU18" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="8" Grid.Column="10" Text      ="{Binding Ext18,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
-
-            <CheckBox                   Grid.Row="9" Grid.Column="6"  IsChecked ="{Binding Chk  [18], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk19" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="9" Grid.Column="7"  Content   ="{Binding Ftype[18]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="9" Grid.Column="8"  Content   ="{Binding Flat [18]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="9" Grid.Column="9"  Value     ="{Binding Mult [18], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU19" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="9" Grid.Column="10" Text      ="{Binding Ext19,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
-
-            <CheckBox                   Grid.Row="10" Grid.Column="6"  IsChecked ="{Binding Chk  [19], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk20" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="10" Grid.Column="7"  Content   ="{Binding Ftype[19]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="10" Grid.Column="8"  Content   ="{Binding Flat [19]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="10" Grid.Column="9"  Value     ="{Binding Mult [19], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU20" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="10" Grid.Column="10" Text      ="{Binding Ext20,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />
-
-            <!--<CheckBox                   Grid.Row="11" Grid.Column="6"  IsChecked ="{Binding Chk  [20], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk21" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
-            <Label                      Grid.Row="11" Grid.Column="7"  Content   ="{Binding Ftype[20]}" Margin="2 0 0 0" />
-            <Label                      Grid.Row="11" Grid.Column="8"  Content   ="{Binding Flat [20]}"  />
-            <telerik:RadNumericUpDown   Grid.Row="11" Grid.Column="9"  Value     ="{Binding Mult [20], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NumberDecimalDigits="0" VerticalAlignment="Center" x:Name="NU21" ValueChanged="NU01_ValueChanged" />
-            <TextBox                    Grid.Row="11" Grid.Column="10" Text      ="{Binding Ext21,UpdateSourceTrigger=PropertyChanged, StringFormat=C}" Width="50" />-->
+                    <CheckBox                   Grid.Row="12" Grid.Column="0" IsChecked="{Binding Chk  [10], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk11" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="12" Grid.Column="1" Content  ="{Binding Ftype[10]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="12" Grid.Column="2" Content  ="{Binding Flat [10]}"  />
 
 
-            <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.ColumnSpan="15" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" >
+                    <CheckBox                   Grid.Row="2" Grid.Column="4"  IsChecked ="{Binding Chk  [11], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk12" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="2" Grid.Column="5"  Content   ="{Binding Ftype[11]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="2" Grid.Column="6"  Content   ="{Binding Flat [11]}"  />
+
+                    <CheckBox                   Grid.Row="3" Grid.Column="4"  IsChecked ="{Binding Chk  [12], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk13" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="3" Grid.Column="5"  Content   ="{Binding Ftype[12]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="3" Grid.Column="6"  Content   ="{Binding Flat [12]}"  />
+
+                    <CheckBox                   Grid.Row="4" Grid.Column="4"  IsChecked ="{Binding Chk  [13], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk14" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="4" Grid.Column="5"  Content   ="{Binding Ftype[13]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="4" Grid.Column="6"  Content   ="{Binding Flat [13]}"  />
+
+                    <CheckBox                   Grid.Row="5" Grid.Column="4"  IsChecked ="{Binding Chk  [14], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk15" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="5" Grid.Column="5"  Content   ="{Binding Ftype[14]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="5" Grid.Column="6"  Content   ="{Binding Flat [14]}"  />
+
+                    <CheckBox                   Grid.Row="6" Grid.Column="4"  IsChecked ="{Binding Chk  [15], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk16" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="6" Grid.Column="5"  Content   ="{Binding Ftype[15]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="6" Grid.Column="6"  Content   ="{Binding Flat [15]}"  />
+
+                    <CheckBox                   Grid.Row="7" Grid.Column="4"  IsChecked ="{Binding Chk  [16], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk17" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="7" Grid.Column="5"  Content   ="{Binding Ftype[16]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="7" Grid.Column="6"  Content   ="{Binding Flat [16]}"  />
+
+                    <CheckBox                   Grid.Row="8" Grid.Column="4"  IsChecked ="{Binding Chk  [17], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk18" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="8" Grid.Column="5"  Content   ="{Binding Ftype[17]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="8" Grid.Column="6"  Content   ="{Binding Flat [17]}"  />
+
+                    <CheckBox                   Grid.Row="9" Grid.Column="4"  IsChecked ="{Binding Chk  [18], Mode=TwoWay}" HorizontalAlignment="Left"  x:Name="Ckk19" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="9" Grid.Column="5"  Content   ="{Binding Ftype[18]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="9" Grid.Column="6"  Content   ="{Binding Flat [18]}"  />
+
+                    <CheckBox                   Grid.Row="10" Grid.Column="4"  IsChecked ="{Binding Chk  [19], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk20" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="10" Grid.Column="5"  Content   ="{Binding Ftype[19]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="10" Grid.Column="6"  Content   ="{Binding Flat [19]}"  />
+
+                    <CheckBox                   Grid.Row="11" Grid.Column="4"  IsChecked ="{Binding Chk  [20], Mode=TwoWay}" HorizontalAlignment="Left" x:Name="Ckk21" Unchecked="ChkBox_Unchecked" Checked="ChkBox_Checked" />
+                    <Label                      Grid.Row="11" Grid.Column="5"  Content   ="{Binding Ftype[20]}" Margin="2 0 0 0" />
+                    <Label                      Grid.Row="11" Grid.Column="6"  Content   ="{Binding Flat [20]}"  />
+
+                </Grid>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Height="125" VerticalAlignment="Top" >
+
+                <Grid Background="LightGray" Height="120" >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="2" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="129*" />
+                        <ColumnDefinition Width="43*"/>
+                        <ColumnDefinition Width="229*" />
+                        <ColumnDefinition Width="171*" />
+                        <ColumnDefinition Width="229*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border BorderThickness="1,1,1,1"
+                        Height="28"
+                        Grid.RowSpan="2"
+                        VerticalAlignment="Top"
+                        Margin="0 0 50 0"
+                        Padding="0"
+                        Background="Yellow"
+                        BorderBrush="Gray"
+                        CornerRadius="10">
+                        <Label BorderThickness="1"
+                               Height="26"
+                               FontSize="16"
+                               Padding="0"
+                               VerticalAlignment="Top"
+                               Foreground="Blue"
+                               Content=" Material"/>
+                    </Border>
+
+                    <Label Content="Total"                  Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="48,0,5,0" />
+                    <Label Content="Markup"                 Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Margin="125,0,5,0" />
+                    
+                    <Label Content="Flat Charge:"           Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+                    <Label Content="Run Charge:"            Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+                    <Label Content="Plate Material:"        Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+                    <Label Content="Finish Material:"       Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" />
+
+                    <Label Content="Converting Material:"   Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+                    <Label Content="Press Material:"        Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+
+                    <TextBox 
+                        Text="{Binding FlatCharges, StringFormat='C'}" 
+                        Width="80" Height="24" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" 
+                        HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="42,1,0,1" />
+
+                    <telerik:RadNumericUpDown 
+                       Value="{Binding FlatChgPct, UpdateSourceTrigger=PropertyChanged}" 
+                       Width="70" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="100,1,0,1" NumberDecimalDigits="0" 
+                       x:Name="FCPct" ValueChanged="FCPct_ValueChanged" />
+
+                    <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+
+                    <TextBox 
+                        Text="{Binding RunCharges, StringFormat='C'}" 
+                        Width="80" Height="24" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" 
+                        HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="42,1,0,1" />
+
+                    <telerik:RadNumericUpDown 
+                        Value="{Binding RunChgPct, UpdateSourceTrigger=PropertyChanged}" 
+                        NumberDecimalDigits="0"  Width="70" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="100,1,0,1" 
+                        x:Name="RCPct" ValueChanged="RCPct_ValueChanged" />
+
+                    <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="2" Content="%" VerticalAlignment="Center" Margin="175,0,0,0" />
+
+                    <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedPlateCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="42,1,0,1" />
+                    <telerik:RadNumericUpDown Width="70"    Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding PlateChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="PCPct" />
+                    <Label HorizontalAlignment="Left"       Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+
+                    <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFinishCharge, StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="42,1,0,1" />
+                    <telerik:RadNumericUpDown Width="70"    Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="FC2Pct" />
+                    <Label HorizontalAlignment="Left"       Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+
+                    <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedConvCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="171,1,0,1" />
+                    <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="4" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding ConvChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CC2Pct" />
+                    <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+
+                    <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedPressCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" Grid.ColumnSpan="2" Margin="171,1,0,1" />
+                    <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding PressChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="SCPct" />
+                    <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+
+                    <Label   Content="Total flat charges:"  Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Margin="0,0,5,0" />
+                    <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Text="{Binding CalculatedFlatCharges,   StringFormat='C'}" HorizontalContentAlignment="Right" FontWeight="Bold" />
+
+                    <Label   Content="Charge per thousand:" Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Margin="0,0,5,0" />
+                    <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" Text="{Binding CalculatedRunCharges,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  />
+
+                </Grid>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="7" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0 0 10 10" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click"   />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>

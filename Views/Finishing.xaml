@@ -9,6 +9,7 @@
         Title="Finishing"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        Loaded="OnLoad"
         Height="270" Width="800">
 
     <Window.Resources>

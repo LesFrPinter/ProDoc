@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaFoundation;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -45,6 +46,13 @@ namespace ProDocEstimate.Views
             LoadData();
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
+
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
+        }
+
 
         private void LoadMaxima()
         {
