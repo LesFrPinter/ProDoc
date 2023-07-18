@@ -17,15 +17,22 @@
 
     <Window.Resources>
         <Style TargetType="{x:Type RadioButton}">
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="16" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="telerik:RadNumericUpDown">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Minimum" Value="0" />
+            <Setter Property="Maximum" Value="300" />
+            <Setter Property="NumberDecimalDigits" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
     </Window.Resources>
 
     <Viewbox>
 
-        <Grid VerticalAlignment="Top" Height="300" Width="800">
+        <Grid VerticalAlignment="Top" Height="330" Width="800">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
@@ -100,7 +107,7 @@
                     Grid.Row="0" 
                     VerticalAlignment="Top"
                     Grid.RowSpan="2"
-                    BorderThickness="1,1,1,0"
+                    BorderThickness="1,1,1,1"
                     Height="36"
                     Margin="0 0 40 0"
                     Background="Yellow"
@@ -131,28 +138,28 @@
                 <Label Content="Press Material:"        Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" />
 
                 <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFlatCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}"  x:Name="FCPct" ValueChanged="FCPct_ValueChanged" />
-                <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="1" Margin="100,1,0,1" Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}"  x:Name="FCPct" ValueChanged="FCPct_ValueChanged" />
+                <Label   HorizontalAlignment="Left"     Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
 
                 <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding RunChargePct,  UpdateSourceTrigger=PropertyChanged}"  x:Name="RCPct" ValueChanged="RCPct_ValueChanged" />
-                <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="1" Content="%" VerticalAlignment="Center" Margin="175,0,0,0" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="1" Margin="100,1,0,1" Value="{Binding RunChargePct,  UpdateSourceTrigger=PropertyChanged}"  x:Name="RCPct" ValueChanged="RCPct_ValueChanged" />
+                <Label   HorizontalAlignment="Left"     Grid.Row="2" Grid.Column="1" Content="%" VerticalAlignment="Center" Margin="170,0,0,0" />
 
                 <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedPlateCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding PlateChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="PCPct" ValueChanged="PCPct_ValueChanged" />
-                <Label HorizontalAlignment="Left"       Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="3" Grid.Column="1" Margin="100,1,0,1" Value="{Binding PlateChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="PCPct" ValueChanged="PCPct_ValueChanged" />
+                <Label   HorizontalAlignment="Left"     Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
 
                 <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFinishCharge, StringFormat='C'}" HorizontalContentAlignment="Right" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CFPct" ValueChanged="CFPct_ValueChanged" />
-                <Label HorizontalAlignment="Left"       Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="4" Grid.Column="1" Margin="100,1,0,1" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CFPct" ValueChanged="CFPct_ValueChanged" />
+                <Label   HorizontalAlignment="Left"     Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
 
                 <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedConvCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding ConvChargePct,UpdateSourceTrigger=PropertyChanged}"   x:Name="CCPct" ValueChanged="CCPct_ValueChanged" />
-                <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="3" Margin="100,1,0,1" Value="{Binding ConvChargePct,UpdateSourceTrigger=PropertyChanged}"   x:Name="CCPct" ValueChanged="CCPct_ValueChanged" />
+                <Label   HorizontalAlignment="Left"     Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
 
                 <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedPressCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" />
-                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding PressChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="SCPct" ValueChanged="SCPct_ValueChanged"/>
-                <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="175,0,0,0" Content="%" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="3" Margin="100,1,0,1" Value="{Binding PressChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="SCPct" ValueChanged="SCPct_ValueChanged" />
+                <Label   HorizontalAlignment="Left"     Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
 
                 <Label   Content="Total flat charges:"  Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
                 <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Text ="{Binding FlatTotal,             StringFormat='C'}" HorizontalContentAlignment="Right" FontWeight="Bold" />

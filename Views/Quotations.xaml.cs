@@ -154,11 +154,6 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Combo");
             lstAvailable.Items.Add("Security");
 
-            //TODO: Move selected categories to lstSelected
-
-            //TODO: Always load Ink Color on new quotes
-            //lstAvailable.Items.Remove("Ink Color");
-            //lstSelected.Items.Add("Ink Color");
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
@@ -201,6 +196,33 @@ namespace ProDocEstimate
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
             GetQuote();
             btnAssignNewQuoteNum.Visibility = Visibility.Visible;
+
+            //TODO: Since Ink Color is going to look for a Backer as one of the ink colors, pre-load a Backer row in Quote_Detail. Should I default to "Std"?
+            //TODO: Always add an Ink Color row (blank) on new quotes
+            //TODO: Always add a PrePress row in Quote_Details with values of 1 for both 
+
+            AddDefaultDetailLines();
+        }
+
+        private void AddDefaultDetailLines()
+        {
+            string cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
+                       + $" VALUES ( '{QUOTE_NUM}', '1', 'Backer' )";
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            scmd = new SqlCommand(cmd, conn);
+            scmd.ExecuteNonQuery(); conn.Close();
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
+                       + $" VALUES ( '{QUOTE_NUM}', '2', 'Ink Color' )";
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            scmd = new SqlCommand(cmd, conn);
+            scmd.ExecuteNonQuery(); conn.Close();
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY, Param1, Param2, Param3, Value1, Value2, Value3 )"
+                        + $" VALUES ( '{QUOTE_NUM}', '7', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', '1', '0', '1' )";
+            conn.Open();
+            scmd.CommandText = cmd;
+            scmd.ExecuteNonQuery(); conn.Close();
         }
 
         private void GetQuote()
@@ -588,6 +610,7 @@ namespace ProDocEstimate
 
         private void btnLoadGrid_Click(object sender, RoutedEventArgs e)
         {
+            if(ProjectType.Length==0) { MessageBox.Show("Please select a project type"); return; }
             int setNum       = int.Parse(PartsSpinner.Value.ToString());
             string formType  = ProjectType.Substring(0, 1);
             string paperType = PAPERTYPE.Substring(0, 1);
@@ -997,6 +1020,8 @@ namespace ProDocEstimate
             PRESSSIZE = "";
             LINEHOLES = false;
             COLLATORCUT = "";
+
+            AddDefaultDetailLines();        // Is this where this call goes?
         }
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -1201,6 +1226,9 @@ namespace ProDocEstimate
             string check = ((char)0x221A).ToString();
 
             if (Category.Contains(check)) { Category = Category.Substring(0, Category.IndexOf(check)).TrimEnd(); }
+
+            if(Category=="Press Numbering")Category = "PressNum";
+
             // Delete current detail line;
             string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QUOTE_NUM}' AND Category LIKE '{Category}%'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
@@ -1230,13 +1258,12 @@ namespace ProDocEstimate
             //TODO: Isn't this already happening somewhere?
         }
 
-
         private void cmbPressSize_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            if(lstSelected.Items.Count == 0) return;
+            if(lstSelected.Items.Count == 0 || cmbPressSize.SelectedIndex == -1) return;
             if(cmbPressSize.Text == cmbPressSize.SelectedItem.ToString()) return;
             if (MessageBox.Show("This will delete any selected features; continue?", "Not undoable", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
-            {
+            {   //TODO: Find out if this should depend on a response from the user...
                 string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();

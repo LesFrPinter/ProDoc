@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="ProDocEstimate.Views.ChargesBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:local="clr-namespace:ProDocEstimate.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="180" d:DesignWidth="800">
+
+    <UserControl.Resources>
+            <Style TargetType="telerik:RadNumericUpDown">
+                <Setter Property="Height" Value="24" />
+                <Setter Property="Minimum" Value="0" />
+                <Setter Property="Maximum" Value="300" />
+                <Setter Property="NumberDecimalDigits" Value="0" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+    
+        <Grid Grid.Row="2" Background="LightGray" Grid.ColumnSpan="6" Height="180" Grid.RowSpan="3" VerticalAlignment="Top">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <Border 
+                    Grid.Row="0" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Grid.RowSpan="2"
+                    BorderThickness="1,1,1,1"
+                    Height="36" Width="86"
+                    Margin="10 4 0 0"
+                    Background="Yellow"
+                    BorderBrush="Gray"
+                    CornerRadius="10">
+                <Border 
+                        Background="Yellow"
+                        BorderBrush="Gray"
+                        Grid.RowSpan="2"
+                        CornerRadius="10"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left">
+                    <Label 
+                            BorderThickness="1"
+                            FontSize="18" Width="86"
+                            VerticalAlignment="Top"
+                            Foreground="Blue"
+                            Content=" Material"/>
+                </Border>
+            </Border>
+
+            <Label Content="Flat Charge:"           Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+            <Label Content="Run Charge:"            Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+            <Label Content="Plate Material:"        Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+            <Label Content="Finish Material:"       Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+
+            <Label Content="Converting Material:"   Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <Label Content="Press Material:"        Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" />
+
+            <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFlatCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}"  x:Name="FCPct" /> <!--ValueChanged="FCPct_ValueChanged"-->
+            <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
+
+            <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+            <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding RunChargePct,  UpdateSourceTrigger=PropertyChanged}"  x:Name="RCPct" /> <!--ValueChanged="RCPct_ValueChanged"-->
+            <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="1" Content="%" VerticalAlignment="Center" Margin="170,0,0,0" />
+
+            <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedPlateCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" />
+            <telerik:RadNumericUpDown Width="70"    Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding PlateChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="PCPct" /> <!--ValueChanged="PCPct_ValueChanged"-->
+            <Label HorizontalAlignment="Left"       Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
+
+            <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFinishCharge, StringFormat='C'}" HorizontalContentAlignment="Right" />
+            <telerik:RadNumericUpDown Width="70"    Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CFPct" /> <!--ValueChanged="CFPct_ValueChanged"-->
+            <Label HorizontalAlignment="Left"       Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
+
+            <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedConvCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" />
+            <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding ConvChargePct,UpdateSourceTrigger=PropertyChanged}"   x:Name="CCPct" /> <!--ValueChanged="CCPct_ValueChanged"-->
+            <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
+
+            <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedPressCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" />
+            <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="100,1,0,1" Value="{Binding PressChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="SCPct" /> <!--ValueChanged="SCPct_ValueChanged"-->
+            <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="170,0,0,0" Content="%" />
+
+            <Label   Content="Total flat charges:"  Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
+            <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Text ="{Binding FlatTotal,             StringFormat='C'}" HorizontalContentAlignment="Right" FontWeight="Bold" />
+
+            <Label   Content="Charge per thousand:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
+            <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  />
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

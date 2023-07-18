@@ -28,7 +28,7 @@ namespace ProDocEstimate.Views
         private string pressSize; public string PressSize { get { return pressSize; } set { pressSize   = value; OnPropertyChanged(); } }
         private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum    = value; OnPropertyChanged(); } }
 
-        private int oe;           public int OE           { get { return oe;        } set { oe          = value; OnPropertyChanged(); } }
+        private int orderEntry;   public int OrderEntry   { get { return orderEntry;} set { orderEntry  = value; OnPropertyChanged(); } }
         private int plateChg;     public int PlateChg     { get { return plateChg;  } set { plateChg    = value; OnPropertyChanged(); } }
         private int prePress;     public int PREPress     { get { return prePress;  } set { prePress    = value; OnPropertyChanged(); } }
 
@@ -72,9 +72,9 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
             DataView dv = new DataView(dt);
-            OE       = int.Parse(dv[0]["Value1"].ToString());
-            PlateChg = int.Parse(dv[0]["Value2"].ToString());
-            PREPress = int.Parse(dv[0]["Value3"].ToString());
+            OrderEntry  = int.Parse(dv[0]["Value1"].ToString());
+            PlateChg    = int.Parse(dv[0]["Value2"].ToString());
+            PREPress    = int.Parse(dv[0]["Value3"].ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -92,12 +92,12 @@ namespace ProDocEstimate.Views
 
             // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + " Quote_Num, Category, Sequence,"
+                + " Quote_Num, Sequence, Category, "
                 + " Param1, Param2, Param3, "
                 + " Value1, Value2, Value3 ) VALUES ( "
                 + $"'{QuoteNum}', 'PrePress', 7, "
                 + "   'OE',  'PLATE CHG',  'PREPRESS', "
-                + $" '{OE}', '{PlateChg}', '{PREPress}' )";
+                + $" '{OrderEntry}', '{PlateChg}', '{PREPress}' )";
 
             // Write to SQL
             //  conn = new SqlConnection(ConnectionString);
