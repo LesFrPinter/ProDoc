@@ -114,7 +114,7 @@ namespace ProDocEstimate.Views
 
         private void LoadMaximum()
         {
-            // Retrieve maximum number of values
+            // Retrieve maximum number of values that can be entered in the M1 spinner
             string str = $"SELECT F_TYPE, MAX(Number) AS Max FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'COMBO' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
             SqlConnection  conn = new(ConnectionString);
             SqlDataAdapter da   = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
@@ -176,8 +176,6 @@ namespace ProDocEstimate.Views
 
         private void CalcTotal()
         {
-//            if (Total == -1.00F) { Total = 0.00F; return; } // The first time that it's called is spurious
-
             CalculatedFlatCharge   = Combo1 * (BaseFlatCharge   * (1 + FlatChargePct   / 100));
             CalculatedRunCharge    = Combo1 * (BaseRunCharge    * (1 + RunChargePct    / 100));
             CalculatedPlateCharge  = Combo1 * (BasePlateCharge  * (1 + PlateChargePct  / 100));
