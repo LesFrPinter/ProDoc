@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -239,12 +240,10 @@ namespace ProDocEstimate
             else
             {
                 DataTable dt = ds.Tables[0]; DataRow dr = dt.Rows[0];
-//                DataRow dr3 = dt.Rows[0];
                 CUST_NUMB = dt.Rows[0]["CUST_NUM"].ToString();
 
-                // These columns need to be added:
-
                 ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();
+                // These columns need to be added:
                 //FSINT1 = dt.Rows[0]["FSINT1"].ToString();  // dr3[6];
                 //FSFRAC1 = dt.Rows[0]["FSFRAC1"].ToString();  // dr3[7];
                 //FSINT2 = dt.Rows[0]["FSINT2"].ToString();  // dr3[8];
@@ -734,8 +733,6 @@ namespace ProDocEstimate
                     lblBasis.Content = temp.Substring(0, ends);
                 }
 
-//            if (dataRow[7].ToString().TrimEnd() == "BND") { dataRow[7] = "BOND"; }      // Added 05/31/23 to ensure that we can change paper type
-
             lblPaperType.Content = dataRow[7].ToString().TrimEnd();
 
             // RollWidth (size) is just to the right of "COLOR" in Description (dataRow[7])
@@ -823,10 +820,10 @@ namespace ProDocEstimate
             if (dt5.Rows.Count == 0) { MessageBox.Show("Paper not found in MasterInventory"); return; }
 
 
-            if (lblItemType.Content.ToString().Length > 0 && txtItemType.Text.ToString().TrimEnd().Length > 0 && lblItemType.Content != txtItemType.Text ) 
-            { 
-                // Not used
-            }
+            //if (lblItemType.Content.ToString().Length > 0 && txtItemType.Text.ToString().TrimEnd().Length > 0 && lblItemType.Content != txtItemType.Text ) 
+            //{ 
+            //    // Not used
+            //}
 
             if (lblPaperType.Content.ToString().Length > 0 && txtPaperType.Text.ToString().TrimEnd().Length > 0)
             {
@@ -1031,10 +1028,6 @@ namespace ProDocEstimate
             string check = ((char)0x221A).ToString();
             if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
             
-//            if (x =="Press Num") { x = "Press"; }
-
-            //TODO: Something funny is happening with long category names; 
-
             switch (x)
             {
                 case "Backer":
@@ -1174,13 +1167,11 @@ namespace ProDocEstimate
 
                 string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
 
-                //if(lstSelected.Items[i].ToString().IndexOf(" ")>0)
-                // { lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, lstSelected.Items[i].ToString().IndexOf(" ")) + (" ").PadRight(20); }
-                //else
-                // { lstSelected.Items[i] = lstSelected.Items[i].ToString()+ (" ").PadRight(20); }
-                
-                lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
-                lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
+                if(i < lstSelected.Items.Count)
+                 {  lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
+                   lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
+                 }
+
             }
 
             conn.Close();
@@ -1229,7 +1220,6 @@ namespace ProDocEstimate
 
             if(Category=="Press Numbering")Category = "PressNum";
 
-            // Delete current detail line;
             string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QUOTE_NUM}' AND Category LIKE '{Category}%'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
             try { scmd.ExecuteNonQuery(); }
@@ -1237,19 +1227,13 @@ namespace ProDocEstimate
             finally { conn.Close(); }
 
             RemoveSelectedFeature();
-
-            // Reload unselected features in the original order
             LoadAvailableCategories();
-
-            // Determine which ones have already been selected
             LoadDetails();
         }
 
         private void RemoveSelectedFeature()
         {
             string? x = lstSelected.SelectedItem.ToString();
-//            x = x.Substring(0, x.IndexOf(" "));
-//            lstAvailable.Items.Add(x); // No, reload the list, skipping categories already in lstSelected.Items
             lstSelected.Items.Remove(x);
         }
 
