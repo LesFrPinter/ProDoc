@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Title="Perfing" Height="260" Width="800">
+        Title="Perfing" Height="329" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -32,14 +32,14 @@
 
     <Viewbox>
 
-        <Grid Width="800" Height="240" VerticalAlignment="Top">
+        <Grid Width="774" Height="294" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="*"  />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="176" />
+                <RowDefinition Height="59" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -51,25 +51,108 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <Label FontSize="22" Foreground="Red" Content="Perfing" Width="100" Grid.ColumnSpan="8" HorizontalAlignment="Center" Padding="2 0" Margin="0" >
+            <Label FontSize="22" Foreground="Red" Content="Perfing" Width="76" Grid.ColumnSpan="2" Padding="2 0" Grid.Column="2" Height="29" Margin="0,11,0,0" VerticalAlignment="Top" >
                 <Label.BitmapEffect>
                     <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
                 </Label.BitmapEffect>
             </Label>
 
-            <Label Grid.Row="1" Grid.Column="1" Content="Part Cross" />
-            <Label Grid.Row="1" Grid.Column="2" Content="Cross" />
-            <Label Grid.Row="1" Grid.Column="3" Content="Part Run" />
-            <Label Grid.Row="1" Grid.Column="4" Content="Running" />
+            <Label Grid.Row="1" Grid.Column="1" Content="Part Cross" Height="16" VerticalAlignment="Top" Width="56" />
+            <Label Grid.Row="1" Grid.Column="2" Content="Cross"      Height="16" VerticalAlignment="Top" Width="32" />
+            <Label Grid.Row="1" Grid.Column="3" Content="Part Run"   Height="16" VerticalAlignment="Top" Width="48" />
+            <Label Grid.Row="1" Grid.Column="4" Content="Running"    Height="16" VerticalAlignment="Top" Width="48" />
 
-            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding PartCross}" x:Name="PC1" />
-            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding Cross}"     x:Name="C1"  />
-            <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PartRun}"   x:Name="PR1"/>
-            <telerik:RadNumericUpDown Grid.Column="4" Width="60" Value="{Binding Running}"   x:Name="R1" />
+            <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding PartCross}" x:Name="PC1" Grid.Row="2" ValueChanged="ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding Cross}"     x:Name="C1"  Grid.Row="2" ValueChanged="ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PartRun}"   x:Name="PR1" Grid.Row="2" ValueChanged="ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Column="4" Width="60" Value="{Binding Running}"   x:Name="R1"  Grid.Row="2" ValueChanged="ValueChanged" />
 
-            <local:DetailFeatures Height="120" Width="800" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="6" Grid.RowSpan="3" />
+            <Grid Grid.Row="3" Background="LightGray" Grid.ColumnSpan="6" Margin="0,17,0,17" >
 
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="200" />
+                </Grid.ColumnDefinitions>
+
+                <Border 
+                    Grid.Row="0" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    BorderThickness="1,1,1,1"
+                    Height="30" Width="90"
+                    Margin="3 3 0 0"
+                    Padding="0" Grid.RowSpan="2"
+                    Background="Yellow"
+                    BorderBrush="Gray"
+                    CornerRadius="10">
+                    <Border 
+                        Background="Yellow"
+                        BorderBrush="Gray"
+                        Grid.RowSpan="2"
+                        CornerRadius="10"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left">
+                        <Label 
+                            BorderThickness="1"
+                            FontSize="18" Width="82" Height="27"
+                            VerticalAlignment="Top"
+                            Foreground="Blue" Padding="0"
+                            Content="Material"/>
+                    </Border>
+                </Border>
+
+                <Label Content="Flat Charge:"           Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+                <Label Content="Run Charge:"            Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+                <Label Content="Plate Material:"        Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+                <Label Content="Finish Material:"       Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" />
+
+                <Label Content="Converting Material:"   Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                <Label Content="Press Material:"        Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" />
+
+                <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding CalculatedFlatCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,30,0" Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}"  x:Name="FCPct" ValueChanged="PctChanged" />
+                <Label HorizontalAlignment="Right"      Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,9,0" Content="%" />
+
+                <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,30,0" Value="{Binding RunChargePct,  UpdateSourceTrigger=PropertyChanged}"  x:Name="RCPct" ValueChanged="PctChanged" />
+                <Label HorizontalAlignment="Right"      Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,9,0" Content="%" />
+
+                <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding CalculatedPlateCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,30,0" Value="{Binding PlateChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="PCPct" ValueChanged="PctChanged" />
+                <Label HorizontalAlignment="Right"      Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,9,0" Content="%" />
+
+                <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Text="{Binding CalculatedFinishCharge, StringFormat='C'}" HorizontalContentAlignment="Right" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,30,0" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CFPct" ValueChanged="PctChanged" />
+                <Label HorizontalAlignment="Right"      Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,9,0" Content="%" />
+
+                <TextBox Width="80" Height="24"         Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left"  Text="{Binding CalculatedConvCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,30,0"  Value="{Binding ConvChargePct,UpdateSourceTrigger=PropertyChanged}"   x:Name="CCPct" ValueChanged="PctChanged" />
+                <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="3" VerticalAlignment="Center"  Margin="175,0,0,0" Content="%" />
+
+                <TextBox Width="80" Height="24"         Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left"  Text="{Binding CalculatedPressCharge,  StringFormat='C'}" HorizontalContentAlignment="Right" />
+                <telerik:RadNumericUpDown Width="70"    Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,30,0"   Value="{Binding PressChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="SCPct" ValueChanged="PctChanged" />
+                <Label HorizontalAlignment="Left"       Grid.Row="2" Grid.Column="3" VerticalAlignment="Center"  Margin="175,0,0,0" Content="%" />
+
+                <Label   Content="Total flat charges:"  Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
+                <TextBox Width="80" Height="24"         Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Text ="{Binding FlatTotal,             StringFormat='C'}" HorizontalContentAlignment="Right" FontWeight="Bold" />
+
+                <Label   Content="Charge per thousand:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
+                <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  />
+
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" VerticalAlignment="Top" HorizontalAlignment="Center" Height="26" Width="98" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click"   />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
