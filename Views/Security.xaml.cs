@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -29,52 +30,64 @@ namespace ProDocEstimate.Views
         public SqlCommand? scmd;
 
         private string fieldList; public string FieldList { get { return fieldList; } set { fieldList = value; OnPropertyChanged(); } }
-
-        private int num_F_Types = 21; public int Num_F_Types { get { return num_F_Types = 21; } set { num_F_Types = value; OnPropertyChanged(); } }
-
-        private string   quoteNum;  public string   QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
-        private string   pressSize; public string   PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
-
-        private bool[]   chk;    public bool[]   Chk    { get { return chk;     } set { chk     = value; OnPropertyChanged(); } }
-        private string[] ftype;  public string[] Ftype  { get { return ftype;   } set { ftype   = value; OnPropertyChanged(); } }
-        private string[] flat;   public string[] Flat   { get { return flat;    } set { flat    = value; OnPropertyChanged(); } }
-        private string[] run;    public string[] Run    { get { return run;     } set { run     = value; OnPropertyChanged(); } }
-
+        private int num_F_Types = 21; public int Num_F_Types { get { return num_F_Types; } set { num_F_Types = value; OnPropertyChanged(); } }
         private bool startup = true; public bool Startup { get { return startup; } set { startup = value; OnPropertyChanged(); } }
+        private string checker; public string Checker { get { return checker; } set { checker = value; OnPropertyChanged(); } }
+        private string quoteNum; public string QuoteNum { get { return quoteNum; } set { quoteNum = value; OnPropertyChanged(); } }
+        private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
+        private float flatTotal; public float FlatTotal { get { return flatTotal; } set { flatTotal = value; OnPropertyChanged(); } }
 
-        //private bool chk01; public bool Chk01 { get { return chk01; } set { chk01 = value; OnPropertyChanged(); } }
-        //private bool chk02; public bool Chk02 { get { return chk02; } set { chk02 = value; OnPropertyChanged(); } }
-        //private bool chk03; public bool Chk03 { get { return chk03; } set { chk03 = value; OnPropertyChanged(); } }
-        //private bool chk04; public bool Chk04 { get { return chk04; } set { chk04 = value; OnPropertyChanged(); } }
-        //private bool chk05; public bool Chk05 { get { return chk05; } set { chk05 = value; OnPropertyChanged(); } }
-        //private bool chk06; public bool Chk06 { get { return chk06; } set { chk06 = value; OnPropertyChanged(); } }
-        //private bool chk07; public bool Chk07 { get { return chk07; } set { chk07 = value; OnPropertyChanged(); } }
-        //private bool chk08; public bool Chk08 { get { return chk08; } set { chk08 = value; OnPropertyChanged(); } }
-        //private bool chk09; public bool Chk09 { get { return chk09; } set { chk09 = value; OnPropertyChanged(); } }
-        //private bool chk10; public bool Chk10 { get { return chk10; } set { chk10 = value; OnPropertyChanged(); } }
-        //private bool chk11; public bool Chk11 { get { return chk11; } set { chk11 = value; OnPropertyChanged(); } }
-        //private bool chk12; public bool Chk12 { get { return chk12; } set { chk12 = value; OnPropertyChanged(); } }
-        //private bool chk13; public bool Chk13 { get { return chk13; } set { chk13 = value; OnPropertyChanged(); } }
-        //private bool chk14; public bool Chk14 { get { return chk14; } set { chk14 = value; OnPropertyChanged(); } }
-        //private bool chk15; public bool Chk15 { get { return chk15; } set { chk15 = value; OnPropertyChanged(); } }
-        //private bool chk16; public bool Chk16 { get { return chk16; } set { chk16 = value; OnPropertyChanged(); } }
-        //private bool chk17; public bool Chk17 { get { return chk17; } set { chk17 = value; OnPropertyChanged(); } }
-        //private bool chk18; public bool Chk18 { get { return chk18; } set { chk18 = value; OnPropertyChanged(); } }
-        //private bool chk19; public bool Chk19 { get { return chk19; } set { chk19 = value; OnPropertyChanged(); } }
-        //private bool chk20; public bool Chk20 { get { return chk20; } set { chk20 = value; OnPropertyChanged(); } }
-        //private bool chk21; public bool Chk21 { get { return chk21; } set { chk21 = value; OnPropertyChanged(); } }
+        private bool[] chk; public bool[] Chk { get { return chk; } set { chk = value; OnPropertyChanged(); } }
+        private string[] ftype; public string[] Ftype { get { return ftype; } set { ftype = value; OnPropertyChanged(); } }
+        private string[] flat; public string[] Flat { get { return flat; } set { flat = value; OnPropertyChanged(); } }
+        private string[] run; public string[] Run { get { return run; } set { run = value; OnPropertyChanged(); } }
 
-        private float flatCharges;           public float FlatCharges           { get { return flatCharges;             } set { flatCharges             = value; OnPropertyChanged(); } }
-        private float runCharges;            public float RunCharges            { get { return runCharges;              } set { runCharges              = value; OnPropertyChanged(); } }
-        private float flatChgPct;            public float FlatChgPct            { get { return flatChgPct;              } set { flatChgPct              = value; OnPropertyChanged(); } }
-        private float runChgPct;             public float RunChgPct             { get { return runChgPct;               } set { runChgPct               = value; OnPropertyChanged(); } }
+        private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
+        private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
+        private float flatChargePct; public float FlatChargePct { get { return flatChargePct; } set { flatChargePct = value; OnPropertyChanged(); } }
+        private float calculatedflatCharge; public float CalculatedFlatCharge { get { return calculatedflatCharge; } set { calculatedflatCharge = value; OnPropertyChanged(); } }
 
-        private float calculatedflatCharges; public float CalculatedFlatCharges { get { return calculatedflatCharges;   } set { calculatedflatCharges   = value; OnPropertyChanged(); } }
-        private float calculatedrunCharges;  public float CalculatedRunCharges  { get { return calculatedrunCharges;    } set { calculatedrunCharges    = value; OnPropertyChanged(); } }
-        private float flatTotal;             public float FlatTotal             { get { return flatTotal;               } set { flatTotal               = value; OnPropertyChanged(); } }
-        private float runTotal;              public float RunTotal              { get { return runTotal;                } set { runTotal                = value; OnPropertyChanged(); } }
+        private float runCharge; public float RunCharge { get { return runCharge; } set { runCharge = value; OnPropertyChanged(); } }
+        private float baserunCharge; public float BaseRunCharge { get { return baserunCharge; } set { baserunCharge = value; OnPropertyChanged(); } }
+        private float runChargePct; public float RunChargePct { get { return runChargePct; } set { runChargePct = value; OnPropertyChanged(); } }
+        private float calculatedrunCharge; public float CalculatedRunCharge { get { return calculatedrunCharge; } set { calculatedrunCharge = value; OnPropertyChanged(); } }
+
+        private float plateCharge; public float PlateCharge { get { return plateCharge; } set { plateCharge = value; OnPropertyChanged(); } }
+        private float baseplateCharge; public float BasePlateCharge { get { return baseplateCharge; } set { baseplateCharge = value; OnPropertyChanged(); } }
+        private float plateChargePct; public float PlateChargePct { get { return plateChargePct; } set { plateChargePct = value; OnPropertyChanged(); } }
+        private float calculatedplateCharge; public float CalculatedPlateCharge { get { return calculatedplateCharge; } set { calculatedplateCharge = value; OnPropertyChanged(); } }
+
+        private float finishCharge; public float FinishCharge { get { return finishCharge; } set { finishCharge = value; OnPropertyChanged(); } }
+        private float basefinishCharge; public float BaseFinishCharge { get { return basefinishCharge; } set { basefinishCharge = value; OnPropertyChanged(); } }
+        private float finishChargePct; public float FinishChargePct { get { return finishChargePct; } set { finishChargePct = value; OnPropertyChanged(); } }
+        private float calculatedfinishCharge; public float CalculatedFinishCharge { get { return calculatedfinishCharge; } set { calculatedfinishCharge = value; OnPropertyChanged(); } }
+
+        private float pressCharge; public float PressCharge { get { return pressCharge; } set { pressCharge = value; OnPropertyChanged(); } }
+        private float basepressCharge; public float BasePressCharge { get { return basepressCharge; } set { basepressCharge = value; OnPropertyChanged(); } }
+        private float pressChargePct; public float PressChargePct { get { return pressChargePct; } set { pressChargePct = value; OnPropertyChanged(); } }
+        private float calculatedpressCharge; public float CalculatedPressCharge { get { return calculatedpressCharge; } set { calculatedpressCharge = value; OnPropertyChanged(); } }
+
+        private float convCharge; public float ConvCharge { get { return convCharge; } set { convCharge = value; OnPropertyChanged(); } }
+        private float baseconvCharge; public float BaseConvCharge { get { return baseconvCharge; } set { baseconvCharge = value; OnPropertyChanged(); } }
+        private float convChargePct; public float ConvChargePct { get { return convChargePct; } set { convChargePct = value; OnPropertyChanged(); } }
+        private float calculatedconvCharge; public float CalculatedConvCharge { get { return calculatedconvCharge; } set { calculatedconvCharge = value; OnPropertyChanged(); } }
 
         #endregion
+
+        // Test data added to FEATURES table:
+        //UPDATE FEATURES
+        //   SET PLATE_MATL = '10.00',
+        //       FINISH_MATL = '20.00',
+        //       PRESS_MATL = '30.00',
+        //       CONV_MATL = '40.00'
+        // WHERE CATEGORY = 'SECURITY'
+        //   AND PRESS_SIZE = '11'
+
+        //UPDATE FEATURES
+        //   SET RUN_CHARGE = '25.00'
+        // WHERE CATEGORY = 'SECURITY'
+        //   AND PRESS_SIZE = '11'
+        //   AND F_TYPE = 'NaNOcopy Void'
 
         public Security(string PRESSSIZE, string QUOTENUM)
         {
@@ -83,33 +96,35 @@ namespace ProDocEstimate.Views
             this.DataContext = this;
 
             Title = QUOTENUM;
-            QuoteNum  = QUOTENUM.ToString();
+            QuoteNum = QUOTENUM.ToString();
             PressSize = PRESSSIZE.ToString();
 
-            Chk     = new bool  [Num_F_Types];
-            Ftype   = new string[Num_F_Types];
-            Flat    = new string[Num_F_Types];
-            Run     = new string[Num_F_Types];
+            Chk = new bool[Num_F_Types];
+            Ftype = new string[Num_F_Types];
+            Flat = new string[Num_F_Types];
+            Run = new string[Num_F_Types];
 
-            for ( int j=0; j<Num_F_Types; j++ )       // Initialize all of the arrays.
-            {   Chk[j]    = false;
-                Ftype[j]  = ""; 
-                Flat[j]   = "";
-                Run[j]    = "";
+            for (int j = 0; j < Num_F_Types; j++)       // Initialize all of the arrays.
+            {
+                Chk[j] = false;
+                Ftype[j] = "";
+                Flat[j] = "";
+                Run[j] = "";
             }
 
             FieldList = "F_TYPE, FLAT_CHARGE, RUN_CHARGE, PLATE_MATL, FINISH_MATL, CONV_MATL, PRESS_MATL";
 
             LoadFtypes();
             LoadData();
+            GetCharges();
 
             Startup = false;
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };  // Esc to close window
         }
 
-        public void OnLoad(object sender, RoutedEventArgs e) 
-        { 
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
             Startup = false;
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
@@ -119,14 +134,15 @@ namespace ProDocEstimate.Views
         {
             string cmd = $"SELECT {FieldList} FROM [Estimating].[dbo].[Features] WHERE CATEGORY = 'SECURITY' AND PRESS_SIZE = '{PressSize}'";
             conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn); 
+            da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable("Security"); da.Fill(dt);
             DataView dv = dt.AsDataView();
             int start = 0;
             for (int i = start; i < start + 20; i++)
-            {   Ftype[i] = dv[i]["F_TYPE"].ToString();
-                Flat[i]  = dv[i]["FLAT_CHARGE"].ToString();
-                Run[i]   = dv[i]["RUN_CHARGE"].ToString();
+            {
+                Ftype[i] = dv[i]["F_TYPE"].ToString();
+                Flat[i] = dv[i]["FLAT_CHARGE"].ToString();
+                Run[i] = dv[i]["RUN_CHARGE"].ToString();
             }
         }
 
@@ -136,105 +152,140 @@ namespace ProDocEstimate.Views
             conn = new SqlConnection(ConnectionString); da = new SqlDataAdapter(cmd, conn);
             DataTable dt2 = new DataTable(); da.Fill(dt2); dv = dt2.DefaultView;
 
-            if(dt2.Rows.Count==0) 
-            {   FlatChgPct  = 0.00F;
-                RunChgPct   = 0.00F;
-                FlatCharges = 0.0F;
-                RunCharges  = 0.00F;
-                CalculatedFlatCharges = 0.00F;
-                CalculatedRunCharges  = 0.00F;
-                return; 
-            }
+            if (dt2.Rows.Count == 0) return;
 
-            //CalculatedFlatCharges = 0.0F;
-            //CalculatedRunCharges = 0.0F;
+            // Note that the string indicating which f_types were checked should be 21 characters long
+            Checker = dv[0]["Value9"].ToString();
+            for (int i = 0; i < Checker.Length; i++)
+            { string v = Checker.Substring(i, 1); Chk[i] = (v == "1") ? true : false; }
 
-            FlatChgPct = 0; if (dv[0]["FlatChargePct"].ToString().Length > 0) { FlatChgPct = float.Parse(dv[0]["FlatChargePct"].ToString()); }
-            RunChgPct  = 0; if (dv[0]["RunChargePct"].ToString().Length > 0)  { RunChgPct  = float.Parse(dv[0]["RunChargePct"].ToString()); }
+            BaseFlatCharge      = float.Parse(dv[0]["FlatCharge"].ToString());
+            FlatTotal           = float.Parse(dv[0]["TotalFlatChg"].ToString());
+            CalculatedRunCharge = float.Parse(dv[0]["PerThousandChg"].ToString());
+            FlatChargePct       = float.Parse(dv[0]["FlatChargePct"].ToString());
+            RunChargePct        = float.Parse(dv[0]["RunChargePct"].ToString());
+            FinishChargePct     = float.Parse(dv[0]["FinishChargePct"].ToString());
+            PressChargePct      = float.Parse(dv[0]["FinishChargePct"].ToString());
+            ConvChargePct       = float.Parse(dv[0]["ConvertChargePct"].ToString());
 
-            FlatCharges = 0.0F;
-            RunCharges = 0.00F;
-            for (int i = 0; i < dv[0]["Value9"].ToString().Length; i++)
-            {   string v = dv[0]["Value9"].ToString().Substring(i,1); 
-                chk[i] = (v=="1") ? true: false;
-                if (chk[i] == true) 
-                { FlatCharges += float.Parse(Flat[i].ToString());  
-                  RunCharges  += float.Parse(Run[i].ToString()); 
-                }
-            }
-
-            CalculatedFlatCharges = FlatCharges * ( 1.00F + (FlatChgPct / 100.00F) );
-            CalculatedRunCharges  = RunCharges  * ( 1.00F + (RunChgPct  / 100.00F) );
+            GetCharges();
         }
 
-        private void TextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        { 
-            // This is only for testing; reassigning Ext[i] to Ext{i} fixes the data display problem.
+        private void GetCharges()
+        {
+            //if(Startup) return;
+
+            //NOTE: This could be simplified by generating the SELECT statement to only refer to checked F_TYPEs...
+            string[] c = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+            for (int i = 0; i <= 20; i++) { c[i] = Chk[i] ? "1=1" : "1=0"; }
+            string cmd = "SELECT F_TYPE, NUMBER, FLAT_CHARGE, RUN_CHARGE, PLATE_MATL, FINISH_MATL, PRESS_MATL, CONV_MATL"
+                        + $"  FROM [ESTIMATING].[dbo].[FEATURES]"
+                        + $" WHERE CATEGORY = 'SECURITY' AND PRESS_SIZE = '{PressSize}'"
+                        + $"   AND ((F_TYPE = 'Alter  Safe Continuous'    AND {c[0]} )"  // If "  Safe" is changed to " Safe" in the table, change this
+                        + $"    OR  (F_TYPE = 'Alter  Safe Cut Sheet'     AND {c[1]} )"
+                        + $"    OR  (F_TYPE = 'Embossing Continuous'      AND {c[2]} )"
+                        + $"    OR  (F_TYPE = 'Embossing Cut Sheet'       AND {c[3]} )"
+                        + $"    OR  (F_TYPE = 'Flat Foil Continuous'      AND {c[4]} )"
+                        + $"    OR  (F_TYPE = 'Flat Foil Cut Sheet'       AND {c[5]} )"
+                        + $"    OR  (F_TYPE = 'Metallic Safe Continuous'  AND {c[6]} )"
+                        + $"    OR  (F_TYPE = 'Metallic Safe Cut Sheet'   AND {c[7]} )"
+                        + $"    OR  (F_TYPE = 'Metallic Safe Snap'        AND {c[8]} )"
+                        + $"    OR  (F_TYPE = 'Rainbow Foil Continuous'   AND {c[9]} )"
+                        + $"    OR  (F_TYPE = 'Rainbow Foil Cut Sheet'    AND {c[10]} )"
+                        + $"    OR  (F_TYPE = 'Refracto Safe Continuous'  AND {c[11]} )"
+                        + $"    OR  (F_TYPE = 'Refracto Safe Cut Sheet'   AND {c[12]} )"
+                        + $"    OR  (F_TYPE = 'Tamper Safe Continuous'    AND {c[13]} )"
+                        + $"    OR  (F_TYPE = 'Tamper Safe Cut Sheets'    AND {c[14]} )"
+                        + $"    OR  (F_TYPE = 'THERMO Safe &Hide'         AND {c[15]} )"
+                        + $"    OR  (F_TYPE = 'THERMOHIDE'                AND {c[16]} )"
+                        + $"    OR  (F_TYPE = 'THERMOSAFE'                AND {c[17]} )"
+                        + $"    OR  (F_TYPE = 'TOUCHSAFE'                 AND {c[18]} )"
+                        + $"    OR  (F_TYPE = 'NaNOcopy Void'             AND {c[19]} )"
+                        + $"    OR  (F_TYPE = 'ISP - ThermoCombo'         AND {c[20]} ))"
+                       + " ORDER BY F_TYPE, NUMBER";
+
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
+            DataView dv = dt.DefaultView;
+            // This DataView contains rows from the FEATURES table whose F_TYPEs are checked 
+
+            BaseFlatCharge = 0;
+            BaseRunCharge = 0;
+            BaseFinishCharge = 0;
+            BaseConvCharge = 0;
+            BasePlateCharge = 0;
+            BasePressCharge = 0;
+            FlatTotal = 0;
+
+            for (int i = 0; i < dv.Count; i++)
+            {
+                float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge   += t1; FlatTotal += t1;
+                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),  out t2); BaseRunCharge    += t2;
+                float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3; FlatTotal += t3;
+                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"].ToString(),   out t4); BaseConvCharge   += t4; FlatTotal += t4;
+                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"].ToString(),  out t5); BasePlateCharge  += t5; FlatTotal += t5;
+                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"].ToString(),  out t6); BasePressCharge  += t6; FlatTotal += t6;
+            }
+
+            CalcTotal();
+        }
+
+        private void CalcTotal()
+        {
+            //if (Startup) return;
+
+            CalculatedFlatCharge = BaseFlatCharge * (1 + FlatChargePct / 100);
+
+            CalculatedRunCharge = BaseRunCharge * (1 + RunChargePct / 100);
+
+            CalculatedPlateCharge = BasePlateCharge * (1 + PlateChargePct / 100);
+            CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100);
+            CalculatedPressCharge = BasePressCharge * (1 + PressChargePct / 100);
+            CalculatedConvCharge = BaseConvCharge * (1 + ConvChargePct / 100);
+
+            FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
+        }
+
+        private void ChkBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //if (Startup) return; 
+            GetCharges(); 
+        }
+
+        private void ChkBox_Checked(object sender, RoutedEventArgs e)
+        {
+            //if (Startup) return;
+            GetCharges(); 
+        }
+
+        private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            //if (Startup) return;
+            CalcTotal(); 
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
-        { 
-            string Checked = ""; for(int i = 0; i < 21;  i++)  { Checked  += (Chk[i] ? "1" : "0"); }
+        {
+            string sChecked = ""; for (int i = 0; i < 21; i++) { sChecked += (Chk[i] ? "1" : "0"); }
             string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Security'";
             conn = new SqlConnection(ConnectionString); conn.Open();
             scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
 
-            string sFlatCharges = CalculatedFlatCharges.ToString();
-            string sRunCharges  = CalculatedRunCharges.ToString();
+            Checker = ""; for(int i = 0;i <= Num_F_Types-1; i++) { Checker += (Chk[i] ? "1" : "0"); }
 
-            scmd.CommandText = $"INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( QUOTE_NUM, SEQUENCE, CATEGORY, VALUE9, FlatChargePct, RunChargePct, TotalFlatChg, PerThousandChg ) VALUES ( '{QuoteNum}', 10, 'Security', '{Checked}', {FlatChgPct}, '{RunChgPct}', '{sFlatCharges}', '{sRunCharges}' )";
-            if(conn.State != ConnectionState.Open) conn.Open();
+            scmd.CommandText
+                = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( QUOTE_NUM, SEQUENCE, CATEGORY, VALUE9,"
+                + "    FlatCharge,     TotalFlatChg,  PerThousandChg,          FlatChargePct,     RunChargePct,     FinishChargePct,     PressChargePct, ConvertChargePct ) "
+                + $" VALUES ( '{QuoteNum}', 10, 'Security', '{Checker}',"
+                + $" '{FlatCharge}', '{FlatTotal}', '{CalculatedRunCharge}', '{FlatChargePct}', '{RunChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}' )";
+            if (conn.State != ConnectionState.Open) conn.Open();
             scmd.ExecuteNonQuery();
             conn.Close();
-            this.Close(); 
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Close(); }
 
-        private void ChkBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!Startup)
-            { SumCharges(); }
-        }
-
-        private void ChkBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!Startup)
-            { SumCharges(); }
-        }
-
-        private void SumCharges()
-        {
-            FlatCharges = 0.00F; 
-            RunCharges  = 0.00F;
-
-            for(int i=0; i< Num_F_Types-1;  i++)
-              { if (Chk[i] == true) 
-                {  FlatCharges += float.Parse(Flat[i].ToString()); 
-                   RunCharges  += float.Parse(Run[i].ToString()); 
-                }
-              }
-
-            float percent = 0.00F;
-            if (FCPct.Value == null) { percent = 0.00F; } else { percent = float.Parse(FCPct.Value.ToString()) / 100.00F; }
-            CalculatedFlatCharges = FlatCharges * (1.00F + percent);
-
-            percent = 0.00F;
-            if (RCPct.Value == null) { percent = 0.00F; } else { percent = float.Parse(RCPct.Value.ToString()) / 100.00F; }
-            CalculatedRunCharges = RunCharges * (1.00F + percent);
-        }
-
-        private void FCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {
-            float percent = float.Parse(FCPct.Value.ToString()) / 100.00F;
-            CalculatedFlatCharges = FlatCharges * (1.00F + percent);
-        }
-
-        private void RCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {
-            float percent = float.Parse(RCPct.Value.ToString()) / 100.00F;
-            CalculatedRunCharges = RunCharges * (1.00F + percent);
-        }
     }
 }

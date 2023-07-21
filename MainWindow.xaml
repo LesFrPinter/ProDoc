@@ -71,6 +71,20 @@
             </Label.RenderTransform>
         </Label>-->
 
+        <TextBox 
+            Grid.Row="1"
+            Text="NOTE: I have changed some of the values stored in the FEATURES table so that the software could be more easily tested. I can easily remove them if needed." 
+            TextWrapping="Wrap" 
+            Height="110" Padding="5" 
+            Width="380" 
+            FontSize="16"
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center" >
+            <TextBox.Effect>
+                <DropShadowEffect Direction="360" ShadowDepth="15" BlurRadius="15" />
+            </TextBox.Effect>
+        </TextBox>
+
     </Grid>
 
 </Window>
