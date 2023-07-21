@@ -64,7 +64,12 @@ namespace ProDocEstimate.Views
         private float  flat_charge;     public float  FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
         private float  total;           public float  Total       { get { return total;       } set { total       = value; OnPropertyChanged(); } }
         private string cmd;             public string Cmd         { get { return cmd;         } set { cmd         = value; OnPropertyChanged(); } }
-        private string backer;          public string Backer      { get { return backer;      } set { backer      = value; OnPropertyChanged(); } }  // read from Quote_Details
+        private string backer;          public string Backer      { get { return backer;      } set { backer      = value; OnPropertyChanged(); } }     // Read from Quote_Details
+
+        private float backerFlatCharge; public float BackerFlatCharge { get { return backerFlatCharge; } set { backerFlatCharge = value; OnPropertyChanged(); } }            // Add to other charges in CalcTotal()
+        private float backerRunCharge;  public float BackerRunCharge  { get { return backerRunCharge;  } set { backerRunCharge  = value; OnPropertyChanged(); } }            //               "
+        private string backerDetails;   public string BackerDetails   { get { return backerDetails;    } set { backerDetails    = value; OnPropertyChanged(); } }            //               "
+
         private string fieldList;       public string FieldList   { get { return fieldList;   } set { fieldList   = value; OnPropertyChanged(); } }
 
         private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
@@ -140,7 +145,6 @@ namespace ProDocEstimate.Views
                 WaterMark = int.Parse(dt.Rows[0]["Value8"].ToString());
                 FluorSel  = int.Parse(dt.Rows[0]["Value9"].ToString());
 
-                //TODO: Load all percentages used in the markup block
                 FlatChargePct   = int.Parse(dt.Rows[0]["FlatChargePct"].ToString());
                 RunChargePct    = int.Parse(dt.Rows[0]["RunChargePct"].ToString());
                 PlateChargePct  = int.Parse(dt.Rows[0]["PlateChargePct"].ToString());
@@ -166,9 +170,15 @@ namespace ProDocEstimate.Views
             MaxColors = Int32.Parse(dt.Rows[0]["Number"].ToString());
 
             // Retrieve value for Backer if one was previously entered 
-            str = $"SELECT PARAM1 FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
+            str = $"SELECT PARAM1, TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
             da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
-            if(dt.Rows.Count > 0 ) { Backer = dt.Rows[0]["Param1"].ToString(); }
+
+            if(dt.Rows.Count > 0 ) 
+            {   Backer = dt.Rows[0]["Param1"].ToString();
+                float t1 = 0; float.TryParse(dt.Rows[0]["TotalFlatChg"].ToString(),   out t1); BackerFlatCharge = t1;
+                float t2 = 0; float.TryParse(dt.Rows[0]["PerThousandChg"].ToString(), out t2); BackerRunCharge  = t2;
+                BackerDetails = t1.ToString("c");
+            }
 
             str = $"SELECT F_TYPE, MAX(Number) AS MaxColors" 
                 + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'INK' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
@@ -218,12 +228,12 @@ namespace ProDocEstimate.Views
             da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
             DataView dv = dt.DefaultView;
 
-            BaseFlatCharge = 0;
-            BaseRunCharge = 0;
+            BaseFlatCharge   = BackerFlatCharge;
+            BaseRunCharge    = BackerRunCharge;
             BaseFinishCharge = 0;
-            BaseConvCharge = 0;
-            BasePlateCharge = 0;
-            BasePressCharge = 0;
+            BaseConvCharge   = 0;
+            BasePlateCharge  = 0;
+            BasePressCharge  = 0;
 
             FlatTotal = 0;
 

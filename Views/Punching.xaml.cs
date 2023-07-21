@@ -108,21 +108,23 @@ namespace ProDocEstimate.Views
             string str = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Punching'";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
+            
             if (dt.Rows.Count == 0) return;
+
             DataView dv = new DataView(dt);
             Two   = int.Parse(dv[0]["Value1"].ToString());
             Three = int.Parse(dv[0]["Value2"].ToString());
             Over3 = int.Parse(dv[0]["Value3"].ToString());
 
-            // Load percentages and recalculate all displayed property values
-            FlatChargePct = float.Parse(dv[0]["FlatChargePct"].ToString());
-            RunChargePct = float.Parse(dv[0]["RunChargePct"].ToString());
-            PlateChargePct = float.Parse(dv[0]["PlateChargePct"].ToString());
-            FinishChargePct = float.Parse(dv[0]["FinishChargePct"].ToString());
-            PressChargePct = float.Parse(dv[0]["PressChargePct"].ToString());
-            ConvChargePct = float.Parse(dv[0]["ConvertChargePct"].ToString());
-            FlatTotal = float.Parse(dv[0]["TotalFlatChg"].ToString());
-            CalculatedRunCharge = float.Parse(dv[0]["PerThousandChg"].ToString());
+            // Load percentages and recalculate all displayed property values; may be null...
+            float t1 = 0; float.TryParse(dv[0]["FlatChargePct"].ToString(),    out t1); FlatChargePct = t1;
+            float t2 = 0; float.TryParse(dv[0]["RunChargePct"].ToString(),     out t2); RunChargePct = t2;
+            float t3 = 0; float.TryParse(dv[0]["PlateChargePct"].ToString(),   out t3); PlateChargePct = t3;
+            float t4 = 0; float.TryParse(dv[0]["FinishChargePct"].ToString(),  out t4); FinishChargePct = t4;
+            float t5 = 0; float.TryParse(dv[0]["PressChargePct"].ToString(),   out t5); PressChargePct = t5;
+            float t6 = 0; float.TryParse(dv[0]["ConvertChargePct"].ToString(), out t6); ConvChargePct = t6;
+            float t7 = 0; float.TryParse(dv[0]["TotalFlatChg"].ToString(),     out t7); FlatTotal = t7;
+            float t8 = 0; float.TryParse(dv[0]["PerThousandChg"].ToString(),   out t8); CalculatedRunCharge = t8;
 
             GetCharges();
         }
@@ -185,13 +187,12 @@ namespace ProDocEstimate.Views
             finally { conn.Close(); }
 
             //TODO: Add percentages to the values that are saved
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + " Quote_Num, Category, Sequence,"
-                + " Param1, Param2, Param3, "
-                + " Value1, Value2, Value3 ) VALUES ( "
-                + $"'{QuoteNum}', 'Punching', 5, "
-                + "  'Two',   'Three',   'Over3', "
-                + $" '{Two}', '{Three}', '{Over3}' )";
+            cmd =  "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
+                +  " ( Quote_Num,      Category,      Sequence,                Param1,            Param2,           Param3,              Value1,             Value2,           Value3, "
+                +  "   FlatCharge,     TotalFlatChg,  PerThousandChg,          FlatChargePct,     RunChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct )"
+                +  " VALUES ( "
+                + $" '{QuoteNum}',    'Punching',     5,                      'Two',             'Three',          'Over3',            '{Two}',            '{Three}',        '{Over3}', "
+                + $" '{FlatCharge}', '{FlatTotal}', '{CalculatedRunCharge}', '{FlatChargePct}', '{RunChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}'  )";
 
             scmd.CommandText = cmd;
             conn.Open();
