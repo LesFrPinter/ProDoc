@@ -11,6 +11,9 @@ namespace ProDocEstimate.Views
 {
     public partial class InkColors : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null) 
+         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
         // Test data added for this screen ; remove later
         //UPDATE FEATURES SET FINISH_MATL = 10, PRESS_MATL = 20, CONV_MATL = 30 where CATEGORY = 'INK' AND PRESS_SIZE = '11'
@@ -19,7 +22,7 @@ namespace ProDocEstimate.Views
 
         #region Properties
 
-        private int maxColors; public int MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
+        private int    maxColors;   public int    MaxColors   { get { return maxColors;   } set { maxColors   = value; OnPropertyChanged(); } }
         private string pressSize;   public string PressSize   { get { return pressSize;   } set { pressSize   = value; OnPropertyChanged(); } }
         private string quoteNum;    public string QuoteNum    { get { return quoteNum;    } set { quoteNum    = value; OnPropertyChanged(); } }
         private string quoteNo;     public string QuoteNo     { get { return quoteNo;     } set { quoteNo     = value; OnPropertyChanged(); } }

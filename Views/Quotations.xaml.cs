@@ -1039,7 +1039,7 @@ namespace ProDocEstimate
 
                 case "Ink Color":
                     {
-                        InkColors Ink = new InkColors(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
+                        Ink Ink = new Ink(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
                         break;
                     }
 

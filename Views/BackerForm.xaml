@@ -11,10 +11,6 @@
         WindowStartupLocation="CenterScreen"
         Title="Backer" Height="350" Width="800">
 
-    <!--<WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="15" />
-    </WindowChrome.WindowChrome>-->
-
     <Window.Resources>
         <Style TargetType="{x:Type RadioButton}">
             <Setter Property="FontSize" Value="16" />
@@ -27,6 +23,7 @@
             <Setter Property="Maximum" Value="300" />
             <Setter Property="NumberDecimalDigits" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
         </Style>
     </Window.Resources>
 
@@ -168,11 +165,6 @@
                 <TextBox Width="80" Height="24"         Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  />
 
             </Grid>
-
-            <!--<Label Grid.Row="4" Grid.Column="3" Content="Total: "  Foreground="Purple" FontSize="18" VerticalAlignment="Center" />
-            <Label Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" HorizontalContentAlignment="Right" FontSize="12" Height="24" Width="80" Background="WhiteSmoke" Margin="5 0 0 0" VerticalAlignment="Center" >
-                <TextBlock Text="{Binding Path=FlatTotal, StringFormat={}{0:C2}}" FontSize="12" Foreground="Purple" />
-            </Label>-->
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" HorizontalAlignment="Center" Margin="10 0 0 0" >
                 <Button x:Name="btnSave"   Grid.Column="3" Content="Save"   FontSize="16" Padding="4 2" Click="btnSave_Click" />
