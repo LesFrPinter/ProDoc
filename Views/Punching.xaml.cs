@@ -32,6 +32,10 @@ namespace ProDocEstimate.Views
         private int three; public int Three { get { return three; } set { three = value; OnPropertyChanged(); } }
         private int over3; public int Over3 { get { return over3; } set { over3 = value; OnPropertyChanged(); } }
 
+        private bool chk1; public bool Chk1 { get { return chk1; } set { chk1 = value; } }
+        private bool chk2; public bool Chk2 { get { return chk2; } set { chk2 = value; } }
+        private bool chk3; public bool Chk3 { get { return chk3; } set { chk3 = value; } }
+
         private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
         private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
         private float flatChargePct; public float FlatChargePct { get { return flatChargePct; } set { flatChargePct = value; OnPropertyChanged(); } }
@@ -77,7 +81,7 @@ namespace ProDocEstimate.Views
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
 
-            LoadMaxima();
+            //LoadMaxima();     // No longer needed; NumericUpDowns were changed to RadioButtons
             LoadData();
             GetCharges();
 
@@ -86,21 +90,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.8;
-            this.Width = this.Width *= 1.8;
-        }
-
-        private void LoadMaxima()
-        {
-            // Retrieve value for Backer if one was previously entered 
-            string str = $"SELECT F_TYPE, MAX(Number) AS Max"
-                + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'Punching' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
-            SqlConnection conn = new(ConnectionString);
-            SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
-            DataView dv = new DataView(dt);
-            dv.RowFilter = "F_TYPE='2 HOLES'";   M1.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='3 HOLES'";   M2.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='4-5 HOLES'"; M3.Maximum = int.Parse(dv[0]["Max"].ToString());
+            this.Height = this.Height *= 2.8;
+            this.Width = this.Width *= 2.8;
         }
 
         private void LoadData()
@@ -111,12 +102,17 @@ namespace ProDocEstimate.Views
             
             if (dt.Rows.Count == 0) return;
 
-            DataView dv = new DataView(dt);
+            DataView dv = dt.DefaultView;
             Two   = int.Parse(dv[0]["Value1"].ToString());
             Three = int.Parse(dv[0]["Value2"].ToString());
             Over3 = int.Parse(dv[0]["Value3"].ToString());
 
-            // Load percentages and recalculate all displayed property values; may be null...
+            // Which radiobutton is checked?
+            Chk1 = (Two == 1);
+            Chk2 = (Three == 1);
+            Chk3 = (Over3 == 1);
+
+            // Load percentages and recalculate all displayed property values; use TryParse since values may be null.
             float t1 = 0; float.TryParse(dv[0]["FlatChargePct"].ToString(),    out t1); FlatChargePct = t1;
             float t2 = 0; float.TryParse(dv[0]["RunChargePct"].ToString(),     out t2); RunChargePct = t2;
             float t3 = 0; float.TryParse(dv[0]["PlateChargePct"].ToString(),   out t3); PlateChargePct = t3;
@@ -186,7 +182,6 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            //TODO: Add percentages to the values that are saved
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
                 +  " ( Quote_Num,      Category,      Sequence,                Param1,            Param2,           Param3,              Value1,             Value2,           Value3, "
                 +  "   FlatCharge,     TotalFlatChg,  PerThousandChg,          FlatChargePct,     RunChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct )"
@@ -203,14 +198,24 @@ namespace ProDocEstimate.Views
             this.Close();
         }
 
-        private void ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { GetCharges(); }
-
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         { CalcTotal(); }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { Close(); }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            string o = ((System.Windows.FrameworkElement)sender).Name;
+
+            switch (o)
+            {
+                case "B1": Two = 1; Three = 0; Over3 = 0; break;
+                case "B2": Two = 0; Three = 1; Over3 = 0; break;
+                case "B3": Two = 0; Three = 0; Over3 = 1; break;
+            }
+            GetCharges();
+        }
 
     }
 }

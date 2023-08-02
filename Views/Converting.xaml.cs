@@ -34,8 +34,8 @@ namespace ProDocEstimate.Views
 
         private int    max;         public int    Max       { get { return max;       } set { max       = value; OnPropertyChanged(); } }
         private string pressSize;   public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
-        private string quoteNum;    public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }  // Which of these two
-        private string quoteNo;     public string QuoteNo   { get { return quoteNo;   } set { quoteNo   = value; OnPropertyChanged(); } }  //  is no longer used?
+        private string quoteNum;    public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }    // Which of these two
+//        private string quoteNo;     public string QuoteNo   { get { return quoteNo;   } set { quoteNo   = value; OnPropertyChanged(); } }  //  is no longer used?
 
         private int crash; public int Crash { get { return crash; } set { crash = value; OnPropertyChanged(); } }
         private int black; public int Black { get { return black; } set { black = value; OnPropertyChanged(); } }
@@ -45,62 +45,6 @@ namespace ProDocEstimate.Views
         private int cont5; public int Cont5 { get { return cont5; } set { cont5 = value; OnPropertyChanged(); } }
         private int fold;  public int Fold  { get { return fold;  } set { fold  = value; OnPropertyChanged(); } }
         private int tape;  public int Tape  { get { return tape;  } set { tape  = value; OnPropertyChanged(); } }
-
-        private float fc11; public float Fc11 { get { return fc11; } set { fc11 = value; OnPropertyChanged(); } }       // Flat charge for first f_type
-        private float fc12; public float Fc12 { get { return fc12; } set { fc12 = value; OnPropertyChanged(); } }       // Flat charge for second f_type...
-        private float fc13; public float Fc13 { get { return fc13; } set { fc13 = value; OnPropertyChanged(); } }
-        private float fc14; public float Fc14 { get { return fc14; } set { fc14 = value; OnPropertyChanged(); } }
-        private float fc15; public float Fc15 { get { return fc15; } set { fc15 = value; OnPropertyChanged(); } }
-        private float fc16; public float Fc16 { get { return fc16; } set { fc16 = value; OnPropertyChanged(); } }
-
-        private float fc21; public float Fc21 { get { return fc21; } set { fc21 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc22; public float Fc22 { get { return fc22; } set { fc22 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc23; public float Fc23 { get { return fc23; } set { fc23 = value; OnPropertyChanged(); } }
-        private float fc24; public float Fc24 { get { return fc24; } set { fc24 = value; OnPropertyChanged(); } }
-        private float fc25; public float Fc25 { get { return fc25; } set { fc25 = value; OnPropertyChanged(); } }
-        private float fc26; public float Fc26 { get { return fc26; } set { fc26 = value; OnPropertyChanged(); } }
-
-        private float fc31; public float Fc31 { get { return fc31; } set { fc31 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc32; public float Fc32 { get { return fc32; } set { fc32 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc33; public float Fc33 { get { return fc33; } set { fc33 = value; OnPropertyChanged(); } }
-        private float fc34; public float Fc34 { get { return fc34; } set { fc34 = value; OnPropertyChanged(); } }
-        private float fc35; public float Fc35 { get { return fc35; } set { fc35 = value; OnPropertyChanged(); } }
-        private float fc36; public float Fc36 { get { return fc36; } set { fc36 = value; OnPropertyChanged(); } }
-
-        private float fc41; public float Fc41 { get { return fc41; } set { fc41 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc42; public float Fc42 { get { return fc42; } set { fc42 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc43; public float Fc43 { get { return fc43; } set { fc43 = value; OnPropertyChanged(); } }
-        private float fc44; public float Fc44 { get { return fc44; } set { fc44 = value; OnPropertyChanged(); } }
-        private float fc45; public float Fc45 { get { return fc45; } set { fc45 = value; OnPropertyChanged(); } }
-        private float fc46; public float Fc46 { get { return fc46; } set { fc46 = value; OnPropertyChanged(); } }
-
-        private float fc51; public float Fc51 { get { return fc51; } set { fc51 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc52; public float Fc52 { get { return fc52; } set { fc52 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc53; public float Fc53 { get { return fc53; } set { fc53 = value; OnPropertyChanged(); } }
-        private float fc54; public float Fc54 { get { return fc54; } set { fc54 = value; OnPropertyChanged(); } }
-        private float fc55; public float Fc55 { get { return fc55; } set { fc55 = value; OnPropertyChanged(); } }
-        private float fc56; public float Fc56 { get { return fc56; } set { fc56 = value; OnPropertyChanged(); } }
-
-        private float fc61; public float Fc61 { get { return fc61; } set { fc61 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc62; public float Fc62 { get { return fc62; } set { fc62 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc63; public float Fc63 { get { return fc63; } set { fc63 = value; OnPropertyChanged(); } }
-        private float fc64; public float Fc64 { get { return fc64; } set { fc64 = value; OnPropertyChanged(); } }
-        private float fc65; public float Fc65 { get { return fc65; } set { fc65 = value; OnPropertyChanged(); } }
-        private float fc66; public float Fc66 { get { return fc66; } set { fc66 = value; OnPropertyChanged(); } }
-
-        private float fc71; public float Fc71 { get { return fc71; } set { fc71 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc72; public float Fc72 { get { return fc72; } set { fc72 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc73; public float Fc73 { get { return fc73; } set { fc73 = value; OnPropertyChanged(); } }
-        private float fc74; public float Fc74 { get { return fc74; } set { fc74 = value; OnPropertyChanged(); } }
-        private float fc75; public float Fc75 { get { return fc75; } set { fc75 = value; OnPropertyChanged(); } }
-        private float fc76; public float Fc76 { get { return fc76; } set { fc76 = value; OnPropertyChanged(); } }
-
-        private float fc81; public float Fc81 { get { return fc81; } set { fc81 = value; OnPropertyChanged(); } }       // Run charge for first f_type
-        private float fc82; public float Fc82 { get { return fc82; } set { fc82 = value; OnPropertyChanged(); } }       // Run charge for second f_type...
-        private float fc83; public float Fc83 { get { return fc83; } set { fc83 = value; OnPropertyChanged(); } }
-        private float fc84; public float Fc84 { get { return fc84; } set { fc84 = value; OnPropertyChanged(); } }
-        private float fc85; public float Fc85 { get { return fc85; } set { fc85 = value; OnPropertyChanged(); } }
-        private float fc86; public float Fc86 { get { return fc86; } set { fc76 = value; OnPropertyChanged(); } }
 
         private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
         private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
@@ -141,11 +85,15 @@ namespace ProDocEstimate.Views
         {
             InitializeComponent();
             this.DataContext = this;
+
             Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
+
             LoadMaxima();
+            LoadBaseValues();
             LoadData();
+
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
@@ -164,7 +112,7 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
 
-            DataView dv  = new DataView(dt);
+            DataView dv  = dt.DefaultView;
             dv.RowFilter = "F_TYPE='2 CRASH NUMB'";   M1.Maximum = int.Parse(dv[0]["Max"].ToString());
             dv.RowFilter = "F_TYPE='BLACK NUMB'";     M2.Maximum = int.Parse(dv[0]["Max"].ToString());
             dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'";  M3.Maximum = int.Parse(dv[0]["Max"].ToString());
@@ -175,77 +123,82 @@ namespace ProDocEstimate.Views
             dv.RowFilter = "F_TYPE='TRANSFER TAPE'";  M8.Maximum = int.Parse(dv[0]["Max"].ToString());
             dt.Clear();
 
-            str = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'Converting' AND Press_Size = '{PressSize}' ORDER BY F_TYPE";
-            da.SelectCommand.CommandText = str;
-            DataTable dt2 = new(); da.Fill(dt2);
-            if (dt2.Rows.Count == 0) return;
+            //#region Old method of summing charges by f_type
+            //str = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'Converting' AND Press_Size = '{PressSize}' ORDER BY F_TYPE";
+            //da.SelectCommand.CommandText = str;
+            //DataTable dt2 = new(); da.Fill(dt2);
+            //if (dt2.Rows.Count == 0) return;
 
-            dv = dt2.DefaultView;
+            //dv = dt2.DefaultView;
 
-            float t = 0.00F;
-            dv.RowFilter = "F_TYPE='2 CRASH NUMB'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc11 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc12 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc13 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc14 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc15 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc16 = t;
+            //float t = 0.00F;
+            //dv.RowFilter = "F_TYPE='2 CRASH NUMB'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc11 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc12 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc13 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc14 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc15 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc16 = t;
 
-            dv.RowFilter = "F_TYPE='BLACK NUMB'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc21 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc22 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc23 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc24 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc25 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc26 = t;
+            //dv.RowFilter = "F_TYPE='BLACK NUMB'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc21 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc22 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc23 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc24 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc25 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc26 = t;
 
-            dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc31 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc32 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc33 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc34 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc35 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc36 = t;
+            //dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc31 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc32 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc33 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc34 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc35 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc36 = t;
 
-            dv.RowFilter = "F_TYPE='SNAP GLUE 5-12'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc41 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc42 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc43 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc44 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc45 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc46 = t;
+            //dv.RowFilter = "F_TYPE='SNAP GLUE 5-12'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc41 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc42 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc43 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc44 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc45 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc46 = t;
 
-            dv.RowFilter = "F_TYPE='FOLDING'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc51 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc52 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc53 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc54 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc55 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc56 = t;
+            //dv.RowFilter = "F_TYPE='FOLDING'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc51 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc52 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc53 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc54 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc55 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc56 = t;
 
-            dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc61 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc62 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc63 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc64 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc65 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc66 = t;
+            //dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc61 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc62 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc63 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc64 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc65 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc66 = t;
 
-            dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc71 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc72 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc73 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc74 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc75 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc76 = t;
+            //dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc71 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc72 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc73 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc74 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc75 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc76 = t;
 
-            dv.RowFilter = "F_TYPE='TRANSFER TAPE'";
-            t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc81 = t;
-            t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc82 = t;
-            t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc83 = t;
-            t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc84 = t;
-            t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc85 = t;
-            t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc86 = t;
+            //dv.RowFilter = "F_TYPE='TRANSFER TAPE'";
+            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc81 = t;
+            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc82 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc83 = t;
+            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc84 = t;
+            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc85 = t;
+            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc86 = t;
+
+            //#endregion
+
+            return;
         }
 
         private void LoadData()
@@ -267,117 +220,100 @@ namespace ProDocEstimate.Views
             Fold  = int.Parse(dv[0]["Value7"].ToString());
             Tape  = int.Parse(dv[0]["Value8"].ToString());
 
-            CalculatedFlatCharge = 0.00F;
-            CalculatedRunCharge = 0.00F;
-            CalculatedPlateCharge = 0.00F;
-            CalculatedFinishCharge = 0.00F;
-            CalculatedPressCharge = 0.00F;
-            CalculatedConvCharge = 0.00F;
+            FlatTotal = float.Parse(dv[0]["TotalFlatChg"].ToString());
+            CalculatedRunCharge = float.Parse(dv[0]["PerThousandChg"].ToString());
+
+            int t1 = 0; int.TryParse(dv[0]["FlatChargePct"].ToString(), out t1); FlatChargePct = t1;
+            int t2 = 0; int.TryParse(dv[0]["RunChargePct"].ToString(), out t2); RunChargePct = t2;
+            int t3 = 0; int.TryParse(dv[0]["FinishChargePct"].ToString(), out t3); FinishChargePct = t3;
+            int t4 = 0; int.TryParse(dv[0]["PressChargePct"].ToString(), out t4); PressChargePct = t4;
+            int t5 = 0; int.TryParse(dv[0]["ConvertChargePct"].ToString(), out t5); ConvChargePct = t5;
+            int t6 = 0; int.TryParse(dv[0]["PlateChargePct"].ToString(), out t6); PlateChargePct = t6;
         }
 
-        private void CalcTotal()
+        private void LoadBaseValues()
         {
-            CalculatedFlatCharge = Crash * (Fc11 * (1 + (FlatChargePct / 100)))
-                                 + Black * (Fc21 * (1 + (FlatChargePct / 100)))
-                                 + Snap2 * (Fc31 * (1 + (FlatChargePct / 100)))
-                                 + Snap5 * (Fc41 * (1 + (FlatChargePct / 100)))
-                                 + Cont2 * (Fc51 * (1 + (FlatChargePct / 100)))
-                                 + Cont5 * (Fc61 * (1 + (FlatChargePct / 100)))
-                                 + Fold  * (Fc71 * (1 + (FlatChargePct / 100)))
-                                 + Tape  * (Fc81 * (1 + (FlatChargePct / 100)));
+            BaseFlatCharge = 0.00F;
+            BaseRunCharge = 0.00F;
+            BasePlateCharge = 0.00F;
+            BaseFinishCharge = 0.00F;
+            BasePressCharge = 0.00F;
+            BaseConvCharge = 0.00F;
 
-            CalculatedRunCharge = Crash * (Fc12 * (1 + (RunChargePct / 100)))
-                                + Black * (Fc22 * (1 + (RunChargePct / 100)))
-                                + Snap2 * (Fc32 * (1 + (RunChargePct / 100)))
-                                + Snap5 * (Fc42 * (2 + (RunChargePct / 100)))
-                                + Cont2 * (Fc52 * (2 + (RunChargePct / 100)))
-                                + Cont5 * (Fc62 * (1 + (RunChargePct / 100)))
-                                + Fold  * (Fc72 * (1 + (RunChargePct / 100)))
-                                + Tape  * (Fc82 * (1 + (RunChargePct / 100)));
+            string str = "SELECT * FROM[ESTIMATING].[dbo].[FEATURES]"
+                + $" WHERE CATEGORY = 'CONVERTING' AND PRESS_SIZE = '11'"
+                + $"   AND ((F_TYPE = '2 CRASH NUMB'   AND NUMBER = {Crash})"
+                + $"    OR  (F_TYPE = 'BLACK NUMB'     AND NUMBER = {Black})"
+                + $"    OR  (F_TYPE = 'SNAP GLUE 2-4'  AND NUMBER = {Snap2})"
+                + $"    OR  (F_TYPE = 'SNAP GLUE 5-12' AND NUMBER = {Snap5})"
+                + $"    OR  (F_TYPE = 'CONT GLUE 2-4'  AND NUMBER = {Cont2})"
+                + $"    OR  (F_TYPE = 'CONT GLUE 5-12' AND NUMBER = {Cont5})"
+                + $"    OR  (F_TYPE = 'FOLDING'        AND NUMBER = {Fold} )"
+                + $"    OR  (F_TYPE = 'TRANSFER TAPE'  AND NUMBER = {Tape}))";
 
-            CalculatedPlateCharge = 
-                                  Crash * (Fc13 * (1 + (PlateChargePct / 100)))
-                                + Black * (Fc23 * (1 + (PlateChargePct / 100)))
-                                + Snap2 * (Fc33 * (1 + (PlateChargePct / 100)))
-                                + Snap5 * (Fc43 * (2 + (PlateChargePct / 100)))
-                                + Cont2 * (Fc53 * (2 + (PlateChargePct / 100)))
-                                + Cont5 * (Fc63 * (1 + (PlateChargePct / 100)))
-                                + Fold  * (Fc73 * (1 + (PlateChargePct / 100)))
-                                + Tape  * (Fc83 * (1 + (PlateChargePct / 100)));
+            conn = new SqlConnection(ConnectionString); 
+            da = new SqlDataAdapter(str, conn);
+            DataTable dt3 = new(); dt3.Rows.Clear(); da.Fill(dt3);
+            if (dt3.Rows.Count == 0) return;
+            DataView dv3 = dt3.DefaultView;
 
-            CalculatedFinishCharge =
-                                  Crash * (Fc14 * (1 + (FinishChargePct / 100)))
-                                + Black * (Fc24 * (1 + (FinishChargePct / 100)))
-                                + Snap2 * (Fc34 * (1 + (FinishChargePct / 100)))
-                                + Snap5 * (Fc44 * (2 + (FinishChargePct / 100)))
-                                + Cont2 * (Fc54 * (2 + (FinishChargePct / 100)))
-                                + Cont5 * (Fc64 * (1 + (FinishChargePct / 100)))
-                                + Fold  * (Fc74 * (1 + (FinishChargePct / 100)))
-                                + Tape  * (Fc84 * (1 + (FinishChargePct / 100)));
+            float t = 0.00F;
+            // Add costs for all rows of each f_type that currently have a value greater than zero
+            for (int i = 0; i < dv3.Count; i++)
+            {   t = 0.00F; float.TryParse(dv3[i]["FLAT_CHARGE"].ToString(), out t); BaseFlatCharge += t;
+                t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(), out t); BaseRunCharge += t;
+                t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(), out t); BasePlateCharge += t;
+                t = 0.00F; float.TryParse(dv3[i]["FINISH_MATL"].ToString(), out t); BaseFinishCharge += t;
+                t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(), out t); BasePressCharge += t;
+                t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(), out t); BaseConvCharge += t;
+            }
 
-            CalculatedPressCharge =
-                                  Crash * (Fc15 * (1 + (PressChargePct / 100)))
-                                + Black * (Fc25 * (1 + (PressChargePct / 100)))
-                                + Snap2 * (Fc35 * (1 + (PressChargePct / 100)))
-                                + Snap5 * (Fc45 * (2 + (PressChargePct / 100)))
-                                + Cont2 * (Fc55 * (2 + (PressChargePct / 100)))
-                                + Cont5 * (Fc65 * (1 + (PressChargePct / 100)))
-                                + Fold  * (Fc75 * (1 + (PressChargePct / 100)))
-                                + Tape  * (Fc85 * (1 + (PressChargePct / 100)));
+            CalcTotals();
+        }
 
-            CalculatedConvCharge =
-                                  Crash * (Fc16 * (1 + (ConvChargePct / 100)))
-                                + Black * (Fc26 * (1 + (ConvChargePct / 100)))
-                                + Snap2 * (Fc36 * (1 + (ConvChargePct / 100)))
-                                + Snap5 * (Fc46 * (2 + (ConvChargePct / 100)))
-                                + Cont2 * (Fc56 * (2 + (ConvChargePct / 100)))
-                                + Cont5 * (Fc66 * (1 + (ConvChargePct / 100)))
-                                + Fold  * (Fc76 * (1 + (ConvChargePct / 100)))
-                                + Tape  * (Fc86 * (1 + (ConvChargePct / 100)));
-
-            FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
+        private void CalcTotals()
+        {  CalculatedFlatCharge    = BaseFlatCharge    * ( 1 + FlatChargePct   / 100);
+           CalculatedRunCharge     = BaseRunCharge     * ( 1 + RunChargePct    / 100);
+           CalculatedPlateCharge   = BasePlateCharge   * ( 1 + PlateChargePct  / 100);
+           CalculatedFinishCharge  = BaseFinishCharge  * ( 1 + FinishChargePct / 100);
+           CalculatedPressCharge   = BasePressCharge   * ( 1 + PressChargePct  / 100); 
+           CalculatedConvCharge    = BaseConvCharge    * ( 1 + ConvChargePct   / 100);
+           FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Validate inputs
-            // e.g., if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
-
-            // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Converting'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
 
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            try     { scmd.ExecuteNonQuery(); }
+            catch   (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + " Quote_Num, Category, Sequence,"
-                + " Param1, Param2, Param3, Param4, Param5, Param6, Param7, Param8, "
-                + " Value1, Value2, Value3, Value4, Value5, Value6, Value7, Value8 ) VALUES ( "
-                + $"'{QuoteNum}', 'Converting', 9, "
-                + " '2 CRASH NUMB', 'BLACK NUMB', 'SNAP GLUE 2-4', 'SNAP GLUE 5-12', "
-                + " 'CONT GLUE 2-4', 'CONT GLUE 5-12', 'FOLDING', 'TRANSFER TAPE', "
-                + $" '{Crash}', '{Black}', '{Snap2}', '{Snap5}', "
-                + $" '{Cont2}', '{Cont5}', '{Fold}',  '{Tape}' )";
+                + "   Quote_Num,      Category,                 Sequence,"
+                + "   Param1,         Param2,                   Param3,             Param4,           Param5,               Param6,             Param7,    Param8,         "
+                + "   Value1,         Value2,                   Value3,             Value4,           Value5,               Value6,             Value7,    Value8, "
+                + "   TotalFlatChg,   PerThousandChg,           FlatChargePct,      RunChargePct,     FinishChargePct,      PressChargePct,     ConvertChargePct,   PlateChargePct ) VALUES ( "
+                + $"'{QuoteNum}',    'Converting',              9, "
+                +  " '2 CRASH NUMB', 'BLACK NUMB',             'SNAP GLUE 2-4',    'SNAP GLUE 5-12', 'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING', 'TRANSFER TAPE', "
+                + $"'{Crash}',      '{Black}',                 '{Snap2}',          '{Snap5}',        '{Cont2}',            '{Cont5}',          '{Fold}',  '{Tape}',"
+                + $"'{FlatTotal}',  '{CalculatedRunCharge}',   '{FlatChargePct}',  '{RunChargePct}', '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}', '{PlateChargePct}' )";
 
-            // Write to SQL
-            //  conn = new SqlConnection(ConnectionString);
             scmd.CommandText = cmd;
             conn.Open();
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); scmd = null; conn = null; }
+            try     { scmd.ExecuteNonQuery(); }
+            catch   (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
 
             this.Close();
         }
 
         private void Pct_Changed(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalcTotal(); }
+        { CalcTotals(); }
 
         private void ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalcTotal(); }
+        { LoadBaseValues(); CalcTotals(); }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { Close(); }

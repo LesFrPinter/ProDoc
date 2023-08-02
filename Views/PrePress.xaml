@@ -18,6 +18,9 @@
             <Setter Property="Margin"              Value="2 0"    />
             <Setter Property="Padding"             Value="2 0"    />
         </Style>
+        <Style TargetType="TextBox" >
+            <Setter Property="IsEnabled" Value="False" />
+        </Style>
         <Style TargetType="telerik:RadNumericUpDown">
             <Setter Property="FontSize" Value="10" />
             <Setter Property="Margin"   Value="4" />
@@ -27,6 +30,16 @@
             <Setter Property="NumberDecimalDigits" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="Minimum"  Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="False">
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="LightGray" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 

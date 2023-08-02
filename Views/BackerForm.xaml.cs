@@ -144,7 +144,11 @@ namespace ProDocEstimate.Views
         {
             if (Total == -1.00F) { Total = 0.00F; return; } // The first time that it's called is spurious
 
-            if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
+            if ((Button1 + Button2 + Button3) == 0) 
+            {
+                //    MessageBox.Show("Please select an option."); return; 
+                Button1 = 1; One = true;
+            }
 
             string cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
             if (Button1 == 1) { cmd += "BACKER'"; }
@@ -156,22 +160,30 @@ namespace ProDocEstimate.Views
             dt   = new DataTable("Charges");
             conn = new SqlConnection(ConnectionString);
             da   = new SqlDataAdapter(cmd, conn);
-            dt.Clear();
-            da.Fill(dt);
+            dt.Clear(); da.Fill(dt);
 
             if(dt.Rows.Count == 0) { MessageBox.Show("No data"); return; }
 
-            BaseFlatCharge  = float.Parse   (dt.Rows[0][1].ToString());
-            // The rest may have NULL values...
-            float ch = 0.00F; float.TryParse(dt.Rows[0][2].ToString(), out ch); BaseRunCharge = ch;
-            float bp = 0.00F; float.TryParse(dt.Rows[0][3].ToString(), out bp); BasePlateCharge = bp;
-            float bf = 0.00F; float.TryParse(dt.Rows[0][4].ToString(), out bf); BaseFinishCharge = bf;
-            float pr = 0.00F; float.TryParse(dt.Rows[0][5].ToString(), out pr); BasePressCharge = pr;
-            float co = 0.00F; float.TryParse(dt.Rows[0][6].ToString(), out co); BaseConvCharge = co;
+            DataView dv = dt.DefaultView;
 
-            BasePlateCharge = Changes * bp;     // $5.00 * Changes
+            float fc = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out fc); BaseFlatCharge = fc;
+            float rc = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(), out rc); BaseRunCharge = rc;
+            float pm = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(), out pm); BasePlateCharge = pm;
+            float fm = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out fm); BaseFinishCharge = fm;
+            float pr = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(), out pr); BasePressCharge = pr;
+            float cm = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(), out cm); BaseConvCharge = cm;
 
-            CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100);
+            //BaseFlatCharge  = float.Parse   (dt.Rows[0][1].ToString());
+            //float ch = 0.00F; float.TryParse(dt.Rows[0][2].ToString(), out ch); BaseRunCharge = ch;
+            //float bp = 0.00F; float.TryParse(dt.Rows[0][3].ToString(), out bp); BasePlateCharge = bp;
+            //float bf = 0.00F; float.TryParse(dt.Rows[0][4].ToString(), out bf); BaseFinishCharge = bf;
+            //float pr = 0.00F; float.TryParse(dt.Rows[0][5].ToString(), out pr); BasePressCharge = pr;
+            //float co = 0.00F; float.TryParse(dt.Rows[0][6].ToString(), out co); BaseConvCharge = co;
+
+            //  I think it was this before: BasePlateCharge = Changes * rc;     // $5.00 * Changes
+            BasePlateCharge = Changes * pm;
+
+            CalculatedFlatCharge = BaseFlatCharge   * (1 + FlatChargePct   / 100);
             CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct    / 100);
             CalculatedPlateCharge  = BasePlateCharge  * (1 + PlateChargePct  / 100);
             CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100);
@@ -180,7 +192,7 @@ namespace ProDocEstimate.Views
 
             Total = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
-            // What total does the number of changes affect?
+            // Which total does the number of changes affect?
 
         }
 
@@ -231,40 +243,25 @@ namespace ProDocEstimate.Views
              + CalculatedPressCharge;
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        { this.Close(); }
-
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { 
-            CalcTotal(); 
+        { CalcTotal(); }
+
+        private void Checked(object sender, RoutedEventArgs e)
+        { CalcTotal(); }
+
+        private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            CalculatedFlatCharge    = (float)BaseFlatCharge     * (1.00F + (float)FlatChargePct   / 100.00F);
+            CalculatedRunCharge     = (float)BaseRunCharge      * (1.00F + (float)RunChargePct    / 100.00F);
+            CalculatedPlateCharge   = (float)BasePlateCharge    * (1.00F + (float)PlateChargePct  / 100.00F);
+            CalculatedFinishCharge  = (float)BaseFinishCharge   * (1.00F + (float)FinishChargePct / 100.00F);
+            CalculatedConvCharge    = (float)BaseConvCharge     * (1.00F + (float)ConvChargePct   / 100.00F);
+            CalculatedPressCharge   = (float)BasePressCharge    * (1.00F + (float)PressChargePct  / 100.00F);
+            GetGrandTotal();
         }
 
-        private void B1_Checked(object sender, RoutedEventArgs e)
-        { CalcTotal(); }
-
-        private void B2_Checked(object sender, RoutedEventArgs e)
-        { CalcTotal(); }
-
-        private void B3_Checked(object sender, RoutedEventArgs e)
-        { CalcTotal(); }
-
-        private void FCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatChargePct / 100.00F); GetGrandTotal(); }
-
-        private void RCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunChargePct / 100.00F); GetGrandTotal(); }
-
-        private void PCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalculatedPlateCharge = (float)BasePlateCharge * (1.00F + (float)PlateChargePct / 100.00F); GetGrandTotal(); }
-
-        private void CFPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalculatedFinishCharge = (float)BaseFinishCharge * (1.00F + (float)FinishChargePct / 100.00F); GetGrandTotal(); }
-
-        private void CCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalculatedConvCharge = (float)BaseConvCharge * (1.00F + (float)ConvChargePct / 100.00F); GetGrandTotal(); }
-
-        private void SCPct_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalculatedPressCharge = (float)BasePressCharge * (1.00F + (float)PressChargePct / 100.00F); GetGrandTotal(); }
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        { Close(); }
 
     }
 }

@@ -221,6 +221,19 @@
 			<Setter Property="VerticalContentAlignment" Value="Center" />
 		</Style>
 
+        <!--<Style TargetType="telerik:RadNumericUpDown">
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="False">
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="LightGray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+
 		<clr:String x:Key="DecimalStringFormat">{}{0:n2}</clr:String>
 		<clr:String x:Key="DecimalStringFormatN2">N2</clr:String>
 

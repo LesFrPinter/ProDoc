@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Title="Combo" Height="250" Width="800">
+        Title="Combo" Height="280" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -34,13 +34,13 @@
 
     <Viewbox>
 
-        <Grid Width="810" Height="250" VerticalAlignment="Top">
+        <Grid Width="800" Height="260" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="24" />
-                <RowDefinition />
-                <RowDefinition Height="24" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="32" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
 
             <telerik:RadNumericUpDown Grid.Row="1" Grid.Column="1" Width="60" Value="{Binding Combo1, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="M1" HorizontalAlignment="Left" Margin="150,1,0,1" ValueChanged="PctChanged" />
 
-            <Grid Grid.Row="2" Background="LightGray" Grid.ColumnSpan="3" Height="175" Grid.RowSpan="2" VerticalAlignment="Top" Margin="0,0,-20,0">
+            <Grid Grid.Row="2" Background="LightGray" Grid.ColumnSpan="3" Height="195" Grid.RowSpan="2" VerticalAlignment="Top" >
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35" />
@@ -150,7 +150,7 @@
 
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Height="22" HorizontalAlignment="Center" Width="97">
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Height="22" HorizontalAlignment="Center" Width="97" Margin="100 0 0 0">
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>

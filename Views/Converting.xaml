@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Title="Converting" Height="300" Width="800">
+        Title="Converting" Height="330" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -34,16 +34,16 @@
 
     <Viewbox>
 
-        <Grid Width="800" Height="300" VerticalAlignment="Top">
+        <Grid Width="800" Height="310" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="20" />
+                <RowDefinition Height="37" />
+                <RowDefinition Height="23" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="130" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="160" />
+                <RowDefinition Height="0" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -56,7 +56,7 @@
             </Grid.ColumnDefinitions>
 
             <Label FontSize="22" Foreground="Red" Content="Converting" Width="120" Grid.ColumnSpan="2" 
-                   VerticalAlignment="Top" Padding="2 0" Grid.Column="2" Height="29" >
+                   VerticalAlignment="Center" Padding="2 0" Grid.Column="2" Height="30" >
                 <Label.BitmapEffect>
                     <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
                 </Label.BitmapEffect>
@@ -67,29 +67,30 @@
             <Label Grid.Row="1" Grid.Column="3" Content="CONT GLUE 2-4"  Height="16" VerticalAlignment="Top" Width="88" />
             <Label Grid.Row="1" Grid.Column="4" Content="CONT GLUE 5-12" Height="16" VerticalAlignment="Top" Width="94" />
 
-            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="1" Width="60" Value="{Binding Crash}" x:Name="M1" ValueChanged="ValueChanged" />
-            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="2" Width="60" Value="{Binding Black}" x:Name="M2" ValueChanged="ValueChanged" />
-            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="3" Width="60" Value="{Binding Cont2}" x:Name="M3" ValueChanged="ValueChanged" />
-            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="4" Width="60" Value="{Binding Cont5}" x:Name="M4" ValueChanged="ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="1" Width="60" Value="{Binding Crash}" x:Name="M1" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="70,0,0,0" />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="2" Width="60" Value="{Binding Black}" x:Name="M2" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="69,0,0,0" />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="3" Width="60" Value="{Binding Cont2}" x:Name="M3" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="69,0,0,0" />
+            <telerik:RadNumericUpDown Grid.Row="2" Grid.Column="4" Width="60" Value="{Binding Cont5}" x:Name="M4" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="70,0,0,0" />
 
             <Label Grid.Row="3" Grid.Column="1" Content="FOLDING"        Height="16" VerticalAlignment="Top" Width="54" />
             <Label Grid.Row="3" Grid.Column="2" Content="SNAP GLUE 2-4"  Height="16" VerticalAlignment="Top" Width="86" />
             <Label Grid.Row="3" Grid.Column="3" Content="SNAP GLUE 5-12" Height="16" VerticalAlignment="Top" Width="92" />
             <Label Grid.Row="3" Grid.Column="4" Content="TRANSFER TAPE"  Height="16" VerticalAlignment="Top" Width="88" />
 
-            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="1" Width="60" Value="{Binding Fold}"  x:Name="M5" ValueChanged="ValueChanged" />
-            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="2" Width="60" Value="{Binding Snap2}" x:Name="M6" ValueChanged="ValueChanged" />
-            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="3" Width="60" Value="{Binding Snap5}" x:Name="M7" ValueChanged="ValueChanged" />
-            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="4" Width="60" Value="{Binding Tape}"  x:Name="M8" ValueChanged="ValueChanged" />
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="1" Width="60" Value="{Binding Fold}"  x:Name="M5" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="70,0,0,0" />
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="2" Width="60" Value="{Binding Snap2}" x:Name="M6" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="69,0,0,0" />
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="3" Width="60" Value="{Binding Snap5}" x:Name="M7" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="69,0,0,0" />
+            <telerik:RadNumericUpDown Grid.Row="4" Grid.Column="4" Width="60" Value="{Binding Tape}"  x:Name="M8" ValueChanged="ValueChanged" HorizontalAlignment="Left" Height="22" Margin="70,0,0,0" />
 
-            <Grid Grid.Row="5" Background="LightGray" Grid.ColumnSpan="6" Height="140" Grid.RowSpan="3" VerticalAlignment="Top">
+            <Grid Grid.Row="5" Background="LightGray" Grid.ColumnSpan="6" Height="140" VerticalAlignment="Center">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="10" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="1" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -165,7 +166,7 @@
 
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center" Margin="20 0 0 0" >
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="5" VerticalAlignment="Bottom" Margin="20,0,0,0" Height="32" >
                 <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
                 <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
