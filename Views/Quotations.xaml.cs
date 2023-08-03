@@ -154,7 +154,6 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("PrePress");
             lstAvailable.Items.Add("Combo");
             lstAvailable.Items.Add("Security");
-
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)

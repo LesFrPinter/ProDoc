@@ -156,7 +156,7 @@
 						        HorizontalAlignment="Left"
 						        VerticalAlignment="Top"
 						        Click="btnCopy_Click"
-						        Content="Lookup" />
+						        Content="Lookup/Copy" />
 
                         <Button x:Name="btnAssignNewQuoteNum"
 						        Grid.Row="0"
