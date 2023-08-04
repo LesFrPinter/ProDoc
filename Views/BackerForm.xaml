@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProDocEstimate.Views"
-        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="ProDocEstimate.Views.BackerForm"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        x:Class="ProDocEstimate.Views.BackerForm"
         mc:Ignorable="d"
         Loaded="OnLoad"
         Background="LightGray"
@@ -20,6 +21,7 @@
         </Style>
 
         <Style TargetType="telerik:RadNumericUpDown">
+
             <Setter Property="Height" Value="24" />
             <Setter Property="Minimum" Value="0" />
             <Setter Property="Maximum" Value="300" />
@@ -27,23 +29,26 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
 
-            <Style.Triggers>
+            <!--<Style.Triggers>
                 <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="Background" Value="Red" />
+                    <Setter Property="BorderThickness" Value="5" />
+                    <Setter Property="BorderBrush" Value="DarkRed" />
                 </Trigger>
                 <Trigger Property="IsKeyboardFocused" Value="False">
-                    <Setter Property="Foreground" Value="Black" />
-                    <Setter Property="Background" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="BorderBrush" Value="Gray" />
                 </Trigger>
-            </Style.Triggers>
+            </Style.Triggers>-->
 
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="Height" Value="24" />
+
+            <Setter Property="Height"     Value="24"   />
             <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="IsEnabled"  Value="True" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+
         </Style>
 
     </Window.Resources>
@@ -97,12 +102,6 @@
                 </Label.BitmapEffect>
             </Label>
 
-            <!--<StackPanel Orientation="Horizontal" Grid.Column="6">
-                <Label Content="(Parts:" />
-                <Label Content="{Binding Parts}" Width="24" Foreground="Red" x:Name="PartsDisplay" />
-                <Label Content=")" />
-            </StackPanel>-->
-            
             <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="85,0,1,0" Grid.Column="2">
                 <RadioButton x:Name="B1" GroupName="Bak" Margin="0 0 0 0"  Content="_Backer"     IsChecked="{Binding One, Mode=TwoWay}"   Width="85" Checked="Checked"/>
                 <RadioButton x:Name="B2" GroupName="Bak" Margin="5 0 0 0" Content="Backer _Std"  IsChecked="{Binding Two, Mode=TwoWay}"   Width="95" Checked="Checked"/>
@@ -203,11 +202,11 @@
                     Content=" Labor " HorizontalAlignment="Left" Width="96" Margin="2,-2,0,0" VerticalAlignment="Top"/>
             </Border>
 
-            <TextBlock Grid.Row="7" Grid.Column="2" Width="90" Height="44" HorizontalAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2" FontSize="16" Foreground="Blue" Margin="0 15 0 0" >
-                <TextBlock xml:space="preserve" >Minutes per <LineBreak />      part</TextBlock>
+            <TextBlock Grid.Row="8" Grid.Column="2" HorizontalAlignment="Center" FontSize="16" Foreground="Blue" Margin="0 5 0 0" >
+                <TextBlock>Minutes</TextBlock>
             </TextBlock>
-            <TextBlock Grid.Row="7" Grid.Column="3" Width="98" Height="44" HorizontalAlignment="Center" TextWrapping="Wrap" Grid.RowSpan="2" FontSize="16" Foreground="Blue" Margin="0 15 0 0" >
-                <TextBlock xml:space="preserve" >Add'l minutes <LineBreak />     per part</TextBlock>
+            <TextBlock Grid.Row="8" Grid.Column="3" Width="98" HorizontalAlignment="Center" FontSize="16" Foreground="Blue" Margin="0 5 0 0" >
+                <TextBlock>Add'l minutes</TextBlock>
             </TextBlock>
             <Label Grid.Row="8" Grid.Column="5" Content="%"             HorizontalAlignment="Center" HorizontalContentAlignment="Center" />
             <Label Grid.Row="8" Grid.Column="6" Content="Add'l %"       HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="10 0 0 0" />

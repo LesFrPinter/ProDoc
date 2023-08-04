@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="CodeSnippets\LaborStuff.cs" />
     <Compile Remove="Views\ChargesBlock.xaml.cs" />
     <Compile Remove="Views\Customers.xaml.cs" />
     <Compile Remove="Views\CustomerSearch.xaml.cs" />
@@ -39,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="CodeSnippets\LaborStuff.xaml" />
     <Page Remove="Views\ChargesBlock.xaml" />
     <Page Remove="Views\Customers.xaml" />
     <Page Remove="Views\CustomerSearch.xaml" />
