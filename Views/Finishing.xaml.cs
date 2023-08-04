@@ -93,8 +93,9 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.8;
-            this.Width = this.Width *= 1.8;
+            this.Height = this.Height *= 1.5;
+            this.Width = this.Width *= 1.5;
+            this.Top = 25;
         }
 
         private void LoadDropDowns()

@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
+        Loaded="OnLoad"
         Title="MainWindow" Height="750" Width="1020">
 
     <Window.Resources>
@@ -19,7 +20,9 @@
 
     </Window.Resources>
 
-    <Grid Background="LightGray" Margin="5">
+    <Viewbox>
+
+        <Grid Background="LightGray" Margin="5" Height="750" Width="1050">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -28,13 +31,13 @@
 
         <!--Set MenuDropAlignment to 0 in RegEdit-->
 
-        <Menu HorizontalContentAlignment="Left">
-            <MenuItem Header="_File"  VerticalAlignment="Center">
+        <Menu HorizontalContentAlignment="Left" HorizontalAlignment="Left" Background="LightGray">
+                <MenuItem Header="_File"  VerticalAlignment="Center" Background="LightGray">
                 <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
             </MenuItem>
-            <MenuItem Header="_Screens" VerticalAlignment="Center">
+                <MenuItem Header="_Screens" VerticalAlignment="Center" Background="LightGray">
                 <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click"         />
-                <MenuItem x:Name="mnuNewEstimate"       Header="New Estimate"       Click="mnuNewEstimate_Click"        />
+                <!--<MenuItem x:Name="mnuNewEstimate"       Header="New Estimate"       Click="mnuNewEstimate_Click"        />-->
                 <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"          />
                 <MenuItem x:Name="mnuStandards"         Header="Standards" >
                 <MenuItem x:Name="mnuPressStandards"	Header="Press Standards"    Click="mnuPressStandards_Click"	    />
@@ -86,5 +89,7 @@
         </TextBox>
 
     </Grid>
+
+    </Viewbox>
 
 </Window>

@@ -15,7 +15,7 @@ namespace ProDocEstimate
 {
     public partial class Quotations : Window, INotifyPropertyChanged
     {
-        HistoricalPrices hp = new();
+//        HistoricalPrices hp = new();
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
@@ -38,7 +38,7 @@ namespace ProDocEstimate
         private string? fsfrac1; public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
         private string? fsint2;  public string? FSINT2  { get { return fsint2;  } set { fsint2  = value; OnPropertyChanged(); } }
         private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
-        private int?    parts;   public int?    PARTS   { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
+        private int     parts;   public int     PARTS   { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
 
         private string? papertype; public string? PAPERTYPE { get { return papertype; } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
         private string? rollwidth; public string? ROLLWIDTH { get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
@@ -140,6 +140,9 @@ namespace ProDocEstimate
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
+        public void OnLoad(object sender, RoutedEventArgs e)
+        { this.Height = this.Height *= 1.5; this.Width = this.Width *= 1.5; this.Top = 50; }
+
         private void LoadAvailableCategories()
         {
             lstAvailable.Items.Clear();
@@ -153,6 +156,7 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Converting");
             lstAvailable.Items.Add("PrePress");
             lstAvailable.Items.Add("Combo");
+            lstAvailable.Items.Add("Strike In");
             lstAvailable.Items.Add("Security");
         }
 
@@ -504,20 +508,20 @@ namespace ProDocEstimate
             { string[] cells = cell.Split(" "); MULT = float.Parse(Elements.Rows[index][3].ToString()); }
         }
 
-        private void dgElements_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            int RowNumber = dgElements.SelectedIndex;
-            int ColumnNumber = dgElements.CurrentCell.Column.DisplayIndex;
-            string? rn = Elements?.Rows[RowNumber][0].ToString();
-            if (rn == "10" || rn == "11" || rn == "12") return;
-            if (ColumnNumber != 2) return;
+        //private void dgElements_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        //{
+        //    int RowNumber = dgElements.SelectedIndex;
+        //    int ColumnNumber = dgElements.CurrentCell.Column.DisplayIndex;
+        //    string? rn = Elements?.Rows[RowNumber][0].ToString();
+        //    if (rn == "10" || rn == "11" || rn == "12") return;
+        //    if (ColumnNumber != 2) return;
 
-            hp = new HistoricalPrices();
-            hp.ShowDialog();
-            float? savedPrice = hp.Price;
-            hp.Close();
-            if (savedPrice != null) { Elements.Rows[RowNumber][ColumnNumber] = savedPrice; }
-        }
+        //    hp = new HistoricalPrices();
+        //    hp.ShowDialog();
+        //    float? savedPrice = hp.Price;
+        //    hp.Close();
+        //    if (savedPrice != null) { Elements.Rows[RowNumber][ColumnNumber] = savedPrice; }
+        //}
 
         private void HandleEsc(object sender, KeyEventArgs e) { if (e.Key == Key.Escape) Close(); }
 
@@ -1025,12 +1029,14 @@ namespace ProDocEstimate
             if (lstSelected.SelectedItem == null) return;
             string? x = lstSelected.SelectedItem.ToString().TrimEnd();
             string check = ((char)0x221A).ToString();
+//            check = "🗹";
             if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
             
             switch (x)
             {
                 case "Backer":
                     {
+                        PARTS = 3;
                         BackerForm backer = new BackerForm(PRESSSIZE, QUOTE_NUM); backer.ShowDialog();
                         backer.Close();
                         break;
@@ -1093,6 +1099,13 @@ namespace ProDocEstimate
                     {
                         Combo combo = new Combo(PRESSSIZE, QUOTE_NUM); combo.ShowDialog(); 
                         if (combo.Removed) { lstSelected_MouseDoubleClick(null, null); }
+                        break;
+                    }
+
+                case "Strike In":
+                    {
+                        StrikeIn strikein = new StrikeIn(PRESSSIZE, QUOTE_NUM); strikein.ShowDialog();
+                        if (strikein.Removed) { lstSelected_MouseDoubleClick(null, null); }
                         break;
                     }
 

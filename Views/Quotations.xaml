@@ -10,6 +10,7 @@
         Width="900"
         Height="770"
         WindowStartupLocation="CenterOwner"
+        Loaded="OnLoad"
         mc:Ignorable="d">
 
     <Window.Resources>
@@ -1413,7 +1414,7 @@
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT4a, StringFormat=N2}" />
 
-                            <DataGrid x:Name="dgElements"
+                            <!--<DataGrid x:Name="dgElements"
 						        Grid.Row="6"
                                 Grid.Column="0"
 						        Grid.RowSpan="11"
@@ -1491,7 +1492,7 @@
 
                                 </DataGrid.Columns>
 
-                            </DataGrid>
+                            </DataGrid>-->
 
                             <Grid Grid.Row="8">
 

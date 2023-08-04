@@ -13,7 +13,14 @@ namespace ProDocEstimate
         private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
 		private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
 
-		private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.5;
+            this.Width = this.Width *= 1.5;
+            this.Top = 50;
+        }
+
+        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
 		{ Application.Current.Shutdown(); Environment.Exit(Environment.ExitCode); }
 
 		private void mnuCustomers_Click(object sender, RoutedEventArgs e)
@@ -30,12 +37,12 @@ namespace ProDocEstimate
 			quotations.ShowDialog();
 		}
 
-		private void mnuItems_Click(object sender, RoutedEventArgs e)
-		{
-			Window items = new Items();
-			items.Owner = this;
-			items.ShowDialog();
-		}
+		//private void mnuItems_Click(object sender, RoutedEventArgs e)
+		//{
+		//	Window items = new Items();
+		//	items.Owner = this;
+		//	items.ShowDialog();
+		//}
 
 		private void mnuPV01_Click(object sender, RoutedEventArgs e)
 		{
@@ -58,12 +65,12 @@ namespace ProDocEstimate
 		//	standards.ShowDialog();
 		//}
 
-		private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
-		{
-			Window newEstimate = new Views.NewEstimate();
-			newEstimate.Owner = this;
-			newEstimate.ShowDialog();
-		}
+		//private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
+		//{
+		//	Window newEstimate = new Views.NewEstimate();
+		//	newEstimate.Owner = this;
+		//	newEstimate.ShowDialog();
+		//}
 
 		private void mnuEdit_Click(object sender, RoutedEventArgs e)
 		{
