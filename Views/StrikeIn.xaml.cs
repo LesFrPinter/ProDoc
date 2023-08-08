@@ -164,26 +164,10 @@ namespace ProDocEstimate.Views
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNum + "' AND CATEGORY = 'Strike In'";
             dt = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+            da = new SqlDataAdapter(cmd, conn); 
+            da.Fill(dt);        // dt is declared globally, so the LoadAdjustments routines will be able to see it
 
-            if (dt.Rows.Count > 0)
-            {   int t;
-
-                t = 0; int.TryParse(dt.Rows[0]["Value1"].ToString(), out t); FCPct = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value2"].ToString(), out t); PSPct = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value3"].ToString(), out t); BTPct = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value4"].ToString(), out t); FMPct = t;
-
-                t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(),  out t); LabPS  = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(),  out t); LabPSL = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(),  out t); LabCS  = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(),  out t); LabCSL = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(),  out t); LabBS  = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
-
-                //t = 0; int.TryParse(dt.Rows[0]["SETUP_MINUTES"].ToString(),    out t); SetupTotal = t;
-                //t = 0; int.TryParse(dt.Rows[0]["SLOWDOWN_PERCENT"].ToString(), out t); SlowdownTotal = t;
-            }
+            if (dt.Rows.Count > 0) { LoadMaterialsAdjustments(); LoadLaborAdjustments(); }
 
             conn.Close();
             CalcTotal();
@@ -208,6 +192,26 @@ namespace ProDocEstimate.Views
             FinishMaterial  = (1.00F + ((float)FMPct / 100.00F)) * BaseFinishMatl;
         }
 
+        private void LoadMaterialsAdjustments()
+        {   // Load percentage markups for the four Materials base values
+            int t;
+            t = 0; int.TryParse(dt.Rows[0]["Value1"].ToString(), out t); FCPct = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value2"].ToString(), out t); PSPct = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value3"].ToString(), out t); BTPct = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value4"].ToString(), out t); FMPct = t;
+        }
+
+        private void LoadLaborAdjustments()
+        {   // Load minutes of setup and slowdown times to the base values read from the FEATURES table
+            int t;
+            t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(), out t); LabPS = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(), out t); LabPSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(), out t); LabCS = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(), out t); LabCSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(), out t); LabBS = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
+        }
+
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
             CalculateLabor();
@@ -226,21 +230,6 @@ namespace ProDocEstimate.Views
             BinderySlowdown = BaseBinderySlowdown + LabBSL;
             SlowdownTotal   = PressSlowdown + CollatorSlowdown + BinderySlowdown;
 
-        }
-
-        //private void GetGrandTotal()
-        //{
-        //    //FlatTotal =
-        //    //   CalculatedFlatCharge
-        //    // + CalculatedPlateCharge
-        //    // + CalculatedFinishCharge
-        //    // + CalculatedConvCharge
-        //    // + CalculatedPressCharge;
-        //}
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -271,6 +260,9 @@ namespace ProDocEstimate.Views
 
             Close();
         }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        { Close(); }
 
     }
 }
