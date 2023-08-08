@@ -1126,9 +1126,9 @@ namespace ProDocEstimate
 
             System.Windows.Clipboard.SetText(cmd);
 
-            dt = new DataTable("Details");
+            dt   = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
+            da   = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 string V1 = dt.Rows[i]["Value1"].ToString();
@@ -1180,7 +1180,7 @@ namespace ProDocEstimate
                 string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
 
                 if(i < lstSelected.Items.Count)
-                 {  lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
+                 { lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
                    lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
                  }
 
