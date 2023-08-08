@@ -15,16 +15,28 @@ namespace ProDocEstimate.Views
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-        // The following test data was added to the Features table:
-            //update features set
-            //  plate_matl      = '10.00',
-            //  finish_matl     = '20.00',
-            //  press_matl      = '30.00',
-            //  conv_matl       = '40.00'
-            // where category   = 'CONVERTING'
-            //   and press_size = '11'
-
         #region Properties
+
+        // The following test data was added to the Features table:
+        //UPDATE FEATURES SET
+        //  PLATE_MATL      = '10.00',
+        //  FINISH_MATL     = '20.00',
+        //  PRESS_MATL      = '30.00',
+        //  CONV_MATL       = '40.00'
+        // WHERE CATEGORY   = 'CONVERTING'
+        //   AND PRESS_SIZE = '11'
+
+        // Added for LABOR COST testing:
+        //UPDATE FEATURES
+        //   SET
+        //    PRESS_SETUP_TIME = 5,
+        //    COLLATOR_SETUP = 10,
+        //    BINDERY_SETUP = 15,
+        //    PRESS_SLOWDOWN = 20,
+        //    COLLATOR_SLOWDOWN = 25,
+        //    BINDERY_SLOWDOWN = 30
+        // WHERE CATEGORY = 'CONVERTING'
+        //   AND PRESS_SIZE = '11'
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
@@ -35,7 +47,7 @@ namespace ProDocEstimate.Views
         private int    max;         public int    Max       { get { return max;       } set { max       = value; OnPropertyChanged(); } }
         private string pressSize;   public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
         private string quoteNum;    public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }    // Which of these two
-//        private string quoteNo;     public string QuoteNo   { get { return quoteNo;   } set { quoteNo   = value; OnPropertyChanged(); } }  //  is no longer used?
+        public  bool   Starting;
 
         private int crash; public int Crash { get { return crash; } set { crash = value; OnPropertyChanged(); } }
         private int black; public int Black { get { return black; } set { black = value; OnPropertyChanged(); } }
@@ -79,6 +91,43 @@ namespace ProDocEstimate.Views
         private float flatTotal; public float FlatTotal { get { return flatTotal; } set { flatTotal = value; OnPropertyChanged(); } }
         private string fieldList; public string FieldList { get { return fieldList; } set { fieldList = value; OnPropertyChanged(); } }
 
+        private float pressSetup; public float PressSetup { get { return pressSetup; } set { pressSetup = value; OnPropertyChanged(); } }
+        private int collatorSetup; public int CollatorSetup { get { return collatorSetup; } set { collatorSetup = value; OnPropertyChanged(); } }
+        private int binderySetup; public int BinderySetup { get { return binderySetup; } set { binderySetup = value; OnPropertyChanged(); } }
+
+        private int basePressSetup; public int BasePressSetup { get { return basePressSetup; } set { basePressSetup = value; OnPropertyChanged(); } }
+        private int baseCollatorSetup; public int BaseCollatorSetup { get { return baseCollatorSetup; } set { baseCollatorSetup = value; OnPropertyChanged(); } }
+        private int baseBinderySetup; public int BaseBinderySetup { get { return baseBinderySetup; } set { baseBinderySetup = value; OnPropertyChanged(); } }
+
+        // Material percentages in NumericUpDowns
+        private int fcPct; public int FCPct { get { return fcPct; } set { fcPct = value; OnPropertyChanged(); } }
+        private int psPct; public int PSPct { get { return psPct; } set { psPct = value; OnPropertyChanged(); } }
+        private int btPct; public int BTPct { get { return btPct; } set { btPct = value; OnPropertyChanged(); } }
+        private int fmPct; public int FMPct { get { return fmPct; } set { fmPct = value; OnPropertyChanged(); } }
+
+        // Labor percentages in NumericUpDowns
+        private int labPS; public int LabPS { get { return labPS; } set { labPS = value; OnPropertyChanged(); } }
+        private int labCS; public int LabCS { get { return labCS; } set { labCS = value; OnPropertyChanged(); } }
+        private int labBS; public int LabBS { get { return labBS; } set { labBS = value; OnPropertyChanged(); } }
+        private int labPSL; public int LabPSL { get { return labPSL; } set { labPSL = value; OnPropertyChanged(); } }
+        private int labCSL; public int LabCSL { get { return labCSL; } set { labCSL = value; OnPropertyChanged(); } }
+        private int labBSL; public int LabBSL { get { return labBSL; } set { labBSL = value; OnPropertyChanged(); } }
+
+        private int pressSlowdown; public int PressSlowdown { get { return pressSlowdown; } set { pressSlowdown = value; OnPropertyChanged(); } }
+        private int collatorSlowdown; public int CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
+        private int binderySlowdown; public int BinderySlowdown { get { return binderySlowdown; } set { binderySlowdown = value; OnPropertyChanged(); } }
+
+        private int basepressSlowdown; public int BasePressSlowdown { get { return basepressSlowdown; } set { basepressSlowdown = value; OnPropertyChanged(); } }
+        private int basecollatorSlowdown; public int BaseCollatorSlowdown { get { return basecollatorSlowdown; } set { basecollatorSlowdown = value; OnPropertyChanged(); } }
+        private int basebinderySlowdown; public int BaseBinderySlowdown { get { return basebinderySlowdown; } set { basebinderySlowdown = value; OnPropertyChanged(); } }
+
+        private int calculatedPS; public int CalculatedPS { get { return calculatedPS; } set { calculatedPS = value; OnPropertyChanged(); } }
+        private int calculatedCS; public int CalculatedCS { get { return calculatedCS; } set { calculatedCS = value; OnPropertyChanged(); } }
+        private int calculatedBS; public int CalculatedBS { get { return calculatedBS; } set { calculatedBS = value; OnPropertyChanged(); } }
+
+        private int slowdownTotal; public int SlowdownTotal { get { return slowdownTotal; } set { slowdownTotal = value; OnPropertyChanged(); } }
+        private int setupTotal; public int SetupTotal { get { return setupTotal; } set { setupTotal = value; OnPropertyChanged(); } }
+
         #endregion
 
         public Converting(string PRESSSIZE, string QUOTENUM)
@@ -90,9 +139,13 @@ namespace ProDocEstimate.Views
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
 
+            Starting = true;
+
             LoadMaxima();
+            LoadQuote();
             LoadBaseValues();
-            LoadData();
+
+            Starting = false;
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
@@ -105,6 +158,7 @@ namespace ProDocEstimate.Views
 
         private void LoadMaxima()
         {
+            // This sets the maximum value for each of the F_TYPE NumericUpDowns (1 for most of them)
             string str =  "SELECT F_TYPE, MAX(Number) AS Max FROM [ESTIMATING].[dbo].[FEATURES] " 
                        + $" WHERE Category = 'Converting' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
 
@@ -123,85 +177,10 @@ namespace ProDocEstimate.Views
             dv.RowFilter = "F_TYPE='TRANSFER TAPE'";  M8.Maximum = int.Parse(dv[0]["Max"].ToString());
             dt.Clear();
 
-            //#region Old method of summing charges by f_type
-            //str = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'Converting' AND Press_Size = '{PressSize}' ORDER BY F_TYPE";
-            //da.SelectCommand.CommandText = str;
-            //DataTable dt2 = new(); da.Fill(dt2);
-            //if (dt2.Rows.Count == 0) return;
-
-            //dv = dt2.DefaultView;
-
-            //float t = 0.00F;
-            //dv.RowFilter = "F_TYPE='2 CRASH NUMB'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc11 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc12 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc13 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc14 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc15 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc16 = t;
-
-            //dv.RowFilter = "F_TYPE='BLACK NUMB'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc21 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc22 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc23 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc24 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc25 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc26 = t;
-
-            //dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc31 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc32 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc33 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc34 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc35 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc36 = t;
-
-            //dv.RowFilter = "F_TYPE='SNAP GLUE 5-12'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc41 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc42 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc43 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc44 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc45 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc46 = t;
-
-            //dv.RowFilter = "F_TYPE='FOLDING'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc51 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc52 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc53 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc54 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc55 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc56 = t;
-
-            //dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc61 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc62 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc63 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc64 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc65 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc66 = t;
-
-            //dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc71 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc72 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc73 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc74 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc75 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc76 = t;
-
-            //dv.RowFilter = "F_TYPE='TRANSFER TAPE'";
-            //t = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t); Fc81 = t;
-            //t = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out t); Fc82 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out t); Fc83 = t;
-            //t = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t); Fc84 = t;
-            //t = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out t); Fc85 = t;
-            //t = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out t); Fc86 = t;
-
-            //#endregion
-
             return;
         }
 
-        private void LoadData()
+        private void LoadQuote()
         {
             string str = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Converting'";
             SqlConnection conn = new(ConnectionString);
@@ -229,16 +208,32 @@ namespace ProDocEstimate.Views
             int t4 = 0; int.TryParse(dv[0]["PressChargePct"].ToString(), out t4); PressChargePct = t4;
             int t5 = 0; int.TryParse(dv[0]["ConvertChargePct"].ToString(), out t5); ConvChargePct = t5;
             int t6 = 0; int.TryParse(dv[0]["PlateChargePct"].ToString(), out t6); PlateChargePct = t6;
+
+            LabPS  = int.Parse(dv[0]["PRESS_ADDL_MIN"].ToString());
+            LabPSL = int.Parse(dv[0]["PRESS_SLOW_PCT"].ToString());
+            LabCS  = int.Parse(dv[0]["COLL_ADDL_MIN"].ToString());
+            LabCSL = int.Parse(dv[0]["COLL_SLOW_PCT"].ToString());
+            LabBS  = int.Parse(dv[0]["BIND_ADDL_MIN"].ToString());
+            LabBSL = int.Parse(dv[0]["BIND_SLOW_PCT"].ToString());
         }
 
         private void LoadBaseValues()
         {
+            // Material base costs:
             BaseFlatCharge = 0.00F;
             BaseRunCharge = 0.00F;
             BasePlateCharge = 0.00F;
             BaseFinishCharge = 0.00F;
             BasePressCharge = 0.00F;
             BaseConvCharge = 0.00F;
+
+            // Labor base minutes:
+            BasePressSetup = 0;
+            BaseCollatorSetup = 0;
+            BaseBinderySetup = 0;
+            BasePressSlowdown = 0;
+            BaseCollatorSlowdown = 0;
+            BaseBinderySlowdown = 0;
 
             string str = "SELECT * FROM[ESTIMATING].[dbo].[FEATURES]"
                 + $" WHERE CATEGORY = 'CONVERTING' AND PRESS_SIZE = '11'"
@@ -260,12 +255,20 @@ namespace ProDocEstimate.Views
             float t = 0.00F;
             // Add costs for all rows of each f_type that currently have a value greater than zero
             for (int i = 0; i < dv3.Count; i++)
-            {   t = 0.00F; float.TryParse(dv3[i]["FLAT_CHARGE"].ToString(), out t); BaseFlatCharge += t;
-                t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(), out t); BaseRunCharge += t;
-                t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(), out t); BasePlateCharge += t;
+            {   t = 0.00F; float.TryParse(dv3[i]["FLAT_CHARGE"].ToString(), out t); BaseFlatCharge   += t;
+                t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(),  out t); BaseRunCharge    += t;
+                t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(),  out t); BasePlateCharge  += t;
                 t = 0.00F; float.TryParse(dv3[i]["FINISH_MATL"].ToString(), out t); BaseFinishCharge += t;
-                t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(), out t); BasePressCharge += t;
-                t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(), out t); BaseConvCharge += t;
+                t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(),  out t); BasePressCharge  += t;
+                t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(),   out t); BaseConvCharge   += t;
+
+            // Load labor costs
+                BasePressSetup       += int.Parse(dv3[i]["PRESS_SETUP_TIME"].ToString());
+                BaseCollatorSetup    += int.Parse(dv3[i]["COLLATOR_SETUP"].ToString());
+                BaseBinderySetup     += int.Parse(dv3[i]["BINDERY_SETUP"].ToString());
+                BasePressSlowdown    += int.Parse(dv3[i]["PRESS_SLOWDOWN"].ToString());
+                BaseCollatorSlowdown += int.Parse(dv3[i]["COLLATOR_SLOWDOWN"].ToString());
+                BaseBinderySlowdown  += int.Parse(dv3[i]["BINDERY_SLOWDOWN"].ToString());
             }
 
             CalcTotals();
@@ -281,39 +284,62 @@ namespace ProDocEstimate.Views
            FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
-            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Converting'";
-            conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+            CalculateLabor();
+        }
 
-            try     { scmd.ExecuteNonQuery(); }
-            catch   (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
+        private void CalculateLabor()
+        {
+            if (Starting) return;
+            PressSetup = BasePressSetup + LabPS;
+            CollatorSetup = BaseCollatorSetup + LabCS;
+            BinderySetup = BaseBinderySetup + LabBS;
+            SetupTotal = (int)PressSetup + CollatorSetup + BinderySetup;
 
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + "   Quote_Num,      Category,                 Sequence,"
-                + "   Param1,         Param2,                   Param3,             Param4,           Param5,               Param6,             Param7,    Param8,         "
-                + "   Value1,         Value2,                   Value3,             Value4,           Value5,               Value6,             Value7,    Value8, "
-                + "   TotalFlatChg,   PerThousandChg,           FlatChargePct,      RunChargePct,     FinishChargePct,      PressChargePct,     ConvertChargePct,   PlateChargePct ) VALUES ( "
-                + $"'{QuoteNum}',    'Converting',              9, "
-                +  " '2 CRASH NUMB', 'BLACK NUMB',             'SNAP GLUE 2-4',    'SNAP GLUE 5-12', 'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING', 'TRANSFER TAPE', "
-                + $"'{Crash}',      '{Black}',                 '{Snap2}',          '{Snap5}',        '{Cont2}',            '{Cont5}',          '{Fold}',  '{Tape}',"
-                + $"'{FlatTotal}',  '{CalculatedRunCharge}',   '{FlatChargePct}',  '{RunChargePct}', '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}', '{PlateChargePct}' )";
+            PressSlowdown = BasePressSlowdown + LabPSL;
+            CollatorSlowdown = BaseCollatorSlowdown + LabCSL;
+            BinderySlowdown = BaseBinderySlowdown + LabBSL;
+            SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
 
-            scmd.CommandText = cmd;
-            conn.Open();
-            try     { scmd.ExecuteNonQuery(); }
-            catch   (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
-
-            this.Close();
         }
 
         private void Pct_Changed(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         { CalcTotals(); }
 
         private void ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { LoadBaseValues(); CalcTotals(); }
+        { LoadBaseValues(); CalcTotals(); CalculateLabor(); }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Converting'";
+            conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
+                + "    Quote_Num,       Category,                Sequence,"
+                + "    Param1,          Param2,                  Param3,             Param4,            Param5,               Param6,             Param7,            Param8, "
+                + "    Value1,          Value2,                  Value3,             Value4,            Value5,               Value6,             Value7,            Value8, "
+                + "    TotalFlatChg,    PerThousandChg,          FlatChargePct,      RunChargePct,      FinishChargePct,      PressChargePct,     ConvertChargePct,  PlateChargePct,"
+                + "    PRESS_ADDL_MIN,  COLL_ADDL_MIN,           BIND_ADDL_MIN,      PRESS_SLOW_PCT,    COLL_SLOW_PCT,        BIND_SLOW_PCT "
+                + " ) VALUES ( "
+                + $" '{QuoteNum}',     'Converting',             9, "
+                + "  '2 CRASH NUMB',   'BLACK NUMB',            'SNAP GLUE 2-4',    'SNAP GLUE 5-12',  'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING',          'TRANSFER TAPE', "
+                + $" '{Crash}',        '{Black}',               '{Snap2}',          '{Snap5}',         '{Cont2}',            '{Cont5}',          '{Fold}',           '{Tape}', "
+                + $" '{FlatTotal}',    '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}',  '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}',  '{PlateChargePct}', "
+                + $"  {LabPS},          {LabCS},                 {LabBS},            {LabPSL},          {LabCSL},             {LabBSL} )";
+
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            this.Close();
+        }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { Close(); }
