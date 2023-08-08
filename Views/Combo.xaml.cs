@@ -11,6 +11,12 @@ namespace ProDocEstimate.Views
 {
     public partial class Combo : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+        #region Properties
+
         // Data loaded for testing:
         //update features set
         //  flat_charge = 60.00,
@@ -18,21 +24,29 @@ namespace ProDocEstimate.Views
         //  plate_matl  = 20.00,
         //  finish_matl = 30.00,
         //  press_matl  = 40.00,
-        //  conv_matl   = 60.00
+        //  conv_matl   = 60.00,
         // where category   = 'COMBO'
         //   and Press_SIZE = '11';
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null)
-        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+        //TestData:
+        //UPDATE[ESTIMATING].[dbo].[FEATURES]
+        // SET
+        //   PRESS_SETUP_TIME  = 10,
+        //   COLLATOR_SETUP    = 20,
+        //   BINDERY_SETUP     = 30,
+        //   PRESS_SLOWDOWN    = 40,
+        //   COLLATOR_SLOWDOWN = 50,
+        //   SLOWDOWN_PER_PART = 60
+        //  WHERE CATEGORY     = 'COMBO'
+        //    AND PRESS_SIZE   = '11'
 
-        #region Properties
+        public bool Starting;
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-        public SqlConnection? conn;
-        public SqlDataAdapter? da;
-        public DataTable? dt;
-        public SqlCommand? scmd;
+        public SqlConnection conn;
+        public SqlDataAdapter da;
+        public DataTable dt;
+        public SqlCommand scmd;
 
         private int max; public int Max { get { return max; } set { max = value; OnPropertyChanged(); } }
         private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
@@ -48,7 +62,7 @@ namespace ProDocEstimate.Views
         private float? total; public float? Total { get { return total; } set { total = value; OnPropertyChanged(); } }
         private bool backer; public bool Backer { get { return backer; } set { backer = value; OnPropertyChanged(); } }
 
-        private string quoteNo; public string QuoteNo { get { return quoteNo; } set { quoteNo = value; } }
+        //private string quoteNo; public string QuoteNo { get { return quoteNo; } set { quoteNo = value; } }
 
         private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
         private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
@@ -83,6 +97,41 @@ namespace ProDocEstimate.Views
         private float flatTotal; public float FlatTotal { get { return flatTotal; } set { flatTotal = value; OnPropertyChanged(); } }
         private string fieldList; public string FieldList { get { return fieldList; } set { fieldList = value; OnPropertyChanged(); } }
 
+        // Labor percentages in NumericUpDowns
+        private int labPS; public int LabPS { get { return labPS; } set { labPS = value; OnPropertyChanged(); } }
+        private int labCS; public int LabCS { get { return labCS; } set { labCS = value; OnPropertyChanged(); } }
+        private int labBS; public int LabBS { get { return labBS; } set { labBS = value; OnPropertyChanged(); } }
+        private int labPSL; public int LabPSL { get { return labPSL; } set { labPSL = value; OnPropertyChanged(); } }
+        private int labCSL; public int LabCSL { get { return labCSL; } set { labCSL = value; OnPropertyChanged(); } }
+        private int labBSL; public int LabBSL { get { return labBSL; } set { labBSL = value; OnPropertyChanged(); } }
+
+        private float pressSetup; public float PressSetup { get { return pressSetup; } set { pressSetup = value; OnPropertyChanged(); } }
+        private int collatorSetup; public int CollatorSetup { get { return collatorSetup; } set { collatorSetup = value; OnPropertyChanged(); } }
+        private int binderySetup; public int BinderySetup { get { return binderySetup; } set { binderySetup = value; OnPropertyChanged(); } }
+
+        private int basePressSetup; public int BasePressSetup { get { return basePressSetup; } set { basePressSetup = value; OnPropertyChanged(); } }
+        private int baseCollatorSetup; public int BaseCollatorSetup { get { return baseCollatorSetup; } set { baseCollatorSetup = value; OnPropertyChanged(); } }
+        private int baseBinderySetup; public int BaseBinderySetup { get { return baseBinderySetup; } set { baseBinderySetup = value; OnPropertyChanged(); } }
+
+        private int pressSlowdown; public int PressSlowdown { get { return pressSlowdown; } set { pressSlowdown = value; OnPropertyChanged(); } }
+        private int collatorSlowdown; public int CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
+        private int binderySlowdown; public int BinderySlowdown { get { return binderySlowdown; } set { binderySlowdown = value; OnPropertyChanged(); } }
+
+        private int basepressSlowdown; public int BasePressSlowdown { get { return basepressSlowdown; } set { basepressSlowdown = value; OnPropertyChanged(); } }
+        private int basecollatorSlowdown; public int BaseCollatorSlowdown { get { return basecollatorSlowdown; } set { basecollatorSlowdown = value; OnPropertyChanged(); } }
+        private int basebinderySlowdown; public int BaseBinderySlowdown { get { return basebinderySlowdown; } set { basebinderySlowdown = value; OnPropertyChanged(); } }
+
+        //private int labPSS1Pct; public int LabPSS1Pct { get { return labPSS1Pct; } set { labPSS1Pct = value; OnPropertyChanged(); } }
+        //private int labCSS2Pct; public int LabCSS2Pct { get { return labCSS2Pct; } set { labCSS2Pct = value; OnPropertyChanged(); } }
+        //private int labBSS2Pct; public int LabBSS2Pct { get { return labBSS2Pct; } set { labBSS2Pct = value; OnPropertyChanged(); } }
+
+        private int calculatedPS; public int CalculatedPS { get { return calculatedPS; } set { calculatedPS = value; OnPropertyChanged(); } }
+        private int calculatedCS; public int CalculatedCS { get { return calculatedCS; } set { calculatedCS = value; OnPropertyChanged(); } }
+        private int calculatedBS; public int CalculatedBS { get { return calculatedBS; } set { calculatedBS = value; OnPropertyChanged(); } }
+
+        private int slowdownTotal; public int SlowdownTotal { get { return slowdownTotal; } set { slowdownTotal = value; OnPropertyChanged(); } }
+        private int setupTotal; public int SetupTotal { get { return setupTotal; } set { setupTotal = value; OnPropertyChanged(); } }
+
         #endregion
 
         public Combo(string PRESSSIZE, string QUOTENUM)
@@ -98,10 +147,31 @@ namespace ProDocEstimate.Views
 
             FlatCharge = 0.00F;     // Do I need to do this? I don't think so...
 
+            Starting = true;
+
+            FieldList =
+               " F_TYPE,"
+             + " FLAT_CHARGE,"
+             + " RUN_CHARGE,"
+             + " PLATE_MATL,"
+             + " ADDTL_BIND_TIME,"
+             + " FINISH_MATL,"
+             + " CONV_MATL,"
+             + " PRESS_MATL,"
+             + " PRESS_SETUP_TIME  AS PRESS_SETUP,"
+             + " COLLATOR_SETUP,"
+             + " BINDERY_SETUP,"
+             + " PRESS_SLOWDOWN,"
+             + " COLLATOR_SLOWDOWN,"
+             + " BINDERY_SLOWDOWN,"
+             + " SLOWDOWN_PER_PART AS BINDERY_SLOWDOWN";  // from the FEATURES table
+
             LoadMaximum();
             LoadFeature();
             LoadData();
             CalcTotal();
+
+            Starting = false;
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
@@ -125,7 +195,7 @@ namespace ProDocEstimate.Views
 
         private void LoadFeature()
         {
-            string str = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'COMBO' AND Press_Size = '{PressSize}' ";
+            string str = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'COMBO' AND Press_Size = '{PressSize}' ";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear();
             try { da.Fill(dt); }
@@ -139,6 +209,16 @@ namespace ProDocEstimate.Views
             float fm = 0.00F; float.TryParse(dv[0]["Finish_Matl"].ToString(), out fm); BaseFinishCharge = fm;
             float rm = 0.00F; float.TryParse(dv[0]["Press_Matl"].ToString(),  out rm); BasePressCharge  = rm;
             float cm = 0.00F; float.TryParse(dv[0]["Conv_Matl"].ToString(),   out cm); BaseConvCharge   = cm;
+
+            // Base Labor Charges
+            // The next three calculations assume that the values from the FEATURES table are minutes
+            BasePressSetup       = int.Parse(dv[0]["PRESS_SETUP"].ToString());
+            BaseCollatorSetup    = int.Parse(dv[0]["COLLATOR_SETUP"].ToString());
+            BaseBinderySetup     = int.Parse(dv[0]["BINDERY_SETUP"].ToString());
+
+            BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());       // Minutes of slowdown to add to the base amount...
+            BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"].ToString());    //              "
+            BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());     //              "
         }
 
         private void LoadData()
@@ -169,7 +249,14 @@ namespace ProDocEstimate.Views
 
             float tfc = 0.00F; float.TryParse(dv[0]["TotalFlatChg"].ToString(),    out tfc); Total          = tfc;
 
-//            Total = float.Parse(dt.Rows[0]["Amount"].ToString());
+            //Load Labor adjustments
+            int t;
+            t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(),  out t); LabPS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(),  out t); LabPSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(),  out t); LabCS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(),  out t); LabCSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(),  out t); LabBS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
 
             CalcTotal();
         }
@@ -184,27 +271,28 @@ namespace ProDocEstimate.Views
             CalculatedConvCharge   = Combo1 * (BaseConvCharge   * (1 + ConvChargePct   / 100));
 
             FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
+
+            CalculateLabor();
+
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
-            DeleteQuoteRow("Combo");
+            CalculateLabor();
+        }
 
-            string cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
-                + " (Quote_Num,     Category, Sequence, Param1,    Value1,     FlatChargePct,     RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,  PerThousandChg )"
-                + " VALUES ( "
-                + $"'{QuoteNum}',  'Combo',   8,       'Combo1', '{Combo1}', '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}' )";
+        private void CalculateLabor()
+        {
+            if (Starting) return;
+            PressSetup = BasePressSetup + LabPS;
+            CollatorSetup = BaseCollatorSetup + LabCS;
+            BinderySetup = BaseBinderySetup + LabBS;
+            SetupTotal = (int)PressSetup + CollatorSetup + BinderySetup;
 
-            Clipboard.SetText(cmd);     // To test in SSMS
-
-            SqlConnection conn = new(ConnectionString); conn.Open();
-            SqlCommand    scmd = new(cmd, conn);
-
-            try { scmd.ExecuteNonQuery();                       }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally              { conn.Close();                }
-
-            this.Hide();
+            PressSlowdown = BasePressSlowdown + LabPSL;
+            CollatorSlowdown = BaseCollatorSlowdown + LabCSL;
+            BinderySlowdown = BaseBinderySlowdown + LabBSL;
+            SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
         }
 
         private void DeleteQuoteRow(string cat)
@@ -217,13 +305,41 @@ namespace ProDocEstimate.Views
             finally { conn.Close(); }
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { CalcTotal(); }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            DeleteQuoteRow("Combo");
+
+            string cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
+                + " ( Quote_Num,     Category, Sequence,"
+                + "   Param1,        Value1,     FlatChargePct,     RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
+                + "   TotalFlatChg,  PerThousandChg, "
+                + "   Param5,         Param6,         Param7,          Param8,         Param9,     Param10,"
+                + "   Value5,         Value6,         Value7,          Value8,         Value9,     Value10, "
+                + "   SETUP_MINUTES,  SLOWDOWN_PERCENT ) "
+                + " VALUES ( "
+                + $" '{QuoteNum}',   'Combo',   8,"
+                + $"  'Combo1',     '{Combo1}', '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
+                + $" '{FlatTotal}', '{CalculatedRunCharge}',"
+                +  "   'LabPS',      'LabPSL',       'LabCS',         'LabCSL',       'LabBS',    'LabBSL',"
+                + $"  '{LabPS}',    '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}',  '{LabBSL}',"
+                + $"   {SetupTotal}, {SlowdownTotal} )";
+
+            SqlCommand scmd = new();
+            scmd.CommandText = cmd;
+            SqlConnection conn = new(ConnectionString);
+            conn.Open();
+            scmd.Connection = conn;
+            scmd.ExecuteNonQuery();
+            conn.Close();
+
             this.Hide();
         }
 
-        private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalcTotal(); }
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        { this.Hide(); }
 
     }
 }

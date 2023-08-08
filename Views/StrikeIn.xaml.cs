@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -90,10 +91,14 @@ namespace ProDocEstimate.Views
 
         public StrikeIn(string PRESSSIZE, string QUOTENUM)
         {
+            //TestData:
+            //UPDATE[ESTIMATING].[dbo].[FEATURES]
+            // SET  (What was changed here?)
+
             InitializeComponent();
             Removed = true; // Will be "automatically" removed from the "lstSelected" collection when the screen is closed unless there are some saved parameters
 
-            PressSize = PRESSSIZE;
+            PressSize = PRESSSIZE; 
             QuoteNum = QUOTENUM;
 
             // List of fields to be retrieved from the FEATURES table:
@@ -174,23 +179,8 @@ namespace ProDocEstimate.Views
             Removed = false;
         }
 
-        private void CalcTotal()
-        {
-            CalcMaterial(); CalculateLabor();
-        }
-
         private void MatValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {   if (Starting) return;
-            CalcMaterial(); 
-        }
-
-        private void CalcMaterial()
-        {   if (Starting) return;
-            FlatCharge      = (1.00F + ((float)FCPct / 100.00F)) * BaseFlatCharge;
-            SetupMinutes    = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BasePressSetup.ToString());
-            BindingTime     = (1.00F + ((float)BTPct / 100.00F)) * float.Parse(BaseBindTime.ToString());
-            FinishMaterial  = (1.00F + ((float)FMPct / 100.00F)) * BaseFinishMatl;
-        }
+        { CalcMaterial(); }
 
         private void LoadMaterialsAdjustments()
         {   // Load percentage markups for the four Materials base values
@@ -210,6 +200,20 @@ namespace ProDocEstimate.Views
             t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(), out t); LabCSL = t;
             t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(), out t); LabBS = t;
             t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
+        }
+
+        private void CalcMaterial()
+        {
+            if (Starting) return;
+            FlatCharge = (1.00F + ((float)FCPct / 100.00F)) * BaseFlatCharge;
+            SetupMinutes = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BasePressSetup.ToString());
+            BindingTime = (1.00F + ((float)BTPct / 100.00F)) * float.Parse(BaseBindTime.ToString());
+            FinishMaterial = (1.00F + ((float)FMPct / 100.00F)) * BaseFinishMatl;
+        }
+
+        private void CalcTotal()
+        {
+            CalcMaterial(); CalculateLabor();
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -241,15 +245,17 @@ namespace ProDocEstimate.Views
 
             str = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
                 +  "(   QUOTE_NUM,     SEQUENCE,       CATEGORY," 
-                +  "   Param1,         Param2,         Param3,          Param4,         Value1,     Value2,    Value3,    Value4, "
+                +  "   Param1,         Param2,         Param3,          Param4,"
+                +  "   Value1,         Value2,         Value3,          Value4, "
                 +  "   Param5,         Param6,         Param7,          Param8,         Param9,     Param10," 
                 +  "   Value5,         Value6,         Value7,          Value8,         Value9,     Value10, "
                 +  "   SETUP_MINUTES,  SLOWDOWN_PERCENT ) "
                 +  "VALUES ( "
                 + $"  '{QuoteNum}',    11,            'Strike In',"
-                + $"  'Flat Charge%', 'Press Setup%', 'Binding Time%', 'Finish Matl%', '{FCPct}', '{PSPct}',   '{BTPct}', '{FMPct}', "
+                + $"  'Flat Charge%', 'Press Setup%', 'Binding Time%', 'Finish Matl%',"
+                + $"  '{FCPct}',      '{PSPct}',      '{BTPct}',       '{FMPct}',"
                 +  "  'PressMins',    'PressSlow',    'CollMins',      'CollSlow',     'BindMins', 'BindSlow'," 
-                + $"  '{LabPS}',      '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}', '{LabBSL}',"
+                + $"  '{LabPS}',      '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}',  '{LabBSL}',"
                 + $"   {SetupTotal},   {SlowdownTotal} )" ;
 
             scmd.CommandText = str; 
