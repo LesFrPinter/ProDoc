@@ -13,10 +13,12 @@ namespace ProDocEstimate.Views
     {
         #region Properties
 
+        private bool starting;  public bool Starting { get { return starting; } set { starting = value; } }
         public bool Removed = false;
+
         private float flatCharge;     public float FlatCharge     { get { return flatCharge;     } set { flatCharge     = value; OnPropertyChanged(); } } // Dollars
-        private int   setupMinutes;   public int   SetupMinutes   { get { return setupMinutes;   } set { setupMinutes   = value; OnPropertyChanged(); } } // Fraction of an hour
-        private float   bindingTime;    public float   BindingTime    { get { return bindingTime;    } set { bindingTime    = value; OnPropertyChanged(); } } // Fraction of an hour
+        private float setupMinutes;   public float SetupMinutes   { get { return setupMinutes;   } set { setupMinutes   = value; OnPropertyChanged(); } } // Fraction of an hour
+        private float bindingTime;    public float   BindingTime  { get { return bindingTime;    } set { bindingTime    = value; OnPropertyChanged(); } } // Fraction of an hour
         private float finishMaterial; public float FinishMaterial { get { return finishMaterial; } set { finishMaterial = value; OnPropertyChanged(); } } // Dollars
 
         private float baseFlatCharge; public float BaseFlatCharge { get { return baseFlatCharge; } set { baseFlatCharge = value; OnPropertyChanged(); } }
@@ -114,8 +116,14 @@ namespace ProDocEstimate.Views
 
             DataContext = this;
 
-            LoadFeature();
-            LoadQuote();
+            Starting = true;    // Don't recalculate during data loading
+
+            LoadFeature();      // This calls CalcTotal
+            LoadQuote();        // The first line of CalcTotal says "If (Starting) return...
+
+            Starting = false;   // Now you can recalculate
+
+            CalcTotal();
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
@@ -166,22 +174,15 @@ namespace ProDocEstimate.Views
                 t = 0; int.TryParse(dt.Rows[0]["Value3"].ToString(), out t); BTPct = t;
                 t = 0; int.TryParse(dt.Rows[0]["Value4"].ToString(), out t); FMPct = t;
 
-                //t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(),   out t); LabPS  = t;
-                //t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(),    out t); LabCS  = t;
-                //t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(),    out t); LabBS  = t;
-                //t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(),   out t); LabPSL = t;
-                //t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(),    out t); LabCSL = t;
-                //t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(),    out t); LabBSL = t;
-
-                t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(),  out t); LabPS = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(),  out t); LabCS = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(),  out t); LabBS = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(),  out t); LabPSL = t;
-                t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(),  out t); LabCSL = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(),  out t); LabPS  = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(),  out t); LabPSL = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(),  out t); LabCS  = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(),  out t); LabCSL = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(),  out t); LabBS  = t;
                 t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
 
-                t = 0; int.TryParse(dt.Rows[0]["SETUP_MINUTES"].ToString(),    out t); SetupTotal = t;
-                t = 0; int.TryParse(dt.Rows[0]["SLOWDOWN_PERCENT"].ToString(), out t); SlowdownTotal = t;
+                //t = 0; int.TryParse(dt.Rows[0]["SETUP_MINUTES"].ToString(),    out t); SetupTotal = t;
+                //t = 0; int.TryParse(dt.Rows[0]["SLOWDOWN_PERCENT"].ToString(), out t); SlowdownTotal = t;
             }
 
             conn.Close();
@@ -195,15 +196,16 @@ namespace ProDocEstimate.Views
         }
 
         private void MatValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalcMaterial(); }
+        {   if (Starting) return;
+            CalcMaterial(); 
+        }
 
         private void CalcMaterial()
-        {   FlatCharge      = (1.00F + (float)FCPct / 100.00F) * BaseFlatCharge;
-            //PressSetup      = (1 + int.Parse(PSPct.ToString()) / 100) * BasePressSetup;
-            //BindingTime     = (1 + int.Parse(BTPct.ToString()) / 100) * BaseBindTime;
-            PressSetup      = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BasePressSetup.ToString());
+        {   if (Starting) return;
+            FlatCharge      = (1.00F + ((float)FCPct / 100.00F)) * BaseFlatCharge;
+            SetupMinutes    = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BasePressSetup.ToString());
             BindingTime     = (1.00F + ((float)BTPct / 100.00F)) * float.Parse(BaseBindTime.ToString());
-            FinishMaterial  = (1.00F + (float)FMPct / 100.00F) * BaseFinishMatl;
+            FinishMaterial  = (1.00F + ((float)FMPct / 100.00F)) * BaseFinishMatl;
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -213,27 +215,28 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-            PressSetup = BasePressSetup + LabPS;
-            CollatorSetup = BaseCollatorSetup + LabCS;
-            BinderySetup = BaseBinderySetup + LabBS;
-            SetupTotal = (int)PressSetup + CollatorSetup + BinderySetup;
+            if (Starting) return;
+            PressSetup      = BasePressSetup + LabPS;
+            CollatorSetup   = BaseCollatorSetup + LabCS;
+            BinderySetup    = BaseBinderySetup + LabBS;
+            SetupTotal      = (int)PressSetup + CollatorSetup + BinderySetup;
 
-            PressSlowdown = BasePressSlowdown + LabPSL;
-            CollatorSlowdown = BaseCollatorSlowdown + LabCSL;
+            PressSlowdown   = BasePressSlowdown + LabPSL;
+            CollatorSlowdown= BaseCollatorSlowdown + LabCSL;
             BinderySlowdown = BaseBinderySlowdown + LabBSL;
-            SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
+            SlowdownTotal   = PressSlowdown + CollatorSlowdown + BinderySlowdown;
 
         }
 
-        private void GetGrandTotal()
-        {
-            //FlatTotal =
-            //   CalculatedFlatCharge
-            // + CalculatedPlateCharge
-            // + CalculatedFinishCharge
-            // + CalculatedConvCharge
-            // + CalculatedPressCharge;
-        }
+        //private void GetGrandTotal()
+        //{
+        //    //FlatTotal =
+        //    //   CalculatedFlatCharge
+        //    // + CalculatedPlateCharge
+        //    // + CalculatedFinishCharge
+        //    // + CalculatedConvCharge
+        //    // + CalculatedPressCharge;
+        //}
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
