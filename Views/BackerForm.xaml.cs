@@ -11,6 +11,9 @@ namespace ProDocEstimate.Views
 {
     public partial class BackerForm : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
         #region Properties
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
@@ -18,9 +21,6 @@ namespace ProDocEstimate.Views
         public SqlDataAdapter? da;
         public DataTable dt;
         public SqlCommand? scmd;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
         private string pressSize = ""; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
 
@@ -146,6 +146,7 @@ namespace ProDocEstimate.Views
         public BackerForm(string PSize, string QUOTENUM)
         {
             InitializeComponent();
+
             FirstTime = true;
 
             DataContext = this;
@@ -174,7 +175,7 @@ namespace ProDocEstimate.Views
             this.Height = this.Height *= 1.5;
             this.Width = this.Width *= 1.5;
             this.Top = 25;
-            FirstTime = false;
+//            FirstTime = false;
         }
 
         private void LoadQuote()

@@ -12,6 +12,10 @@ namespace ProDocEstimate.Views
 {
     public partial class StrikeIn : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
         #region Properties
 
         private bool starting;  public bool Starting { get { return starting; } set { starting = value; } }
@@ -85,10 +89,6 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null)
-        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
-
         public StrikeIn(string PRESSSIZE, string QUOTENUM)
         {
             //TestData:
@@ -134,7 +134,11 @@ namespace ProDocEstimate.Views
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)
-        { this.Height = this.Height *= 1.8; this.Width = this.Width *= 1.8; Top = 25; }
+        { 
+            this.Height = this.Height *= 1.8; 
+            this.Width = this.Width *= 1.8; 
+            Top = 25; 
+        }
 
         private void LoadFeature()
         {
