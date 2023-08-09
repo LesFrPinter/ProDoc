@@ -145,8 +145,6 @@ namespace ProDocEstimate.Views
             QuoteNum   = QUOTENUM;
             PressSize  = PRESSSIZE;
 
-            FlatCharge = 0.00F;     // Do I need to do this? I don't think so...
-
             Starting = true;
 
             FieldList =
@@ -195,12 +193,37 @@ namespace ProDocEstimate.Views
 
         private void LoadFeature()
         {
-            string str = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'COMBO' AND Press_Size = '{PressSize}' ";
+            if ( Starting ) return;
+
+            BaseFlatCharge = 0.00F;
+            BaseRunCharge = 0.00F;
+            BasePlateCharge = 0.00F;
+            BaseFinishCharge = 0.00F;
+            BasePressCharge = 0.00F;
+            BaseConvCharge = 0.00F;
+
+            //FlatChargePct = 0.00F;
+            //RunChargePct = 0.00F;
+            //PlateChargePct = 0.00F;
+            //FinishChargePct = 0.00F;
+            //PressChargePct = 0.00F;
+            //ConvChargePct = 0.00F;
+
+            BasePressSetup = 0;
+            BaseCollatorSetup = 0;
+            BaseBinderySetup = 0;
+            BasePressSlowdown = 0;
+            BaseCollatorSlowdown = 0;
+            BaseBinderySlowdown = 0;
+
+            string str = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'COMBO' AND Press_Size = '{PressSize}' AND NUMBER = '{Combo1}'";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear();
             try { da.Fill(dt); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+            
             if (dt.Rows.Count == 0) return;
+
             DataView dv = dt.DefaultView;
 
             float fc = 0.00F; float.TryParse(dv[0]["Flat_Charge"].ToString(), out fc); BaseFlatCharge   = fc;
@@ -212,11 +235,11 @@ namespace ProDocEstimate.Views
 
             // Base Labor Charges
             // The next three calculations assume that the values from the FEATURES table are minutes
-            BasePressSetup       = int.Parse(dv[0]["PRESS_SETUP"].ToString());
-            BaseCollatorSetup    = int.Parse(dv[0]["COLLATOR_SETUP"].ToString());
-            BaseBinderySetup     = int.Parse(dv[0]["BINDERY_SETUP"].ToString());
+            BasePressSetup       = int.Parse(dv[0]["PRESS_SETUP"].ToString());          // Minutes to add to the base setup times.
+            BaseCollatorSetup    = int.Parse(dv[0]["COLLATOR_SETUP"].ToString());       //              "
+            BaseBinderySetup     = int.Parse(dv[0]["BINDERY_SETUP"].ToString());        //              "
 
-            BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());       // Minutes of slowdown to add to the base amount...
+            BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());       // Minutes to add to the base slowdown amounts.
             BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"].ToString());    //              "
             BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());     //              "
         }
@@ -251,24 +274,22 @@ namespace ProDocEstimate.Views
 
             //Load Labor adjustments
             int t;
-            t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(),  out t); LabPS  = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(),  out t); LabPSL = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(),  out t); LabCS  = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(),  out t); LabCSL = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(),  out t); LabBS  = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
-
-            CalcTotal();
+            t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out t); LabPS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out t); LabPSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(),  out t); LabCS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(),  out t); LabCSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(),  out t); LabBS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(),  out t); LabBSL = t;
         }
 
         private void CalcTotal()
         {
-            CalculatedFlatCharge   = Combo1 * (BaseFlatCharge   * (1 + FlatChargePct   / 100));
-            CalculatedRunCharge    = Combo1 * (BaseRunCharge    * (1 + RunChargePct    / 100));
-            CalculatedPlateCharge  = Combo1 * (BasePlateCharge  * (1 + PlateChargePct  / 100));
-            CalculatedFinishCharge = Combo1 * (BaseFinishCharge * (1 + FinishChargePct / 100));
-            CalculatedPressCharge  = Combo1 * (BasePressCharge  * (1 + PressChargePct  / 100));
-            CalculatedConvCharge   = Combo1 * (BaseConvCharge   * (1 + ConvChargePct   / 100));
+            CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100);
+            CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct    / 100);
+            CalculatedPlateCharge  = BasePlateCharge  * (1 + PlateChargePct  / 100);
+            CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100);
+            CalculatedPressCharge  = BasePressCharge  * (1 + PressChargePct  / 100);
+            CalculatedConvCharge   = BaseConvCharge   * (1 + ConvChargePct   / 100);
 
             FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
@@ -283,7 +304,7 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-            if (Starting) return;
+            if ( Starting ) return;
             PressSetup = BasePressSetup + LabPS;
             CollatorSetup = BaseCollatorSetup + LabCS;
             BinderySetup = BaseBinderySetup + LabBS;
@@ -306,26 +327,26 @@ namespace ProDocEstimate.Views
         }
 
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { CalcTotal(); }
+        {
+            CalcTotal(); 
+        }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             DeleteQuoteRow("Combo");
 
             string cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
-                + " ( Quote_Num,     Category, Sequence,"
-                + "   Param1,        Value1,     FlatChargePct,     RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
-                + "   TotalFlatChg,  PerThousandChg, "
-                + "   Param5,         Param6,         Param7,          Param8,         Param9,     Param10,"
-                + "   Value5,         Value6,         Value7,          Value8,         Value9,     Value10, "
+                + " ( Quote_Num,      Category,         Sequence,"
+                + "   Param1,         Value1,           FlatChargePct,      RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
+                + "   TotalFlatChg,   PerThousandChg, "
+                + "   PRESS_ADDL_MIN, PRESS_SLOW_PCT,   COLL_ADDL_MIN,      COLL_SLOW_PCT,    BIND_ADDL_MIN,      BIND_SLOW_PCT,"
                 + "   SETUP_MINUTES,  SLOWDOWN_PERCENT ) "
                 + " VALUES ( "
-                + $" '{QuoteNum}',   'Combo',   8,"
-                + $"  'Combo1',     '{Combo1}', '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
+                + $" '{QuoteNum}',   'Combo',           8,"
+                + $"  'Combo1',     '{Combo1}',       '{FlatChargePct}',   '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
                 + $" '{FlatTotal}', '{CalculatedRunCharge}',"
-                +  "   'LabPS',      'LabPSL',       'LabCS',         'LabCSL',       'LabBS',    'LabBSL',"
-                + $"  '{LabPS}',    '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}',  '{LabBSL}',"
-                + $"   {SetupTotal}, {SlowdownTotal} )";
+                + $"  {LabPS},       {LabPSL},         {LabCS},             {LabCSL} ,        {LabBS},            {LabBSL},"
+                + $"  {SetupTotal},  {SlowdownTotal} )";
 
             SqlCommand scmd = new();
             scmd.CommandText = cmd;
@@ -340,6 +361,12 @@ namespace ProDocEstimate.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Hide(); }
+
+        private void M1_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            LoadFeature();  // use the selected value of 'Combo1' to retrieve base values
+            CalcTotal();
+        }
 
     }
 }
