@@ -50,33 +50,9 @@
 
         <Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
 
-        <!--<Label Grid.Row="2" Content="Pro Vision 2" Padding="20 5 20 5" Style="{StaticResource MainTitle}" RenderTransformOrigin="0.5,0.5" Foreground="Navy" >
-            <Label.Effect>
-                <DropShadowEffect Direction="325" Color="black" ShadowDepth="12" BlurRadius="22" />
-            </Label.Effect>
-            <Label.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseDirectlyOver" Value="True">
-                            <Setter Property="Background" Value="Red" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Label.Resources>
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-14.069"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>-->
-
         <TextBox 
             Grid.Row="1"
-            Text="NOTE: I have changed some of the values stored in the FEATURES table so that the software could be more easily tested. I can easily remove them if needed." 
+            Text="NOTE: I have changed some of the values stored in the FEATURES table so that the software could be more easily tested. Restore correct data after testing is done." 
             TextWrapping="Wrap" 
             Height="110" Padding="5" 
             Width="380" 
@@ -84,7 +60,7 @@
             VerticalAlignment="Center" 
             HorizontalAlignment="Center" >
             <TextBox.Effect>
-                <DropShadowEffect Direction="360" ShadowDepth="15" BlurRadius="15" />
+                <DropShadowEffect Direction="320" ShadowDepth="15" BlurRadius="25" />
             </TextBox.Effect>
         </TextBox>
 

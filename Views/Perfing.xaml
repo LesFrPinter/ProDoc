@@ -222,12 +222,12 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Foreground="Blue"  VerticalAlignment="Bottom">
-                <TextBlock>Minutes</TextBlock>
-            </TextBlock>
+                    <TextBlock>Minutes</TextBlock>
+                </TextBlock>
 
                 <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Foreground="Blue" VerticalAlignment="Bottom">
-                <TextBlock>Add'l minutes</TextBlock>
-            </TextBlock>
+                    <TextBlock>Add'l minutes</TextBlock>
+                </TextBlock>
 
                 <Label Grid.Row="0" Grid.Column="5" Content="%"             HorizontalAlignment="Center" />
                 <Label Grid.Row="0" Grid.Column="6" Content="Add'l %"       HorizontalAlignment="Center" />
