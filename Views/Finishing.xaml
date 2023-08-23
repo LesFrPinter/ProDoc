@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Height="500" Width="800">
+        Height="400" Width="795">
 
     <Window.Resources>
 
@@ -35,7 +35,7 @@
             <Setter Property="Foreground" Value="Blue" />
             <Setter Property="Margin"     Value="2" />
             <Setter Property="Height"     Value="18" />
-            <!--<Setter Property="IsReadOnly" Value="True" />-->
+            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="IsEnabled"  Value="False"  />
             <Setter Property="Width"      Value="60" />
         </Style>
@@ -53,17 +53,17 @@
 
     </Window.Resources>
 
-    <Viewbox>
+    <Viewbox >
 
-        <Grid Width="800" Height="400" VerticalAlignment="Top" Margin="0 -40 0 0">
+        <Grid Width="800" Height="390" VerticalAlignment="Top">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="130"/>
-                <RowDefinition Height="155"/>
-                <RowDefinition Height="112" />
+                <RowDefinition Height="145"/>
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -94,7 +94,7 @@
             <ComboBox Grid.Column="4" SelectedValue="{Binding Pad, Mode=TwoWay}"        x:Name="M4" Grid.Row="2" SelectionChanged="SelectionChanged" Margin="27,3,25,3" />
             <ComboBox Grid.Column="5" SelectedValue="{Binding Trim, Mode=TwoWay}"       x:Name="M5" Grid.Row="2" SelectionChanged="SelectionChanged" Margin="27,3,25,3" />
 
-            <Grid Grid.Row="3" Background="LightGray" Grid.ColumnSpan="7" Height="120" VerticalAlignment="Center" >
+            <Grid Grid.Row="3" Background="LightGray" Grid.ColumnSpan="7" Height="120" VerticalAlignment="Top" >
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24" />
@@ -182,24 +182,24 @@
 
             </Grid>
 
-            <Grid Height="150" Grid.Row="4" Grid.ColumnSpan="7" VerticalAlignment="Center" >
+            <Grid Height="140" Grid.Row="3" Grid.ColumnSpan="7" VerticalAlignment="Top" Margin="0,128,0,0" Grid.RowSpan="2" >
 
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="14" />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="25*" />
+                    <RowDefinition Height="16.438" />
+                    <RowDefinition Height="28*" />
+                    <RowDefinition Height="28*" />
+                    <RowDefinition Height="28*" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="135*" />
-                    <ColumnDefinition Width="100*" />
-                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="166*" />
+                    <ColumnDefinition Width="105*" />
+                    <ColumnDefinition Width="115*" />
                     <ColumnDefinition Width="173*" />
-                    <ColumnDefinition Width="92*" />
-                    <ColumnDefinition Width="93*" />
+                    <ColumnDefinition Width="101*" />
+                    <ColumnDefinition Width="139*" />
                 </Grid.ColumnDefinitions>
 
                 <Border 
@@ -218,59 +218,66 @@
                         Content=" Labor " HorizontalAlignment="Left" Width="96" Margin="2,1,0,0" VerticalAlignment="Top"/>
                 </Border>
 
-                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Foreground="Blue"  VerticalAlignment="Bottom">
+                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Foreground="Blue"  VerticalAlignment="Center" Margin="20 0 0 0">
                     <TextBlock>Minutes</TextBlock>
                 </TextBlock>
 
-                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Foreground="Blue" VerticalAlignment="Bottom">
+                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Foreground="Blue" VerticalAlignment="Center" >
                     <TextBlock>Add'l minutes</TextBlock>
                 </TextBlock>
 
-                <Label Grid.Row="1" Grid.Column="4" Content="%"             HorizontalAlignment="Center" />
-                <Label Grid.Row="1" Grid.Column="5" Content="Add'l %"       HorizontalAlignment="Center" />
+                <Label Grid.Row="1" Grid.Column="4" Content="%" Height="14" VerticalAlignment="Center" Width="14" />
+                <Label Grid.Row="1" Grid.Column="5" Content="Add'l %" Height="14" VerticalAlignment="Center" Width="45" HorizontalAlignment="Left" Margin="10,0,0,0" />
 
-                <Label                                  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0" Target="{Binding ElementName=S1}" VerticalAlignment="Center"  >
+                <Label                                  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Target="{Binding ElementName=S1}" VerticalAlignment="Center" >
                     <AccessText>_Press setup:</AccessText>
                 </Label>
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PressSetup,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="0,3,0,3" Height="22" />
-                <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="2" Value="{Binding LabPS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor"  Margin="24,3,14,3" x:Name="S1"/>
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="2" Grid.Column="1" Text="{Binding PressSetup,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="5,0,0,0" HorizontalAlignment="Left" />
+                <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="2" Value="{Binding LabPS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor"  x:Name="S1" HorizontalAlignment="Left" Margin="2,3,0,0" Width="60"/>
 
-                <Label Content="Press slowdown:"        Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" />
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding PressSlowdown,    StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="0,3,0,3" Height="22" />
-                <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="5" Value="{Binding LabPSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" Margin="24,3,9,3"/>
+                <Label Content="Press slowdown:"        Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="73,0,0,0" VerticalAlignment="Center" Height="16" Width="91" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" Text="{Binding PressSlowdown,    StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10,0,0,0" Height="18" />
+                <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="5" Value="{Binding LabPSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" HorizontalAlignment="Left" Margin="2,2,0,1" Width="60" />
 
-                <Label                                  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0" Target="{Binding ElementName=S2}" VerticalAlignment="Center" >
+                <Label                                  Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Target="{Binding ElementName=S2}" VerticalAlignment="Center" >
                     <AccessText>_Collator setup:</AccessText>
                 </Label>
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding CollatorSetup,    StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="0,3,0,3" Height="22" />
-                <telerik:RadNumericUpDown               Grid.Row="3" Grid.Column="2" Value="{Binding LabCS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor" Margin="24,3,14,3" x:Name="S2"/>
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CollatorSetup,    StringFormat='N0'}" HorizontalContentAlignment="Right" Height="18" Margin="5 0 0 0" />
+                <telerik:RadNumericUpDown               Grid.Row="3" Grid.Column="2" Value="{Binding LabCS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor" HorizontalAlignment="Left"   x:Name="S2" Margin="2,2,0,2" Width="60"/>
 
-                <Label Content="Collator slowdown:"     Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" />
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding CollatorSlowdown, StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="0,3,0,3" Height="22" />
-                <telerik:RadNumericUpDown               Grid.Row="3" Grid.Column="5" Value="{Binding LabCSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" Margin="24,3,9,3"/>
+                <Label Content="Collator slowdown:"     Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="59,0,0,0" VerticalAlignment="Center" Height="16" Width="105"  />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Text="{Binding CollatorSlowdown, StringFormat='N0'}" HorizontalContentAlignment="Right" Height="18" Margin="10 0 0 0" />
+                <telerik:RadNumericUpDown               Grid.Row="3" Grid.Column="5" Value="{Binding LabCSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" HorizontalAlignment="Left" Margin="2,2,0,2" Width="60" />
 
-                <Label                                  Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0" Target="{Binding ElementName=S3}" VerticalAlignment="Center" >
+                <Label                                  Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Target="{Binding ElementName=S3}" >
                     <AccessText>_Bindery setup:</AccessText>
                 </Label>
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding BinderySetup,     StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="0,3,0,3" Height="22" />
-                <telerik:RadNumericUpDown               Grid.Row="4" Grid.Column="2" Value="{Binding LabBS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor" Margin="24,3,14,3" x:Name="S3"/>
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding BinderySetup,     StringFormat='N0'}" HorizontalContentAlignment="Right" Height="18" Margin="5 0 0 0" />
+                <telerik:RadNumericUpDown               Grid.Row="4" Grid.Column="2" Value="{Binding LabBS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor" HorizontalAlignment="Left"  x:Name="S3" Margin="2,2,0,1" Width="60"/>
 
-                <Label Content="Bindery slowdown:"      Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" />
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding BinderySlowdown,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="0,3,0,3" Height="22" />
-                <telerik:RadNumericUpDown               Grid.Row="4" Grid.Column="5" Value="{Binding LabBSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" Margin="24,3,9,3"/>
+                <Label Content="Bindery slowdown:"      Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="61,0,0,0" VerticalAlignment="Center" Height="16" Width="103" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" Text="{Binding BinderySlowdown,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10,0,0,0" Height="18" />
+                <telerik:RadNumericUpDown               Grid.Row="4" Grid.Column="5" Value="{Binding LabBSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" HorizontalAlignment="Left" Margin="2,2,0,1" Width="60" />
 
-                <Label Content="Total Setup:"           Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0" HorizontalContentAlignment="Right" FontWeight="Bold"  VerticalAlignment="Center"/>
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding SetupTotal, StringFormat='N0'}" HorizontalContentAlignment="Right"       Margin="0,3,0,3" Height="22" />
+                <Label Content="Total Setup:"           Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,0,0" HorizontalContentAlignment="Right" FontWeight="Bold"  VerticalAlignment="Center" Height="15" Width="71"/>
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding SetupTotal, StringFormat='N0'}" HorizontalContentAlignment="Right"       Margin="3,0,0,0" Height="18" />
 
-                <Label Content="Total Slowdown:"        Grid.Row="5" Grid.Column="3" HorizontalAlignment="Right" Margin="1,0,10,0" HorizontalContentAlignment="Right" FontWeight="Bold" VerticalAlignment="Center"/>
-                <TextBox IsEnabled="False" Width="80"   Grid.Row="5" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding SlowdownTotal,  StringFormat='N0'}" HorizontalContentAlignment="Right"   Margin="0,3,0,3" Height="22" />
+                <Label Content="Total Slowdown:"        Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Center" Height="15" Width="90" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" Text="{Binding SlowdownTotal,  StringFormat='N0'}" HorizontalContentAlignment="Right"   Margin="10,0,0,0" Height="18" />
 
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="6" VerticalAlignment="Top" HorizontalAlignment="Center" Height="25" Width="98" >
-                <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
-                <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
-            </StackPanel>
+            <Grid Grid.Row="5" Grid.ColumnSpan="7" Margin="0 0 20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="98" >
+                    <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
+                    <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
+                </StackPanel>
+
+            </Grid>
 
         </Grid>
 
