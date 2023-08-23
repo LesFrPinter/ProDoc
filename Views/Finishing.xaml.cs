@@ -312,17 +312,18 @@ namespace ProDocEstimate.Views
             finally { conn.Close(); }
 
             // Store in Quote_Detail table:
+            // TODO: Add total material and labor costs to saved data
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,         Category,         Sequence, "
                 + "   Param1,            Param2,           Param3,              Param4,             Param5, "
                 + "   Value1,            Value2,           Value3,              Value4,             Value5, "
-                + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,"
+                + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,   TotalFlatChg,  PerThousandChg,"
                 + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT   )"
                 + "   VALUES ( "
                 + $" '{QuoteNum}',      'Finishing',       7,"
                 + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',"
                 + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',"
-                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
+                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}',"
                 + $"  {LabPS},           {LabCS},          {LabBS},            {LabPSL},            {LabCSL},           {LabBSL} )";
 
             scmd.CommandText = cmd;

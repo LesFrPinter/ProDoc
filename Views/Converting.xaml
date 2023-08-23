@@ -203,7 +203,7 @@
                         BorderThickness="1"
                         FontSize="18"
                         Foreground="Blue"
-                        Content=" Labor " HorizontalAlignment="Left" Width="96" Margin="2,-2,0,0" VerticalAlignment="Top"/>
+                        Content=" Labor " HorizontalAlignment="Left" Width="96" Margin="2,0,0,0" VerticalAlignment="Center"/>
                 </Border>
 
                 <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Foreground="Blue"  VerticalAlignment="Bottom">
