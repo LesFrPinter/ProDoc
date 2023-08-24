@@ -250,7 +250,7 @@ namespace ProDocEstimate.Views
 
             if (confirmResult == MessageBoxResult.Yes)
             {   string cmd = $"DELETE [ESTIMATING].[dbo].[CUSTOMER] WHERE GUID = '{GUID}'";
-                Clipboard.SetText(cmd); // In case I want to look at it in SQL Management Console
+
                 SqlConnection conn = new(ConnectionString); conn.Open();
                 scmd = new SqlCommand(cmd, conn);
                 int Result = scmd.ExecuteNonQuery();
@@ -406,7 +406,7 @@ namespace ProDocEstimate.Views
 
             if (confirmResult == MessageBoxResult.Yes)
             {   string cmd = $"DELETE [ESTIMATING].[dbo].[CUSTOMER_CONTACT] WHERE CGUID = '{CGUID}'";
-                Clipboard.SetText(cmd); // In case I want to look at it in SQL Management Console
+
                 SqlConnection conn = new(ConnectionString); conn.Open();
                 scmd = new SqlCommand(cmd, conn);
                 int Result = scmd.ExecuteNonQuery();
@@ -486,7 +486,6 @@ namespace ProDocEstimate.Views
             if (cmd2 != "" && cmd3 != "") { cmd += " WHERE " + cmd2 + " AND " + cmd3; }
 
             cmd += " ORDER BY CONTACT_NAME";
-            Clipboard.SetText(cmd);
 
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);

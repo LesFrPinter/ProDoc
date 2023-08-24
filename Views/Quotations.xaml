@@ -105,7 +105,7 @@
 			            SelectionChanged="Tabs_SelectionChanged">
 
                 <TabItem x:Name="Page1"
-                         FontSize="16" Header="    Page 1    ">
+                         FontSize="16" Header="    Page _1    ">
 
                     <Grid Height="575">
 
@@ -481,7 +481,8 @@
 						        Grid.Row="9" Height="24" 
 						        Grid.Column="3" Margin="-100 0 0 0"
 						        Click="btnLoadGrid_Click"
-						        Content="  Load Page 2 Grid  " />
+						        Content="  Load Page 2 Grid  " >
+                        </Button>
 
                         <Label Grid.Row="6"
 						       Grid.ColumnSpan="2"
@@ -788,7 +789,7 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page2" FontSize="16" Header="    Page 2    " IsEnabled="False">
+                <TabItem x:Name="Page2" FontSize="16" Header="    Page _2    " IsEnabled="False">
 
                     <Grid Height="570">
 
@@ -1060,7 +1061,7 @@
 
                 <TabItem x:Name="Page3"
 				         FontSize="16"
-				         Header="    Page 3    "
+				         Header="    Page _3    "
                          GotFocus="Page3_GotFocus"
 				         IsEnabled="True" Height="25" VerticalAlignment="Top">
 
@@ -1134,7 +1135,7 @@
 
                 <TabItem x:Name="Page4"
 				         FontSize="16"
-				         Header="Page 4">
+				         Header="Page _4">
 
                     <Viewbox>
 

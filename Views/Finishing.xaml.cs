@@ -14,6 +14,8 @@ namespace ProDocEstimate.Views
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
+        #region Properties
+
         // The following test data was added to the Features table:
 
         //UPDATE FEATURES SET PLATE_MATL = 10, PRESS_MATL = 30, CONV_MATL = 40 WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '11'
@@ -31,8 +33,6 @@ namespace ProDocEstimate.Views
         //   AND CATEGORY = 'FINISHING'
 
         // NOTE: Where FINISH_MATL had some values already, they were left in place. So if FINISH_MATL contains '20', it can be cleared.
-
-        #region Properties
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
@@ -312,7 +312,6 @@ namespace ProDocEstimate.Views
             finally { conn.Close(); }
 
             // Store in Quote_Detail table:
-            // TODO: Add total material and labor costs to saved data
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,         Category,         Sequence, "
                 + "   Param1,            Param2,           Param3,              Param4,             Param5, "

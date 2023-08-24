@@ -316,12 +316,6 @@ namespace ProDocEstimate.Views
                 + $" {FlatTotal},    {CalculatedRunCharge}, {FlatChargePct}, {RunChargePct}, {PlateChargePct}, {FinishChargePct}, {PressChargePct}, {ConvChargePct}, "
                 + $" {LabPS},        {LabPSL},              {LabCS},         {LabCSL} ,      {LabBS},          {LabBSL} )";
 
-            Clipboard.SetText(cmd);
-//            Debugger.Break();
-
-//+ $" '{FlatTotal}', '{CalculatedRunCharge}',"
-//+ $"  {SetupTotal},  {SlowdownTotal} )";
-
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

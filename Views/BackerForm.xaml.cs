@@ -243,8 +243,6 @@ namespace ProDocEstimate.Views
             if (Button2 == 1) { cmd += "BACKER STD'"; }
             if (Button3 == 1) { cmd += "BACKER PMS'"; }
 
-            Clipboard.SetText(cmd);
-
             dt   = new DataTable("Charges");
             conn = new SqlConnection(ConnectionString);
             da   = new SqlDataAdapter(cmd, conn);

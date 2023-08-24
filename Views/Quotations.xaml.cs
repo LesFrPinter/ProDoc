@@ -171,8 +171,6 @@ namespace ProDocEstimate
             + " FROM [ESTIMATING].[dbo].[CUSTOMER] C, [ESTIMATING].[dbo].[CUSTOMER_CONTACT] CC "
             + $" WHERE C.CUST_NUMB = CC.CUST_NUMB AND C.CUST_NUMB = '{CUST_NUMB}'" ;
 
-            System.Windows.Clipboard.SetText(str);
-
             conn = new SqlConnection(ConnectionString);
             SqlDataAdapter da = new(str, conn);
             DataTable dt = new(); da.Fill(dt);
@@ -647,8 +645,6 @@ namespace ProDocEstimate
                 " AND Inventoryable = 1"              +
                 " ORDER BY E.SETNUM, E.SEQ";
 
-            Clipboard.SetText(cmd);
-
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
             DataSet ds = new("Papers");
@@ -804,10 +800,7 @@ namespace ProDocEstimate
             SqlDataAdapter da4 = new(cmd, cn); DataTable dt4 = new("CT"); da4.Fill(dt4);
 
             if (int.Parse(dt4.Rows[0][0].ToString()) == 0) 
-              { MessageBox.Show("Paper not found", TestDesc);
-                System.Windows.Clipboard.SetText(cmd); // In case I want to see what SQL sees...
-                return;
-              }
+              { MessageBox.Show("Paper not found", TestDesc); return; }
 
             string WhereClause  = " WHERE ReportType = '" + PAPERTYPE.ToString().TrimEnd() + "'";
             if (txtRollWidth.Text.Length > 0) { WhereClause +=   " AND Size = '"       + lblRollWidth.Content.ToString().TrimEnd() + "'"; }
@@ -816,17 +809,9 @@ namespace ProDocEstimate
 
             cmd = "SELECT COUNT(*) FROM MasterInventory " + WhereClause;
 
-            System.Windows.Clipboard.SetText(cmd); // In case I want to see what SQL sees...
-
             SqlDataAdapter da5 = new(cmd, cn); DataTable dt5 = new("CT"); da5.Fill(dt5);
 
             if (dt5.Rows.Count == 0) { MessageBox.Show("Paper not found in MasterInventory"); return; }
-
-
-            //if (lblItemType.Content.ToString().Length > 0 && txtItemType.Text.ToString().TrimEnd().Length > 0 && lblItemType.Content != txtItemType.Text ) 
-            //{ 
-            //    // Not used
-            //}
 
             if (lblPaperType.Content.ToString().Length > 0 && txtPaperType.Text.ToString().TrimEnd().Length > 0)
             {
@@ -1123,8 +1108,6 @@ namespace ProDocEstimate
         private void CheckRows()
         {
             string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
-
-            System.Windows.Clipboard.SetText(cmd);
 
             dt   = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);

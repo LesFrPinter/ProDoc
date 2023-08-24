@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -17,6 +18,15 @@ namespace ProDocEstimate.Views
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
         #region Properties
+
+        //TEST DATA ADDED:
+        //UPDATE FEATURES
+        //   SET PRESS_SETUP_TIME =  3,
+        //       ADDTL_BIND_TIME  = 20
+        // WHERE PRESS_SIZE = '11'
+        //   AND CATEGORY = 'STRIKE IN'
+
+        //NOTE: PRESS_SETUP_TIME and ADDTL_BIND_TIME should contain minutes, not fractions of an hour
 
         private bool starting;  public bool Starting { get { return starting; } set { starting = value; } }
         public bool Removed = false;
@@ -46,13 +56,13 @@ namespace ProDocEstimate.Views
         public string QuoteNum;
         public string FieldList;
 
-        private float pressSetup;     public float PressSetup    { get { return pressSetup;     } set { pressSetup      = value; OnPropertyChanged(); } }
-        private int collatorSetup;  public int CollatorSetup { get { return collatorSetup;  } set { collatorSetup   = value; OnPropertyChanged(); } }
-        private int binderySetup;   public int BinderySetup  { get { return binderySetup;   } set { binderySetup    = value; OnPropertyChanged(); } }
+        private float pressSetup;      public float PressSetup    { get { return pressSetup;     } set { pressSetup      = value; OnPropertyChanged(); } }
+        private int collatorSetup;     public int CollatorSetup { get { return collatorSetup;  } set { collatorSetup   = value; OnPropertyChanged(); } }
+        private int binderySetup;      public int BinderySetup  { get { return binderySetup;   } set { binderySetup    = value; OnPropertyChanged(); } }
 
-        private int basePressSetup; public int BasePressSetup { get { return basePressSetup; } set { basePressSetup = value; OnPropertyChanged(); } }
+        private int basePressSetup;    public int BasePressSetup { get { return basePressSetup; } set { basePressSetup = value; OnPropertyChanged(); } }
         private int baseCollatorSetup; public int BaseCollatorSetup { get { return baseCollatorSetup; } set { baseCollatorSetup = value; OnPropertyChanged(); } }
-        private int baseBinderySetup; public int BaseBinderySetup { get { return baseBinderySetup; } set { baseBinderySetup = value; OnPropertyChanged(); } }
+        private int baseBinderySetup;  public int BaseBinderySetup { get { return baseBinderySetup; } set { baseBinderySetup = value; OnPropertyChanged(); } }
 
         // Material percentages in NumericUpDowns
         private int fcPct; public int FCPct { get { return fcPct; } set { fcPct = value; OnPropertyChanged(); } }
@@ -137,7 +147,7 @@ namespace ProDocEstimate.Views
         { 
             this.Height = this.Height *= 1.8; 
             this.Width = this.Width *= 1.8; 
-            Top = 25; 
+            Top = 50; 
         }
 
         private void LoadFeature()
@@ -165,7 +175,10 @@ namespace ProDocEstimate.Views
 
             BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());       // Minutes of slowdown to add to the base amount...
             BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"].ToString());    //              "
-            BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());     //              "
+            BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());     //
+
+            BaseSetupTime = int.Parse(dv[0]["PRESS_SETUP"].ToString());    // RENAMED FROM "PRESS_SETUP_TIME" IN FieldList
+            BaseBindTime  = int.Parse(dv[0]["ADDTL_BIND_TIME"].ToString());
         }
 
         private void LoadQuote()
@@ -209,9 +222,10 @@ namespace ProDocEstimate.Views
         private void CalcMaterial()
         {
             if (Starting) return;
-            FlatCharge = (1.00F + ((float)FCPct / 100.00F)) * BaseFlatCharge;
-            SetupMinutes = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BasePressSetup.ToString());
-            BindingTime = (1.00F + ((float)BTPct / 100.00F)) * float.Parse(BaseBindTime.ToString());
+
+            FlatCharge     = (1.00F + ((float)FCPct / 100.00F)) * BaseFlatCharge;
+            SetupMinutes   = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BaseSetupTime.ToString());
+            BindingTime    = (1.00F + ((float)BTPct / 100.00F)) * float.Parse(BaseBindTime.ToString());
             FinishMaterial = (1.00F + ((float)FMPct / 100.00F)) * BaseFinishMatl;
         }
 

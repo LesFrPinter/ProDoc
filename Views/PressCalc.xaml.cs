@@ -115,11 +115,7 @@ namespace ProDocEstimate.Views
 
                 Cost *= Amt;
             }
-            catch (Exception ex) 
-            { 
-                MessageBox.Show(ex.Message,str);
-                Clipboard.SetText(str);
-            }
+            catch (Exception ex) {  MessageBox.Show(ex.Message,str); }
 
             double m = (y2 - y1) / (x2 - x1);
             double b = y2 - (x2 * m);

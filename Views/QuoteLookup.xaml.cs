@@ -54,13 +54,9 @@ namespace ProDocEstimate.Views
             if (txtCustNo.Text.Trim().Length > 0)
             { cmd += " AND QUOTES.CUST_NUMB = " + txtCustNo.Text.Trim(); };
 
-//            else return;
-
             cmd += " ORDER BY QUOTE_NUM";
-            if (Descending == true) { cmd += " DESC"; }
 
-            System.Windows.Clipboard.SetText(cmd);
-//            Debugger.Break();
+            if (Descending == true) { cmd += " DESC"; }
 
             cn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, cn);
