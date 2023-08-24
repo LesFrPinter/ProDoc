@@ -339,15 +339,13 @@ namespace ProDocEstimate.Views
             string cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
                 + " ( Quote_Num,      Category,         Sequence,"
                 + "   Param1,         Value1,           FlatChargePct,      RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
-                + "   TotalFlatChg,   PerThousandChg, "
-                + "   PRESS_ADDL_MIN, PRESS_SLOW_PCT,   COLL_ADDL_MIN,      COLL_SLOW_PCT,    BIND_ADDL_MIN,      BIND_SLOW_PCT,"
-                + "   SETUP_MINUTES,  SLOWDOWN_PERCENT ) "
+                + "   TotalFlatChg,   PerThousandChg,   "
+                + "   PRESS_ADDL_MIN, PRESS_SLOW_PCT,   COLL_ADDL_MIN,      COLL_SLOW_PCT,    BIND_ADDL_MIN,      BIND_SLOW_PCT,       SETUP_MINUTES,      SLOWDOWN_PERCENT ) "
                 + " VALUES ( "
                 + $" '{QuoteNum}',   'Combo',           8,"
                 + $"  'Combo1',     '{Combo1}',       '{FlatChargePct}',   '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
                 + $" '{FlatTotal}', '{CalculatedRunCharge}',"
-                + $"  {LabPS},       {LabPSL},         {LabCS},             {LabCSL} ,        {LabBS},            {LabBSL},"
-                + $"  {SetupTotal},  {SlowdownTotal} )";
+                + $"  {LabPS},       {LabPSL},         {LabCS},             {LabCSL} ,        {LabBS},            {LabBSL},            {SetupTotal},       {SlowdownTotal} )";
 
             SqlCommand scmd = new();
             scmd.CommandText = cmd;
