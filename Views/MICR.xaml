@@ -17,6 +17,7 @@
             <Setter Property="VerticalAlignment"   Value="Bottom" />
             <Setter Property="Margin"              Value="2 0"    />
             <Setter Property="Padding"             Value="2 0"    />
+            <Setter Property="Foreground"          Value="Blue" />
         </Style>
         <Style TargetType="telerik:RadNumericUpDown">
             <Setter Property="FontSize" Value="12" />

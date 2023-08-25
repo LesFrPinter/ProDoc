@@ -1013,8 +1013,9 @@ namespace ProDocEstimate
         {
             if (lstSelected.SelectedItem == null) return;
             string? x = lstSelected.SelectedItem.ToString().TrimEnd();
-            string check = ((char)0x221A).ToString();
-//            check = "🗹";
+            string check;
+//            check = ((char)0x221A).ToString();
+            check = "🗹";
             if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
             
             switch (x)
@@ -1107,6 +1108,9 @@ namespace ProDocEstimate
 
         private void CheckRows()
         {
+
+            //TODO: See if there's a cleaner, simpler way to add a checkmark if the screen has been filled in...
+
             string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
 
             dt   = new DataTable("Details");
@@ -1122,6 +1126,8 @@ namespace ProDocEstimate
                 string V6 = dt.Rows[i]["Value6"].ToString();
                 string V7 = dt.Rows[i]["Value7"].ToString();
                 string V8 = dt.Rows[i]["Value8"].ToString();
+                string V9 = dt.Rows[i]["Value9"].ToString();
+                string V10 = dt.Rows[i]["Value10"].ToString();
 
                 Int32 I1 = 0;
                 Int32 I2 = 0;
@@ -1131,6 +1137,8 @@ namespace ProDocEstimate
                 Int32 I6 = 0;
                 Int32 I7 = 0;
                 Int32 I8 = 0;
+                Int32 I9 = 0;
+                Int32 I10 = 0;
 
                 bool B1 = int.TryParse(dt.Rows[i]["Value1"].ToString(), out I1);
                 bool B2 = int.TryParse(dt.Rows[i]["Value2"].ToString(), out I2);
@@ -1140,16 +1148,15 @@ namespace ProDocEstimate
                 bool B6 = int.TryParse(dt.Rows[i]["Value6"].ToString(), out I6);
                 bool B7 = int.TryParse(dt.Rows[i]["Value7"].ToString(), out I7);
                 bool B8 = int.TryParse(dt.Rows[i]["Value8"].ToString(), out I8);
+                bool B9 = int.TryParse(dt.Rows[i]["Value9"].ToString(), out I9);
+                bool B10 = int.TryParse(dt.Rows[i]["Value10"].ToString(), out I10);
 
                 Int32 RowTotal = 0;
 
-                //TODO: Note that BackerForm is a little different...
                 string? CheckCategory = dt.Rows[i]["Category"].ToString(); 
-                if (CheckCategory.ToUpper().Contains("BACKER")) 
-                {
-                    RowTotal = 1;
-//                    Debugger.Break();
-                }
+
+                if (CheckCategory.ToUpper().Contains("BACKER")) { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("SECURITY")) { RowTotal = 1; }
 
                 if (B1 == true) { RowTotal += I1; }
                 if (B2 == true) { RowTotal += I2; }
@@ -1159,10 +1166,13 @@ namespace ProDocEstimate
                 if (B6 == true) { RowTotal += I6; }
                 if (B7 == true) { RowTotal += I7; }
                 if (B8 == true) { RowTotal += I8; }
+                if (B9 == true) { RowTotal += I9; }
+                if (B10 == true) { RowTotal += I10; }
 
-                string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
-
-                if(i < lstSelected.Items.Count)
+//                string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
+                string suffix = (RowTotal > 0) ? " " + "🗹" : string.Empty;
+                
+                if (i < lstSelected.Items.Count)
                  { lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
                    lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0,17) + suffix;
                  }

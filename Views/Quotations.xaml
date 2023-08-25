@@ -1072,8 +1072,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="21*" />
+                                <RowDefinition Height="19*" />
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
@@ -1090,9 +1090,9 @@
 								   Grid.Row="1" Width="154"
                                    HorizontalAlignment="Center" Height="30" />
 
-                            <ListBox x:Name="lstAvailable" Grid.Row="2" Grid.RowSpan="4" 
-                                     FontFamily="Courier New" FontSize="14"
-                                     Height="240" VerticalAlignment="Top"
+                            <ListBox x:Name="lstAvailable" Grid.Row="2" 
+                                     FontFamily="Courier New" FontSize="12"
+                                     Height="230" VerticalAlignment="Center"
                                      MouseDoubleClick="lstAvailable_MouseDoubleClick" />
 
                             <Label Content="Selected                                                         (Right-click to view/change)"
@@ -1101,18 +1101,16 @@
                                    HorizontalAlignment="Left" Height="30" Margin="4,0,0,0" />
 
                             <ListBox x:Name="lstSelected" 
-                                     Grid.Row="2" Grid.Column="2" Grid.RowSpan="4"
-                                     FontFamily="Courier New" FontSize="14" 
+                                     Grid.Row="2" Grid.Column="2"
+                                     FontFamily="Courier New" FontSize="12" 
                                      Width="180" HorizontalAlignment="Left"
-                                     Height="240" VerticalAlignment="Top"
+                                     Height="230" VerticalAlignment="Center"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
-	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" >
+	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" />
 
-                            </ListBox>
-
-                            <Expander Grid.Row="3" Grid.ColumnSpan="4"
-                                      VerticalAlignment="Top" HorizontalAlignment="Left"
-                                      ExpandDirection="Right" >
+                            <Expander Grid.Row="3"
+                                      VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="3"
+                                      ExpandDirection="Right" Height="200" Width="690" >
                                 <DataGrid Height="180" VerticalAlignment="Top" Width="655" Margin="0 25 0 0" >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Type"		Width="100" />
