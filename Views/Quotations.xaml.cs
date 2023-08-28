@@ -144,12 +144,13 @@ namespace ProDocEstimate
         { 
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
-            this.Top = 50;
+            Top = 100;
         }
 
         private void LoadAvailableCategories()
         {
             lstAvailable.Items.Clear();
+            lstAvailable.Items.Add("Base Charges");
             lstAvailable.Items.Add("Backer");
             lstAvailable.Items.Add("Ink Color");
             lstAvailable.Items.Add("MICR");
@@ -1020,10 +1021,18 @@ namespace ProDocEstimate
             string check;
 //            check = ((char)0x221A).ToString();
             check = "🗹";
+
             if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
             
             switch (x)
             {
+
+                case "Base Charges":
+                    {
+                        BaseCharge bc = new BaseCharge(QUOTE_NUM); bc.ShowDialog();
+                        break;
+                    }
+
                 case "Backer":
                     {
                         PARTS = 3;
@@ -1162,6 +1171,8 @@ namespace ProDocEstimate
                 if (CheckCategory.ToUpper().Contains("BACKER")) { RowTotal = 1; }
                 if (CheckCategory.ToUpper().Contains("SECURITY")) { RowTotal = 1; }
 
+//                if(CheckCategory.ToUpper().Contains("MICR")) { Debugger.Break(); }
+
                 if (B1 == true) { RowTotal += I1; }
                 if (B2 == true) { RowTotal += I2; }
                 if (B3 == true) { RowTotal += I3; }
@@ -1223,7 +1234,7 @@ namespace ProDocEstimate
         private void lstSelected_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Category = lstSelected.SelectedItem.ToString().TrimEnd();
-            string check = ((char)0x221A).ToString();
+            string check = ((char)0x221A).ToString(); // Previously I used the square root symbol; I replaced it with the character seen below.
             check = "🗹";
 
             if (Category.Contains(check)) { Category = Category.Substring(0, Category.IndexOf(check)).TrimEnd(); }

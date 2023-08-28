@@ -1026,7 +1026,7 @@
                                    HorizontalAlignment="Center" Height="30" />
 
                             <ListBox x:Name="lstAvailable" Grid.Row="2" 
-                                     FontFamily="Courier New" FontSize="12"
+                                     FontFamily="Courier New" FontSize="11"
                                      Height="230" VerticalAlignment="Center"
                                      MouseDoubleClick="lstAvailable_MouseDoubleClick" />
 
@@ -1037,7 +1037,7 @@
 
                             <ListBox x:Name="lstSelected" 
                                      Grid.Row="2" Grid.Column="2"
-                                     FontFamily="Courier New" FontSize="12" 
+                                     FontFamily="Courier New" FontSize="11" 
                                      Width="180" HorizontalAlignment="Left"
                                      Height="230" VerticalAlignment="Center"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"

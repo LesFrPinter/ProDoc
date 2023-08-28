@@ -147,7 +147,7 @@ namespace ProDocEstimate.Views
         { 
             this.Height = this.Height *= 1.8; 
             this.Width = this.Width *= 1.8; 
-            Top = 50; 
+            Top = 150; 
         }
 
         private void LoadFeature()
@@ -269,7 +269,7 @@ namespace ProDocEstimate.Views
                 +  "   Value5,         Value6,         Value7,          Value8,         Value9,     Value10, "
                 +  "   SETUP_MINUTES,  SLOWDOWN_PERCENT ) "
                 +  "VALUES ( "
-                + $"  '{QuoteNum}',    11,            'Strike In',"
+                + $"  '{QuoteNum}',    12,            'Strike In',"
                 + $"  'Flat Charge%', 'Press Setup%', 'Binding Time%', 'Finish Matl%',"
                 + $"  '{FCPct}',      '{PSPct}',      '{BTPct}',       '{FMPct}',"
                 +  "  'PressMins',    'PressSlow',    'CollMins',      'CollSlow',     'BindMins', 'BindSlow'," 

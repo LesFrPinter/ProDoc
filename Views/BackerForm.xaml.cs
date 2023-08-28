@@ -174,7 +174,7 @@ namespace ProDocEstimate.Views
         {
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
-            this.Top = 50;
+            this.Top = 150;
 //            FirstTime = false;
         }
 

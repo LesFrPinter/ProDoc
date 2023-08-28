@@ -327,7 +327,7 @@ namespace ProDocEstimate.Views
                 + "    TotalFlatChg,    PerThousandChg,          FlatChargePct,      RunChargePct,      FinishChargePct,      PressChargePct,     ConvertChargePct,  PlateChargePct,"
                 + "    PRESS_ADDL_MIN,  COLL_ADDL_MIN,           BIND_ADDL_MIN,      PRESS_SLOW_PCT,    COLL_SLOW_PCT,        BIND_SLOW_PCT "
                 + " ) VALUES ( "
-                + $" '{QuoteNum}',     'Converting',             9, "
+                + $" '{QuoteNum}',     'Converting',             10, "
                 + "  '2 CRASH NUMB',   'BLACK NUMB',            'SNAP GLUE 2-4',    'SNAP GLUE 5-12',  'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING',          'TRANSFER TAPE', "
                 + $" '{Crash}',        '{Black}',               '{Snap2}',          '{Snap5}',         '{Cont2}',            '{Cont5}',          '{Fold}',           '{Tape}', "
                 + $" '{FlatTotal}',    '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}',  '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}',  '{PlateChargePct}', "

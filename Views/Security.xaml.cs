@@ -172,7 +172,7 @@ namespace ProDocEstimate.Views
             Startup = false;
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
-            Top = 50;
+            Top = 150;
         }
 
         public void LoadFtypes()
@@ -372,7 +372,7 @@ namespace ProDocEstimate.Views
                 + "    PRESS_ADDL_MIN, COLL_ADDL_MIN, BIND_ADDL_MIN,            PRESS_SLOW_PCT,    COLL_SLOW_PCT,    BIND_SLOW_PCT )"
 
                 +  " VALUES ( " 
-                + $" '{QuoteNum}',     10,           'Security',              '{Checker}',"
+                + $" '{QuoteNum}',     11,           'Security',              '{Checker}',"
                 + $" '{FlatCharge}', '{FlatTotal}',  '{CalculatedRunCharge}', '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', "
                 + $"  {LabPS},        {LabCS},        {LabBS},                 {LabPSL},          {LabCSL},         {LabBSL} )";
 

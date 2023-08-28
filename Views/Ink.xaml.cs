@@ -209,7 +209,7 @@ namespace ProDocEstimate.Views
         {
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
-            Top = 50;
+            Top = 150;
         }
 
         private void LoadMaxColors()

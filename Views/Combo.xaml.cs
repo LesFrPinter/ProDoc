@@ -178,7 +178,7 @@ namespace ProDocEstimate.Views
         {
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
-            Top = 50;
+            Top = 150;
         }
 
         private void LoadMaximum()
@@ -342,7 +342,7 @@ namespace ProDocEstimate.Views
                 + "   TotalFlatChg,   PerThousandChg,   "
                 + "   PRESS_ADDL_MIN, PRESS_SLOW_PCT,   COLL_ADDL_MIN,      COLL_SLOW_PCT,    BIND_ADDL_MIN,      BIND_SLOW_PCT,       SETUP_MINUTES,      SLOWDOWN_PERCENT ) "
                 + " VALUES ( "
-                + $" '{QuoteNum}',   'Combo',           8,"
+                + $" '{QuoteNum}',   'Combo',           9,"
                 + $"  'Combo1',     '{Combo1}',       '{FlatChargePct}',   '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
                 + $" '{FlatTotal}', '{CalculatedRunCharge}',"
                 + $"  {LabPS},       {LabPSL},         {LabCS},             {LabCSL} ,        {LabBS},            {LabBSL},            {SetupTotal},       {SlowdownTotal} )";

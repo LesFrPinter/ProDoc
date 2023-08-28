@@ -138,7 +138,7 @@ namespace ProDocEstimate.Views
         {
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
-            this.Top = 50;
+            Top = 150;
         }
 
         private void LoadDropDowns()
@@ -319,7 +319,7 @@ namespace ProDocEstimate.Views
                 + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,   TotalFlatChg,  PerThousandChg,"
                 + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT   )"
                 + "   VALUES ( "
-                + $" '{QuoteNum}',      'Finishing',       7,"
+                + $" '{QuoteNum}',      'Finishing',       8,"
                 + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',"
                 + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',"
                 + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}',"
