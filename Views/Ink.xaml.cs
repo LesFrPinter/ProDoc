@@ -207,7 +207,7 @@ namespace ProDocEstimate.Views
 
         private void LoadMaxColors()
         {
-            PressSize = PressSize;
+//            PressSize = PRESSSIZE;
 
             SqlConnection cn = new(ConnectionString);
             string str = $"SELECT Number FROM [ESTIMATING].[dbo].[PressSizeColors] WHERE Size = '{PressSize}'";
@@ -250,11 +250,11 @@ namespace ProDocEstimate.Views
             int backercount = (Backer.ToString().Length > 0) ? 1 : 0;
             int totalcount = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + backercount;
             if (totalcount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); }
-            GetCharges(chosen);
+            GetCharges();
             CalcTotal();
         }
 
-        private void GetCharges(string ctl)
+        private void GetCharges()
         {
             string cmd =  "SELECT * FROM [ESTIMATING].[dbo].[FEATURES]"
                        + $" WHERE CATEGORY = 'INK'           AND PRESS_SIZE = '{PressSize}'"

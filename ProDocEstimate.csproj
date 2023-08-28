@@ -21,10 +21,12 @@
     <Compile Remove="Views\CustomerSearch.xaml.cs" />
     <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
     <Compile Remove="Views\DetailFeatures.xaml.cs" />
+    <Compile Remove="Views\FeatureCharges.xaml.cs" />
     <Compile Remove="Views\FeaturePicker.xaml.cs" />
     <Compile Remove="Views\HistoricalPrices.xaml.cs" />
     <Compile Remove="Views\InkColors.xaml.cs" />
     <Compile Remove="Views\Items.xaml.cs" />
+    <Compile Remove="Views\LaborPart.xaml.cs" />
     <Compile Remove="Views\NewCustomer.xaml.cs" />
     <Compile Remove="Views\NewEstimate.xaml.cs" />
     <Compile Remove="Views\PV01.xaml.cs" />
@@ -47,10 +49,12 @@
     <Page Remove="Views\CustomerSearch.xaml" />
     <Page Remove="Views\CustSearchTreeView.xaml" />
     <Page Remove="Views\DetailFeatures.xaml" />
+    <Page Remove="Views\FeatureCharges.xaml" />
     <Page Remove="Views\FeaturePicker.xaml" />
     <Page Remove="Views\HistoricalPrices.xaml" />
     <Page Remove="Views\InkColors.xaml" />
     <Page Remove="Views\Items.xaml" />
+    <Page Remove="Views\LaborPart.xaml" />
     <Page Remove="Views\NewCustomer.xaml" />
     <Page Remove="Views\NewEstimate.xaml" />
     <Page Remove="Views\PV01.xaml" />

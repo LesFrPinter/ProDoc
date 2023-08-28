@@ -157,8 +157,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.6;
-            this.Width = this.Width *= 1.6;
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
             Top = 50;
         }
 

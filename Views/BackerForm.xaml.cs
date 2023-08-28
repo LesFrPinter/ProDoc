@@ -172,8 +172,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.5;
-            this.Width = this.Width *= 1.5;
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
             this.Top = 50;
 //            FirstTime = false;
         }
@@ -259,7 +259,6 @@ namespace ProDocEstimate.Views
             float pr = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(), out pr); BasePressCharge = pr;
             float cm = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(), out cm); BaseConvCharge = cm;
 
-            //  I think it was this before: BasePlateCharge = Changes * rc;     // $5.00 * Changes
             BasePlateCharge = Changes * pm;
 
             CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100);
@@ -272,6 +271,7 @@ namespace ProDocEstimate.Views
             Total = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
             // The next three calculations assume that the values from the FEATURES table are decimal fractions of an your (e.g. .25 for 1/4)
+            //TODO: Determine whether these values should be number of minutes in the database table
             float fPressSetup    = float.Parse(dv[0]["PRESS_SETUP_TIME"].ToString()) * 60.0F; BasePressSetup       = int.Parse(fPressSetup.ToString());
             float fCollatorSetup = float.Parse(dv[0]["COLLATOR_SETUP"].ToString()) * 60.0F; BaseCollatorSetup    = int.Parse(fCollatorSetup.ToString());
             float fBinderySetup  = float.Parse(dv[0]["BINDERY_SETUP"].ToString()) * 60.0F; BaseBinderySetup     = int.Parse(fBinderySetup.ToString());
