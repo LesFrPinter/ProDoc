@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
+        Background="LightGray"
         WindowStartupLocation="CenterScreen"
+        Loaded="OnLoad"
         Title="Customers" Height="670" Width="800">
 
     <Window.Resources>
@@ -94,18 +96,18 @@
 
     <Viewbox>
 
-        <Grid Background="LightCyan" >
+        <Grid>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TabControl x:Name="tabCustomers" Background="LightCyan" Grid.ColumnSpan="2" Margin="5,0,5,0" VerticalAlignment="Center" >
+            <TabControl x:Name="tabCustomers" Grid.ColumnSpan="2" Margin="5,0,5,0" VerticalAlignment="Center" >
 
                 <TabItem Header="Customers" >
 
-                    <TabControl Background="LightCyan" Height="290" Width="800" x:Name="CustDetailPage"  >
+                    <TabControl Height="290" Width="800" x:Name="CustDetailPage"  >
 
                         <TabItem Header="    Details    " x:Name="CustDetlPage"  Padding="5 0" >
 
@@ -190,13 +192,13 @@
 
             </TabControl>
 
-            <TabControl x:Name="tabContacts" Background="LightCyan" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0" VerticalAlignment="Center" >
+            <TabControl x:Name="tabContacts" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,5,0" VerticalAlignment="Center" >
 
                 <TabItem Header="Contacts" >
 
-                    <TabControl Background="LightCyan" Height="290" Width="800" x:Name="ContDetailPage"  >
+                    <TabControl Height="290" Width="800" x:Name="ContDetailPage" >
 
-                        <TabItem Header="    Details    " x:Name="ContDetlPage"  Padding="5 0" >
+                        <TabItem Header="    Details    " x:Name="ContDetlPage" Padding="5 0" >
 
                             <Grid>
                                 <Grid.RowDefinitions>

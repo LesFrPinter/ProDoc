@@ -94,7 +94,14 @@ namespace ProDocEstimate.Views
 			Editing = false;
 		}
 
-		private void mnuExit_Click  (object sender, RoutedEventArgs e) { Close(); }
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.5;
+            this.Width = this.Width *= 1.5;
+            this.Top = 100;
+        }
+
+        private void mnuExit_Click  (object sender, RoutedEventArgs e) { Close(); }
 		private void mnuEdit_Click  (object sender, RoutedEventArgs e) { Editing = true;  }
 		private void mnuNew_Click   (object sender, RoutedEventArgs e) { Editing = true;  }
 		private void mnuSave_Click  (object sender, RoutedEventArgs e) { Editing = false; }
