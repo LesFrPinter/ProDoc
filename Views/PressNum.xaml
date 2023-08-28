@@ -38,7 +38,7 @@
 
     <Viewbox>
 
-        <Grid Width="800" Height="430" VerticalAlignment="Top" >
+        <Grid Width="800" Height="425" VerticalAlignment="Top" >
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />

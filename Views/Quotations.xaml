@@ -204,15 +204,6 @@
 						          Foreground="Black"
 						          Text="{Binding ProjectType}" />
 
-                        <!--<Label Grid.Row="2"
-						       Grid.Column="3"
-						       Width="170"
-						       Margin="3,0,0,0"
-						       HorizontalAlignment="Left"
-						       FontSize="11">
-                            Get from ESTFORMTYPE
-                        </Label>-->
-
                         <Label Grid.Row="3"
 						       Grid.Column="0"
 						       Grid.ColumnSpan="2"
@@ -441,23 +432,23 @@
 						       Content="Parts:" />
 
                         <telerik:RadNumericUpDown x:Name="PartsSpinner"
-						                          Grid.Row="4"
-						                          Grid.Column="2"
-						                          Width="24"
-						                          Height="24"
-						                          Margin="4,0,0,0"
-						                          Padding="0"
-						                          HorizontalAlignment="Left"
-						                          VerticalAlignment="Center"
-						                          VerticalContentAlignment="Center"
-						                          FontFamily="Courier New"
-						                          FontSize="11"
-						                          IsInteger="True"
-						                          LargeChange="1"
-						                          Maximum="12"
-						                          Minimum="1"
-						                          NumberDecimalDigits="0"
-						                          Value="{Binding Path=PARTS}" />
+						    Grid.Row="4"
+						    Grid.Column="2"
+						    Width="24"
+						    Height="24"
+						    Margin="4,0,0,0"
+						    Padding="0"
+						    HorizontalAlignment="Left"
+						    VerticalAlignment="Center"
+						    VerticalContentAlignment="Center"
+						    FontFamily="Courier New"
+						    FontSize="11"
+						    IsInteger="True"
+						    LargeChange="1"
+						    Maximum="12"
+						    Minimum="1"
+						    NumberDecimalDigits="0"
+						    Value="{Binding Path=PARTS}" />
 
                         <Label Grid.Row="5"
 						       Grid.ColumnSpan="2"
@@ -474,8 +465,6 @@
                                   SelectionChanged="cmbPaperType_SelectionChanged_1"
 						          IsSynchronizedWithCurrentItem="True"
 						          Text="{Binding Path=PAPERTYPE}" />
-
-                        <!--SelectionChanged="cmbPaperType_SelectionChanged"-->
 
                         <Button x:Name="btnLoadGrid"
 						        Grid.Row="9" Height="24" 
@@ -521,8 +510,6 @@
 						          Width="90"
 						          Margin="4,4,0,4" SelectionChanged="cmbPressSize_SelectionChanged_1"
 						          Text="{Binding PRESSSIZE}" />
-
-                        <!--SelectionChanged="cmbPressSize_SelectionChanged"-->
 
                         <Label Grid.Row="7"
 						       Grid.Column="2"
@@ -595,11 +582,6 @@
 						        Click="btnNew_Click"
 						        Content="New" />
 
-                        <!--select substring(cust_numb,patindex('%[0-9]%', cust_numb),len(cust_numb)) from customer where cust_numb like 'P%'
-
-						    insert into customer ( cust_numb, cust_name ) values ( 'P00001', 'Test new customer')-->
-
-
                         <Button x:Name="btnQuoteLookup"
 						        Grid.Row="10"
 						        Grid.Column="2"
@@ -663,21 +645,6 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding ContactName}" />
 
-                        <!--<Label Grid.Row="13"
-						       Grid.ColumnSpan="2"
-						       Margin="0,4,4,0"
-						       Padding="0"
-						       VerticalAlignment="Top"
-						       Content="Location:" />
-                        <TextBox x:Name="txtLocation"
-						         Grid.Row="13"
-						         Grid.Column="2"
-						         Grid.ColumnSpan="2"
-						         Width="340"
-						         Margin="10,5,0,4"
-						         IsEnabled="False"
-						         Style="{StaticResource TextField}"
-						         Text="{Binding Location}" />-->
                         <Label Grid.Row="14"
 						       Grid.ColumnSpan="2"
 						       Margin="0,4,4,0"
@@ -777,14 +744,6 @@
 						       Content="Wide" 
                                Margin="142,4,0,0" />
 
-                        <!--<Button x:Name="btnBaseCharge"
-						        Grid.Row="17"
-						        Grid.Column="5"
-						        Height="24"
-						        Padding="10,2"
-						        Click="btnBaseCharge_Click"
-						        Content="Enable page 2" />-->
-
                     </Grid>
 
                 </TabItem>
@@ -801,7 +760,6 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <!--<RowDefinition Height="30" />-->
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -823,23 +781,22 @@
                                Content="Waste:" HorizontalAlignment="Right" Padding="0" FontSize="14" />
 
                         <telerik:RadNumericUpDown x:Name="WasteSpinner"
-						                          Grid.Column="1"
-						                          Width="22"
-						                          Height="24"
-						                          Padding="0"
-                                                  Margin="10,0,0,0"
-						                          HorizontalAlignment="Left"
-						                          VerticalAlignment="Center"
-						                          VerticalContentAlignment="Center"
-						                          FontFamily="Courier New"
-						                          FontSize="10"
-						                          IsInteger="True"
-						                          LargeChange="1"
-						                          Maximum="30"
-						                          Minimum="0"
-						                          NumberDecimalDigits="0"
-						                          Value="{Binding Path=WastePct}" />
-
+						    Grid.Column="1"
+						    Width="22"
+						    Height="24"
+						    Padding="0"
+                            Margin="10,0,0,0"
+						    HorizontalAlignment="Left"
+						    VerticalAlignment="Center"
+						    VerticalContentAlignment="Center"
+						    FontFamily="Courier New"
+						    FontSize="10"
+						    IsInteger="True"
+						    LargeChange="1"
+						    Maximum="30"
+						    Minimum="0"
+						    NumberDecimalDigits="0"
+						    Value="{Binding Path=WastePct}" />
 
                         <Label Grid.Column="1" Content="%" HorizontalAlignment="Right" Padding="0 0 5 0" Margin="76,0,0,0" />
 
@@ -855,18 +812,6 @@
                                  GotFocus="txtQty1_GotFocus"
                                  Text="{Binding Path=Qty1,StringFormat=N0}" x:Name="txtQty1" 
                                  PreviewMouseDown="txtQty1_PreviewMouseDown" />
-
-                        <!--<Popup Grid.Row="7" 
-                               x:Name="CalcPopup"
-							   PlacementTarget="{Binding ElementName=txtQty1}"
-                               Placement="Center" PlacementRectangle="0 0 30 30"
-							   AllowsTransparency="True"
-							   PopupAnimation="Fade"
-                               Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2"
-                               HorizontalAlignment="Center" 
-                               IsOpen="{Binding Path=IsCalc}">
-                            <TextBlock Text="Calculating..." Background="Yellow" Foreground="Red" FontSize="24" />
-                        </Popup>-->
 
                         <Label Grid.Column="3" HorizontalAlignment="Center" Content="Qty 2" FontSize="10" FontWeight="Bold" VerticalAlignment="Top" />
                         <TextBox Grid.Row="1" Grid.Column="3" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
@@ -890,13 +835,6 @@
                             Background="Red"
                             HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                        <!--<Label x:Name="lblCalcMsg" Grid.Row="1" Grid.Column="8" 
-                               HorizontalAlignment="Center"
-                               Foreground="White" Background="Green" 
-                               Visibility="Visible"
-                               Content="{Binding CalcMsg, UpdateSourceTrigger=PropertyChanged}" FontSize="9"  />-->
-
-
                         <Label Content="Paper Type" Grid.Row="2" Grid.Column="2" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" />
 
@@ -910,7 +848,6 @@
                                  Height="22"
                                  Text="{Binding Path=PAPERTYPE, UpdateSourceTrigger=PropertyChanged}"
 						         VerticalAlignment="Center" HorizontalAlignment="Center" />
-
 
                         <Label Content="ItemType" Grid.Row="2" Grid.Column="3" 
 						       HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -973,8 +910,6 @@
 						          VerticalAlignment="Top"
                                   CellEditEnding="dgSheetsOfPaper_CellEditEnding"
                                   SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" Grid.RowSpan="3">
-
-                            <!--PreviewMouseDown="dgSheetsOfPaper_PreviewMouseDown"-->
 
                             <DataGrid.Columns>
 
@@ -1118,8 +1053,6 @@
                                         <DataGridTextColumn Header="Run chg"	Width="100" />
                                         <DataGridTextColumn Header="Plate"		Width="100" />
                                         <DataGridTextColumn Header="FinishMatl" Width="100" />
-                                        <!--<DataGridTextColumn Header="SetupTime"	Width="100" />
-	                                        <DataGridTextColumn Header="Slowdown"	Width="100" />-->
                                         <DataGridTextColumn Header="PressMatl"	Width="100" />
                                     </DataGrid.Columns>
                                 </DataGrid>
@@ -1207,15 +1140,15 @@
 						       FontSize="11" />
 
                             <telerik:RadNumericUpDown x:Name="Qty1b"
-						                    Grid.Row="1"
-						                    Grid.Column="1"
-						                    Width="85"
-						                    Margin="10,2,0,2"
-						                    HorizontalAlignment="Left"
-                                            VerticalContentAlignment="Center"
-						                    FontSize="14"
-						                    Value="{Binding Path=QTY1a}"
-                                            LostFocus="Qty1b_LostFocus" />
+						        Grid.Row="1"
+						        Grid.Column="1"
+						        Width="85"
+						        Margin="10,2,0,2"
+						        HorizontalAlignment="Left"
+                                VerticalContentAlignment="Center"
+						        FontSize="14"
+						        Value="{Binding Path=QTY1a}"
+                                LostFocus="Qty1b_LostFocus" />
                             <TextBox x:Name="CPM1"
 						         Grid.Row="1"
 						         Grid.Column="2"
@@ -1258,15 +1191,15 @@
 						         Text="{Binding Path=EXT1a, StringFormat=N2}" />
 
                             <telerik:RadNumericUpDown x:Name="Qty2b"
-						                    Grid.Row="2"
-						                    Grid.Column="1"
-						                    Width="85"
-						                    Margin="10,2,0,2"
-						                    HorizontalAlignment="Left"
-                                            VerticalContentAlignment="Center"
-						                    FontSize="14"
-						                    Value="{Binding Path=QTY2a}"
-						                    LostFocus="Qty2b_LostFocus" />
+						        Grid.Row="2"
+						        Grid.Column="1"
+						        Width="85"
+						        Margin="10,2,0,2"
+						        HorizontalAlignment="Left"
+                                VerticalContentAlignment="Center"
+						        FontSize="14"
+						        Value="{Binding Path=QTY2a}"
+						        LostFocus="Qty2b_LostFocus" />
                             <TextBox x:Name="CPM2"
 						         Grid.Row="2"
 						         Grid.Column="2"
@@ -1310,15 +1243,15 @@
 						         Text="{Binding Path=EXT2a, StringFormat=N2}" />
 
                             <telerik:RadNumericUpDown x:Name="Qty3b"
-						                    Grid.Row="3"
-						                    Grid.Column="1"
-						                    Width="85"
-						                    Margin="10,2,0,2"
-						                    HorizontalAlignment="Left"
-                                            VerticalContentAlignment="Center"
-						                    FontSize="14"
-						                    Value="{Binding Path=QTY3a}"
-						                    LostFocus="Qty3b_LostFocus" />
+						        Grid.Row="3"
+						        Grid.Column="1"
+						        Width="85"
+						        Margin="10,2,0,2"
+						        HorizontalAlignment="Left"
+                                VerticalContentAlignment="Center"
+						        FontSize="14"
+						        Value="{Binding Path=QTY3a}"
+						        LostFocus="Qty3b_LostFocus" />
                             <TextBox x:Name="CPM3"
 						         Grid.Row="3"
 						         Grid.Column="2"
@@ -1362,15 +1295,15 @@
 						         Text="{Binding Path=EXT3a, StringFormat=N2}" />
 
                             <telerik:RadNumericUpDown x:Name="Qty4b"
-						                    Grid.Row="4"
-						                    Grid.Column="1"
-						                    Width="85"
-						                    Margin="10,2,0,2"
-						                    HorizontalAlignment="Left"
-                                            VerticalContentAlignment="Center"
-						                    FontSize="14"
-						                    Value="{Binding Path=QTY4a}"
-						                    LostFocus="Qty4b_LostFocus" />
+						        Grid.Row="4"
+						        Grid.Column="1"
+						        Width="85"
+						        Margin="10,2,0,2"
+						        HorizontalAlignment="Left"
+                                VerticalContentAlignment="Center"
+						        FontSize="14"
+						        Value="{Binding Path=QTY4a}"
+						        LostFocus="Qty4b_LostFocus" />
                             <TextBox x:Name="CPM4"
 						         Grid.Row="4"
 						         Grid.Column="2"
@@ -1412,86 +1345,6 @@
 						         FontSize="11"
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT4a, StringFormat=N2}" />
-
-                            <!--<DataGrid x:Name="dgElements"
-						        Grid.Row="6"
-                                Grid.Column="0"
-						        Grid.RowSpan="11"
-						        Grid.ColumnSpan="7"
-                                Margin="30 0"
-						        Width="720"
-						        AutoGenerateColumns="False"
-						        Background="lightBlue"
-						        ColumnWidth="auto"
-						        FontSize="10"
-						        IsSynchronizedWithCurrentItem="True"
-						        ItemsSource="{Binding dtElements.DefaultView}"
-						        MouseDoubleClick="dgElements_MouseDoubleClick"
-						        RowHeight="18"
-						        SelectedCellsChanged="dgElements_SelectedCellsChanged">
-
-                                <DataGrid.Columns>
-
-                                    <DataGridTextColumn Width="60" Binding="{Binding Path=SEQ}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
-										       Content="SEQ#"
-										       FontSize="12" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
-
-                                    <DataGridTextColumn Width="350" Binding="{Binding Path=ITEM}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Left"
-										       Content="Item (MasterInventory.Description)"
-										       FontSize="11" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
-
-                                    <DataGridTextColumn x:Name="gdPrice"
-								                    Width="90"
-								                    Binding="{Binding Path=PRICE, StringFormat=N2}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
-										       Content="Price"
-										       FontSize="12" />
-                                        </DataGridTextColumn.Header>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-
-                                    <DataGridTextColumn Width="80" Binding="{Binding Path=MULT, StringFormat=N0}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
-										       Content="Mult"
-										       FontSize="12" />
-                                        </DataGridTextColumn.Header>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-
-                                    <DataGridTextColumn Width="90" Binding="{Binding Path=EXT, StringFormat=N2}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
-										       Content="Ext"
-										       FontSize="12" />
-                                        </DataGridTextColumn.Header>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-
-                                </DataGrid.Columns>
-
-                            </DataGrid>-->
 
                             <Grid Grid.Row="8">
 

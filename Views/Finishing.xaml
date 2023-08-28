@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Height="400" Width="795">
+        Height="400" Width="800">
 
     <Window.Resources>
 

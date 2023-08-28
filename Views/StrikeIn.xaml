@@ -52,7 +52,7 @@
 
     <Viewbox>
 
-        <Grid  Height="445" Width="800">
+        <Grid  Height="440" Width="800">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />

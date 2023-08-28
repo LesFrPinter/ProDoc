@@ -45,7 +45,7 @@
 
     <Viewbox>
 
-        <Grid Width="774" Height="431" VerticalAlignment="Top" >
+        <Grid Width="800" Height="435" VerticalAlignment="Top" >
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="45" />

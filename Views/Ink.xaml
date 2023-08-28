@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
-        Title="Ink Colors" Height="475" Width="800">
+        Title="Ink Colors" Height="485" Width="800">
 
     <Window.Resources>
 
@@ -26,11 +26,13 @@
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Margin"   Value="1" />
             <Setter Property="Height"   Value="24" />
-            <Setter Property="Width"    Value="50" />
+            <Setter Property="Width"    Value="80" />
             <Setter Property="NumberDecimalDigits" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment"   Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="Minimum"   Value="0" />
+            <Setter Property="IsInteger" Value="True" />
             <Setter Property="IsTabStop" Value="True" />
             <Setter Property="Background" Value="White" />
         </Style>
@@ -112,8 +114,6 @@
                 <Label                    Grid.Row="1" Grid.Column="10" Content="{Binding Backer}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,0,0,0" />
                 <Label                    Grid.Row="1" Grid.Column="10" Content="{Binding BackerDetails}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Foreground="Red" FontSize="9" VerticalAlignment="Top" Margin="10 -10 0 0"/>
 
-                <!--<TextBlock Grid.Row="3" Grid.Column="7" FontSize="7" Text="NOTE: Only SP press sizes have 4 color values)" TextWrapping ="Wrap" Height="33" VerticalAlignment="Center" Padding="2" Foreground="Purple" FontWeight="Bold" />-->
-
             </Grid>
 
             <Grid Grid.Row="2" Margin="0,0,0,17">
@@ -168,7 +168,7 @@
                 <Label Content="Press Material:"        Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Height="22" Margin="108,0,0,0" Width="93" />
 
                 <TextBox Width="60" Height="20"         Grid.Row="1" Grid.Column="1" Text="{Binding CalculatedFlatCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="4,4,0,2" />
-                <telerik:RadNumericUpDown Width="60"    Grid.Row="1" Grid.Column="1" Margin="71,4,0,4" Value="{Binding FlatChargePct,   UpdateSourceTrigger=PropertyChanged}" x:Name="FCPct" ValueChanged="PctChanged" HorizontalAlignment="Left" />
+                <telerik:RadNumericUpDown Width="60"    Grid.Row="1" Grid.Column="1" Margin="71 0 0 0" Value="{Binding FlatChargePct,   UpdateSourceTrigger=PropertyChanged}" x:Name="FCPct" ValueChanged="PctChanged" HorizontalAlignment="Left" />
                 <Label                                  Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="%" HorizontalAlignment="Left" Height="22" Margin="4,0,0,0" Width="15" />
 
                 <TextBox Width="60" Height="20"         Grid.Row="2" Grid.Column="1" Text="{Binding CalculatedRunCharge,    StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="4,4,0,2" />
