@@ -157,12 +157,12 @@ namespace ProDocEstimate.Views
             PressChargePct = 0;
             ConvChargePct =0;
 
-            BasePressSetup = 0;
-            BaseCollatorSetup = 0;
-            BaseBinderySetup = 0;
-            BasePressSlowdown = 0;
-            BaseCollatorSlowdown = 0;
-            BaseBinderySlowdown =0;
+            //BasePressSetup = 0;
+            //BaseCollatorSetup = 0;
+            //BaseBinderySetup = 0;
+            //BasePressSlowdown = 0;
+            //BaseCollatorSlowdown = 0;
+            //BaseBinderySlowdown =0;
 
             string str = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Perfing'";
             da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
@@ -183,12 +183,12 @@ namespace ProDocEstimate.Views
                 t5 = 0; int.TryParse(dt.Rows[0]["PressChargePct"].ToString(), out t5); PressChargePct = t5;
                 t6 = 0; int.TryParse(dt.Rows[0]["ConvertChargePct"].ToString(), out t6); ConvChargePct = t6;
 
-                l1 = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out l1); BasePressSetup += l1;
-                l2 = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(), out l2); BaseCollatorSetup += l2;
-                l3 = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(), out l3); BaseBinderySetup += l3;
-                l4 = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out l4); BasePressSlowdown += l4;
-                l5 = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(), out l5); BaseCollatorSlowdown += l5;
-                l6 = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(), out l6); BaseBinderySlowdown += l6;
+                l1 = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out l1); LabPS  += l1;
+                l2 = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(), out l2);  LabCS  += l2;
+                l3 = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(), out l3);  LabBS  += l3;
+                l4 = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out l4); LabPSL += l4;
+                l5 = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(), out l5);  LabCSL += l5;
+                l6 = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(), out l6);  LabBSL += l6;
             }
 
             CalcTotal();
@@ -237,12 +237,12 @@ namespace ProDocEstimate.Views
                 t5 = 0.00F; float.TryParse(dv[i]["PLATE_MATL"].ToString(), out t5); BasePlateCharge += t5;
                 t6 = 0.00F; float.TryParse(dv[i]["PRESS_MATL"].ToString(), out t6); BasePressCharge += t6;
 
-                l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"].ToString(), out l1); BasePressSetup += l1;
-                l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"].ToString(), out l2); BaseCollatorSetup += l2;
-                l3 = 0; int.TryParse(dv[i]["BINDERY_SETUP"].ToString(), out l3); BaseBinderySetup += l3;
-                l4 = 0; int.TryParse(dv[i]["PRESS_SLOWDOWN"].ToString(), out l4); BasePressSlowdown += l4;
+                l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup       += l1;
+                l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"]   .ToString(), out l2); BaseCollatorSetup    += l2;
+                l3 = 0; int.TryParse(dv[i]["BINDERY_SETUP"]    .ToString(), out l3); BaseBinderySetup     += l3;
+                l4 = 0; int.TryParse(dv[i]["PRESS_SLOWDOWN"]   .ToString(), out l4); BasePressSlowdown    += l4;
                 l5 = 0; int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown += l5;
-                l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"].ToString(), out l6); BaseBinderySlowdown += l6;
+                l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"] .ToString(), out l6); BaseBinderySlowdown  += l6;
             }
 
             CalcTotal();

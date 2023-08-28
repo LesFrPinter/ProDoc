@@ -1224,6 +1224,7 @@ namespace ProDocEstimate
         {
             Category = lstSelected.SelectedItem.ToString().TrimEnd();
             string check = ((char)0x221A).ToString();
+            check = "🗹";
 
             if (Category.Contains(check)) { Category = Category.Substring(0, Category.IndexOf(check)).TrimEnd(); }
 

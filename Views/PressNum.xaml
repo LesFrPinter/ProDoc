@@ -225,36 +225,34 @@
                 <Label Grid.Row="0" Grid.Column="5" Content="Add'l %" Height="16" Margin="0,9,0,0" VerticalAlignment="Top" Width="44" />
 
                 <Label Content="Press Setup:"    HorizontalAlignment="Left" Margin="84,0,0,0"  VerticalAlignment="Center" Grid.Row="1" Height="16" Width="68"/>
-                <Label Content="Collator Setup:" HorizontalAlignment="Left" Margin="70,0,0,0"  VerticalAlignment="Center" Grid.Row="2" Height="16" Width="82" />
-                <Label Content="Bindery Setup:"  HorizontalAlignment="Left" Margin="72,0,0,0"  VerticalAlignment="Center" Grid.Row="3" Height="16" Width="80" />
-                <Label Content="Total Setup:"    HorizontalAlignment="Left" Margin="81,0,0,0"  VerticalAlignment="Center" Grid.Row="4" FontWeight="Bold" Height="16" Width="71" />
-
-                <Label Content="Press Slowdown:" VerticalAlignment="Center" Grid.Row="1"  Grid.Column="3" HorizontalAlignment="Right"/>
-                <Label Content="Collator Slowdown:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"  Grid.Column="3" Height="16" Width="106" Margin="85,0,0,0"/>
-                <Label Content="Bindery Slowdown:"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"  Grid.Column="3" Height="16" Width="104" Margin="87,0,0,0"/>
-                <Label Content="Total Slowdown:"    HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"  Grid.Column="3" FontWeight="Bold" Height="16" Width="97" Margin="94,0,0,0" />
-
-                <TextBox IsEnabled="False" Width="60"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PressSetup,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PressSetup,       StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
                 <telerik:RadNumericUpDown               Grid.Row="1" Grid.Column="2" Value="{Binding LabPS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor"  x:Name="S1" Margin="0,4,0,4" Width="60"/>
 
+                <Label Content="Press Slowdown:" VerticalAlignment="Center" Grid.Row="1"  Grid.Column="3" HorizontalAlignment="Right"/>
                 <TextBox IsEnabled="False" Width="60"   Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding PressSlowdown,    StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
                 <telerik:RadNumericUpDown               Grid.Row="1" Grid.Column="5" Value="{Binding LabPSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" Margin="0,4,0,4" Width="60" />
 
+                <Label Content="Collator Setup:" HorizontalAlignment="Left" Margin="70,0,0,0"  VerticalAlignment="Center" Grid.Row="2" Height="16" Width="82" />
                 <TextBox IsEnabled="False" Width="60"   Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding CollatorSetup,    StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
                 <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="2" Value="{Binding LabCS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor" x:Name="S2" Margin="0,4,0,4" Width="60"/>
 
+                <Label Content="Collator Slowdown:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"  Grid.Column="3" Height="16" Width="106" Margin="85,0,0,0"/>
                 <TextBox IsEnabled="False" Width="60"   Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding CollatorSlowdown, StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
                 <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="5" Value="{Binding LabCSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" Margin="0,4,0,4" Width="60" />
 
+                <Label Content="Bindery Setup:"  HorizontalAlignment="Left" Margin="72,0,0,0"  VerticalAlignment="Center" Grid.Row="3" Height="16" Width="80" />
                 <TextBox IsEnabled="False" Width="60"   Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding BinderySetup,     StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
                 <telerik:RadNumericUpDown               Grid.Row="3" Grid.Column="2" Value="{Binding LabBS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor" x:Name="S3" Margin="0,4,0,4" Width="60"/>
 
+                <Label Content="Bindery Slowdown:"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"  Grid.Column="3" Height="16" Width="104" Margin="87,0,0,0"/>
                 <TextBox IsEnabled="False" Width="60"   Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding BinderySlowdown,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
                 <telerik:RadNumericUpDown               Grid.Row="3" Grid.Column="5" Value="{Binding LabBSL,UpdateSourceTrigger=PropertyChanged}"  ValueChanged="CalcLabor" Margin="0,4,0,4" Width="60" />
 
-                <TextBox IsEnabled="False" Width="60"   Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding SetupTotal, StringFormat='N0'}" HorizontalContentAlignment="Right"       Margin="10 0 0 0" Height="20" />
+                <Label Content="Total Setup:"           HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"                  FontWeight="Bold" Height="16" Width="71" Margin="81,0,0,0" />
+                <Label Content="Total Slowdown:"        HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"  Grid.Column="3" FontWeight="Bold" Height="16" Width="97" Margin="94,0,0,0" />
 
-                <TextBox IsEnabled="False" Width="60"   Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding SlowdownTotal,  StringFormat='N0'}" HorizontalContentAlignment="Right"   Margin="10 0 0 0" Height="20" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding SetupTotal,    StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding SlowdownTotal, StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10 0 0 0" Height="20" />
 
             </Grid>
 

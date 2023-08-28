@@ -174,6 +174,13 @@ namespace ProDocEstimate.Views
             float t7 = 0; float.TryParse(dv[0]["TotalFlatChg"].ToString(),     out t7); FlatTotal = t7;
             float t8 = 0; float.TryParse(dv[0]["PerThousandChg"].ToString(),   out t8); CalculatedRunCharge = t8;
 
+            int l1 = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out l1); LabPS += l1;
+            int l2 = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(), out l2); LabCS += l2;
+            int l3 = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(), out l3); LabBS += l3;
+            int l4 = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out l4); LabPSL += l4;
+            int l5 = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(), out l5); LabCSL += l5;
+            int l6 = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(), out l6); LabBSL += l6;
+
             GetCharges();
         }
 

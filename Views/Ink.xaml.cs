@@ -189,7 +189,14 @@ namespace ProDocEstimate.Views
                 WaterMark = int.Parse(dt.Rows[0]["Value8"].ToString());
                 FluorSel = int.Parse(dt.Rows[0]["Value9"].ToString());
 
-                LabPS  = int.Parse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString());
+                FlatChargePct = int.Parse(dt.Rows[0]["FlatChargePct"].ToString());
+                RunChargePct = int.Parse(dt.Rows[0]["RunChargePct"].ToString());
+                PlateChargePct = int.Parse(dt.Rows[0]["PlateChargePct"].ToString());
+                FinishChargePct = int.Parse(dt.Rows[0]["FinishChargePct"].ToString());
+                PressChargePct = int.Parse(dt.Rows[0]["PressChargePct"].ToString());
+                ConvChargePct = int.Parse(dt.Rows[0]["ConvertChargePct"].ToString());
+
+                LabPS = int.Parse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString());
                 LabCS  = int.Parse(dt.Rows[0]["COLL_ADDL_MIN"].ToString());
                 LabBS  = int.Parse(dt.Rows[0]["BIND_ADDL_MIN"].ToString());
                 LabPSL = int.Parse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString());

@@ -391,12 +391,12 @@ namespace ProDocEstimate.Views
                 + "   Quote_Num,           Category,          Sequence,"
                 + "   Param1,              Param2,            Param3,             Value1,              Value2,             Value3, "
                 + "   FlatChargePct,       RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,  PerThousandChg, "
-                + "   PRESS_ADDL_MIN,      PRESS_SLOW_PCT,    COLL_ADDL_MIN,      COLL_SLOW_PCT,       BIND_ADDL_MIN,      BIND_SLOW_PCT,     SETUP_MINUTES, SLOWDOWN_PERCENT ) "
+                + "   PRESS_ADDL_MIN,      COLL_ADDL_MIN,     BIND_ADDL_MIN,      PRESS_SLOW_PCT,      COLL_SLOW_PCT,      BIND_SLOW_PCT,     SETUP_MINUTES, SLOWDOWN_PERCENT ) "
                 + " VALUES ( "
                 + $" '{QuoteNum}',        'MICR',             4,"
                 + $"  'Digital',          'Pack2Pack',       'Press',           '{Digital}',         '{Pack2Pack}',      '{Press}', "
                 + $" '{FlatChargePct}',  '{RunChargePct}',  '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
-                + $"  {LabPS},            {LabPSL},          {LabCS},            {LabCSL} ,           {LabBS},            {LabBSL},          {SetupTotal},  {SlowdownTotal} )";
+                + $"  {LabPS},            {LabCS},           {LabBS},            {LabPSL} ,           {LabCSL},           {LabBSL},          {SetupTotal},  {SlowdownTotal} )";
 
             scmd.CommandText = cmd;
             conn.Open();
