@@ -271,19 +271,13 @@ namespace ProDocEstimate.Views
 
             Total = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
-            // The next three calculations assume that the values from the FEATURES table are decimal fractions of an your (e.g. .25 for 1/4)
-            //TODO: Determine whether these values should be number of minutes in the database table
-            //float fPressSetup    = float.Parse(dv[0]["PRESS_SETUP_TIME"].ToString()) * 60.0F; BasePressSetup       = int.Parse(fPressSetup.ToString());
-            //float fCollatorSetup = float.Parse(dv[0]["COLLATOR_SETUP"].ToString()) * 60.0F; BaseCollatorSetup    = int.Parse(fCollatorSetup.ToString());
-            //float fBinderySetup  = float.Parse(dv[0]["BINDERY_SETUP"].ToString()) * 60.0F; BaseBinderySetup     = int.Parse(fBinderySetup.ToString());
-
             float fPressSetup = 0.0F;
             float fCollatorSetup = 0.0F;
             float fBinderySetup = 0.0F;
 
-            float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"].ToString(), out F2); BasePressSetup = (int)F2 * 60;
-            float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]  .ToString(), out F3); BaseCollatorSetup = (int)F3 * 60;
-            float F4 = 0; float.TryParse(dv[0]["BINDERY_SETUP"]   .ToString(), out F4); BaseBinderySetup = (int)F4 * 60;
+            float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"].ToString(), out F2); BasePressSetup    = (int)(F2 * 60);
+            float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]  .ToString(), out F3); BaseCollatorSetup = (int)(F3 * 60);
+            float F4 = 0; float.TryParse(dv[0]["BINDERY_SETUP"]   .ToString(), out F4); BaseBinderySetup  = (int)(F4 * 60);
 
             int I2 = 0; int.TryParse(dv[0]["PRESS_SLOWDOWN"]      .ToString(), out I2); BasePressSlowdown = I2;
             int I3 = 0; int.TryParse(dv[0]["COLLATOR_SLOWDOWN"]   .ToString(), out I3); BaseCollatorSlowdown = I3;

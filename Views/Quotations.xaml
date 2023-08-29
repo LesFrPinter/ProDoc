@@ -157,7 +157,7 @@
 						        HorizontalAlignment="Left"
 						        VerticalAlignment="Top"
 						        Click="btnCopy_Click"
-						        Content="Lookup/Copy" />
+						        Content="Lookup" />
 
                         <Button x:Name="btnAssignNewQuoteNum"
 						        Grid.Row="0"
@@ -168,8 +168,7 @@
 						        HorizontalAlignment="Left"
 						        VerticalAlignment="Top"
                                 Click="btnAssignNewQuoteNum_Click"
-                                Visibility="Hidden"
-						        Content="Assign a new Quote #" />
+						        Content="Copy and Assign a new Quote #" />
 
                         <Label Grid.Row="1"
 						       Grid.ColumnSpan="2"
@@ -1067,6 +1066,7 @@
 
                 <TabItem x:Name="Page4"
 				         FontSize="16"
+                         GotFocus="Page4_GotFocus"
 				         Header="Page _4">
 
                     <Viewbox>
@@ -1144,7 +1144,7 @@
 						        Grid.Row="1"
 						        Grid.Column="1"
 						        Width="85"
-						        Margin="10,2,0,2"
+						        Margin="10,3,0,1"
 						        HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center"
 						        FontSize="14"
@@ -1347,6 +1347,9 @@
 						         IsEnabled="False"
 						         Text="{Binding Path=EXT4a, StringFormat=N2}" />
 
+                            <Label Grid.Row="6" Grid.Column="1" Content="Features total:" Grid.ColumnSpan="2" Margin="0 0 10 0" HorizontalAlignment="Right" FontWeight="Bold" />
+                            <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding QuoteTotal, StringFormat=C}" Width="80" Height="22" HorizontalContentAlignment="Right" />
+
                             <Grid Grid.Row="8">
 
                                 <Grid.RowDefinitions>
@@ -1393,7 +1396,10 @@
 
                             </Grid>
 
-                            <Button Grid.Row="17" Grid.ColumnSpan="7" HorizontalAlignment="Center" >Save Quote</Button>
+                            <StackPanel Grid.Row="17" Grid.ColumnSpan="8" HorizontalAlignment="Right" Margin="0 0 20 0" Orientation="Horizontal" >
+                                <Button x:Name="btnSaveQuote"   Margin="5 0 0 0" Width="90" Height="22" Click="btnSaveQuote_Click"   > Save Quote </Button>
+                                <Button x:Name="btnCancelQuote" Margin="5 0 5 0" Width="90" Height="22" Click="btnCancelQuote_Click" > Don't Save </Button>
+                            </StackPanel>
 
                         </Grid>
 

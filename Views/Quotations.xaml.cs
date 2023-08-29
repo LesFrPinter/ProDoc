@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ProDocEstimate
 {
@@ -203,15 +204,23 @@ namespace ProDocEstimate
             ql.ShowDialog();
             QUOTE_NUM = ql.SelQuote; ql.Close();
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
+
             GetQuote();
-            btnAssignNewQuoteNum.Visibility = Visibility.Visible;
+
+//          btnAssignNewQuoteNum.Visibility = Visibility.Visible;
 
             // Always add a Backer row in Quote_Detail, Since Ink Color includes a Backer as one of the ink colors. Should it also default to "Std"?
             // Always add an Ink Color row (blank) on new quotes
             // Always add a PrePress row in Quote_Details with values of 1 for both 
 
-//            LoadAvailableCategories();
-//            AddDefaultDetailLines();
+            //            LoadAvailableCategories();
+            //            AddDefaultDetailLines();
+
+            //NewQuote();
+
+            //txtQuoteNum.Focus();
+            //txtQuoteNum.Background = Brushes.Red;
+            //txtQuoteNum.Foreground = Brushes.Yellow;
         }
 
         private void AddDefaultDetailLines()
@@ -552,6 +561,9 @@ namespace ProDocEstimate
 
         private void txtQuoteNum_LostFocus(object sender, RoutedEventArgs e)
         {
+            txtQuoteNum.Foreground = Brushes.Black;
+            txtQuoteNum.Background = Brushes.White;
+
             GetQuote();
         }
 
@@ -998,6 +1010,11 @@ namespace ProDocEstimate
 
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
+            NewQuote();
+        }
+
+        private void NewQuote()
+        {
             Adding = true; // to suppress "DELETE ALL ROWS?" message connected to ROLL_WIDTH validation
 
             conn = new SqlConnection(ConnectionString); conn.Open();
@@ -1275,7 +1292,18 @@ namespace ProDocEstimate
 
         private void btnAssignNewQuoteNum_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Isn't this already happening somewhere?
+            QuoteLookup ql = new();
+            ql.ShowDialog();
+            QUOTE_NUM = ql.SelQuote; ql.Close();
+
+            if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
+
+            GetQuote();
+            NewQuote();
+
+            txtQuoteNum.Focus();
+            txtQuoteNum.Background = Brushes.Red;
+            txtQuoteNum.Foreground = Brushes.Yellow;
         }
 
         private void cmbPressSize_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -1296,6 +1324,38 @@ namespace ProDocEstimate
                 MessageBox.Show("Features removed.", "Done", MessageBoxButton.OK, MessageBoxImage.Information );
             }
         }
- 
+
+        private void btnSaveQuote_Click(object sender, RoutedEventArgs e)
+        {
+            // Do I need to save the bit value LineHoles as well?
+            string cmd
+                =  "INSERT INTO QUOTES (   QUOTE_NUM,     CUST_NUM,     PARTS,    PAPERTYPE,     ROLLWIDTH,   LINEHOLES,   PRESSSIZE,     COLLATORCUT,     PROJECTTYPE,   Date,       Amount      ) "
+                + $"            VALUES ( '{QUOTE_NUM}', '{CUST_NUMB}', {PARTS}, '{PAPERTYPE}', '{ROLLWIDTH}', 0,         '{PRESSSIZE}', '{COLLATORCUT}', '{ProjectType}', GetDate(), {QuoteTotal} )";
+            Clipboard.SetText(cmd);
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close(); MessageBox.Show(" Quote saved ", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            Close();
+        }
+
+        private void btnCancelQuote_Click(object sender, RoutedEventArgs e)
+        {
+            if(MessageBox.Show("Delete this new quote?", "Erase this new quote?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) 
+            {   string cmd = $"DELETE QUOTE_DETAILS WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+                conn = new SqlConnection(ConnectionString);
+                scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
+                MessageBox.Show("Done");
+                Close();
+            }
+        }
+
+        private void Page4_GotFocus(object sender, RoutedEventArgs e)
+        {
+            string cmd = $"SELECT SUM(TotalFlatChg) AS TotalCharge FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = {QUOTE_NUM}";
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter (cmd, conn); 
+            dt = new DataTable("Tot"); da.Fill(dt);
+            QuoteTotal  = float.Parse(dt.Rows[0]["TotalCharge"].ToString());
+            conn.Close();
+        }
     }
 }
