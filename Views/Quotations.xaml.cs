@@ -16,7 +16,6 @@ namespace ProDocEstimate
 {
     public partial class Quotations : Window, INotifyPropertyChanged
     {
-//        HistoricalPrices hp = new();
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
@@ -651,6 +650,9 @@ namespace ProDocEstimate
         {
             if(ProjectType.Length==0) { MessageBox.Show("Please select a project type"); return; }
 
+            Trace.WriteLine("----------------\nADDING DEFAULT DETAIL LINES\n----------------");
+            AddDefaultDetailLines();
+
             int setNum       = int.Parse(PartsSpinner.Value.ToString());
             string formType  = ProjectType.Substring(0, 1);
             string paperType = PAPERTYPE.Substring(0, 1);
@@ -1035,7 +1037,7 @@ namespace ProDocEstimate
             COLLATORCUT = "";
 
             LoadAvailableCategories();
-            AddDefaultDetailLines();        // Is this where this call goes?
+//            AddDefaultDetailLines();        // NOT where this call goes!
         }
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -1350,12 +1352,13 @@ namespace ProDocEstimate
 
         private void Page4_GotFocus(object sender, RoutedEventArgs e)
         {
-            string cmd = $"SELECT SUM(TotalFlatChg) AS TotalCharge FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = {QUOTE_NUM}";
+            string cmd = $"SELECT SUM(TotalFlatChg) AS TotalCharge FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             SqlConnection conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter (cmd, conn); 
             dt = new DataTable("Tot"); da.Fill(dt);
             QuoteTotal  = float.Parse(dt.Rows[0]["TotalCharge"].ToString());
             conn.Close();
         }
+
     }
 }

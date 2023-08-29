@@ -239,7 +239,7 @@ namespace ProDocEstimate.Views
             // The default values for this feature depend on the currently selected value for F_TYPE (type of backer)
             // That's why it has to be called every time the type of backer (a RadioButton control) changes.
 
-            string cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
+            string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND PRESS_SIZE = '{PressSize}' AND F_TYPE = '";
             if (Button1 == 1) { cmd += "BACKER'"; }
             if (Button2 == 1) { cmd += "BACKER STD'"; }
             if (Button3 == 1) { cmd += "BACKER PMS'"; }

@@ -89,7 +89,7 @@
 
                 <Label Content="Max Colors"          FontSize="11" Width="58" />
                 <Label Content="Std"                 Grid.Column="1" FontSize="11" Width="19" />
-                <Label Content="Black &amp; Std"     Grid.Column="2" FontSize="11" Width="59" />
+                <Label Content="Blk/Reflex"     Grid.Column="2" FontSize="11" />
                 <Label Content="PMS"                 Grid.Column="3" FontSize="11" Width="25" />
                 <Label Content="Desensitized"        Grid.Column="4" FontSize="11" Width="65"  />
                 <Label Content="Split Ftn"           Grid.Column="5" FontSize="11" Width="43" />

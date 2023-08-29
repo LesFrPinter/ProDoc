@@ -103,9 +103,9 @@
             </Label>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="85,0,1,0" Grid.Column="2">
-                <RadioButton x:Name="B1" GroupName="Bak" Margin="0 0 0 0"  Content="_Backer"     IsChecked="{Binding One, Mode=TwoWay}"   Width="85" Checked="Checked"/>
-                <RadioButton x:Name="B2" GroupName="Bak" Margin="5 0 0 0" Content="Backer _Std"  IsChecked="{Binding Two, Mode=TwoWay}"   Width="95" Checked="Checked"/>
-                <RadioButton x:Name="B3" GroupName="Bak" Margin="30 0 0 0" Content="Backer _PMS"  IsChecked="{Binding Three, Mode=TwoWay}" Width="105" Checked="Checked"/>
+                <RadioButton x:Name="B1" GroupName="Bak" Margin="0 0 0 0"  Content="_Backer"     IsChecked="{Binding One, Mode=TwoWay}"   Width="85"  Checked="Checked"/>
+                <RadioButton x:Name="B2" GroupName="Bak" Margin="5 0 0 0"  Content="Backer _Std" IsChecked="{Binding Two, Mode=TwoWay}"   Width="95"  Checked="Checked"/>
+                <RadioButton x:Name="B3" GroupName="Bak" Margin="30 0 0 0" Content="Backer _PMS" IsChecked="{Binding Three, Mode=TwoWay}" Width="105" Checked="Checked"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="5" Background="LightGray" Margin="2,0,0,0" Grid.Column="2" Visibility="Hidden" >
