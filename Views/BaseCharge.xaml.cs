@@ -45,9 +45,13 @@ namespace ProDocEstimate.Views
         private void LoadData()
         {
             string cmd = $"SELECT TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{Quote_Num}' AND Category = 'Base Charges'";
+
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable(); da.Fill(dt);
+            FlatChg = 0.00F; 
+            if (dt.Rows.Count == 0) return;
+            //TODO: For a new quote, always add the four default features
             FlatChg = float.Parse(dt.Rows[0]["TotalFlatChg"].ToString());
             RunChg = float.Parse(dt.Rows[0]["PerThousandChg"].ToString());
         }

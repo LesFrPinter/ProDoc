@@ -161,19 +161,38 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
             DataView dv = new DataView(dt);
-            OrderEntry = int.Parse(dv[0]["Value1"].ToString());
-            PlateChg   = int.Parse(dv[0]["Value2"].ToString());
-            PREPress   = int.Parse(dv[0]["Value3"].ToString());
+
+            int I1 = 0;
+            int I2 = 0;
+            int I3 = 0;
+
+            int.TryParse(dv[0]["Value1"].ToString(), out I1);
+            int.TryParse(dv[0]["Value2"].ToString(), out I2);
+            int.TryParse(dv[0]["Value3"].ToString(), out I3);
+
+            OrderEntry = I1;
+            PlateChg = I2;
+            PREPress = I3;
 
             // Load percentages and recalculate all displayed property values
-            FlatChargePct = float.Parse(dv[0]["FlatChargePct"].ToString());
-            RunChargePct = float.Parse(dv[0]["RunChargePct"].ToString());
-            PlateChargePct = float.Parse(dv[0]["PlateChargePct"].ToString());
-            FinishChargePct = float.Parse(dv[0]["FinishChargePct"].ToString());
-            PressChargePct = float.Parse(dv[0]["PressChargePct"].ToString());
-            ConvChargePct = float.Parse(dv[0]["ConvertChargePct"].ToString());
-            FlatTotal = float.Parse(dv[0]["TotalFlatChg"].ToString());
-            CalculatedRunCharge = float.Parse(dv[0]["PerThousandChg"].ToString());
+
+            float F1 = 0.0F;
+            float F2 = 0.0F;
+            float F3 = 0.0F;
+            float F4 = 0.0F;
+            float F5 = 0.0F;
+            float F6 = 0.0F;
+            float F7 = 0.0F;
+            float F8 = 0.0F;
+
+            float.TryParse(dv[0]["FlatChargePct"].ToString(), out F1); FlatChargePct = F1;
+            float.TryParse(dv[0]["RunChargePct"].ToString(), out F2); RunChargePct = F2;
+            float.TryParse(dv[0]["PlateChargePct"].ToString(), out F3); PlateChargePct = F3;
+            float.TryParse(dv[0]["FinishChargePct"].ToString(), out F4); FinishChargePct = F4;
+            float.TryParse(dv[0]["PressChargePct"].ToString(), out F5); PressChargePct = F5;
+            float.TryParse(dv[0]["ConvertChargePct"].ToString(), out F6); ConvChargePct = F6;
+            float.TryParse(dv[0]["TotalFlatChg"].ToString(), out F7); FlatTotal = F7;
+            float.TryParse(dv[0]["PerThousandChg"].ToString(), out F8); CalculatedRunCharge = F8;
 
             int l1; int.TryParse(dv[0]["PRESS_ADDL_MIN"].ToString(), out l1); LabPS = l1;
             int l2; int.TryParse(dv[0]["COLL_ADDL_MIN"].ToString(), out l2); LabCS = l2;

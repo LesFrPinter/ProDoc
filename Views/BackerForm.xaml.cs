@@ -198,10 +198,11 @@ namespace ProDocEstimate.Views
                 }
 
                 // Retrieve the number of changes and the total amount 
-                Changes = Int32.Parse(dt.Rows[0]["Value2"].ToString());
-                Total = float.Parse(dt.Rows[0]["Amount"].ToString());
+                int I1 = 0; int.TryParse(dt.Rows[0]["Value2"].ToString(), out I1); Changes = I1;
+                //                Total = float.Parse(dt.Rows[0]["Amount"].ToString());
+                float F1 = 0.00F; float.TryParse(dt.Rows[0]["Amount"].ToString(), out F1); Total = F1;
 
-// MATERIAL modifiers (are these six initializations needed?)
+                // MATERIAL modifiers (are these six initializations needed?)
                 FlatChargePct = 0;
                 RunChargePct = 0;
                 PlateChargePct = 0;
@@ -210,21 +211,21 @@ namespace ProDocEstimate.Views
                 PressChargePct = 0;
 
                 int t;
-                t = 0; int.TryParse(dt.Rows[0]["FlatChargePct"].ToString(), out t); FlatChargePct = t;
-                t = 0; int.TryParse(dt.Rows[0]["RunChargePct"].ToString(), out t); RunChargePct = t;
-                t = 0; int.TryParse(dt.Rows[0]["PlateChargePct"].ToString(), out t); PlateChargePct = t;
-                t = 0; int.TryParse(dt.Rows[0]["FinishChargePct"].ToString(), out t); FinishChargePct = t;
+                t = 0; int.TryParse(dt.Rows[0]["FlatChargePct"]   .ToString(), out t); FlatChargePct = t;
+                t = 0; int.TryParse(dt.Rows[0]["RunChargePct"]    .ToString(), out t); RunChargePct = t;
+                t = 0; int.TryParse(dt.Rows[0]["PlateChargePct"]  .ToString(), out t); PlateChargePct = t;
+                t = 0; int.TryParse(dt.Rows[0]["FinishChargePct"] .ToString(), out t); FinishChargePct = t;
                 t = 0; int.TryParse(dt.Rows[0]["ConvertChargePct"].ToString(), out t); ConvChargePct = t;
-                t = 0; int.TryParse(dt.Rows[0]["PressChargePct"].ToString(), out t); PressChargePct = t;
+                t = 0; int.TryParse(dt.Rows[0]["PressChargePct"]  .ToString(), out t); PressChargePct = t;
 
 // LABOR modifiers:
-                t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out t); LabPS1 = t;
-                t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(), out t); LabCS2 = t;
-                t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(), out t); LabBS2 = t;
-                t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out t); LabPSS1Pct = t;
-                t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(), out t); LabCSS2Pct = t;
-                t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(), out t); LabBSS2Pct = t;
-                t = 0; int.TryParse(dt.Rows[0]["SETUP_MINUTES"].ToString(), out t); SetupTotal = t;
+                t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"]  .ToString(), out t); LabPS1 = t;
+                t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"]   .ToString(), out t); LabCS2 = t;
+                t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"]   .ToString(), out t); LabBS2 = t;
+                t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"]  .ToString(), out t); LabPSS1Pct = t;
+                t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"]   .ToString(), out t); LabCSS2Pct = t;
+                t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"]   .ToString(), out t); LabBSS2Pct = t;
+                t = 0; int.TryParse(dt.Rows[0]["SETUP_MINUTES"]   .ToString(), out t); SetupTotal = t;
                 t = 0; int.TryParse(dt.Rows[0]["SLOWDOWN_PERCENT"].ToString(), out t); SlowdownTotal = t;
             }
 
@@ -272,17 +273,27 @@ namespace ProDocEstimate.Views
 
             // The next three calculations assume that the values from the FEATURES table are decimal fractions of an your (e.g. .25 for 1/4)
             //TODO: Determine whether these values should be number of minutes in the database table
-            float fPressSetup    = float.Parse(dv[0]["PRESS_SETUP_TIME"].ToString()) * 60.0F; BasePressSetup       = int.Parse(fPressSetup.ToString());
-            float fCollatorSetup = float.Parse(dv[0]["COLLATOR_SETUP"].ToString()) * 60.0F; BaseCollatorSetup    = int.Parse(fCollatorSetup.ToString());
-            float fBinderySetup  = float.Parse(dv[0]["BINDERY_SETUP"].ToString()) * 60.0F; BaseBinderySetup     = int.Parse(fBinderySetup.ToString());
+            //float fPressSetup    = float.Parse(dv[0]["PRESS_SETUP_TIME"].ToString()) * 60.0F; BasePressSetup       = int.Parse(fPressSetup.ToString());
+            //float fCollatorSetup = float.Parse(dv[0]["COLLATOR_SETUP"].ToString()) * 60.0F; BaseCollatorSetup    = int.Parse(fCollatorSetup.ToString());
+            //float fBinderySetup  = float.Parse(dv[0]["BINDERY_SETUP"].ToString()) * 60.0F; BaseBinderySetup     = int.Parse(fBinderySetup.ToString());
 
-            BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());
-            BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"].ToString());
-            BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());
+            float fPressSetup = 0.0F;
+            float fCollatorSetup = 0.0F;
+            float fBinderySetup = 0.0F;
 
-            PressSlowdown = BasePressSlowdown + LabPSS1Pct;
+            float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"].ToString(), out F2); BasePressSetup = (int)F2 * 60;
+            float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]  .ToString(), out F3); BaseCollatorSetup = (int)F3 * 60;
+            float F4 = 0; float.TryParse(dv[0]["BINDERY_SETUP"]   .ToString(), out F4); BaseBinderySetup = (int)F4 * 60;
+
+            int I2 = 0; int.TryParse(dv[0]["PRESS_SLOWDOWN"]      .ToString(), out I2); BasePressSlowdown = I2;
+            int I3 = 0; int.TryParse(dv[0]["COLLATOR_SLOWDOWN"]   .ToString(), out I3); BaseCollatorSlowdown = I3;
+            int I4 = 0; int.TryParse(dv[0]["BINDERY_SLOWDOWN"]    .ToString(), out I4); BaseBinderySlowdown = I4;
+
+            // the "Lab..." values were retrieved from QUOTE_DETAILS
+
+            PressSlowdown    = BasePressSlowdown    + LabPSS1Pct;
             CollatorSlowdown = BaseCollatorSlowdown + LabCSS2Pct;
-            BinderySlowdown = BaseBinderySlowdown + LabBSS2Pct;
+            BinderySlowdown  = BaseBinderySlowdown  + LabBSS2Pct;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

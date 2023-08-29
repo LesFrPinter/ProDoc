@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
-        Loaded="OnLoad"
+        Loaded="OnLoad" Left="100"
         Title="MainWindow" Height="750" Width="1020">
 
     <Window.Resources>

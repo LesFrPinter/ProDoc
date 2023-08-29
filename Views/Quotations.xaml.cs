@@ -30,6 +30,8 @@ namespace ProDocEstimate
 
         private bool isCalc; public bool IsCalc { get { return isCalc; } set { isCalc = value; OnPropertyChanged(); } }
 
+        private bool adding; public bool Adding { get { return adding; } set { adding = value; OnPropertyChanged(); } }
+
         private string? quote_num = "";   public string? QUOTE_NUM   { get { return quote_num;   } set { quote_num   = value; OnPropertyChanged(); } }
         private string? cust_num;         public string? CUST_NUMB   { get { return cust_num;    } set { cust_num    = value; OnPropertyChanged(); } }
         private string? projectType = ""; public string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
@@ -142,9 +144,9 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
-            this.Height = this.Height *= 1.8;
-            this.Width = this.Width *= 1.8;
-            Top = 100;
+            this.Height = this.Height *= 1.6;
+            this.Width = this.Width *= 1.6;
+            Top = 50;
         }
 
         private void LoadAvailableCategories()
@@ -204,16 +206,26 @@ namespace ProDocEstimate
             GetQuote();
             btnAssignNewQuoteNum.Visibility = Visibility.Visible;
 
-            //TODO: Since Ink Color is going to look for a Backer as one of the ink colors, pre-load a Backer row in Quote_Detail. Should I default to "Std"?
-            //TODO: Always add an Ink Color row (blank) on new quotes
-            //TODO: Always add a PrePress row in Quote_Details with values of 1 for both 
+            // Always add a Backer row in Quote_Detail, Since Ink Color includes a Backer as one of the ink colors. Should it also default to "Std"?
+            // Always add an Ink Color row (blank) on new quotes
+            // Always add a PrePress row in Quote_Details with values of 1 for both 
 
-            AddDefaultDetailLines();
+//            LoadAvailableCategories();
+//            AddDefaultDetailLines();
         }
 
         private void AddDefaultDetailLines()
         {
-            string cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
+            // Don't add them twice
+            string cmd = $"SELECT COUNT(*) AS HowMany FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = {QUOTE_NUM}";
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            da = new SqlDataAdapter(cmd, conn);
+            dt = new DataTable(); da.Fill(dt);
+            if (int.Parse(dt.Rows[0]["HowMany"].ToString()) > 0) return;
+
+            lstSelected.Items.Clear();
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
                        + $" VALUES ( '{QUOTE_NUM}', '1', 'Backer' )";
             conn = new SqlConnection(ConnectionString); conn.Open();
             scmd = new SqlCommand(cmd, conn);
@@ -230,6 +242,14 @@ namespace ProDocEstimate
             conn.Open();
             scmd.CommandText = cmd;
             scmd.ExecuteNonQuery(); conn.Close();
+
+            LoadDetails();
+
+            lstAvailable.Items.Remove("Backer");
+            lstAvailable.Items.Remove("Ink Color");
+            lstAvailable.Items.Remove("PrePress");
+
+            //TODO: Should I also always insert a Base Charges row?
         }
 
         private void GetQuote()
@@ -262,6 +282,8 @@ namespace ProDocEstimate
                 COLLATORCUT = dt.Rows[0]["COLLATORCUT"].ToString();  // dr3[9]; "PressSize.FormSize"	
 
                 txtCustomerNum_LostFocus(this, null);
+
+                //TODO: Add detail lines, changing QUOTE_DETAILS.QUOTE_NUM
             }
         }
 
@@ -616,6 +638,7 @@ namespace ProDocEstimate
         private void btnLoadGrid_Click(object sender, RoutedEventArgs e)
         {
             if(ProjectType.Length==0) { MessageBox.Show("Please select a project type"); return; }
+
             int setNum       = int.Parse(PartsSpinner.Value.ToString());
             string formType  = ProjectType.Substring(0, 1);
             string paperType = PAPERTYPE.Substring(0, 1);
@@ -638,16 +661,16 @@ namespace ProDocEstimate
                 "M.COSTPERFACTOR AS MastInvCost," +
                 "0.00 AS SelectedCost," +
                 "0.00 AS PaperCost" +
-                            " FROM PROVISIONDEV.DBO.MasterInventory M" +
-                " RIGHT OUTER JOIN PROVISIONDEV.DBO.ESTPAPER E" +
+                " FROM             PROVISIONDEV.DBO.MasterInventory M" +
+                " RIGHT OUTER JOIN PROVISIONDEV.DBO.ESTPAPER        E" +
                 "  ON M.ITEMTYPE    = E.PTYPE"       +
                 " AND M.COLOR       = E.COLOR"       +
                 " AND M.SubWT       = E.WEIGHT"      +
-                " WHERE E.FORMTYPE  = '"  + formType  + "'" +
-                "   AND E.PAPERTYPE = '"  + paperType + "'" +
-                "   AND M.SIZE      = '"  + rollWidth + "'" +
-                "   AND E.SETNUM    = "   + setNum    +
-                " AND Inventoryable = 1"              +
+               $" WHERE E.FORMTYPE  = '{formType}'"  +
+               $"   AND E.PAPERTYPE = '{paperType}'" +
+               $"   AND M.SIZE      = '{rollWidth}'" +
+               $"   AND E.SETNUM    =  {setNum}"     +
+                " AND Inventoryable = 1"             +
                 " ORDER BY E.SETNUM, E.SEQ";
 
             SqlConnection cn = new(ConnectionString); cn.Open();
@@ -912,25 +935,6 @@ namespace ProDocEstimate
         }
         private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
         {   SelectedQty = Qty4;
-            //Calculating c = new Calculating(); c.Show();
-            //PressCalc pc = new PressCalc();
-            //pc.WastePct = (int)WastePct;
-            //pc.Up = int.Parse(lblUp.Content.ToString());
-            //QuoteTotal = 0.00D;
-            //int r = 0;
-            //for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            //{
-            //    pc.NumDocs = (int)SelectedQty;
-            //    pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
-            //    pc.PressSize = PRESSSIZE;
-            //    dgSheetsOfPaper.SelectedIndex = r;
-            //    pc.Calc();
-            //    DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
-            //    dataRow[11] = pc.Pounds;
-            //    dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
-            //    QuoteTotal += double.Parse(dataRow[16].ToString());
-            //}
-            //c.Close();
             QTY4a = SelectedQty;
             CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM4a = CPM4a * 1000.00F;
@@ -994,6 +998,8 @@ namespace ProDocEstimate
 
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
+            Adding = true; // to suppress "DELETE ALL ROWS?" message connected to ROLL_WIDTH validation
+
             conn = new SqlConnection(ConnectionString); conn.Open();
             SqlCommand scmd = new SqlCommand();
             scmd.Connection = conn;
@@ -1011,19 +1017,23 @@ namespace ProDocEstimate
             LINEHOLES = false;
             COLLATORCUT = "";
 
+            LoadAvailableCategories();
             AddDefaultDetailLines();        // Is this where this call goes?
         }
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            Trace.WriteLine("Right-clicked");  // Ctrl+Alt+O
             if (lstSelected.SelectedItem == null) return;
+
             string? x = lstSelected.SelectedItem.ToString().TrimEnd();
             string check;
 //            check = ((char)0x221A).ToString();
             check = "🗹";
 
-            if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)).TrimEnd(); }
-            
+            if (x.IndexOf(check) > 0) { x = x.Substring(0, x.IndexOf(check)); }
+            x = x.Trim();
+
             switch (x)
             {
 
@@ -1122,7 +1132,8 @@ namespace ProDocEstimate
         private void CheckRows()
         {
 
-            //TODO: See if there's a cleaner, simpler way to add a checkmark if the screen has been filled in...
+            // If any of the ten Value columns contains anything, show a checkmark.
+            // Note that Base Charges, Backer, Security are always checked
 
             string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
 
@@ -1166,12 +1177,11 @@ namespace ProDocEstimate
 
                 Int32 RowTotal = 0;
 
-                string? CheckCategory = dt.Rows[i]["Category"].ToString(); 
+                string? CheckCategory = dt.Rows[i]["Category"].ToString();
 
-                if (CheckCategory.ToUpper().Contains("BACKER")) { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("BASE"))     { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("BACKER"))   { RowTotal = 1; }
                 if (CheckCategory.ToUpper().Contains("SECURITY")) { RowTotal = 1; }
-
-//                if(CheckCategory.ToUpper().Contains("MICR")) { Debugger.Break(); }
 
                 if (B1 == true) { RowTotal += I1; }
                 if (B2 == true) { RowTotal += I2; }
@@ -1199,12 +1209,16 @@ namespace ProDocEstimate
         
         private void Page3_GotFocus(object sender, RoutedEventArgs e)
         {
+            LoadDetails();
             return;
         }
 
         private void LoadDetails()
         {
+            if(Adding) lstSelected.Items.Clear();
+
             // Load any selected categories and remove them from the "Available" listbox
+
             string cmd = $"SELECT CATEGORY, Amount FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY Sequence";
             dt = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
@@ -1219,6 +1233,7 @@ namespace ProDocEstimate
                 lstAvailable.Items.Remove(s);
             }
             conn.Close();
+            Adding = false;
 
             CheckRows();        // Add a checkmark at the end for items that have been selected
 
@@ -1265,18 +1280,22 @@ namespace ProDocEstimate
 
         private void cmbPressSize_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
+            if (Adding) return;
+
             if(lstSelected.Items.Count == 0 || cmbPressSize.SelectedIndex == -1) return;
             if(cmbPressSize.Text == cmbPressSize.SelectedItem.ToString()) return;
-            if (MessageBox.Show("This will delete any selected features; continue?", "Not undoable", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
-            {   //TODO: Find out if this should depend on a response from the user...
+            if (MessageBox.Show("This will delete any selected features; continue?", "Feature selection depends on Press Size", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
+            {   //TODO: Should this also delete Base Charges, Ink and Backer?
                 string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
                 conn.Close();
-                lstSelected.Items.Clear(); LoadPressSizes();
-                MessageBox.Show("Features removed.", "All features depend on Press Size", MessageBoxButton.OK, MessageBoxImage.Information );
+                lstSelected.Items.Clear(); 
+                LoadPressSizes();
+                MessageBox.Show("Features removed.", "Done", MessageBoxButton.OK, MessageBoxImage.Information );
             }
         }
+ 
     }
 }

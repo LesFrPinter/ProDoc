@@ -179,29 +179,63 @@ namespace ProDocEstimate.Views
             da = new SqlDataAdapter(str, conn); da.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                Std = int.Parse(dt.Rows[0]["Value1"].ToString());
-                BlackStd = int.Parse(dt.Rows[0]["Value2"].ToString());
-                PMS = int.Parse(dt.Rows[0]["Value3"].ToString());
-                Desens = int.Parse(dt.Rows[0]["Value4"].ToString());
-                Split = int.Parse(dt.Rows[0]["Value5"].ToString());
-                Thermo = int.Parse(dt.Rows[0]["Value6"].ToString());
-                FourColor = int.Parse(dt.Rows[0]["Value7"].ToString());
-                WaterMark = int.Parse(dt.Rows[0]["Value8"].ToString());
-                FluorSel = int.Parse(dt.Rows[0]["Value9"].ToString());
+                int I1 = 0;
+                int I2 = 0;
+                int I3 = 0;
+                int I4 = 0;
+                int I5 = 0;
+                int I6 = 0;
+                int I7 = 0;
+                int I8 = 0;
+                int I9 = 0;
 
-                FlatChargePct = int.Parse(dt.Rows[0]["FlatChargePct"].ToString());
-                RunChargePct = int.Parse(dt.Rows[0]["RunChargePct"].ToString());
-                PlateChargePct = int.Parse(dt.Rows[0]["PlateChargePct"].ToString());
-                FinishChargePct = int.Parse(dt.Rows[0]["FinishChargePct"].ToString());
-                PressChargePct = int.Parse(dt.Rows[0]["PressChargePct"].ToString());
-                ConvChargePct = int.Parse(dt.Rows[0]["ConvertChargePct"].ToString());
+                int.TryParse(dt.Rows[0]["Value1"].ToString(), out I1);
+                int.TryParse(dt.Rows[0]["Value2"].ToString(), out I2);
+                int.TryParse(dt.Rows[0]["Value3"].ToString(), out I3);
+                int.TryParse(dt.Rows[0]["Value4"].ToString(), out I4);
+                int.TryParse(dt.Rows[0]["Value5"].ToString(), out I5);
+                int.TryParse(dt.Rows[0]["Value6"].ToString(), out I6);
+                int.TryParse(dt.Rows[0]["Value7"].ToString(), out I7);
+                int.TryParse(dt.Rows[0]["Value8"].ToString(), out I8);
+                int.TryParse(dt.Rows[0]["Value9"].ToString(), out I9);
 
-                LabPS = int.Parse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString());
-                LabCS  = int.Parse(dt.Rows[0]["COLL_ADDL_MIN"].ToString());
-                LabBS  = int.Parse(dt.Rows[0]["BIND_ADDL_MIN"].ToString());
-                LabPSL = int.Parse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString());
-                LabCSL = int.Parse(dt.Rows[0]["COLL_SLOW_PCT"].ToString());
-                LabBSL = int.Parse(dt.Rows[0]["BIND_SLOW_PCT"].ToString());
+                Std = I1;
+                BlackStd = I2;
+                PMS = I3;
+                Desens = I4;
+                Split = I5;
+                Thermo = I6;
+                FourColor = I7;
+                WaterMark = I8;
+                FluorSel = I9;
+
+                int.TryParse(dt.Rows[0]["FlatChargePct"]   .ToString(), out I1);
+                int.TryParse(dt.Rows[0]["RunChargePct"]    .ToString(), out I2);
+                int.TryParse(dt.Rows[0]["PlateChargePct"]  .ToString(), out I3);
+                int.TryParse(dt.Rows[0]["FinishChargePct"] .ToString(), out I4);
+                int.TryParse(dt.Rows[0]["PressChargePct"]  .ToString(), out I5);
+                int.TryParse(dt.Rows[0]["ConvertChargePct"].ToString(), out I6);
+
+                FlatChargePct = I1;
+                RunChargePct = I2;
+                PlateChargePct = I3;
+                FinishChargePct = I4;
+                PressChargePct = I5;
+                ConvChargePct = I6;
+
+                int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out I1);
+                int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"] .ToString(), out I2);
+                int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"] .ToString(), out I3);
+                int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out I4);
+                int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"] .ToString(), out I5);
+                int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"] .ToString(), out I6);
+
+                LabPS = I1;
+                LabCS = I2;
+                LabBS = I3;
+                LabPSL = I4;
+                LabCSL = I5;
+                LabBSL = I6;
             }
         }
 
