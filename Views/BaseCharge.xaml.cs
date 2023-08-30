@@ -52,8 +52,9 @@ namespace ProDocEstimate.Views
             FlatChg = 0.00F; 
             if (dt.Rows.Count == 0) return;
             //TODO: For a new quote, always add the four default features
-            FlatChg = float.Parse(dt.Rows[0]["TotalFlatChg"].ToString());
-            RunChg = float.Parse(dt.Rows[0]["PerThousandChg"].ToString());
+
+            float F1 = 0.0F; float.TryParse(dt.Rows[0]["TotalFlatChg"]  .ToString(), out F1); FlatChg = F1;
+            float F2 = 0.0F; float.TryParse(dt.Rows[0]["PerThousandChg"].ToString(), out F2); RunChg  = F2;
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -64,8 +65,9 @@ namespace ProDocEstimate.Views
             string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{Quote_Num}' AND Category = 'Base Charges'";
             conn = new SqlConnection(ConnectionString); conn.Open();
             scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
-            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, Category, TotalFlatChg, PerThousandChg )" +
-                  $" VALUES ( '{Quote_Num}', 'Base Charges', '{FlatChg}', '{RunChg}' )";
+            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS]"
+                +  "          ( QUOTE_NUM,    Category,       Value1,  TotalFlatChg, PerThousandChg )" +
+                  $" VALUES ( '{Quote_Num}', 'Base Charges', 'Show', '{FlatChg}',  '{RunChg}'       )";
             conn.Open(); scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
 
             this.Close(); 

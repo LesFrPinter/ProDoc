@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -7,7 +6,6 @@ using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -32,14 +30,16 @@ namespace ProDocEstimate.Views
         public bool Removed = false;
 
         private float flatCharge;     public float FlatCharge     { get { return flatCharge;     } set { flatCharge     = value; OnPropertyChanged(); } } // Dollars
-        private float setupMinutes;   public float SetupMinutes   { get { return setupMinutes;   } set { setupMinutes   = value; OnPropertyChanged(); } } // Fraction of an hour
-        private float bindingTime;    public float   BindingTime  { get { return bindingTime;    } set { bindingTime    = value; OnPropertyChanged(); } } // Fraction of an hour
+        private float setupMinutes;   public float SetupMinutes   { get { return setupMinutes;   } set { setupMinutes   = value; OnPropertyChanged(); } } // Minutes
+        private float bindingTime;    public float BindingTime    { get { return bindingTime;    } set { bindingTime    = value; OnPropertyChanged(); } } // Minutes
         private float finishMaterial; public float FinishMaterial { get { return finishMaterial; } set { finishMaterial = value; OnPropertyChanged(); } } // Dollars
 
         private float baseFlatCharge; public float BaseFlatCharge { get { return baseFlatCharge; } set { baseFlatCharge = value; OnPropertyChanged(); } }
-        private int   baseSetupTime;  public int   BaseSetupTime  { get { return baseSetupTime;  } set { baseSetupTime  = value; OnPropertyChanged(); } }
-        private int   baseBindTime;   public int   BaseBindTime   { get { return baseBindTime;   } set { baseBindTime   = value; OnPropertyChanged(); } }
+        private float baseSetupTime;  public float BaseSetupTime  { get { return baseSetupTime;  } set { baseSetupTime  = value; OnPropertyChanged(); } }
+        private float baseBindTime;   public float BaseBindTime   { get { return baseBindTime;   } set { baseBindTime   = value; OnPropertyChanged(); } }
         private float baseFinishMatl; public float BaseFinishMatl { get { return baseFinishMatl; } set { baseFinishMatl = value; OnPropertyChanged(); } }
+
+        private int strike_In = 0;    public int   Strike_In      { get { return strike_In;      } set { strike_In      = value; OnPropertyChanged(); } }
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
@@ -126,15 +126,14 @@ namespace ProDocEstimate.Views
              + " BINDERY_SETUP,"
              + " PRESS_SLOWDOWN,"
              + " COLLATOR_SLOWDOWN,"
-             + " BINDERY_SLOWDOWN,"
-             + " SLOWDOWN_PER_PART AS BINDERY_SLOWDOWN";  // from the FEATURES table
+             + " BINDERY_SLOWDOWN";  // from the FEATURES table
 
             DataContext = this;
 
             Starting = true;    // Don't recalculate during data loading
 
-            LoadFeature();      // This calls CalcTotal
             LoadQuote();        // The first line of CalcTotal says "If (Starting) return...
+            LoadFeature();      // This calls CalcTotal
 
             Starting = false;   // Now you can recalculate
 
@@ -150,35 +149,51 @@ namespace ProDocEstimate.Views
             Top = 150; 
         }
 
+        private void StrkIn_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        { LoadFeature(); CalcMaterial(); CalculateLabor(); }
+
         private void LoadFeature()
         {
             string cmd = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] "
-                       + $" WHERE CATEGORY = 'STRIKE IN' AND PRESS_SIZE = '{PressSize}'";
+                       + $" WHERE CATEGORY = 'STRIKE IN' AND PRESS_SIZE = '{PressSize}' AND NUMBER = '{Strike_In}'";
 
             dt = new DataTable("Features");
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             DataView dv = dt.DefaultView;
 
-            // Base material charges
-            float t;
-            t = 0.0F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out t);                     BaseFlatCharge = t;
-            t = 0.0F; float.TryParse(dv[0]["PRESS_SETUP"].ToString(), out t); t = 60.00F * t;     BasePressSetup = (int)t;
-            t = 0.0F; float.TryParse(dv[0]["ADDTL_BIND_TIME"].ToString(), out t); t = 60.00F * t; BaseBindTime = (int)t;
-            t = 0.0F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out t);                     BaseFinishMatl = t;
+            BaseSetupTime = 0;
 
-            // Base Labor Charges
-            // The next three calculations assume that the values from the FEATURES table are decimal fractions of an hour (e.g. .25 for 1/4)
-            float fPressSetup    = float.Parse(dv[0]["PRESS_SETUP"].ToString())    * 60.0F; BasePressSetup    = (int)Math.Round(fPressSetup); 
-            float fCollatorSetup = float.Parse(dv[0]["COLLATOR_SETUP"].ToString()) * 60.0F; BaseCollatorSetup = (int)Math.Round(fCollatorSetup);
-            float fBinderySetup  = float.Parse(dv[0]["BINDERY_SETUP"].ToString())  * 60.0F; BaseBinderySetup  = (int)Math.Round(fBinderySetup);
+            BaseFlatCharge = 0.0F;
+            BaseSetupTime = 0;
+            BaseBindTime = 0;
+            BaseFinishMatl = 0.0F;
 
-            BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());       // Minutes of slowdown to add to the base amount...
-            BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"].ToString());    //              "
-            BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());     //
+            BasePressSetup = 0;
+            BaseCollatorSetup = 0;
+            BaseBinderySetup = 0;
+            BasePressSlowdown = 0;
+            BaseCollatorSlowdown = 0;
+            BaseBinderySlowdown = 0;
 
-            BaseSetupTime = int.Parse(dv[0]["PRESS_SETUP"].ToString());    // RENAMED FROM "PRESS_SETUP_TIME" IN FieldList
-            BaseBindTime  = int.Parse(dv[0]["ADDTL_BIND_TIME"].ToString());
+            if (dv.Count > 0)
+            {
+                // Base material charges
+                BaseFlatCharge       = float.Parse(dv[0]["FLAT_CHARGE"]     .ToString());
+                BaseSetupTime        = int  .Parse(dv[0]["PRESS_SETUP"]     .ToString());  // Is this right?
+                BaseBindTime         = int  .Parse(dv[0]["ADDTL_BIND_TIME"] .ToString());
+                BaseFinishMatl       = float.Parse(dv[0]["FINISH_MATL"]     .ToString());
+
+                // Base Labor Charges
+                // The next six calculations assume that the values from the FEATURES table are minutes
+                BasePressSetup       = int.Parse(dv[0]["PRESS_SETUP"]       .ToString()); 
+                BaseCollatorSetup    = int.Parse(dv[0]["COLLATOR_SETUP"]    .ToString());
+                BaseBinderySetup     = int.Parse(dv[0]["BINDERY_SETUP"]     .ToString());
+
+                BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"]    .ToString());       // Minutes of slowdown to add to the base amount...
+                BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"] .ToString());    //              "
+                BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"]  .ToString());     //
+            }
         }
 
         private void LoadQuote()
@@ -186,10 +201,22 @@ namespace ProDocEstimate.Views
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNum + "' AND CATEGORY = 'Strike In'";
             dt = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn); 
-            da.Fill(dt);        // dt is declared globally, so the LoadAdjustments routines will be able to see it
+            da = new SqlDataAdapter(cmd, conn);
+            da.Fill(dt);
 
-            if (dt.Rows.Count > 0) { LoadMaterialsAdjustments(); LoadLaborAdjustments(); }
+            Strike_In = 0;
+            if (dt.Rows.Count > 0) { int I1 = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(), out I1); Strike_In = I1; }
+
+            LoadFeature();
+
+            cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNum + "' AND CATEGORY = 'Strike In'";
+            dt = new DataTable("Details");
+            conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn);
+            da.Fill(dt);
+
+            LoadMaterialsAdjustments(); 
+            LoadLaborAdjustments(); 
 
             conn.Close();
             CalcTotal();
@@ -211,12 +238,12 @@ namespace ProDocEstimate.Views
         private void LoadLaborAdjustments()
         {   // Load minutes of setup and slowdown times to the base values read from the FEATURES table
             int t;
-            t = 0; int.TryParse(dt.Rows[0]["Value5"].ToString(), out t); LabPS = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value6"].ToString(), out t); LabPSL = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value7"].ToString(), out t); LabCS = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value8"].ToString(), out t); LabCSL = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value9"].ToString(), out t); LabBS = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value10"].ToString(), out t); LabBSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out t); LabPS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(),  out t); LabPSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(),  out t); LabCS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out t); LabCSL = t;
+            t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(),  out t); LabBS  = t;
+            t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(),  out t); LabBSL = t;
         }
 
         private void CalcMaterial()
@@ -224,14 +251,15 @@ namespace ProDocEstimate.Views
             if (Starting) return;
 
             FlatCharge     = (1.00F + ((float)FCPct / 100.00F)) * BaseFlatCharge;
-            SetupMinutes   = (1.00F + ((float)PSPct / 100.00F)) * float.Parse(BaseSetupTime.ToString());
-            BindingTime    = (1.00F + ((float)BTPct / 100.00F)) * float.Parse(BaseBindTime.ToString());
+            SetupMinutes   = (1.00F + ((float)PSPct / 100.00F)) * int.Parse(BaseSetupTime.ToString());
+            BindingTime    = (1.00F + ((float)BTPct / 100.00F)) * int.Parse(BaseBindTime.ToString());
             FinishMaterial = (1.00F + ((float)FMPct / 100.00F)) * BaseFinishMatl;
         }
 
         private void CalcTotal()
         {
-            CalcMaterial(); CalculateLabor();
+            CalcMaterial(); 
+            CalculateLabor();
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -262,19 +290,17 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(str, conn); scmd.ExecuteNonQuery(); if(conn.State==ConnectionState.Open) { conn.Close(); }
 
             str = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
-                +  "(   QUOTE_NUM,     SEQUENCE,       CATEGORY," 
-                +  "   Param1,         Param2,         Param3,          Param4,"
-                +  "   Value1,         Value2,         Value3,          Value4, "
-                +  "   Param5,         Param6,         Param7,          Param8,         Param9,     Param10," 
-                +  "   Value5,         Value6,         Value7,          Value8,         Value9,     Value10, "
-                +  "   SETUP_MINUTES,  SLOWDOWN_PERCENT ) "
-                +  "VALUES ( "
+                + "(  QUOTE_NUM,       SEQUENCE,       CATEGORY, "
+                + "   Param1,          Param2,         Param3,           Param4,         Param5, "
+                + "   Value1,          Value2,         Value3,           Value4,         Value5, "
+                + "   SETUP_MINUTES,   SLOWDOWN_PERCENT, "
+                + "   PRESS_ADDL_MIN,  COLL_ADDL_MIN,  BIND_ADDL_MIN,    PRESS_SLOW_PCT, COLL_SLOW_PCT, BIND_SLOW_PCT ) "
+                + " VALUES ( "
                 + $"  '{QuoteNum}',    12,            'Strike In',"
-                + $"  'Flat Charge%', 'Press Setup%', 'Binding Time%', 'Finish Matl%',"
-                + $"  '{FCPct}',      '{PSPct}',      '{BTPct}',       '{FMPct}',"
-                +  "  'PressMins',    'PressSlow',    'CollMins',      'CollSlow',     'BindMins', 'BindSlow'," 
-                + $"  '{LabPS}',      '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}',  '{LabBSL}',"
-                + $"   {SetupTotal},   {SlowdownTotal} )" ;
+                +  "  'Flat Charge%', 'Press Setup%', 'Binding Time%',  'Finish Matl%', 'Strike_In',"
+                + $"  '{FCPct}',      '{PSPct}',      '{BTPct}',       '{FMPct}',      '{Strike_In}',"
+                + $"   {SetupTotal},   {SlowdownTotal}, "
+                + $"  '{LabPS}',      '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}',     '{LabBSL}' )";
 
             scmd.CommandText = str; 
             conn.Open(); 

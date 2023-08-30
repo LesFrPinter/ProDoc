@@ -229,32 +229,44 @@ namespace ProDocEstimate
             conn = new SqlConnection(ConnectionString); conn.Open();
             da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable(); da.Fill(dt);
+            conn.Close();
+
             if (int.Parse(dt.Rows[0]["HowMany"].ToString()) > 0) return;
 
             lstSelected.Items.Clear();
 
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
-                       + $" VALUES ( '{QUOTE_NUM}', '1', 'Backer' )";
-            conn = new SqlConnection(ConnectionString); conn.Open();
-            scmd = new SqlCommand(cmd, conn);
-            scmd.ExecuteNonQuery(); conn.Close();
+            // 08/30/2023 7:54am
+            //cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
+            //           + $" VALUES ( '{QUOTE_NUM}', '1', 'Backer' )";
+            //conn = new SqlConnection(ConnectionString); conn.Open();
+            //scmd = new SqlCommand(cmd, conn);
+            //scmd.ExecuteNonQuery(); conn.Close();
 
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
-                       + $" VALUES ( '{QUOTE_NUM}', '2', 'Ink Color' )";
-            conn = new SqlConnection(ConnectionString); conn.Open();
-            scmd = new SqlCommand(cmd, conn);
-            scmd.ExecuteNonQuery(); conn.Close();
+            //cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY )"
+            //           + $" VALUES ( '{QUOTE_NUM}', '2', 'Ink Color' )";
+            //conn = new SqlConnection(ConnectionString); conn.Open();
+            //scmd = new SqlCommand(cmd, conn);
+            //scmd.ExecuteNonQuery(); conn.Close();
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS]"
+                +  " (          QUOTE_NUM,    SEQUENCE, CATEGORY,       Value1 )"
+                + $" VALUES ( '{QUOTE_NUM}', '1',      'Base Charges', 'Show'  )";
+            Clipboard.SetText(cmd);
+
+            conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY, Param1, Param2, Param3, Value1, Value2, Value3 )"
                         + $" VALUES ( '{QUOTE_NUM}', '7', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', '1', '0', '1' )";
-            conn.Open();
-            scmd.CommandText = cmd;
-            scmd.ExecuteNonQuery(); conn.Close();
+            Clipboard.SetText(cmd);
+
+            conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
 
             LoadDetails();
 
-            lstAvailable.Items.Remove("Backer");
-            lstAvailable.Items.Remove("Ink Color");
+            //lstAvailable.Items.Remove("Backer");
+            //lstAvailable.Items.Remove("Ink Color");
+
+            lstAvailable.Items.Remove("Base Charges");
             lstAvailable.Items.Remove("PrePress");
 
             //TODO: Should I also always insert a Base Charges row?
@@ -650,7 +662,7 @@ namespace ProDocEstimate
         {
             if(ProjectType.Length==0) { MessageBox.Show("Please select a project type"); return; }
 
-            Trace.WriteLine("----------------\nADDING DEFAULT DETAIL LINES\n----------------");
+            Trace.WriteLine("--------------------------------\nADDING DEFAULT DETAIL LINES\n--------------------------------");
             AddDefaultDetailLines();
 
             int setNum       = int.Parse(PartsSpinner.Value.ToString());
@@ -730,7 +742,7 @@ namespace ProDocEstimate
 
             dgSheetsOfPaper.ItemsSource = dt.DefaultView;
 
-            // TODO: Select the first description and populate the comboboxes above the grid
+            // Select the first description and populate the comboboxes above the grid
 
             Page2.IsEnabled = true;
             Page3.IsEnabled = true;
@@ -1042,7 +1054,7 @@ namespace ProDocEstimate
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Trace.WriteLine("Right-clicked");  // Ctrl+Alt+O
+//            Trace.WriteLine("Right-clicked");  // Ctrl+Alt+O
             if (lstSelected.SelectedItem == null) return;
 
             string? x = lstSelected.SelectedItem.ToString().TrimEnd();
@@ -1352,13 +1364,21 @@ namespace ProDocEstimate
 
         private void Page4_GotFocus(object sender, RoutedEventArgs e)
         {
-            string cmd = $"SELECT SUM(TotalFlatChg) AS TotalCharge FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+            string cmd = $"SELECT SUM(CONVERT(Money,TotalFlatChg)) AS TotalCharge, SUM(CONVERT(Money,PerThousandChg)) As PerThouChg FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             SqlConnection conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter (cmd, conn); 
             dt = new DataTable("Tot"); da.Fill(dt);
-            QuoteTotal  = float.Parse(dt.Rows[0]["TotalCharge"].ToString());
+            float FlatTotal = float.Parse(dt.Rows[0]["TotalCharge"].ToString());
+            float PerMil    = float.Parse(dt.Rows[0]["PerThouChg"].ToString());
             conn.Close();
+
+            //            CPM1a = FlatTotal + (QTY1a * PerMil);
+            CPM1a = PerMil;
         }
 
+        private void txtQty1_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -809,7 +809,9 @@
                         <TextBox Grid.Row="1" Grid.Column="2" Width="66" Height="22" 
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty1_GotFocus"
+                                 IsEnabled="True"
                                  Text="{Binding Path=Qty1,StringFormat=N0}" x:Name="txtQty1" 
+                                 LostFocus="txtQty1_LostFocus"
                                  PreviewMouseDown="txtQty1_PreviewMouseDown" />
 
                         <Label Grid.Column="3" HorizontalAlignment="Center" Content="Qty 2" FontSize="10" FontWeight="Bold" VerticalAlignment="Top" />
@@ -1147,6 +1149,7 @@
 						        Margin="10,3,0,1"
 						        HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center"
+                                NumberDecimalDigits="0"
 						        FontSize="14"
 						        Value="{Binding Path=QTY1a}"
                                 LostFocus="Qty1b_LostFocus" />
@@ -1158,7 +1161,7 @@
 						         HorizontalContentAlignment="Right"
                                  VerticalContentAlignment="Center"
 						         FontSize="14"
-						         Text="{Binding Path=CPM1a, StringFormat=N2}"
+						         Text="{Binding Path=CPM1a, StringFormat=C}"
 						         TextChanged="Qty1b_LostFocus" />
                             <TextBox x:Name="Markup1"
 						         Grid.Row="1"
@@ -1194,6 +1197,7 @@
                             <telerik:RadNumericUpDown x:Name="Qty2b"
 						        Grid.Row="2"
 						        Grid.Column="1"
+                                NumberDecimalDigits="0"
 						        Width="85"
 						        Margin="10,2,0,2"
 						        HorizontalAlignment="Left"
@@ -1246,6 +1250,7 @@
                             <telerik:RadNumericUpDown x:Name="Qty3b"
 						        Grid.Row="3"
 						        Grid.Column="1"
+                                NumberDecimalDigits="0"
 						        Width="85"
 						        Margin="10,2,0,2"
 						        HorizontalAlignment="Left"
@@ -1298,6 +1303,7 @@
                             <telerik:RadNumericUpDown x:Name="Qty4b"
 						        Grid.Row="4"
 						        Grid.Column="1"
+                                NumberDecimalDigits="0"
 						        Width="85"
 						        Margin="10,2,0,2"
 						        HorizontalAlignment="Left"

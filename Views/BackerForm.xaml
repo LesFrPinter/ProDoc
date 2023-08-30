@@ -8,6 +8,9 @@
         x:Class="ProDocEstimate.Views.BackerForm"
         mc:Ignorable="d"
         Loaded="OnLoad"
+        KeyboardNavigation.TabNavigation="Local"
+        KeyboardNavigation.ControlTabNavigation="Local"
+        KeyboardNavigation.DirectionalNavigation="Local"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
         Title="Backer" Height="460" Width="800">
@@ -21,25 +24,14 @@
         </Style>
 
         <Style TargetType="telerik:RadNumericUpDown">
-
             <Setter Property="Height" Value="24" />
             <Setter Property="Minimum" Value="0" />
             <Setter Property="Maximum" Value="300" />
             <Setter Property="NumberDecimalDigits" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
-
-            <!--<Style.Triggers>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="BorderThickness" Value="5" />
-                    <Setter Property="BorderBrush" Value="DarkRed" />
-                </Trigger>
-                <Trigger Property="IsKeyboardFocused" Value="False">
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="BorderBrush" Value="Gray" />
-                </Trigger>
-            </Style.Triggers>-->
-
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="IsTabStop" Value="True" />
         </Style>
 
         <Style TargetType="TextBox">
@@ -103,9 +95,9 @@
             </Label>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="85,0,1,0" Grid.Column="2">
-                <RadioButton x:Name="B1" GroupName="Bak" Margin="0 0 0 0"  Content="_Backer"     IsChecked="{Binding One, Mode=TwoWay}"   Width="85"  Checked="Checked"/>
-                <RadioButton x:Name="B2" GroupName="Bak" Margin="5 0 0 0"  Content="Backer _Std" IsChecked="{Binding Two, Mode=TwoWay}"   Width="95"  Checked="Checked"/>
-                <RadioButton x:Name="B3" GroupName="Bak" Margin="30 0 0 0" Content="Backer _PMS" IsChecked="{Binding Three, Mode=TwoWay}" Width="105" Checked="Checked"/>
+                <RadioButton x:Name="B1" GroupName="Bak" Margin="0 0 0 0"  Content="_Backer"     IsChecked="{Binding One,   Mode=TwoWay}" Width="85"  Checked="Checked" IsTabStop="False" />
+                <RadioButton x:Name="B2" GroupName="Bak" Margin="5 0 0 0"  Content="Backer _Std" IsChecked="{Binding Two,   Mode=TwoWay}" Width="95"  Checked="Checked" IsTabStop="False" />
+                <RadioButton x:Name="B3" GroupName="Bak" Margin="30 0 0 0" Content="Backer _PMS" IsChecked="{Binding Three, Mode=TwoWay}" Width="105" Checked="Checked" IsTabStop="False" />
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="5" Background="LightGray" Margin="2,0,0,0" Grid.Column="2" Visibility="Hidden" >
@@ -114,17 +106,21 @@
                 <Label Content="{Binding Path=Button3, Mode=TwoWay}" HorizontalContentAlignment="Right"  Margin="20 0 0 0" Width="145"/>
             </StackPanel>
 
-            <Label Content="Changes" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Left"  Margin="100,0,0,0" Height="32" Width="71" Grid.ColumnSpan="2" />
+            <Label Grid.Row="1" Grid.Column="5" HorizontalAlignment="Left"  Margin="100,0,0,0" Height="32" Width="71" Grid.ColumnSpan="2" Target="{Binding ElementName=numChanges}" >
+                <AccessText>_Changes</AccessText>
+            </Label>
 
             <telerik:RadNumericUpDown 
                 Grid.Row="1"
                 Grid.Column="6" 
+                x:Name="numChanges"
                 NumberDecimalDigits="0"
                 Width="60" 
                 Minimum="0" 
                 Maximum="10"
                 Value="{Binding Changes}"
                 ValueChanged="RadNumericUpDown_ValueChanged"
+                IsTabStop="False" 
                 FontSize="14" 
                 Height="24" Margin="72,2,0,2" 
                 VerticalAlignment="Center"
