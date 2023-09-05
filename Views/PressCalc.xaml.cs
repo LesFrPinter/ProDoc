@@ -39,7 +39,6 @@ namespace ProDocEstimate.Views
         private int linearFt; public int LinearFt { get { return linearFt; } set { linearFt = value; } }
         [MaybeNull]
         private double matlCost; public double MatlCost { get { return matlCost; } set { matlCost = value; } }
-        #endregion
 
         double y1 = 0.0D;
         double y2 = 0.0D;
@@ -51,6 +50,8 @@ namespace ProDocEstimate.Views
         double Documents = 0.0D;
         double Cost = 0.0D;
         double Amt = 0.0D;
+
+        #endregion
 
         public void MainWindow()
         {
@@ -86,7 +87,6 @@ namespace ProDocEstimate.Views
             this.Height = this.Height *= 1.8;
             this.Width = this.Width *= 1.8;
         }
-
 
         public void Calc()
         {

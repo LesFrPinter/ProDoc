@@ -14,6 +14,7 @@
         mc:Ignorable="d">
 
     <Window.Resources>
+        
         <Style x:Key="TextField" TargetType="TextBox">
             <Setter Property="Height" Value="22" />
             <Setter Property="Padding" Value="2" />
@@ -43,11 +44,7 @@
         <Style x:Key="CellRightAlign">
             <Setter Property="Control.HorizontalAlignment" Value="Right" />
         </Style>
-
-        <!--<Style TargetType="ComboBox">
-            <Setter Property="Foreground" Value="Black" />
-        </Style>-->
-
+        
     </Window.Resources>
 
     <Viewbox>
@@ -107,7 +104,7 @@
                 <TabItem x:Name="Page1"
                          FontSize="16" Header="    Page _1    ">
 
-                    <Grid Height="575">
+                    <Grid Height="625">
 
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -810,24 +807,27 @@
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty1_GotFocus"
                                  IsEnabled="True"
-                                 Text="{Binding Path=Qty1,StringFormat=N0}" x:Name="txtQty1" 
+                                 Text="{Binding Path=Qty1, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty1" 
                                  LostFocus="txtQty1_LostFocus"
                                  PreviewMouseDown="txtQty1_PreviewMouseDown" />
 
                         <Label Grid.Column="3" HorizontalAlignment="Center" Content="Qty 2" FontSize="10" FontWeight="Bold" VerticalAlignment="Top" />
                         <TextBox Grid.Row="1" Grid.Column="3" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty2_GotFocus"
-                                 Text="{Binding Path=Qty2,StringFormat=N0}" x:Name="txtQty2" PreviewMouseDown="txtQty2_PreviewMouseDown" />
+                                 Text="{Binding Path=Qty2, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty2" 
+                                 PreviewMouseDown="txtQty2_PreviewMouseDown" LostFocus="txtQty2_LostFocus" />
 
                         <Label Grid.Column="4" HorizontalAlignment="Center" Content="Qty 3" FontSize="10" FontWeight="Bold" />
                         <TextBox Grid.Row="1" Grid.Column="4" Margin="0,4,0,4" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty3_GotFocus"
-                                 Text="{Binding Path=Qty3,StringFormat=N0}" x:Name="txtQty3" PreviewMouseDown="txtQty3_PreviewMouseDown" />
+                                 Text="{Binding Path=Qty3, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty3" 
+                                 PreviewMouseDown="txtQty3_PreviewMouseDown" LostFocus="txtQty3_LostFocus" />
 
                         <Label Grid.Column="5" HorizontalAlignment="Center" Content="Qty 4" FontSize="10" FontWeight="Bold" />
                         <TextBox Grid.Row="1" Grid.Column="5" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
 								 GotFocus="txtQty4_GotFocus"
-                                 Text="{Binding Path=Qty4,StringFormat=N0}" x:Name="txtQty4" PreviewMouseDown="txtQty4_PreviewMouseDown" />
+                                 Text="{Binding Path=Qty4, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty4" 
+                                 PreviewMouseDown="txtQty4_PreviewMouseDown" LostFocus="txtQty4_LostFocus" />
 
                         <TextBlock Grid.Row="4" Grid.Column="0"
                             Foreground="White" FontWeight="Bold" 
@@ -1073,338 +1073,322 @@
 
                     <Viewbox>
 
-                        <Grid Height="580" Width="780">
+                        <Grid Width="800" Height="600" >
 
                             <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="136*" />
+                                <RowDefinition Height="55*" />
+                                <RowDefinition Height="96*" />
+                                <RowDefinition Height="96*" />
+                                <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                            </Grid.ColumnDefinitions>
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <Grid Grid.Row="1" Height="145" Width="800" VerticalAlignment="Top">
 
-                            <!--  up to 4 different quantities can be included in the estimate  -->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition Height="18" />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0"
-						       Grid.Column="1"
-						       Padding="0"
-						       HorizontalAlignment="Center"
-						       VerticalAlignment="Center"
-						       VerticalContentAlignment="Center"
-						       Content="Qty"
-						       FontSize="11" />
-                            <Label Grid.Row="0"
-						       Grid.Column="2"
-						       Padding="0"
-						       HorizontalAlignment="Center"
-						       VerticalAlignment="Center"
-						       VerticalContentAlignment="Center"
-						       Content="Cost/M"
-						       FontSize="11" />
-                            <Label Grid.Row="0"
-						       Grid.Column="3"
-						       Padding="0"
-						       HorizontalAlignment="Center"
-						       VerticalAlignment="Center"
-						       VerticalContentAlignment="Center"
-						       Content="Markup"
-						       FontSize="11" />
-                            <Label Grid.Row="0"
-						       Grid.Column="4"
-						       Padding="0"
-						       HorizontalAlignment="Center"
-						       VerticalAlignment="Center"
-						       VerticalContentAlignment="Center"
-						       Content="Extended"
-						       FontSize="11" />
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                    </Grid.ColumnDefinitions>
 
-                            <telerik:RadNumericUpDown x:Name="Qty1b"
-						        Grid.Row="1"
-						        Grid.Column="1"
-						        Width="85"
-						        Margin="10,3,0,1"
-						        HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center"
-                                NumberDecimalDigits="0"
-						        FontSize="14"
-						        Value="{Binding Path=QTY1a}"
-                                LostFocus="Qty1b_LostFocus" />
-                            <TextBox x:Name="CPM1"
-						         Grid.Row="1"
-						         Grid.Column="2"
-						         Width="80"
-						         Margin="3,2,0,2"
-						         HorizontalContentAlignment="Right"
-                                 VerticalContentAlignment="Center"
-						         FontSize="14"
-						         Text="{Binding Path=CPM1a, StringFormat=C}"
-						         TextChanged="Qty1b_LostFocus" />
-                            <TextBox x:Name="Markup1"
-						         Grid.Row="1"
-						         Grid.Column="3"
-						         Width="50"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         Text="{Binding Path=MAR1a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
-						         TextChanged="Qty1b_LostFocus" />
-                            <Label Grid.Row="1"
-						       Grid.Column="3"
-						       Width="13"
-						       Height="21"
-						       Margin="93,0,0,0"
-						       Padding="0"
-						       HorizontalAlignment="Left"
-						       VerticalContentAlignment="Center"
-						       Content="%"
-						       FontSize="9" />
-                            <TextBox x:Name="Ext1"
-						         Grid.Row="1"
-						         Grid.Column="4"
-						         Width="80"
-						         Margin="10,2,0,2"
-						         HorizontalAlignment="Left"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         IsEnabled="False"
-						         Text="{Binding Path=EXT1a, StringFormat=N2}" />
+                                    <Label Content="Price that was quoted:" Padding="0" HorizontalAlignment="Left" Margin="20 0 0 0" />
 
-                            <telerik:RadNumericUpDown x:Name="Qty2b"
-						        Grid.Row="2"
-						        Grid.Column="1"
-                                NumberDecimalDigits="0"
-						        Width="85"
-						        Margin="10,2,0,2"
-						        HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center"
-						        FontSize="14"
-						        Value="{Binding Path=QTY2a}"
-						        LostFocus="Qty2b_LostFocus" />
-                            <TextBox x:Name="CPM2"
-						         Grid.Row="2"
-						         Grid.Column="2"
-						         Width="80"
-						         Margin="10,2,0,2"
-						         HorizontalAlignment="Left"
-						         HorizontalContentAlignment="Right"
-                                 VerticalContentAlignment="Center"
-						         FontSize="14"
-						         Text="{Binding Path=CPM2a, StringFormat=N2}"
-						         TextChanged="Qty2b_LostFocus" />
-                            <TextBox x:Name="Markup2"
-						         Grid.Row="2"
-						         Grid.Column="3"
-						         Width="50"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         Text="{Binding Path=MAR2a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
-						         TextChanged="Qty2b_LostFocus" />
-                            <Label Grid.Row="2"
-						       Grid.Column="3"
-						       Width="13"
-						       Height="21"
-						       Margin="93,0,0,0"
-						       Padding="0"
-						       HorizontalAlignment="Left"
-						       VerticalContentAlignment="Center"
-						       Content="%"
-						       FontSize="9" />
-                            <TextBox x:Name="Ext2"
-						         Grid.Row="2"
-						         Grid.Column="4"
-						         Width="80"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         IsEnabled="False"
-						         Text="{Binding Path=EXT2a, StringFormat=N2}" />
+                                    <Label Grid.Row="1"
+								   Grid.Column="1"
+								   Padding="0"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center"
+								   VerticalContentAlignment="Center"
+								   Content="Qty"
+								   FontSize="11" />
+                                    <Label Grid.Row="1"
+								   Grid.Column="2"
+								   Padding="0"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center"
+								   VerticalContentAlignment="Center"
+								   Content="Cost/M"
+								   FontSize="11" />
+                                    <Label Grid.Row="1"
+								   Grid.Column="4"
+								   Padding="0"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center"
+								   VerticalContentAlignment="Center"
+								   Content="Job Value"
+								   FontSize="11" />
 
-                            <telerik:RadNumericUpDown x:Name="Qty3b"
-						        Grid.Row="3"
-						        Grid.Column="1"
-                                NumberDecimalDigits="0"
-						        Width="85"
-						        Margin="10,2,0,2"
-						        HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center"
-						        FontSize="14"
-						        Value="{Binding Path=QTY3a}"
-						        LostFocus="Qty3b_LostFocus" />
-                            <TextBox x:Name="CPM3"
-						         Grid.Row="3"
-						         Grid.Column="2"
-						         Width="80"
-						         Margin="10,2,0,2"
-						         HorizontalAlignment="Left"
-						         HorizontalContentAlignment="Right"
-                                 VerticalContentAlignment="Center"
-						         FontSize="14"
-						         Text="{Binding Path=CPM3a, StringFormat=N2}"
-						         TextChanged="Qty3b_LostFocus" />
-                            <TextBox x:Name="Markup3"
-						         Grid.Row="3"
-						         Grid.Column="3"
-						         Width="50"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         Text="{Binding Path=MAR3a, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"
-						         TextChanged="Qty3b_LostFocus" />
-                            <Label Grid.Row="3"
-						       Grid.Column="3"
-						       Width="13"
-						       Height="21"
-						       Margin="93,0,0,0"
-						       Padding="0"
-						       HorizontalAlignment="Left"
-						       VerticalContentAlignment="Center"
-						       Content="%"
-						       FontSize="9" />
-                            <TextBox x:Name="Ext3"
-						         Grid.Row="3"
-						         Grid.Column="4"
-						         Width="80"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         IsEnabled="False"
-						         Text="{Binding Path=EXT3a, StringFormat=N2}" />
+                                    <telerik:RadNumericUpDown 
+									x:Name="Qty1b"
+									Grid.Row="2"
+									Grid.Column="1"
+									Width="65"
+									Height="20"
+									Margin="10 0 0 0"
+									HorizontalAlignment="Left"
+									VerticalContentAlignment="Center"
+									NumberDecimalDigits="0"
+									FontSize="14"
+									Value="{Binding Path=QTY1a}"
+									LostFocus="Qty1b_LostFocus" />
+                                    <TextBox x:Name="CPM1"
+									 Grid.Row="2"
+									 Grid.Column="2"
+									 Width="60"
+									 Height="20"
+									 HorizontalContentAlignment="Right"
+									 VerticalContentAlignment="Center"
+									 FontSize="14"
+									 Text="{Binding Path=CPM1a, StringFormat=C}"
+									 TextChanged="Qty1b_LostFocus" />
+                                    <TextBox 
+                                     x:Name="Ext1"
+									 Grid.Row="2"
+									 Grid.Column="4"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 FontSize="11"
+									 IsEnabled="False"
+									 Text="{Binding Path=EXT1a, StringFormat=N2}" />
 
-                            <telerik:RadNumericUpDown x:Name="Qty4b"
-						        Grid.Row="4"
-						        Grid.Column="1"
-                                NumberDecimalDigits="0"
-						        Width="85"
-						        Margin="10,2,0,2"
-						        HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center"
-						        FontSize="14"
-						        Value="{Binding Path=QTY4a}"
-						        LostFocus="Qty4b_LostFocus" />
-                            <TextBox x:Name="CPM4"
-						         Grid.Row="4"
-						         Grid.Column="2"
-						         Width="80"
-						         Margin="10,2,0,2"
-						         HorizontalAlignment="Left"
-						         HorizontalContentAlignment="Right"
-                                 VerticalContentAlignment="Center"
-						         FontSize="14"
-						         Text="{Binding Path=CPM4a, StringFormat=N2}"
-						         TextChanged="Qty4b_LostFocus" />
-                            <TextBox x:Name="Markup4"
-						         Grid.Row="4"
-						         Grid.Column="3"
-						         Width="50"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         Text="{Binding Path=MAR4a, StringFormat=N, UpdateSourceTrigger=PropertyChanged}"
-						         TextChanged="Qty4b_LostFocus" />
-                            <Label Grid.Row="4"
-						       Grid.Column="3"
-						       Width="13"
-						       Height="21"
-						       Margin="93,0,0,0"
-						       Padding="0"
-						       HorizontalAlignment="Left"
-						       VerticalContentAlignment="Center"
-						       Content="%"
-						       FontSize="9" />
-                            <TextBox x:Name="Ext4"
-						         Grid.Row="4"
-						         Grid.Column="4"
-						         Width="80"
-						         Margin="0,2,0,2"
-						         HorizontalAlignment="Center"
-						         HorizontalContentAlignment="Right"
-						         FontSize="11"
-						         IsEnabled="False"
-						         Text="{Binding Path=EXT4a, StringFormat=N2}" />
+                                    <telerik:RadNumericUpDown 
+                                    x:Name="Qty2b"
+									Grid.Row="3"
+									Grid.Column="1"
+									NumberDecimalDigits="0"
+									Width="65"
+									Height="20"
+									Margin="10 0 0 0"
+									HorizontalAlignment="Left"
+									VerticalContentAlignment="Center"
+									FontSize="14"
+									Value="{Binding Path=QTY2a}"
+									LostFocus="Qty2b_LostFocus" />
+                                    <TextBox 
+                                     x:Name="CPM2"
+									 Grid.Row="3"
+									 Grid.Column="2"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 VerticalContentAlignment="Center"
+									 FontSize="14"
+									 Text="{Binding Path=CPM2a, StringFormat=N2}"
+									 TextChanged="Qty2b_LostFocus" />
+                                    <TextBox x:Name="Ext2"
+									 Grid.Row="3"
+									 Grid.Column="4"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 FontSize="11"
+									 IsEnabled="False"
+									 Text="{Binding Path=EXT2a, StringFormat=N2}" />
 
-                            <Label Grid.Row="6" Grid.Column="1" Content="Features total:" Grid.ColumnSpan="2" Margin="0 0 10 0" HorizontalAlignment="Right" FontWeight="Bold" />
-                            <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding QuoteTotal, StringFormat=C}" Width="80" Height="22" HorizontalContentAlignment="Right" />
+                                    <telerik:RadNumericUpDown x:Name="Qty3b"
+									Grid.Row="4"
+									Grid.Column="1"
+									NumberDecimalDigits="0"
+									Width="65"
+									Height="20"
+									Margin="10 0 0 0"
+									HorizontalAlignment="Left"
+									VerticalContentAlignment="Center"
+									FontSize="14"
+									Value="{Binding Path=QTY3a}"
+									LostFocus="Qty3b_LostFocus" />
+                                    <TextBox 
+                                     x:Name="CPM3"
+									 Grid.Row="4"
+									 Grid.Column="2"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 VerticalContentAlignment="Center"
+									 FontSize="14"
+									 Text="{Binding Path=CPM3a, StringFormat=N2}"
+									 TextChanged="Qty3b_LostFocus" />
+                                    <TextBox 
+                                     x:Name="Ext3"
+									 Grid.Row="4"
+									 Grid.Column="4"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 FontSize="11"
+									 IsEnabled="False"
+									 Text="{Binding Path=EXT3a, StringFormat=N2}" />
 
-                            <Grid Grid.Row="8">
+                                    <telerik:RadNumericUpDown 
+                                    x:Name="Qty4b"
+									Grid.Row="5"
+									Grid.Column="1"
+									NumberDecimalDigits="0"
+									Width="65"
+                                    Height="20"
+									Margin="10,0,0,0"
+									HorizontalAlignment="Left"
+									VerticalContentAlignment="Center"
+									FontSize="14"
+									Value="{Binding Path=QTY4a}"
+									LostFocus="Qty4b_LostFocus" />
+                                    <TextBox 
+                                    x:Name="CPM4"
+									 Grid.Row="5"
+									 Grid.Column="2"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 VerticalContentAlignment="Center"
+									 FontSize="14"
+									 Text="{Binding Path=CPM4a, StringFormat=N2}"
+									 TextChanged="Qty4b_LostFocus" />
+                                    <TextBox 
+                                     x:Name="Ext4"
+									 Grid.Row="5"
+									 Grid.Column="4"
+									 Width="60"
+									 Height="20"
+									 Margin="20 0 0 0"
+									 HorizontalAlignment="Left"
+									 HorizontalContentAlignment="Right"
+									 FontSize="11"
+									 IsEnabled="False"
+									 Text="{Binding Path=EXT4a, StringFormat=N2}" />
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                                    <!--<Label Grid.Row="6" Grid.Column="1" Content="Features total:" Grid.ColumnSpan="2" Margin="0 0 10 0" HorizontalAlignment="Right" FontWeight="Bold" />
+                            <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding QuoteTotal, StringFormat=C}" Width="80" Height="22" HorizontalContentAlignment="Right" />-->
 
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Grid.Row="9"
+                                    <Grid Grid.Row="8">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Grid.Row="9"
 								       Grid.Column="4"
 								       Grid.ColumnSpan="4"
 								       Width="auto"
 								       Margin="40,0,0,0"
 								       HorizontalAlignment="Left"
 								       Content="Lookup" />
-                                    <Label Grid.Row="8"
+                                            <Label Grid.Row="8"
 								       Grid.Column="3"
 								       Width="auto"
 								       HorizontalAlignment="Left"
 								       Content="Paper" />
-                                    <Label Grid.Row="8"
+                                            <Label Grid.Row="8"
 								       Grid.Column="4"
 								       Width="auto"
 								       HorizontalAlignment="Left"
 								       Content="Color" />
-                                    <Label Grid.Row="8"
+                                            <Label Grid.Row="8"
 								       Grid.Column="5"
 								       Width="auto"
 								       HorizontalAlignment="Left"
 								       Content="Type" />
-                                    <Label Grid.Row="8"
+                                            <Label Grid.Row="8"
 								       Grid.Column="6"
 								       Width="auto"
 								       HorizontalAlignment="Left"
 								       Content="Basis" />
-                                    <Label Grid.Row="8"
+                                            <Label Grid.Row="8"
 								       Grid.Column="7"
 								       Width="auto"
 								       HorizontalAlignment="Left"
 								       Content="Width"
 								       FontWeight="Bold"
 								       Foreground="Red" />
-                                </StackPanel>
+                                        </StackPanel>
 
-                            </Grid>
+                                    </Grid>
 
-                            <StackPanel Grid.Row="17" Grid.ColumnSpan="8" HorizontalAlignment="Right" Margin="0 0 20 0" Orientation="Horizontal" >
-                                <Button x:Name="btnSaveQuote"   Margin="5 0 0 0" Width="90" Height="22" Click="btnSaveQuote_Click"   > Save Quote </Button>
-                                <Button x:Name="btnCancelQuote" Margin="5 0 5 0" Width="90" Height="22" Click="btnCancelQuote_Click" > Don't Save </Button>
+
+                                </Grid>
+                            </Border>
+
+                            <Label Grid.Row="1" Content="Paper to be used:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0" Padding="0" Height="21" Width="123" />
+
+                            <ListView Margin="2" Name="lvPaper" Grid.Row="2" FontSize="11" FontFamily="Courier New" >
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.Resources>
+                                    <DataTemplate x:Key="Templ">
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding}"/>
+                                    </DataTemplate>
+                                    <DataTemplate x:Key="Tempr">
+                                        <TextBlock HorizontalAlignment="Right" Text="{Binding}"/>
+                                    </DataTemplate>
+                                    <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader">
+                                        <Setter Property="FontSize" Value="11" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    </Style>
+                                    <Style x:Key="HeaderStyleR" TargetType="GridViewColumnHeader">
+                                        <Setter Property="FontSize" Value="11" />
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                                    </Style>
+                                    <Style TargetType="GridViewColumnHeader">
+                                        <Setter Property="FontSize" Value="11" />
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                                    </Style>
+                                </ListView.Resources>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style>
+                                                <Setter Property="TextElement.FontSize"   Value="11"      />
+                                                <Setter Property="TextElement.FontWeight" Value="Bold"    />
+                                                <Setter Property="TextElement.Foreground" Value="Green" />
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Description" Width="420" DisplayMemberBinding="{Binding Description}"						 HeaderTemplate="{StaticResource Templ}" HeaderContainerStyle="{StaticResource HeaderStyle}" />
+                                        <GridViewColumn Header="Run Charge"  Width="100" DisplayMemberBinding="{Binding RunCharge, StringFormat='C'}"		 HeaderTemplate="{StaticResource Tempr}" HeaderContainerStyle="{StaticResource HeaderStyleR}"/>
+                                        <GridViewColumn Header="Lbs/M"		 Width="100" DisplayMemberBinding="{Binding LbsPerThousand, StringFormat='N0'}"  HeaderTemplate="{StaticResource Tempr}" HeaderContainerStyle="{StaticResource HeaderStyleR}"/>
+                                        <GridViewColumn Header="Extended"	 Width="150" DisplayMemberBinding="{Binding Extended, StringFormat=C}"			 HeaderTemplate="{StaticResource Tempr}" HeaderContainerStyle="{StaticResource HeaderStyleR}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                            <StackPanel Grid.Row="6" HorizontalAlignment="Left" Orientation="Horizontal" Margin="605,0,0,0" Width="195" >
+                                <Button x:Name="btnSaveQuote"   Margin="5 0 0 0" Width="90" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
+                                <Button x:Name="btnCancelQuote" Margin="5 0 5 0" Width="90" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
                             </StackPanel>
 
                         </Grid>

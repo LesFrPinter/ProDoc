@@ -1,5 +1,6 @@
 ﻿using ProDocEstimate.Views;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -311,9 +312,10 @@ namespace ProDocEstimate
         {
             switch (Tabs.SelectedIndex)
             {
-                case 0: ActivePage = "Base"; lblPageName.Content = "Base"; OnPropertyChanged("ActivePage"); break;
-                case 1: ActivePage = "Details"; lblPageName.Content = "Details"; OnPropertyChanged("ActivePage"); break;
-                case 2: ActivePage = "Pricing"; lblPageName.Content = "Pricing"; OnPropertyChanged("ActivePage"); break;
+                case 0: ActivePage = "Base";     lblPageName.Content = "Base";     OnPropertyChanged("ActivePage"); break;
+                case 1: ActivePage = "Details";  lblPageName.Content = "Details";  OnPropertyChanged("ActivePage"); break;
+                case 2: ActivePage = "Features"; lblPageName.Content = "Features"; OnPropertyChanged("ActivePage"); break;
+                case 3: ActivePage = "Pricing";  lblPageName.Content = "Pricing";  OnPropertyChanged("ActivePage"); break;
             }
         }
 
@@ -601,7 +603,7 @@ namespace ProDocEstimate
 
         private void Markup1_GotFocus(object sender, RoutedEventArgs e)
         {
-            Markup1.SelectAll();
+//            Markup1.SelectAll();
         }
 
         private async void SelectAll_OnTextBoxGotFocus(object sender, RoutedEventArgs e)
@@ -816,7 +818,6 @@ namespace ProDocEstimate
             dgSheetsOfPaper.SelectedIndex = -1;
 
             SumRowTotals();
-
         }
 
         private void dgSheetsOfPaper_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -939,28 +940,40 @@ namespace ProDocEstimate
 
         private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            return; // LostFocus event now does this
+
             SelectedQty = Qty1;
             GridCalc();
             QTY1a = SelectedQty;
             CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM1a = CPM1a * 1000.00F;
         }
-        private void txtQty2_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty2;
+        private void txtQty2_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            return; // LostFocus event now does this
+
+            SelectedQty = Qty2;
             GridCalc();
             QTY2a = SelectedQty;
             CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM2a = CPM2a * 1000.00F;
         }
-        private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty3;
+        private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            return; // LostFocus event now does this
+
+            SelectedQty = Qty3;
             GridCalc();
             QTY3a = SelectedQty;
             CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM3a = CPM3a * 1000.00F;
         }
-        private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e) 
-        {   SelectedQty = Qty4;
+        private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            return; // LostFocus event now does this
+
+            SelectedQty = Qty4;
+            GridCalc();
             QTY4a = SelectedQty;
             CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM4a = CPM4a * 1000.00F;
@@ -974,6 +987,10 @@ namespace ProDocEstimate
             pc.Up = int.Parse(lblUp.Content.ToString());
             QuoteTotal = 0.00D;
             int r = 0;
+
+            // Populate the Paper ListView on Page 4
+            List<Paper> Papers = new List<Paper>();
+
             for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
             {
                 pc.NumDocs = (int)SelectedQty;
@@ -985,8 +1002,18 @@ namespace ProDocEstimate
                 dataRow[11] = pc.Pounds;    // multiply UseThisPrice times Pounds and store in last column
                 dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
                 QuoteTotal += double.Parse(dataRow[16].ToString());
+
+                Papers.Add( new Paper() 
+                  { Description     = dataRow[0]             .ToString(),  
+                    RunCharge       = float.Parse(dataRow[16].ToString()), 
+                    LbsPerThousand  = int.Parse  (dataRow[11].ToString()), 
+                    Extended        = float.Parse(dataRow[16].ToString()) });
+
             }
             c.Close();
+
+            lvPaper.ItemsSource = Papers;
+
             SumRowTotals();
         }
 
@@ -1378,7 +1405,50 @@ namespace ProDocEstimate
 
         private void txtQty1_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            if(Qty1==0) return;
+            SelectedQty = Qty1;
+            GridCalc();
+            QTY1a = SelectedQty;
+            CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM1a = CPM1a * 1000.00F;
         }
+
+        private void txtQty2_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Qty2 == 0) return;
+            SelectedQty = Qty2;
+            GridCalc();
+            QTY2a = SelectedQty;
+            CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM2a = CPM2a * 1000.00F;
+        }
+
+        private void txtQty3_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Qty3 == 0) return;
+            SelectedQty = Qty3;
+            GridCalc();
+            QTY3a = SelectedQty;
+            CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM3a = CPM3a * 1000.00F;
+        }
+
+        private void txtQty4_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Qty4 == 0) return;
+            SelectedQty = Qty4;
+            GridCalc();
+            QTY4a = SelectedQty;
+            CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
+            CPM4a = CPM4a * 1000.00F;
+        }
+
+        public class Paper
+        {   public string Description    { get; set; }
+            public float  RunCharge      { get; set; }
+            public int    LbsPerThousand { get; set; }
+            public float  Extended       { get; set; }
+        }
+
     }
 }

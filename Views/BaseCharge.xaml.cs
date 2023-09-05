@@ -42,6 +42,12 @@ namespace ProDocEstimate.Views
             this.Top = 150;
         }
 
+        private void Flat_GotFocus(object sender, RoutedEventArgs e)
+        { Flat.SelectAll(); }
+
+        private void Run_GotFocus(object sender, RoutedEventArgs e)
+        { Run.SelectAll(); }
+
         private void LoadData()
         {
             string cmd = $"SELECT TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{Quote_Num}' AND Category = 'Base Charges'";
@@ -75,7 +81,6 @@ namespace ProDocEstimate.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Close(); }
-
 
     }
 }

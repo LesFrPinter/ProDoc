@@ -157,13 +157,6 @@ namespace ProDocEstimate.Views
             PressChargePct = 0;
             ConvChargePct =0;
 
-            //BasePressSetup = 0;
-            //BaseCollatorSetup = 0;
-            //BaseBinderySetup = 0;
-            //BasePressSlowdown = 0;
-            //BaseCollatorSlowdown = 0;
-            //BaseBinderySlowdown =0;
-
             string str = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Perfing'";
             da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count > 0) {
