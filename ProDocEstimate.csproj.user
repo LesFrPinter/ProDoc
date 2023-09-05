@@ -7,16 +7,31 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\BackerForm.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\BaseCharge.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Calculating.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Collator_Standards.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\FeaturePicker.xaml.cs">
+    <Compile Update="Views\Combo.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Converting.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CustCont.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Feature_Standards.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\HistoricalPrices.xaml.cs">
+    <Compile Update="Views\Finishing.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CustLoc.xaml.cs">
@@ -25,22 +40,31 @@
     <Compile Update="Views\CustomerLookup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Customers.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\EstimatorLookup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Items.xaml.cs">
+    <Compile Update="Views\Ink.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\NewEstimate.xaml.cs">
+    <Compile Update="Views\MICR.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Perfing.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PrePress.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\PressCalc.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PressNum.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Press_Standards.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Punching.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Quotations.xaml.cs">
@@ -52,18 +76,39 @@
     <Compile Update="Views\SalesRepLookup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Security.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StrikeIn.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\BackerForm.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BaseCharge.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Calculating.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Collator_Standards.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\FeaturePicker.xaml">
+    <Page Update="Views\Combo.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Converting.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CustCont.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Feature_Standards.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\HistoricalPrices.xaml">
+    <Page Update="Views\Finishing.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CustLoc.xaml">
@@ -72,25 +117,34 @@
     <Page Update="Views\CustomerLookup.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Customers.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\EstimatorLookup.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Items.xaml">
+    <Page Update="Views\Ink.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\NewEstimate.xaml">
+    <Page Update="Views\MICR.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Perfing.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PrePress.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PressCalc.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\PressNum.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Press_Standards.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Punching.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Quotations.xaml">
@@ -103,6 +157,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SalesRepLookup.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Security.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StrikeIn.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

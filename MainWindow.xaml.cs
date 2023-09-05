@@ -1,22 +1,31 @@
 ﻿using ProDocEstimate.Views;
+using System;
 using System.Windows;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
+using System.Windows.Input;
 
 namespace ProDocEstimate
 {
-	public partial class MainWindow : Window
+    public partial class MainWindow : Window
 	{
-		public MainWindow() { InitializeComponent(); }
+		public MainWindow() { InitializeComponent(); PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
 
-		private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
+        private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
 		private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
 
-		private void mnuFileExit_Click(object sender, RoutedEventArgs e)
-		{ Application.Current.Shutdown(); }
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
+            this.Top = 50;
+        }
+
+        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+		{ Application.Current.Shutdown(); Environment.Exit(Environment.ExitCode); }
 
 		private void mnuCustomers_Click(object sender, RoutedEventArgs e)
 		{ 
-			Window customers = new Customers();
+			Window customers = new CustCont();
 			customers.Owner = this;
 			customers.ShowDialog();
 		}
@@ -28,12 +37,12 @@ namespace ProDocEstimate
 			quotations.ShowDialog();
 		}
 
-		private void mnuItems_Click(object sender, RoutedEventArgs e)
-		{
-			Window items = new Items();
-			items.Owner = this;
-			items.ShowDialog();
-		}
+		//private void mnuItems_Click(object sender, RoutedEventArgs e)
+		//{
+		//	Window items = new Items();
+		//	items.Owner = this;
+		//	items.ShowDialog();
+		//}
 
 		private void mnuPV01_Click(object sender, RoutedEventArgs e)
 		{
@@ -56,54 +65,54 @@ namespace ProDocEstimate
 		//	standards.ShowDialog();
 		//}
 
-		private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
-		{
-			Window newEstimate = new Views.NewEstimate();
-			newEstimate.Owner = this;
-			newEstimate.ShowDialog();
-		}
+		//private void mnuNewEstimate_Click(object sender, RoutedEventArgs e)
+		//{
+		//	Window newEstimate = new Views.NewEstimate();
+		//	newEstimate.Owner = this;
+		//	newEstimate.ShowDialog();
+		//}
 
 		private void mnuEdit_Click(object sender, RoutedEventArgs e)
 		{
-			CustomerLookup cl = new CustomerLookup();
-			cl.SearchType = "Edit an existing quote";
-			cl.lblSearchType.Content = cl.SearchType;
-			cl.ShowDialog();
-			CustName = cl.CustomerName;
-			CustCode = cl.CustomerCode;
-			if(CustName?.Length!=0)
-			{ NewEstimate ne = new NewEstimate();
-				ne.Message = "Editing an existing quote";
-				ne.lblCustName.Content = CustName;
-				ne.txtCustNo.Text = CustCode;
-				ne.lblMessage.Content = "(" + CustCode + ") " + CustName;
-				ne.ShowDialog();
-			}
-				else
-			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
+			//CustomerLookup cl = new CustomerLookup();
+			//cl.SearchType = "Edit an existing quote";
+			//cl.lblSearchType.Content = cl.SearchType;
+			//cl.ShowDialog();
+			//CustName = cl.CustomerName;
+			//CustCode = cl.CustomerCode;
+			//if(CustName?.Length!=0)
+			//{ NewEstimate ne = new NewEstimate();
+			//	ne.Message = "Editing an existing quote";
+			//	ne.lblCustName.Content = CustName;
+			//	ne.txtCustNo.Text = CustCode;
+			//	ne.lblMessage.Content = "(" + CustCode + ") " + CustName;
+			//	ne.ShowDialog();
+			//}
+			//	else
+			//{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
 
-			cl.Close();
+			//cl.Close();
     }
 
 		private void mnuCopy_Click(object sender, RoutedEventArgs e)
 		{
-			CustomerLookup cl = new CustomerLookup();
-			cl.SearchType = "Copy an existing quote";
-			cl.lblSearchType.Content = cl.SearchType;
-			cl.ShowDialog();
-			CustName = cl.CustomerName;
-			CustCode = cl.CustomerCode;
-			if (CustName?.Length != 0)
-			{ NewEstimate ne = new NewEstimate();
-				ne.Message = "Copy of Quote # " + cl.CustomerCode + " with a new quote number";
-				ne.lblCustName.Content = CustName;
-				ne.txtCustNo.Text = CustCode;
-				ne.ShowDialog();
-			}
-			else
-			{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
+			//CustomerLookup cl = new CustomerLookup();
+			//cl.SearchType = "Copy an existing quote";
+			//cl.lblSearchType.Content = cl.SearchType;
+			//cl.ShowDialog();
+			//CustName = cl.CustomerName;
+			//CustCode = cl.CustomerCode;
+			//if (CustName?.Length != 0)
+			//{ NewEstimate ne = new NewEstimate();
+			//	ne.Message = "Copy of Quote # " + cl.CustomerCode + " with a new quote number";
+			//	ne.lblCustName.Content = CustName;
+			//	ne.txtCustNo.Text = CustCode;
+			//	ne.ShowDialog();
+			//}
+			//else
+			//{ MessageBox.Show("Lookup canceled", "Edit", MessageBoxButton.OK, MessageBoxImage.Information); }
 
-			cl.Close();
+			//cl.Close();
 		}
 
 		private void mnuBlank_Click(object sender, RoutedEventArgs e)

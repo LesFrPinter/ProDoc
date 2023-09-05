@@ -5,69 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProDocEstimate"
         mc:Ignorable="d"
+        Background="LightGray"
         WindowStartupLocation="CenterScreen"
+        Loaded="OnLoad" Left="100"
         Title="MainWindow" Height="750" Width="1020">
 
-	<Window.Resources>
+    <Window.Resources>
 
-		<Style TargetType="MenuItem">
-			<Setter Property="FontSize" Value="18" />
-			<Setter Property="Foreground" Value="Blue" />
-		</Style>
+        <Style TargetType="MenuItem">
+            <Setter Property="FontSize"   Value="18"    />
+            <Setter Property="Foreground" Value="Blue" />
+            <Setter Property="Padding"    Value="4"     />
+        </Style>
 
-	</Window.Resources>
+    </Window.Resources>
 
-	<Grid Background="Beige" Margin="0,-3,0,3">
+    <Viewbox>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="60" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
+        <Grid Background="LightGray" Margin="5" Height="750" Width="1050">
 
-		<!--Set MenuDropAlignment to 0 in RegEdit-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-		<Menu HorizontalContentAlignment="Left">
-			<MenuItem Header="_File" Height="40">
-				<MenuItem  FlowDirection="RightToLeft" x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" />
-			</MenuItem>
-			<MenuItem Header="_Demos">
-				<MenuItem x:Name="mnuQuotations"  Header="_Quotations" Height="40" Click="mnuQuotations_Click" />
-				<MenuItem x:Name="mnuNewEstimate" Header="New Estimate" Height="40" Click="mnuNewEstimate_Click" />
-				<MenuItem x:Name="mnuCustomers"   Header="_Customers"  Height="40" Click="mnuCustomers_Click"  />
-				<MenuItem x:Name="mnuStandards"   Header="Standards" Height="40" >
-					<MenuItem x:Name="mnuPressStandards"	  Header="Press Standards"    Click="mnuPressStandards_Click"	   />
-					<MenuItem x:Name="mnuCollatorStandards" Header="Collator Standards" Click="mnuCollatorStandards_Click" />
-					<MenuItem x:Name="mnuFeatureStandards"  Header="Feature Standards"  Click="mnuFeatureStandards_Click"  />
-				</MenuItem>
+        <!--Set MenuDropAlignment to 0 in RegEdit-->
 
-			</MenuItem>
-			<!--<MenuItem Header="_Current system" Height="40" >
-				<MenuItem x:Name="mnuEdit"  Header="_Edit an existing estimate" Click="mnuEdit_Click" />
-				<MenuItem x:Name="mnuCopy"  Header="_Copy an existing estimate" Click="mnuCopy_Click" />
-				<MenuItem x:Name="mnuBlank" Header="New _blank estimate"        Click="mnuBlank_Click" />
-				<MenuItem x:Name="mnuCombo" Header="New c_ombo estimate"        Click="mnuCombo_Click" />
-			</MenuItem>-->
-		</Menu>
+        <Menu HorizontalContentAlignment="Left" HorizontalAlignment="Left" Background="LightGray">
+                <MenuItem Header="_File"  VerticalAlignment="Center" Background="LightGray">
+                <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
+            </MenuItem>
+                <MenuItem Header="_Screens" VerticalAlignment="Center" Background="LightGray">
+                <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click"         />
+                <!--<MenuItem x:Name="mnuNewEstimate"       Header="New Estimate"       Click="mnuNewEstimate_Click"        />-->
+                <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"          />
+                <MenuItem x:Name="mnuStandards"         Header="Standards" >
+                <MenuItem x:Name="mnuPressStandards"	Header="Press Standards"    Click="mnuPressStandards_Click"	    />
+                <MenuItem x:Name="mnuCollatorStandards" Header="Collator Standards" Click="mnuCollatorStandards_Click"  />
+                <MenuItem x:Name="mnuFeatureStandards"  Header="Feature Standards"  Click="mnuFeatureStandards_Click"   />
+            </MenuItem>
 
-		<Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
+            </MenuItem>
+        </Menu>
 
-		<Label Grid.Row="2" Content="Pro Vision II" Padding="20 5 20 5" FontFamily="Comic Sans MS" Style="{StaticResource MainTitle}"  >
-			<Label.Effect>
-				<DropShadowEffect Direction="325" Color="black" ShadowDepth="12" BlurRadius="12" />
-			</Label.Effect>
-				<Label.Resources>
-					<Style TargetType="Border">
-						<Setter Property="CornerRadius" Value="5"/>
-						<Style.Triggers>
-							<Trigger Property="IsMouseDirectlyOver" Value="True">
-								<Setter Property="Background" Value="Red" />
-							</Trigger>
-						</Style.Triggers>
-					</Style>
-				</Label.Resources>
-			</Label>
+        <Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
 
-	</Grid>
+        <TextBox 
+            Grid.Row="1"
+            Text="NOTE: I have changed some of the values stored in the FEATURES table so that the software could be more easily tested. Restore correct data after testing is done." 
+            TextWrapping="Wrap" 
+            Height="110" Padding="5" 
+            Width="380" 
+            FontSize="16"
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center" >
+            <TextBox.Effect>
+                <DropShadowEffect Direction="320" ShadowDepth="15" BlurRadius="25" />
+            </TextBox.Effect>
+        </TextBox>
+
+    </Grid>
+
+    </Viewbox>
 
 </Window>
