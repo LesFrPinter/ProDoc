@@ -117,12 +117,12 @@ namespace ProDocEstimate.Views
             }
             catch (Exception ex) {  MessageBox.Show(ex.Message,str); }
 
-            double m = (y2 - y1) / (x2 - x1);
-            double b = y2 - (x2 * m);
+            double m = (y2 -  y1) / (x2 - x1);
+            double b =  y2 - (x2  * m);
 
             double pRate = (Documents * m) + b;
             ProdRate = Convert.ToInt32(pRate);  // lblrate.Text = (txtDocuments.Text * m) + b
-            ProdTime = Documents / pRate;       // lblProduction.Text = txtDocuments.Text / lblrate.Text
+            ProdTime = Documents /     pRate;   // lblProduction.Text = txtDocuments.Text / lblrate.Text
             MatlCost = Cost;                    // lblCost.Text = Cost
 
             OnPropertyChanged("Pounds");

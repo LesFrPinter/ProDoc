@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -316,13 +317,16 @@ namespace ProDocEstimate.Views
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 +  "  Quote_Num,      Category,          Sequence,"
                 +  "  Param1,         Param2,            Param3,          Value1,             Value2,              Value3,"
-                +  "  FlatCharge,     FlatChargePct,     RunChargePct,    PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct, TotalFlatChg,   PerThousandChg,"
+                +  "  FlatCharge,     FlatChargePct,     RunChargePct,    PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct, TotalFlatChg,   PerThousandChg,         SlowDown_Percent,"
                 +  "  PRESS_ADDL_MIN, COLL_ADDL_MIN,     BIND_ADDL_MIN,   PRESS_SLOW_PCT,     COLL_SLOW_PCT,       BIND_SLOW_PCT )"
                 +  " VALUES ( "
                 + $"'{QuoteNum}',    'PrePress',         7,"
                 + $" 'OE',           'Plate Chg',       'PrePress',     '{OrderEntry}',     '{PlateChg}',        '{PREPress}',"
-                + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}',"
+                + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', {SlowdownTotal}, "
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL} )";
+
+            //Clipboard.SetText(cmd);
+            //Debugger.Break();
 
             scmd.CommandText = cmd;
             conn.Open();
