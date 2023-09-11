@@ -1577,7 +1577,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Flat Charge" Width="100" Binding="{Binding TotalFlatChg,   StringFormat=C}" >
+                                    <DataGridTextColumn Header="Flat Charge" Width="100" Binding="{Binding TotalFlatChg, StringFormat=C}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Right"></Setter>

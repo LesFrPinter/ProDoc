@@ -19,7 +19,6 @@ namespace ProDocEstimate
 {
     public partial class Quotations : Window, INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
