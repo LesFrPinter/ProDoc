@@ -337,15 +337,17 @@ namespace ProDocEstimate.Views
             DeleteQuoteRow("Combo");
 
             string cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
-                + " ( Quote_Num,      Category,         Sequence,"
-                + "   Param1,         Value1,           FlatChargePct,      RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
-                + "   TotalFlatChg,   PerThousandChg,   "
-                + "   PRESS_ADDL_MIN, PRESS_SLOW_PCT,   COLL_ADDL_MIN,      COLL_SLOW_PCT,    BIND_ADDL_MIN,      BIND_SLOW_PCT,       SETUP_MINUTES,      SLOWDOWN_PERCENT ) "
+                + " ( Quote_Num,      Category,          Sequence,"
+                + "   Param1,         Value1,            FlatChargePct,      RunChargePct,       PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
+                + "   TotalFlatChg,   PerThousandChg,    "
+                + "   PRESS_ADDL_MIN, PRESS_SLOW_PCT,    COLL_ADDL_MIN,      COLL_SLOW_PCT,      BIND_ADDL_MIN,      BIND_SLOW_PCT,       SETUP_MINUTES,      SLOWDOWN_PERCENT, "
+                + "   PressSetupMin,  PressSlowPct,      CollSetupMin,       CollSlowPct,        BindSetupMin,       BindSlowPct   ) "
                 + " VALUES ( "
-                + $" '{QuoteNum}',   'Combo',           9,"
-                + $"  'Combo1',     '{Combo1}',       '{FlatChargePct}',   '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
+                + $" '{QuoteNum}',   'Combo',            9,"
+                + $"  'Combo1',     '{Combo1}',        '{FlatChargePct}',  '{RunChargePct}',   '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
                 + $" '{FlatTotal}', '{CalculatedRunCharge}',"
-                + $"  {LabPS},       {LabPSL},         {LabCS},             {LabCSL} ,        {LabBS},            {LabBSL},            {SetupTotal},       {SlowdownTotal} )";
+                + $"  {LabPS},       {LabPSL},          {LabCS},            {LabCSL} ,          {LabBS},            {LabBSL},            {SetupTotal},       {SlowdownTotal}, "
+                + $"  {PressSetup},  {PressSlowdown},   {CollatorSetup},    {CollatorSlowdown}, {BinderySetup},     {BinderySlowdown} )";
 
             SqlCommand scmd = new();
             scmd.CommandText = cmd;

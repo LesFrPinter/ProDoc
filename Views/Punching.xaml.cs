@@ -290,13 +290,15 @@ namespace ProDocEstimate.Views
             finally { conn.Close(); }
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] "
-                + " (  Quote_Num,      Category,      Sequence,                Param1,            Param2,           Param3,              Value1,              Value2,             Value3, "
-                + "    FlatCharge,     TotalFlatChg,  PerThousandChg,          FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,     PressChargePct,     ConvertChargePct,"
-                + "    PRESS_ADDL_MIN, COLL_ADDL_MIN, BIND_ADDL_MIN,           PRESS_SLOW_PCT,    COLL_SLOW_PCT,    BIND_SLOW_PCT   )"
+                + " (  Quote_Num,      Category,        Sequence,                Param1,            Param2,           Param3,              Value1,              Value2,             Value3, "
+                + "    FlatCharge,     TotalFlatChg,    PerThousandChg,          FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,     PressChargePct,     ConvertChargePct,"
+                + "    PRESS_ADDL_MIN, COLL_ADDL_MIN,   BIND_ADDL_MIN,           PRESS_SLOW_PCT,    COLL_SLOW_PCT,    BIND_SLOW_PCT,  "
+                + "    PressSetupMin,  PressSlowPct,    CollSetupMin,            CollSlowPct,       BindSetupMin,     BindSlowPct   ) "
                 + " VALUES ( "
-                + $" '{QuoteNum}',    'Punching',     5,                      'Two',             'Three',          'Over3',            '{Two}',             '{Three}',          '{Over3}', "
-                + $" '{FlatCharge}', '{FlatTotal}', '{CalculatedRunCharge}', '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}',  '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
-                + $"  {LabPS},           {LabCS},          {LabBS},            {LabPSL},            {LabCSL},           {LabBSL} )";
+                + $" '{QuoteNum}',    'Punching',       5,                      'Two',             'Three',          'Over3',            '{Two}',             '{Three}',          '{Over3}', "
+                + $" '{FlatCharge}', '{FlatTotal}',   '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',"
+                + $"  {LabPS},        {LabCS},         {LabBS},                 {LabPSL},           {LabCSL},         {LabBSL}, "
+                + $"  {PressSetup},   {PressSlowdown}, {CollatorSetup},         {CollatorSlowdown}, {BinderySetup},   {BinderySlowdown} )";
 
             scmd.CommandText = cmd;
             conn.Open();

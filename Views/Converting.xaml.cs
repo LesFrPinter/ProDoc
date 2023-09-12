@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -325,13 +326,18 @@ namespace ProDocEstimate.Views
                 + "    Param1,          Param2,                  Param3,             Param4,            Param5,               Param6,             Param7,            Param8, "
                 + "    Value1,          Value2,                  Value3,             Value4,            Value5,               Value6,             Value7,            Value8, "
                 + "    TotalFlatChg,    PerThousandChg,          FlatChargePct,      RunChargePct,      FinishChargePct,      PressChargePct,     ConvertChargePct,  PlateChargePct,"
-                + "    PRESS_ADDL_MIN,  COLL_ADDL_MIN,           BIND_ADDL_MIN,      PRESS_SLOW_PCT,    COLL_SLOW_PCT,        BIND_SLOW_PCT "
-                + " ) VALUES ( "
+                + "    PRESS_ADDL_MIN,  COLL_ADDL_MIN,           BIND_ADDL_MIN,      PRESS_SLOW_PCT,    COLL_SLOW_PCT,        BIND_SLOW_PCT, "
+                + "    PressSetupMin,   PressSlowPct,            CollSetupMin,       CollSlowPct,       BindSetupMin,         BindSlowPct   ) "
+                + " VALUES ( "
                 + $" '{QuoteNum}',     'Converting',             10, "
                 + "  '2 CRASH NUMB',   'BLACK NUMB',            'SNAP GLUE 2-4',    'SNAP GLUE 5-12',  'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING',          'TRANSFER TAPE', "
                 + $" '{Crash}',        '{Black}',               '{Snap2}',          '{Snap5}',         '{Cont2}',            '{Cont5}',          '{Fold}',           '{Tape}', "
                 + $" '{FlatTotal}',    '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}',  '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}',  '{PlateChargePct}', "
-                + $"  {LabPS},          {LabCS},                 {LabBS},            {LabPSL},          {LabCSL},             {LabBSL} )";
+                + $"  {LabPS},          {LabCS},                 {LabBS},            {LabPSL},          {LabCSL},             {LabBSL}, "
+                + $"  {PressSetup},     {PressSlowdown},         {CollatorSetup},    {CollatorSlowdown},{BinderySetup},       {BinderySlowdown} )";
+
+            Clipboard.SetText(cmd);
+            Debugger.Break();
 
             scmd.CommandText = cmd;
             conn.Open();

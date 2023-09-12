@@ -367,17 +367,17 @@ namespace ProDocEstimate.Views
 
             scmd.CommandText
                 = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details]" 
-                + "  ( QUOTE_NUM,      SEQUENCE,      CATEGORY,                 VALUE10,"
-                + "    FlatCharge,     TotalFlatChg,  PerThousandChg,           FlatChargePct,     RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
-                + "    PRESS_ADDL_MIN, COLL_ADDL_MIN, BIND_ADDL_MIN,            PRESS_SLOW_PCT,    COLL_SLOW_PCT,    BIND_SLOW_PCT )"
+                + "  ( QUOTE_NUM,      SEQUENCE,       CATEGORY,                 VALUE10,"
+                + "    FlatCharge,     TotalFlatChg,   PerThousandChg,           FlatChargePct,      RunChargePct,     PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,"
+                + "    PRESS_ADDL_MIN, COLL_ADDL_MIN,  BIND_ADDL_MIN,            PRESS_SLOW_PCT,     COLL_SLOW_PCT,    BIND_SLOW_PCT,  "
+                + "    PressSetupMin,  PressSlowPct,   CollSetupMin,             CollSlowPct,        BindSetupMin,     BindSlowPct   ) "
+                + " VALUES ( " 
+                + $" '{QuoteNum}',     11,            'Security',              '{Checker}',"
+                + $" '{FlatCharge}', '{FlatTotal}',   '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', "
+                + $"  {LabPS},        {LabCS},         {LabBS},                 {LabPSL},           {LabCSL},         {LabBSL}, "
+                + $"  {PressSetup},   {PressSlowdown}, {CollatorSetup},         {CollatorSlowdown}, {BinderySetup},   {BinderySlowdown} )";
 
-                +  " VALUES ( " 
-                + $" '{QuoteNum}',     11,           'Security',              '{Checker}',"
-                + $" '{FlatCharge}', '{FlatTotal}',  '{CalculatedRunCharge}', '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', "
-                + $"  {LabPS},        {LabCS},        {LabBS},                 {LabPSL},          {LabCSL},         {LabBSL} )";
-
-
-            Clipboard.SetText(scmd.CommandText);
+//            Clipboard.SetText(scmd.CommandText);
 
             if (conn.State != ConnectionState.Open) conn.Open();
             scmd.ExecuteNonQuery();

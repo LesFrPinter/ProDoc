@@ -400,16 +400,17 @@ namespace ProDocEstimate.Views
 
             //TODO: Add all percentage field names and values before saving
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + "  Quote_Num,        Category,       Sequence,          Param1,          Param2,             Param3,              Param4,             Param5,            Param6,        Param7,        Param8,       Param9, "
-                + "                                                       Value1,          Value2,             Value3,              Value4,             Value5,            Value6,        Value7,        Value8,       Value9, "
-                + "  Amount,           FlatCharge,     FlatChargePct,     RunChargePct,    PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,  PerThousandChg, "
-                + "  PRESS_ADDL_MIN,   COLL_ADDL_MIN,  BIND_ADDL_MIN,     PRESS_SLOW_PCT,  COLL_SLOW_PCT,      BIND_SLOW_PCT )"
+                + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,        Param7,        Param8,       Param9, "
+                + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,        Value7,        Value8,       Value9, "
+                + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,  PerThousandChg, "
+                + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,  "
+                + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct )   " 
                 + " VALUES ( "
-                + $" {QuoteNum},       'Ink Color',     2,                'Std',           'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',      'Watermark',   'FluorSel',   'FourColor', "
-                + $"                                                     '{Std}',         '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',    '{WaterMark}', '{FluorSel}', '{FourColor}', "
-                + $" '{FLAT_CHARGE}', '{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
-                + $"  {LabPS},         {LabCS},        {LabBS},           {LabPSL},        {LabCSL},           {LabBSL} )";
-
+                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',      'Watermark',   'FluorSel',   'FourColor', "
+                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',    '{WaterMark}', '{FluorSel}', '{FourColor}', "
+                + $" '{FLAT_CHARGE}', '{FlatCharge}',  '{FlatChargePct}', '{RunChargePct}',  '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
+                + $"  {LabPS},         {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
+                + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown} )";
 
             scmd.CommandText = cmd;
             conn.Open();

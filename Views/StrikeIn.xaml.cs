@@ -228,22 +228,28 @@ namespace ProDocEstimate.Views
 
         private void LoadMaterialsAdjustments()
         {   // Load percentage markups for the four Materials base values
-            int t;
-            t = 0; int.TryParse(dt.Rows[0]["Value1"].ToString(), out t); FCPct = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value2"].ToString(), out t); PSPct = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value3"].ToString(), out t); BTPct = t;
-            t = 0; int.TryParse(dt.Rows[0]["Value4"].ToString(), out t); FMPct = t;
+            FCPct = 0; PSPct = 0; BTPct = 0; FMPct = 0;
+            if (dt.Rows.Count > 0) { 
+                int t;
+                t = 0; int.TryParse(dt.Rows[0]["Value1"].ToString(), out t); FCPct = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value2"].ToString(), out t); PSPct = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value3"].ToString(), out t); BTPct = t;
+                t = 0; int.TryParse(dt.Rows[0]["Value4"].ToString(), out t); FMPct = t;
+            }
         }
 
         private void LoadLaborAdjustments()
         {   // Load minutes of setup and slowdown times to the base values read from the FEATURES table
-            int t;
-            t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out t); LabPS  = t;
-            t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(),  out t); LabPSL = t;
-            t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(),  out t); LabCS  = t;
-            t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out t); LabCSL = t;
-            t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(),  out t); LabBS  = t;
-            t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(),  out t); LabBSL = t;
+            LabPS = 0; LabPSL = 0; LabCS = 0; LabCSL = 0; LabBS = 0; LabBSL = 0;
+            if (dt.Rows.Count > 0)
+            {   int t;
+                t = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out t); LabPS = t;
+                t = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(), out t); LabPSL = t;
+                t = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(), out t); LabCS = t;
+                t = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out t); LabCSL = t;
+                t = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(), out t); LabBS = t;
+                t = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(), out t); LabBSL = t;
+            }
         }
 
         private void CalcMaterial()
@@ -290,17 +296,19 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(str, conn); scmd.ExecuteNonQuery(); if(conn.State==ConnectionState.Open) { conn.Close(); }
 
             str = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
-                + "(  QUOTE_NUM,       SEQUENCE,       CATEGORY, "
-                + "   Param1,          Param2,         Param3,           Param4,         Param5, "
-                + "   Value1,          Value2,         Value3,           Value4,         Value5, "
+                + "(  QUOTE_NUM,       SEQUENCE,         CATEGORY, "
+                + "   Param1,          Param2,           Param3,           Param4,             Param5, "
+                + "   Value1,          Value2,           Value3,           Value4,             Value5, "
                 + "   SETUP_MINUTES,   SLOWDOWN_PERCENT, "
-                + "   PRESS_ADDL_MIN,  COLL_ADDL_MIN,  BIND_ADDL_MIN,    PRESS_SLOW_PCT, COLL_SLOW_PCT, BIND_SLOW_PCT ) "
+                + "   PRESS_ADDL_MIN,  COLL_ADDL_MIN,    BIND_ADDL_MIN,    PRESS_SLOW_PCT,     COLL_SLOW_PCT,   BIND_SLOW_PCT,  "
+                + "   PressSetupMin,   PressSlowPct,     CollSetupMin,     CollSlowPct,        BindSetupMin,    BindSlowPct   ) "
                 + " VALUES ( "
-                + $"  '{QuoteNum}',    12,            'Strike In',"
-                +  "  'Flat Charge%', 'Press Setup%', 'Binding Time%',  'Finish Matl%', 'Strike_In',"
-                + $"  '{FCPct}',      '{PSPct}',      '{BTPct}',       '{FMPct}',      '{Strike_In}',"
+                + $"  '{QuoteNum}',    12,              'Strike In',"
+                +  "  'Flat Charge%', 'Press Setup%',   'Binding Time%',  'Finish Matl%',     'Strike_In',"
+                + $"  '{FCPct}',      '{PSPct}',        '{BTPct}',       '{FMPct}',          '{Strike_In}',"
                 + $"   {SetupTotal},   {SlowdownTotal}, "
-                + $"  '{LabPS}',      '{LabPSL}',     '{LabCS}',       '{LabCSL}',     '{LabBS}',     '{LabBSL}' )";
+                + $"  '{LabPS}',      '{LabPSL}',       '{LabCS}',       '{LabCSL}',         '{LabBS}',       '{LabBSL}', "
+                + $"   {PressSetup},   {PressSlowdown},  {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},  {BinderySlowdown} )";
 
             scmd.CommandText = str; 
             conn.Open(); 

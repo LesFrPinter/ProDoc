@@ -302,13 +302,13 @@ namespace ProDocEstimate.Views
             catch   ( Exception ex ) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( " 
                 + " Quote_Num, Category, Sequence, Param1, Param2, Value2, "
                 + " FlatChargePct, RunChargePct, PlateChargePct, FinishChargePct, ConvertChargePct, PressChargePct, " 
                 + " TotalFlatChg, PerThousandChg, FlatCharge, Amount, "
                 + " PRESS_ADDL_MIN, COLL_ADDL_MIN, BIND_ADDL_MIN, PRESS_SLOW_PCT, COLL_SLOW_PCT, BIND_SLOW_PCT, " 
-                + " SETUP_MINUTES, SLOWDOWN_PERCENT )"
+                + " SETUP_MINUTES, SLOWDOWN_PERCENT,"
+                + " PressSetupMin,       PressSlowPct,      CollSetupMin,       CollSlowPct,         BindSetupMin,       BindSlowPct   ) "
                 + " VALUES ";
 
             cmd += $"( '{QuoteNo}', 'Backer', 1, ";
@@ -320,13 +320,11 @@ namespace ProDocEstimate.Views
 
             // Param2 is 'Changes'; number of changes goes in Value2
             cmd += $" 'Changes', '{Changes}', ";
-
             cmd += $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{ConvChargePct}', "
                 +  $" '{PressChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', '{FlatTotal}', '{Total}', "
-                +  $" '{LabPS1}', '{LabCS2}', '{LabBS2}', '{LabPSS1Pct}', '{LabCSS2Pct}', '{LabBSS2Pct}', "
-                +  $" '{SetupTotal}', '{SlowdownTotal}' )";
+                +  $" '{LabPS1}', '{LabCS2}', '{LabBS2}', '{LabPSS1Pct}', '{LabCSS2Pct}', '{LabBSS2Pct}', '{SetupTotal}', '{SlowdownTotal}',"
+                +  $"  {PressSetup},       {PressSlowdown},   {CollatorSetup},    {CollatorSlowdown},  {BinderySetup},     {BinderySlowdown} )";
 
-            // Write to SQL
             conn = new SqlConnection(ConnectionString);
             conn.Open();
             scmd.Connection = conn;

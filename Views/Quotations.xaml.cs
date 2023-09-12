@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Telerik.Windows.Controls;
 
 namespace ProDocEstimate
 {
@@ -29,6 +30,8 @@ namespace ProDocEstimate
         public SqlCommand? scmd;
 
         #region Property Declarations
+
+        private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
 
         private float pressSetupTime; public float PressSetupTime { get { return pressSetupTime; } set { pressSetupTime = value; OnPropertyChanged(); } }
         private float pressSetupCost; public float PressSetupCost { get { return pressSetupCost; } set { pressSetupCost = value; OnPropertyChanged(); } }
@@ -744,6 +747,7 @@ namespace ProDocEstimate
 
             if(dt.DefaultView.Count==0) { MessageBox.Show("No data was returned; the SELECT command was stored in your ClipBoard."); return; }
 
+            bool NoCostAssigned = false;
             for (int r = 0; r < dt.DefaultView.Count; r++)
             {
                 string? clr  = dt.Rows[r]["Color"].ToString();
@@ -777,7 +781,14 @@ namespace ProDocEstimate
                        dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();    // SelectedCost defaults to average cost
                     }
                 else { dt.Rows[r]["SelectedCost"] = dt.Rows[r]["LastPOCost"]; }     // Default is AverageCost unless it was zero
+
+                if (float.Parse(dt.Rows[r]["SelectedCost"].ToString()) == 0.0F) { NoCostAssigned = true; }
             }
+
+            if (NoCostAssigned == true)
+            { CostMessage.Visibility = Visibility.Visible; }
+            else
+            { CostMessage.Visibility = Visibility.Hidden; }
 
             // SelectedCost is what goes in the "Cost used" column on page 4
 
@@ -819,7 +830,7 @@ namespace ProDocEstimate
             lblColor.Content = dataRow[8].ToString();
             lblBasis.Content = dataRow[2].ToString().TrimEnd();
 
-            // If the Description field basis doesn't match the contents that came from ESTPAPER.SubWT, fix it.
+            // If the Description field basis doesn't match the contents that came from ESTPAPER.SubWT, fix it. TODO: This a workaround for BAD DATA
             if (dataRow[0].ToString().Contains(".")) 
                 {  // Get basis from Description starting right after the first chr(32) up to but not including the "#":
                     int starts  = dataRow[0].ToString().IndexOf(" ") + 1;
@@ -834,7 +845,7 @@ namespace ProDocEstimate
             string col  = lblColor.Content.ToString();
             string Desc = dataRow[0].ToString();
             int ColorAt = Desc.IndexOf(col) + 4;
-            string RW   = Desc.Substring(ColorAt);  // RollWidth
+            string RW   = Desc.Substring(ColorAt).TrimEnd();  // RollWidth
 
             lblRollWidth.Content = RW.ToString().TrimEnd();
 
@@ -850,6 +861,8 @@ namespace ProDocEstimate
                                                     
                 txtItemType.IsDropDownOpen = false; // collapse the ItemType dropdown
                 dataRow[15] = dataRow[idx];         // Use the value they clicked as the "cost to use"
+                                                    //                CostMessage.Visibility = Visibility.Hidden; // This assumes that only one cost was not assigned; TODO:
+                CostMessage.Visibility = Visibility.Hidden;
             }
 
             double a = double.Parse(dataRow[11].ToString()) * double.Parse(dataRow[15].ToString());
@@ -938,13 +951,6 @@ namespace ProDocEstimate
             return;
         }
 
-        private void dgSheetsOfPaper_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {   // What is this?
-            // Recalculate cost
-            //string? rowNum = e.Row.DataContext.ToString();
-            //string prop1 = (e.Row.Item as DataRowView).Row[1].ToString();
-        }
-
         private void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
         {
             txtItemType.Focus();  // TODO: Provide a visual cue that combobox itemlists have been refreshed and they need to pick anything they want to change
@@ -987,42 +993,20 @@ namespace ProDocEstimate
         private void txtQty1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             return; // LostFocus event now does this
-
-            SelectedQty = Qty1;
-            GridCalc();
-            QTY1a = SelectedQty;
-            CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM1a = CPM1a * 1000.00F;
         }
         private void txtQty2_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             return; // LostFocus event now does this
-
-            SelectedQty = Qty2;
-            GridCalc();
-            QTY2a = SelectedQty;
-            CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM2a = CPM2a * 1000.00F;
         }
+
         private void txtQty3_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             return; // LostFocus event now does this
-
-            SelectedQty = Qty3;
-            GridCalc();
-            QTY3a = SelectedQty;
-            CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM3a = CPM3a * 1000.00F;
         }
+
         private void txtQty4_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             return; // LostFocus event now does this
-
-            SelectedQty = Qty4;
-            GridCalc();
-            QTY4a = SelectedQty;
-            CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
-            CPM4a = CPM4a * 1000.00F;
         }
 
         private void GridCalc()
@@ -1059,7 +1043,6 @@ namespace ProDocEstimate
             c.Close();
 
             PaperGrid.ItemsSource = Papers;
-//            LabData.ItemsSource = Papers;
 
             SumRowTotals();
         }
@@ -1451,7 +1434,7 @@ namespace ProDocEstimate
             if(dgFeatures.ItemsSource == null)
               { 
                 da.SelectCommand.CommandText
-                    =  "SELECT Category, 0 as NumFlats, 0 as NumRuns, TotalFlatChg, PerThousandChg, Setup_Minutes, SlowDown_Percent "
+                    = "SELECT   Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
                     + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
                 dt = new DataTable("Features"); da.Fill(dt);
                 DataView dvFeat = dt.DefaultView;
@@ -1686,9 +1669,12 @@ namespace ProDocEstimate
             // Adjust for the percent slowdown for all selected features
             da.SelectCommand.CommandText = $"SELECT SUM(SLOWDOWN_PERCENT) AS SLOWDOWN_PERCENT FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             DataTable dt2 = new DataTable(); da.Fill(dt2); DataView dv2 = dt2.DefaultView;
-            SlowDownPct = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString());
+
+            SlowDownPct = 0; if(dv2.Count>0) { SlowDownPct = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString()); }
 
             float correction = (100.0F - (float)SlowDownPct)/100.0F;
+            if(correction<0) { correction = 1.0F; }
+
             FPM = (int)(FPM * correction);
 
             float MinutesPerPart = FeetPerPart / (float)FPM;
@@ -1701,11 +1687,35 @@ namespace ProDocEstimate
 
             DollarsPerHr = hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());
 
-            PressSetupTime = Hrs;
-            PressSetupCost = DollarsPerHr;
+            PressRunTime = Hrs;
+            PressRunCost = DollarsPerHr;
+
+            // Do the same for setup times
+            // dv1 contains the Press_Speeds data
+
+            // int SetupMinutes = int.Parse(dv1[0]["SETUP_MINUTES"].ToString());
 
             CalcPanel.Visibility = Visibility.Visible;
         }
 
+        private void S1_Click(object sender, RoutedEventArgs e)
+        {
+            txtQty1.Focus();
+        }
+
+        private void S2_Click(object sender, RoutedEventArgs e)
+        {
+            txtQty2.Focus();
+        }
+
+        private void S3_Click(object sender, RoutedEventArgs e)
+        {
+            txtQty3.Focus();
+        }
+
+        private void S4_Click(object sender, RoutedEventArgs e)
+        {
+            txtQty4.Focus();
+        }
     }
 }

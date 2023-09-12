@@ -55,9 +55,8 @@ namespace ProDocEstimate.Views
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable(); da.Fill(dt);
-            FlatChg = 0.00F; 
+            FlatChg = 0.0F; RunChg = 0.0F;
             if (dt.Rows.Count == 0) return;
-            //TODO: For a new quote, always add the four default features
 
             float F1 = 0.0F; float.TryParse(dt.Rows[0]["TotalFlatChg"]  .ToString(), out F1); FlatChg = F1;
             float F2 = 0.0F; float.TryParse(dt.Rows[0]["PerThousandChg"].ToString(), out F2); RunChg  = F2;

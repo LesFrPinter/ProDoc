@@ -318,12 +318,14 @@ namespace ProDocEstimate.Views
                 +  "  Quote_Num,      Category,          Sequence,"
                 +  "  Param1,         Param2,            Param3,          Value1,             Value2,              Value3,"
                 +  "  FlatCharge,     FlatChargePct,     RunChargePct,    PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct, TotalFlatChg,   PerThousandChg,         SlowDown_Percent,"
-                +  "  PRESS_ADDL_MIN, COLL_ADDL_MIN,     BIND_ADDL_MIN,   PRESS_SLOW_PCT,     COLL_SLOW_PCT,       BIND_SLOW_PCT )"
-                +  " VALUES ( "
+                + "  PRESS_ADDL_MIN,  COLL_ADDL_MIN,     BIND_ADDL_MIN,   PRESS_SLOW_PCT,     COLL_SLOW_PCT,       BIND_SLOW_PCT,  "
+                + "   PressSetupMin,  PressSlowPct,      CollSetupMin,    CollSlowPct,        BindSetupMin,        BindSlowPct   ) "
+                + " VALUES ( "
                 + $"'{QuoteNum}',    'PrePress',         7,"
                 + $" 'OE',           'Plate Chg',       'PrePress',     '{OrderEntry}',     '{PlateChg}',        '{PREPress}',"
                 + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', {SlowdownTotal}, "
-                + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL} )";
+                + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
+                + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
 
             //Clipboard.SetText(cmd);
             //Debugger.Break();
