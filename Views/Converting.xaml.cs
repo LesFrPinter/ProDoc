@@ -336,8 +336,8 @@ namespace ProDocEstimate.Views
                 + $"  {LabPS},          {LabCS},                 {LabBS},            {LabPSL},          {LabCSL},             {LabBSL}, "
                 + $"  {PressSetup},     {PressSlowdown},         {CollatorSetup},    {CollatorSlowdown},{BinderySetup},       {BinderySlowdown} )";
 
-            Clipboard.SetText(cmd);
-            Debugger.Break();
+            //Clipboard.SetText(cmd);
+            //Debugger.Break();
 
             scmd.CommandText = cmd;
             conn.Open();

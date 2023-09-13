@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ProDocEstimate.Views;
+﻿using ProDocEstimate.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,10 +10,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using Telerik.Windows.Controls;
 
 namespace ProDocEstimate
 {
@@ -216,12 +213,66 @@ namespace ProDocEstimate
             PreviewKeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Escape) Close(); };
         }
 
+        //private bool MoveFocus_Next(UIElement uiElement)
+        //{   if (uiElement != null) { uiElement.MoveFocus(new TraversalRequest(System.Windows.Input.FocusNavigationDirection.Next)); return true; }
+        //    return false;
+        //}
+
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
             this.Height = this.Height *= 1.6;
             this.Width = this.Width *= 1.6;
             Top = 50;
         }
+
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{ EventManager.RegisterClassHandler(typeof(Window), Window.PreviewKeyUpEvent, new KeyEventHandler(Window_PreviewKeyUp)); }
+
+        //private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == System.Windows.Input.Key.Enter)
+        //    {
+        //        IInputElement inputElement = Keyboard.FocusedElement;
+        //        if (inputElement != null)
+        //        {
+        //            System.Windows.Controls.Primitives.TextBoxBase textBoxBase = inputElement as System.Windows.Controls.Primitives.TextBoxBase;
+        //            if (textBoxBase != null)
+        //            {
+        //                if (!textBoxBase.AcceptsReturn)
+        //                    MoveFocus_Next(textBoxBase);
+        //                return;
+        //            }
+        //            if (
+        //                MoveFocus_Next(inputElement as ComboBox)
+        //                ||
+        //                MoveFocus_Next(inputElement as Button)
+        //                ||
+        //                MoveFocus_Next(inputElement as DatePicker)
+        //                ||
+        //                MoveFocus_Next(inputElement as CheckBox)
+        //                ||
+        //                MoveFocus_Next(inputElement as DataGrid)
+        //                ||
+        //                MoveFocus_Next(inputElement as TabItem)
+        //                ||
+        //                MoveFocus_Next(inputElement as RadioButton)
+        //                ||
+        //                MoveFocus_Next(inputElement as ListBox)
+        //                ||
+        //                MoveFocus_Next(inputElement as ListView)
+        //                ||
+        //                MoveFocus_Next(inputElement as PasswordBox)
+        //                ||
+        //                MoveFocus_Next(inputElement as Window)
+        //                ||
+        //                MoveFocus_Next(inputElement as Page)
+        //                ||
+        //                MoveFocus_Next(inputElement as Frame)
+        //            )
+        //                return;
+        //        }
+        //    }
+        //}
 
         private void LoadAvailableCategories()
         {
@@ -314,7 +365,7 @@ namespace ProDocEstimate
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY, Param1, Param2, Param3, Value1, Value2, Value3 )"
                         + $" VALUES ( '{QUOTE_NUM}', '7', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', '1', '0', '1' )";
-            Clipboard.SetText(cmd);
+            //Clipboard.SetText(cmd);
 
             conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
 
@@ -737,7 +788,7 @@ namespace ProDocEstimate
                 " AND Inventoryable = 1"             +
                 " ORDER BY E.SETNUM, E.SEQ";
 
-            Clipboard.SetText(cmd);
+            //Clipboard.SetText(cmd);
 
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
@@ -1398,13 +1449,17 @@ namespace ProDocEstimate
 
         private void btnSaveQuote_Click(object sender, RoutedEventArgs e)
         {
-            // Do I need to save the bit value LineHoles as well?
-            string cmd
-                =  "INSERT INTO QUOTES (   QUOTE_NUM,     CUST_NUM,     PARTS,    PAPERTYPE,     ROLLWIDTH,   LINEHOLES,   PRESSSIZE,     COLLATORCUT,     PROJECTTYPE,   Date,       Amount      ) "
-                + $"            VALUES ( '{QUOTE_NUM}', '{CUST_NUMB}', {PARTS}, '{PAPERTYPE}', '{ROLLWIDTH}', 0,         '{PRESSSIZE}', '{COLLATORCUT}', '{ProjectType}', GetDate(), {QuoteTotal} )";
-            Clipboard.SetText(cmd);
-            SqlConnection conn = new SqlConnection(ConnectionString);
-            conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close(); MessageBox.Show(" Quote saved ", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTES] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+            SqlConnection conn = new SqlConnection(ConnectionString); conn.Open(); 
+            scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
+            string Today = DateTime.Now.ToString("MM/dd/yyyy");
+            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTES] (   QUOTE_NUM,     CUST_NUM,     PARTS,    PAPERTYPE,     ROLLWIDTH,   LINEHOLES,   PRESSSIZE,     COLLATORCUT,     PROJECTTYPE,     Date,     Amount      )"
+                + $"                                 VALUES ( '{QUOTE_NUM}', '{CUST_NUMB}', {PARTS}, '{PAPERTYPE}', '{ROLLWIDTH}', 0,         '{PRESSSIZE}', '{COLLATORCUT}', '{ProjectType}', '{Today}', {QuoteTotal} )";
+            //Clipboard.SetText(cmd);
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            scmd.CommandText = cmd; scmd.Connection = conn; scmd.ExecuteNonQuery(); conn.Close(); 
+            MessageBox.Show(" Quote saved ", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+
             Close();
         }
 
@@ -1424,14 +1479,14 @@ namespace ProDocEstimate
             // Why did I add this code?
             //string cmd = $"SELECT SUM(CONVERT(Money,TotalFlatChg)) AS TotalCharge, SUM(CONVERT(Money,PerThousandChg)) As PerThouChg FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             //SqlConnection conn = new SqlConnection(ConnectionString);
-            //da = new SqlDataAdapter (cmd, conn); 
+            //da = new SqlDataAdapter(cmd, conn);
             //dt = new DataTable("Tot"); da.Fill(dt);
             //float FlatTotal = float.Parse(dt.Rows[0]["TotalCharge"].ToString());
-            //float PerMil    = float.Parse(dt.Rows[0]["PerThouChg"].ToString());
+            //float PerMil = float.Parse(dt.Rows[0]["PerThouChg"].ToString());
             //conn.Close();
             //CPM1a = PerMil;
 
-            if(dgFeatures.ItemsSource == null)
+            if (dgFeatures.ItemsSource == null)
               { 
                 da.SelectCommand.CommandText
                     = "SELECT   Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
@@ -1682,7 +1737,7 @@ namespace ProDocEstimate
             int TotalMinutes = (int)(MinutesPerPart * (float)PARTS);
             float hrs = TotalMinutes / 60.0F;
 
-            hrs += .01F;    // Force it to round up 
+            hrs += .01F;    // In case hrs = .50 (.5 rounds down, .51 rounds up), force it to round up 
             Hrs = (float)Math.Round(hrs, 1);
 
             DollarsPerHr = hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());
@@ -1695,7 +1750,7 @@ namespace ProDocEstimate
 
             // int SetupMinutes = int.Parse(dv1[0]["SETUP_MINUTES"].ToString());
 
-            CalcPanel.Visibility = Visibility.Visible;
+            CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }
 
         private void S1_Click(object sender, RoutedEventArgs e)

@@ -1811,7 +1811,9 @@
                             </StackPanel>
 
                         </Grid>
+                        
                     </Viewbox>
+                    
                 </TabItem>
 
             </TabControl>
