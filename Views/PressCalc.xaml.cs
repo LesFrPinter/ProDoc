@@ -1,14 +1,10 @@
-﻿using MediaFoundation;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows;
-
-//TODO: Change all "Material" references to "Description".
 
 namespace ProDocEstimate.Views
 {

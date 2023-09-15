@@ -28,13 +28,23 @@ namespace ProDocEstimate
         public DataTable? dt;
         public SqlCommand? scmd;
 
-        private bool   already; public bool   Already { get { return already; } set { already = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
-        private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
+        private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
+        private string costMsg;       public string CostMsg       { get { return costMsg;        } set { costMsg        = value; OnPropertyChanged(); } }
 
         private float pressSetupTime; public float PressSetupTime { get { return pressSetupTime; } set { pressSetupTime = value; OnPropertyChanged(); } }
         private float pressSetupCost; public float PressSetupCost { get { return pressSetupCost; } set { pressSetupCost = value; OnPropertyChanged(); } }
         private float pressRunTime;   public float PressRunTime   { get { return pressRunTime;   } set { pressRunTime   = value; OnPropertyChanged(); } }
         private float pressRunCost;   public float PressRunCost   { get { return pressRunCost;   } set { pressRunCost   = value; OnPropertyChanged(); } }
+
+        private float collSetupTime;  public float CollSetupTime  { get { return collSetupTime;  } set { collSetupTime  = value; OnPropertyChanged(); } }
+        private float collSetupCost;  public float CollSetupCost  { get { return collSetupCost;  } set { collSetupCost  = value; OnPropertyChanged(); } }
+        private float collRunTime;    public float CollRunTime    { get { return collRunTime;    } set { collRunTime    = value; OnPropertyChanged(); } }
+        private float collRunCost;    public float CollRunCost    { get { return collRunCost;    } set { collRunCost    = value; OnPropertyChanged(); } }
+
+        private float bindSetupTime;  public float BindSetupTime  { get { return bindSetupTime;  } set { bindSetupTime  = value; OnPropertyChanged(); } }
+        private float bindSetupCost;  public float BindSetupCost  { get { return bindSetupCost;  } set { bindSetupCost  = value; OnPropertyChanged(); } }
+        private float bindRunTime;    public float BindRunTime    { get { return bindRunTime;    } set { bindRunTime    = value; OnPropertyChanged(); } }
+        private float bindRunCost;    public float BindRunCost    { get { return bindRunCost;    } set { bindRunCost    = value; OnPropertyChanged(); } }
 
         private string customer  = "Sample Customer";         public string Customer  { get { return customer;  } set { customer  = value; OnPropertyChanged(); } }
         private string date      = new DateOnly().ToString(); public string Date      { get { return date;      } set { date      = value; OnPropertyChanged(); } }
@@ -78,17 +88,18 @@ namespace ProDocEstimate
         private string? cust_num;         public string? CUST_NUMB   { get { return cust_num;    } set { cust_num    = value; OnPropertyChanged(); } }
         private string? projectType = ""; public string? ProjectType { get { return projectType; } set { projectType = value; OnPropertyChanged(); } }
 
-        private string? fsint1;  public string? FSINT1  { get { return fsint1;  } set { fsint1  = value; OnPropertyChanged(); } }
-        private string? fsfrac1; public string? FSFRAC1 { get { return fsfrac1; } set { fsfrac1 = value; OnPropertyChanged(); } }
-        private string? fsint2;  public string? FSINT2  { get { return fsint2;  } set { fsint2  = value; OnPropertyChanged(); } }
-        private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
-        private int     parts;   public int     PARTS   { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
+        private string? fsint1;      public string? FSINT1        { get { return fsint1;        } set { fsint1       = value; OnPropertyChanged(); } }
+        private string? fsfrac1;     public string? FSFRAC1       { get { return fsfrac1;       } set { fsfrac1      = value; OnPropertyChanged(); } }
+        private string? fsint2;      public string? FSINT2        { get { return fsint2;        } set { fsint2       = value; OnPropertyChanged(); } }
+        private string? fsfrac2;     public string? FSFRAC2       { get { return fsfrac2;       } set { fsfrac2      = value; OnPropertyChanged(); } }
+        private int     parts;       public int     PARTS         { get { return parts;         } set { parts        = value; OnPropertyChanged(); } }
 
-        private string? papertype;   public string? PAPERTYPE   { get { return papertype;   } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
-        private string? rollwidth;   public string? ROLLWIDTH   { get { return rollwidth;   } set { rollwidth = value; OnPropertyChanged(); } }
-        private string? presssize;   public string? PRESSSIZE   { get { return presssize;   } set { presssize = value; OnPropertyChanged(); LoadCollator(); } }
-        private bool?   lineholes;   public bool?   LINEHOLES   { get { return lineholes;   } set { lineholes = value; OnPropertyChanged(); } }
-        private string? collatorcut; public string? COLLATORCUT { get { return collatorcut; } set { collatorcut = value; OnPropertyChanged(); } }
+        private string? papertype;   public string? PAPERTYPE     { get { return papertype;     } set { papertype    = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
+        private string? rollwidth;   public string? ROLLWIDTH     { get { return rollwidth;     } set { rollwidth    = value; OnPropertyChanged(); } }
+        private string? presssize;   public string? PRESSSIZE     { get { return presssize;     } set { presssize    = value; OnPropertyChanged(); LoadCollator(); } }
+        private bool?   lineholes;   public bool?   LINEHOLES     { get { return lineholes;     } set { lineholes    = value; OnPropertyChanged(); } }
+        private string? collatorcut; public string? COLLATORCUT   { get { return collatorcut;   } set { collatorcut  = value; OnPropertyChanged(); } }
+
         private float   decimalCollatorCut; public float DecimalCollatorCut { get { return decimalCollatorCut; } set { decimalCollatorCut = value; OnPropertyChanged(); } }
 
         private string? customerName; public string? CustomerName { get { return customerName;  } set { customerName = value; OnPropertyChanged(); } }
@@ -620,12 +631,13 @@ namespace ProDocEstimate
         private void Qty1b_LostFocus(object sender, RoutedEventArgs e)
         {
             if ((QTY1a != null && QTY1a != 0) && (CPM1a != null && CPM1a != 0) & (MAR1a != null && MAR1a != 0))
-            { float? result = QTY1a * CPM1a * MAR1a; EXT1a = EXT1a = result / 1000.00F; }
+            { float? result = QTY1a * CPM1a * MAR1a; EXT1a = EXT1a + result / 1000.00F; }
         }
 
         private void Qty2b_LostFocus(object sender, RoutedEventArgs e)
         {
-            if ((QTY2a != null && QTY2a != 0) && (CPM2a != null && CPM2a != 0) & (MAR2a != null && MAR2a != 0)) { float? result = QTY2a * CPM2a * MAR2a; EXT2a = EXT2a = result / 1000.00F; }
+            if ((QTY2a != null && QTY2a != 0) && (CPM2a != null && CPM2a != 0) & (MAR2a != null && MAR2a != 0)) 
+            { float? result = QTY2a * CPM2a * MAR2a; EXT2a = EXT2a + result / 1000.00F; }
         }
 
         private void Qty3b_LostFocus(object sender, RoutedEventArgs e)
@@ -1649,7 +1661,10 @@ namespace ProDocEstimate
             if (Qty1 > 0) 
             {   DisplayQuantity = "(using " + Qty1.ToString() + ")";
                 Already = true;
-                Q1(); 
+                Q1();
+                SellPrice1 = ((float)Qty1 / 1000.0F) * float.Parse(CPM1a.ToString());
+                if (MkUpPct1 > 0.0F) { SellPrice1 *= (100.0F + MkUpPct1)/100.0F; }
+                if (MkUpAmt1 > 0.0F) { SellPrice1 += MkUpAmt1; }
             }
         }
 
@@ -1659,7 +1674,10 @@ namespace ProDocEstimate
             if (Qty2 > 0) 
             {   DisplayQuantity = "(using " + Qty2.ToString() + ")";
                 Already = true;
-                Q2(); 
+                Q2();
+                SellPrice2 = ((float)Qty2 / 1000.0F) * float.Parse(CPM2a.ToString());
+                if (MkUpPct2 > 0.0F) { SellPrice2 *= (100.0F + MkUpPct2) / 100.0F; }
+                if (MkUpAmt2 > 0.0F) { SellPrice2 += MkUpAmt2; }
             }
         }
 
@@ -1669,7 +1687,10 @@ namespace ProDocEstimate
             if (Qty3 > 0) 
             {   DisplayQuantity = "(using " + Qty3.ToString() + ")";
                 Already = true;
-                Q3(); 
+                Q3();
+                SellPrice3 = ((float)Qty3 / 1000.0F) * float.Parse(CPM3a.ToString());
+                if (MkUpPct3 > 0.0F) { SellPrice3 *= (100.0F + MkUpPct3) / 100.0F; }
+                if (MkUpAmt3 > 0.0F) { SellPrice3 += MkUpAmt3; }
             }
         }
 
@@ -1679,7 +1700,10 @@ namespace ProDocEstimate
             if (Qty4 > 0) 
             {   DisplayQuantity = "(using " + Qty4.ToString() + ")";
                 Already = true;
-                Q4(); 
+                Q4();
+                SellPrice4 = ((float)Qty4 / 1000.0F) * float.Parse(CPM4a.ToString());
+                if (MkUpPct4 > 0.0F) { SellPrice4 *= (100.0F + MkUpPct4) / 100.0F; }
+                if (MkUpAmt4 > 0.0F) { SellPrice4 += MkUpAmt4; }
             }
         }
 
@@ -1749,6 +1773,15 @@ namespace ProDocEstimate
             float SetupDollars = float.Parse(dv1[0][7].ToString()) * SetupHrs;
             PressSetupCost = SetupDollars;
 
+            cmd = "SELECT * FROM [ESTIMATING].[dbo].[Collator_Speeds] WHERE ";
+            WhereClause = $" CutSize = '{COLLATORCUT}' AND {SelectedQty} BETWEEN MinCutQty AND MaxCutQty";
+            cmd += WhereClause;
+            da = new SqlDataAdapter(cmd, ConnectionString);
+            dt = new DataTable("Speeds"); da.Fill(dt); DataView dv3 = dt.DefaultView;
+
+            CollRunTime = SelectedQty / float.Parse(dv3[0]["StdCutsPerHr"].ToString());
+            CollRunCost = CollRunTime * float.Parse(dv3[0]["DollarsPerHr"].ToString());
+
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }
 
@@ -1774,31 +1807,12 @@ namespace ProDocEstimate
 
         private void txtQty1_KeyDown(object sender, KeyEventArgs e)
         {
+            //***********************************************
+            // Make the {Enter} key act like the {Tab} key...
+            //***********************************************
             var uiElement = e.OriginalSource as UIElement;
             if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
         }
 
-        private void txtQty2_KeyDown(object sender, KeyEventArgs e)
-        {
-            var uiElement = e.OriginalSource as UIElement;
-            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
-        }
-
-        private void txtQty3_KeyDown(object sender, KeyEventArgs e)
-        {
-            var uiElement = e.OriginalSource as UIElement;
-            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
-        }
-
-        private void txtQty4_KeyDown(object sender, KeyEventArgs e)
-        {
-            var uiElement = e.OriginalSource as UIElement;
-            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
-        }
-
-        private void MarkupBasis1_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Debugger.Break();
-        }
     }
 }

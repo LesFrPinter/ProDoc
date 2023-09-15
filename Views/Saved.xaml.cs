@@ -1,22 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProDocEstimate.Views
 {
-    /// <summary>
-    /// Interaction logic for Saved.xaml
-    /// </summary>
     public partial class Saved : Window
     {
         public Saved()
@@ -24,9 +10,12 @@ namespace ProDocEstimate.Views
             InitializeComponent();
         }
 
-        private void Window_Initialized(object sender, EventArgs e)
+        public void OnLoad(object sender, RoutedEventArgs e)
         {
-
+            this.Height = this.Height *= 1.8;
+            this.Width = this.Width *= 1.8;
+            Top = 150;
         }
+
     }
 }

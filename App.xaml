@@ -160,9 +160,9 @@
 			<Setter Property="VerticalContentAlignment" Value="Center" />
 			<Style.Triggers>
                 <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Background" Value="Yellow"/>
-					<Setter Property="Foreground" Value="Green"/>
-				</Trigger>
+					<Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Trigger>
 			</Style.Triggers>
 		</Style>
 

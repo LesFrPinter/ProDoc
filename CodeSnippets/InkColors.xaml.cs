@@ -194,7 +194,7 @@ namespace ProDocEstimate.Views
             dv.RowFilter = "F_TYPE='THERMO'";        The1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
             dv.RowFilter = "F_TYPE='ART WATERMARK'"; Wat1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
             dv.RowFilter = "F_TYPE='FLUOR SEL'";     Flo1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='4 CLR PRO'";     if (dv.Count > 0) { Fou1.Maximum = int.Parse(dv[0]["MaxColors"].ToString()); } //TODO: What does this mean?
+            dv.RowFilter = "F_TYPE='4 CLR PRO'";     if (dv.Count > 0) { Fou1.Maximum = int.Parse(dv[0]["MaxColors"].ToString()); }
         }
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -270,7 +270,6 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally              { conn.Close();                }
 
-            //TODO: Add all percentage field names and values before saving
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 +  "  Quote_Num,        Category,       Sequence,          Param1,          Param2,             Param3,              Param4,             Param5,            Param6,        Param7,        Param8,       Param9, "
                 +  "                                                       Value1,          Value2,             Value3,              Value4,             Value5,            Value6,        Value7,        Value8,       Value9, " 
