@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace ProDocEstimate.Views
 {
@@ -7,7 +8,13 @@ namespace ProDocEstimate.Views
         public Calculating()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
+
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            Top = 350;
+            Left = 1300;
+        }
+
     }
 }

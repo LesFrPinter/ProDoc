@@ -47,6 +47,14 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
+        <Style TargetType="{x:Type ComboBox}" >
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
     </Window.Resources>
 
     <Viewbox Stretch="Fill" >
@@ -72,6 +80,8 @@
 				       FontSize="24"
 				       Foreground="White" />
             </Border>
+
+            <Label FontSize="20" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Visibility="Visible" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
 
             <Border Grid.RowSpan="2"
 			        Grid.Column="0"
@@ -535,7 +545,6 @@
 						       Content="1"
 						       FontSize="11" />
 
-
                         <Label x:Name="lblUpMessage"
                                Grid.Row="9"
 						       Grid.Column="2"
@@ -544,7 +553,6 @@
 						       HorizontalAlignment="Left"
 						       Content="UP"
 						       FontSize="11" />
-
 
                         <Label Grid.Row="10"
 						       Grid.ColumnSpan="2"
@@ -605,6 +613,7 @@
 						         MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
 						         Style="{StaticResource TextField}"
 						         Text="{Binding CUST_NUMB}" Grid.ColumnSpan="2" />
+                        
                         <CheckBox x:Name="chkProspect"
 						          Grid.Row="11"
 						          Grid.Column="6"
@@ -632,7 +641,6 @@
 						       Padding="0"
 						       VerticalAlignment="Top"
 						       Content="Address:" Grid.Column="1" />
-
                         <TextBox x:Name="txtAddress"
 						         Grid.Row="14"
 						         Grid.Column="2"
@@ -658,7 +666,6 @@
 						       Padding="0"
 						       HorizontalAlignment="Left"
 						       Content="Phone:" Grid.Column="1" />
-
                         <TextBox x:Name="txtPhone"
 						         Grid.Row="16"
 						         Grid.Column="2"
@@ -674,7 +681,6 @@
 						       Padding="0"
 						       HorizontalAlignment="Left"
 						       Content="Email:" Grid.Column="1" />
-
                         <TextBox x:Name="txtEmail"
 						         Grid.Row="17"
 						         Grid.Column="2"
@@ -714,6 +720,7 @@
                             <ComboBoxItem Content="3" />
                             <ComboBoxItem Content="4" />
                         </ComboBox>
+
                         <Label Grid.Row="8"
 						       Grid.Column="2"
                                FontSize="14"
@@ -787,49 +794,68 @@
                                ToolTip="Pick an ItemType to populate the four dropdown lists for editing"  />
 
                         <Label Grid.Column="2" HorizontalAlignment="Left" Content="Qty 1" FontSize="10" FontWeight="Bold" Margin="39,0,0,-5" VerticalAlignment="Bottom" />
+
                         <TextBox Grid.Row="1" Grid.Column="2" Width="66" Height="22"
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty1_GotFocus"  VerticalAlignment="Top"
                                  IsEnabled="True"
-                                 Text="{Binding Path=Qty1, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty1" 
+                                 Text="{Binding Path=Qty1, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" 
+                                 x:Name="txtQty1" 
+                                 KeyDown="txtQty1_KeyDown"
                                  LostFocus="txtQty1_LostFocus"
-                                 PreviewMouseDown="txtQty1_PreviewMouseDown" Margin="0,4,0,4" />
+                                 Margin="0,4,0,4" />
+
                         <Button  x:Name="S1" Grid.Row="1" Grid.Column="2" 
                                  Click="S1_Click"
                                  VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <Label Grid.Column="4" HorizontalAlignment="Left" Content="Qty 2" FontSize="10" FontWeight="Bold" Margin="18,0,0,-5" VerticalAlignment="Bottom" />
-                        <TextBox Grid.Row="1" Grid.Column="4" Width="66" Height="22" HorizontalAlignment="Left" HorizontalContentAlignment="Right"
+
+                        <TextBox Grid.Row="1" Grid.Column="4" Width="66" Height="22" 
+                                 HorizontalAlignment="Left" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty2_GotFocus" VerticalAlignment="Top"
-                                 Text="{Binding Path=Qty2, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty2" 
-                                 PreviewMouseDown="txtQty2_PreviewMouseDown" LostFocus="txtQty2_LostFocus" Margin="1,4,0,4" />
+                                 Text="{Binding Path=Qty2, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" 
+                                 x:Name="txtQty2" 
+                                 KeyDown="txtQty2_KeyDown"
+                                 LostFocus="txtQty2_LostFocus" 
+                                 Margin="1,4,0,4" />
+
                         <Button  x:Name="S2" Grid.Row="1" Grid.Column="4" Click="S2_Click"
                                  VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <Label Grid.Column="5" HorizontalAlignment="Center" Content="Qty 3" FontSize="10" FontWeight="Bold" Margin="0 0 0 -5" VerticalAlignment="Bottom" />
-                        <TextBox Grid.Row="1" Grid.Column="5" Margin="0,4,0,4" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
+
+                        <TextBox Grid.Row="1" Grid.Column="5" Width="66" Height="22" 
+                                 HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty3_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty3, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty3" 
-                                 PreviewMouseDown="txtQty3_PreviewMouseDown" LostFocus="txtQty3_LostFocus" />
+                                 KeyDown="txtQty3_KeyDown"
+                                 LostFocus="txtQty3_LostFocus"
+                                 Margin="1,4,0,4" />
+
                         <Button  x:Name="S3" Grid.Row="1" Grid.Column="5" 
                                  Click="S3_Click"
                                  VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <Label Grid.Column="6" HorizontalAlignment="Left" Content="Qty 4" FontSize="10" FontWeight="Bold" Margin="27,0,0,-5" VerticalAlignment="Bottom"  />
-                        <TextBox Grid.Row="1" Grid.Column="6" Width="66" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Right"
+
+                        <TextBox Grid.Row="1" Grid.Column="6" Width="66" Height="22" 
+                                 HorizontalAlignment="Center" HorizontalContentAlignment="Right"
 								 GotFocus="txtQty4_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty4, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty4" 
-                                 PreviewMouseDown="txtQty4_PreviewMouseDown" LostFocus="txtQty4_LostFocus" Margin="0,4,0,4" />
+                                 KeyDown="txtQty4_KeyDown"
+                                 LostFocus="txtQty4_LostFocus" 
+                                 Margin="0,4,0,4" />
                         <Button  x:Name="S4" Grid.Row="1" Grid.Column="6" 
                                  Click="S4_Click"
                                  VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Label Content="Selected Quantity: " VerticalAlignment="Center" />
+                            <Label Content="Selected Quantity: " VerticalAlignment="Top" />
                             <TextBlock 
                                 Foreground="White" Background="Red" 
                                 FontWeight="Bold" FontSize="11" Padding="10 2" Width="50"
-                                Text="{Binding SelectedQty, StringFormat='0,0'}" Margin="0 0 10 0"
+                                Text="{Binding SelectedQty, StringFormat='0,0'}" Margin="0 0 10 15"
                                 HorizontalAlignment="Left" VerticalAlignment="Center" />
                         </StackPanel>
 
@@ -838,7 +864,8 @@
                         <Label x:Name="lblPaperType" Grid.Row="3" Grid.Column="2" 
                                HorizontalAlignment="Center" Background="Red" Foreground="White" />
 
-                        <TextBlock x:Name="CostMessage" Text="Verify all costs" Grid.Row="4" HorizontalAlignment="Center" Height="20" Padding="0" FontSize="14" Foreground="Red" Visibility="Hidden" />
+                        <TextBlock x:Name="CostMessage" Text="Verify COST USED" 
+                                   Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 10 0 0" Height="20" Padding="0" FontSize="12" Foreground="Red" Visibility="Hidden" FontWeight="Bold" />
 
                         <ComboBox x:Name="txtPaperType"
 						         Grid.Row="4" Grid.Column="2"
@@ -894,15 +921,14 @@
                         <ComboBox x:Name="txtRollWidth" Grid.Row="4" FontSize="10" Grid.Column="7" Width="64" Padding="2 0" Height="22" 
                                  DisplayMemberPath="Size" VerticalAlignment="Center" Margin="25,0,0,0"/>
 
-
                         <DataGrid x:Name="dgSheetsOfPaper"
 						          Grid.Row="5"
 						          Grid.Column="0"
 						          Grid.ColumnSpan="9"
                                   Grid.RowSpan="2"
 						          Width="775"
-						          Height="400"
-                                  Margin="2,10,0,0"
+						          Height="370"
+                                  Margin="2,30,0,0"
                                   CanUserAddRows="False"
                                   IsSynchronizedWithCurrentItem="True"
 						          VerticalAlignment="Top"
@@ -953,9 +979,10 @@
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=SelectedCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=SelectedCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}" >
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
+                                               Background="{Binding ProblemColor}"
 										       Content="Cost Used"
 										       FontSize="10" />
                                     </DataGridTextColumn.Header>
@@ -972,7 +999,6 @@
                             </DataGrid.Columns>
 
                         </DataGrid>
-
 
                         <Button x:Name="btnUpdate"
 						         Grid.Row="4" Grid.Column="8" Width="70" Height="24" Padding="0"
@@ -1045,6 +1071,7 @@
                             <Expander Grid.Row="3"
                                       VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="4"
                                       ExpandDirection="Right" Height="200" Width="690" >
+
                                 <DataGrid Height="180" VerticalAlignment="Top" Width="655" Margin="0 25 0 0" >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Type"		Width="100" />
@@ -1055,6 +1082,7 @@
                                         <DataGridTextColumn Header="PressMatl"	Width="100" />
                                     </DataGrid.Columns>
                                 </DataGrid>
+
                             </Expander>
 
                         </Grid>
@@ -1066,7 +1094,7 @@
                 <TabItem x:Name="Page4"
 				         FontSize="16"
                          GotFocus="Page4_GotFocus"
-				         Header="Page _4">
+				         Header="Page _4" Height="27" Margin="-2,-2,-2,0" VerticalAlignment="Top" >
 
                     <Viewbox>
 
@@ -1102,7 +1130,7 @@
                                         <ColumnDefinition Width="100" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Content="Price that was quoted:" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="156" />
+                                    <Label Content="Quote based on:" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="156"  />
 
                                     <Label Grid.Row="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="140" Content="{Binding DisplayQuantity}" />
 
@@ -1152,58 +1180,41 @@
 								       Content="Selling Price"
 								       FontSize="11" Height="14" Width="58" />
 
-                                    <Button x:Name="Select1" Grid.Column="0" Grid.Row="1" Padding="4" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select1_Click">
-                                        <Button.Content>
-                                            <AccessText FontSize="9">Select</AccessText>
-                                        </Button.Content>
-                                    </Button>
+                                    <Button x:Name="Select1" Content="Select" Grid.Column="0" Grid.Row="1" Padding="2" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select1_Click" />
 
-                                    <Button x:Name="Select2" Grid.Column="0" Grid.Row="2" Padding="4" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select2_Click">
-                                        <Button.Content>
-                                            <AccessText FontSize="9">Select</AccessText>
-                                        </Button.Content>
-                                    </Button>
+                                    <Button x:Name="Select2" Content="Select" Grid.Column="0" Grid.Row="2" Padding="2" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select2_Click" />
 
-                                    <Button x:Name="Select3" Grid.Column="0" Grid.Row="3" Padding="4" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select3_Click">
-                                        <Button.Content>
-                                            <AccessText FontSize="9">Select</AccessText>
-                                        </Button.Content>
-                                    </Button>
+                                    <Button x:Name="Select3" Content="Select" Grid.Column="0" Grid.Row="3" Padding="2" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select3_Click" />
 
-                                    <Button x:Name="Select4" Grid.Column="0" Grid.Row="4" Padding="4" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select4_Click">
-                                        <Button.Content>
-                                            <AccessText FontSize="9">Select</AccessText>
-                                        </Button.Content>
-                                    </Button>
+                                    <Button x:Name="Select4" Grid.Column="0" Content="Select" Grid.Row="4" Padding="2" HorizontalAlignment="Left" Height="22" Margin="159,0,0,0" Width="41" Click="Select4_Click" />
 
-                                    <!--<telerik:RadNumericUpDown  x:Name="Qty1b"LostFocus="Qty1b_LostFocus" was QTY1a />-->
                                     <TextBox
+                                        x:Name="QBO1"
 									    Grid.Row="1"
 									    Grid.Column="1"
 									    Width="70"
 									    Margin="0,1,0,1"
                                         IsEnabled="False"
+                                        IsTabStop="False"
 									    HorizontalAlignment="Center"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty1, StringFormat=N0}" />
 
-                                    <!--x:Name="CPM1"-->
-
                                     <TextBox 
-									 Grid.Row="1"
-									 Grid.Column="2"
-                                     Width="60"
-                                     IsEnabled="False"
-                                     Margin="0,2,0,2"
-									 HorizontalContentAlignment="Right"
-									 VerticalContentAlignment="Center"
-									 FontSize="14"
-									 Text="{Binding Path=CPM1a, StringFormat=C}" />
+									     Grid.Row="1"
+									     Grid.Column="2"
+                                         Width="60"
+                                         IsEnabled="False"
+                                         Margin="0,2,0,2"
+									     HorizontalContentAlignment="Right"
+									     VerticalContentAlignment="Center"
+									     FontSize="14"
+									     Text="{Binding Path=CPM1a, StringFormat=C}" />
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                        <ComboBox x:Name="MarkupBasis1" SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" Height="18"  HorizontalAlignment="Left" Margin="5 0 0 0" SelectionChanged="MarkupBasis1_SelectionChanged" Width="36" >
+                                        <ComboBox x:Name="MarkupBasis1" SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10" HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis1_SelectionChanged" >
                                             <ComboBoxItem Content=" " />
                                             <ComboBoxItem Content="$" />
                                             <ComboBoxItem Content="%" />
@@ -1253,38 +1264,35 @@
 
                                     </StackPanel>
 
-                                    <!--<telerik:RadNumericUpDown 
-                                    x:Name="Qty2b"
-									NumberDecimalDigits="0"
-                                    LostFocus="Qty2b_LostFocus" was QTY2a-->
-
                                     <TextBox
+                                        x:Name="QBO2"
                                         Grid.Row="2"
 									    Grid.Column="1"
 									    Width="70"
 									    Margin="0,1,0,1"
                                         IsEnabled="False"
+                                        IsTabStop="False"
 									    HorizontalAlignment="Center"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty2, StringFormat=N0}" />
 
                                     <TextBox 
-                                     x:Name="CPM2"
-									 Grid.Row="2"
-									 Grid.Column="2"
-                                     IsEnabled="False"
-									 Width="60"
-									 Margin="0,2,0,2"
-									 HorizontalAlignment="Center"
-									 HorizontalContentAlignment="Right"
-									 VerticalContentAlignment="Center"
-									 FontSize="14"
-									 Text="{Binding Path=CPM2a, StringFormat=N2}" />
+                                         x:Name="CPM2"
+									     Grid.Row="2"
+									     Grid.Column="2"
+                                         IsEnabled="False"
+									     Width="60"
+									     Margin="0,2,0,2"
+									     HorizontalAlignment="Center"
+									     HorizontalContentAlignment="Right"
+									     VerticalContentAlignment="Center"
+									     FontSize="14"
+									     Text="{Binding Path=CPM2a, StringFormat=N2}" />
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                        <ComboBox x:Name="MarkupBasis2" SelectedValue="{Binding ComboSel2, UpdateSourceTrigger=PropertyChanged}" Height="18"  HorizontalAlignment="Left" Margin="5 0 0 0" SelectionChanged="MarkupBasis2_SelectionChanged"  Width="36" >
+                                        <ComboBox x:Name="MarkupBasis2" SelectedValue="{Binding ComboSel2, UpdateSourceTrigger=LostFocus}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis2_SelectionChanged" >
                                             <ComboBoxItem Content=" " />
                                             <ComboBoxItem Content="$" />
                                             <ComboBoxItem Content="%" />
@@ -1334,34 +1342,35 @@
 
                                     </StackPanel>
 
-                                    <!-- <telerik:RadNumericUpDown x:Name="Qty3b" LostFocus="Qty3b_LostFocus"  NumberDecimalDigits="0" was QTY3a-->
                                     <TextBox
+                                        x:Name="QBO3"
 									    Grid.Row="3"
 									    Grid.Column="1"
 									    Width="70"
 									    Margin="0,1,0,1"
                                         IsEnabled="False"
+                                        IsTabStop="False"
 									    HorizontalAlignment="Center"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty3, StringFormat=N0}"/>
 
                                     <TextBox 
-                                     x:Name="CPM3"
-									 Grid.Row="3"
-									 Grid.Column="2"
-                                     IsEnabled="False"
-									 Width="60"
-									 Margin="0,2,0,2"
-									 HorizontalAlignment="Center"
-									 HorizontalContentAlignment="Right"
-									 VerticalContentAlignment="Center"
-									 FontSize="14"
-									 Text="{Binding Path=CPM3a, StringFormat=N2}" />
+                                         x:Name="CPM3"
+									     Grid.Row="3"
+									     Grid.Column="2"
+                                         IsEnabled="False"
+									     Width="60"
+									     Margin="0,2,0,2"
+									     HorizontalAlignment="Center"
+									     HorizontalContentAlignment="Right"
+									     VerticalContentAlignment="Center"
+									     FontSize="14"
+									     Text="{Binding Path=CPM3a, StringFormat=N2}" />
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                        <ComboBox x:Name="MarkupBasis3" SelectedValue="{Binding ComboSel3, UpdateSourceTrigger=PropertyChanged}" Height="18"  HorizontalAlignment="Left" Margin="5 0 0 0" SelectionChanged="MarkupBasis3_SelectionChanged" Width="36"  >
+                                        <ComboBox x:Name="MarkupBasis3" SelectedValue="{Binding ComboSel3, UpdateSourceTrigger=LostFocus}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis3_SelectionChanged"  >
                                             <ComboBoxItem Content=" " />
                                             <ComboBoxItem Content="$" />
                                             <ComboBoxItem Content="%" />
@@ -1411,35 +1420,35 @@
 
                                     </StackPanel>
 
-                                    <!-- <telerik:RadNumericUpDown was QTY4a LostFocus="Qty4b_LostFocus" NumberDecimalDigits="0" x:Name="Qty4b" -->
-
                                     <TextBox
+                                        x:Name="QBO4"
                                         Grid.Row="4"
 									    Grid.Column="1"
 									    Width="70"
 									    Margin="0,1,0,1"
                                         IsEnabled="False"
+                                        IsTabStop="False"
 									    HorizontalAlignment="Center"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty4}" />
 
                                     <TextBox 
-                                    x:Name="CPM4"
-									 Grid.Row="4"
-									 Grid.Column="2"
-                                     IsEnabled="False"
-									 Width="60"
-									 Margin="0,2,0,2"
-									 HorizontalAlignment="Center"
-									 HorizontalContentAlignment="Right"
-									 VerticalContentAlignment="Center"
-									 FontSize="14"
-									 Text="{Binding Path=CPM4a, StringFormat=N2}" />
+                                        x:Name="CPM4"
+									     Grid.Row="4"
+									     Grid.Column="2"
+                                         IsEnabled="False"
+									     Width="60"
+									     Margin="0,2,0,2"
+									     HorizontalAlignment="Center"
+									     HorizontalContentAlignment="Right"
+									     VerticalContentAlignment="Center"
+									     FontSize="14"
+									     Text="{Binding Path=CPM4a, StringFormat=N2}" />
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="4" >
 
-                                        <ComboBox x:Name="MarkupBasis4" SelectedValue="{Binding ComboSel4, UpdateSourceTrigger=PropertyChanged}" Height="18"  HorizontalAlignment="Left" Margin="5 0 0 0" SelectionChanged="MarkupBasis4_SelectionChanged" Width="36"  >
+                                        <ComboBox x:Name="MarkupBasis4" SelectedValue="{Binding ComboSel4, UpdateSourceTrigger=LostFocus}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis4_SelectionChanged"  >
                                             <ComboBoxItem Content=" " />
                                             <ComboBoxItem Content="$" />
                                             <ComboBoxItem Content="%" />
@@ -1487,7 +1496,6 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice4, StringFormat=C}" />
 
-
                                     </StackPanel>
 
                                     <Grid Grid.Row="4">
@@ -1499,39 +1507,39 @@
 
                                         <StackPanel Orientation="Horizontal">
                                             <Label Grid.Row="9"
-								       Grid.Column="4"
-								       Grid.ColumnSpan="4"
-								       Width="auto"
-								       Margin="40,0,0,0"
-								       HorizontalAlignment="Left"
-								       Content="Lookup" />
+								               Grid.Column="4"
+								               Grid.ColumnSpan="4"
+								               Width="auto"
+								               Margin="40,0,0,0"
+								               HorizontalAlignment="Left"
+								               Content="Lookup" />
                                             <Label Grid.Row="8"
-								       Grid.Column="3"
-								       Width="auto"
-								       HorizontalAlignment="Left"
-								       Content="Paper" />
+								               Grid.Column="3"
+								               Width="auto"
+								               HorizontalAlignment="Left"
+								               Content="Paper" />
                                             <Label Grid.Row="8"
-								       Grid.Column="4"
-								       Width="auto"
-								       HorizontalAlignment="Left"
-								       Content="Color" />
+								               Grid.Column="4"
+								               Width="auto"
+								               HorizontalAlignment="Left"
+								               Content="Color" />
                                             <Label Grid.Row="8"
-								       Grid.Column="5"
-								       Width="auto"
-								       HorizontalAlignment="Left"
-								       Content="Type" />
+								               Grid.Column="5"
+								               Width="auto"
+								               HorizontalAlignment="Left"
+								               Content="Type" />
                                             <Label Grid.Row="8"
-								       Grid.Column="6"
-								       Width="auto"
-								       HorizontalAlignment="Left"
-								       Content="Basis" />
+								               Grid.Column="6"
+								               Width="auto"
+								               HorizontalAlignment="Left"
+								               Content="Basis" />
                                             <Label Grid.Row="8"
-								       Grid.Column="7"
-								       Width="auto"
-								       HorizontalAlignment="Left"
-								       Content="Width"
-								       FontWeight="Bold"
-								       Foreground="Red" />
+								               Grid.Column="7"
+								               Width="auto"
+								               HorizontalAlignment="Left"
+								               Content="Width"
+								               FontWeight="Bold"
+								               Foreground="Red" />
                                         </StackPanel>
 
                                     </Grid>
@@ -1541,6 +1549,7 @@
                             </Border>
 
                             <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
+
                             <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="138" HorizontalAlignment="Center" VerticalAlignment="Center" >
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
                                 <DataGrid.Columns>
@@ -1561,7 +1570,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
 
-                            <Label Grid.Row="2" Content="Features:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
+                            <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
                             <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="118" Margin="0,22,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
 
@@ -1622,6 +1631,7 @@
                                     </DataGridTextColumn>
 
                                 </DataGrid.Columns>
+
                             </DataGrid>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="3" >
@@ -1632,6 +1642,7 @@
                             </StackPanel>
 
                             <Grid Grid.Row="3" Height="150" Margin="10 30 0 0" >
+
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
@@ -1661,7 +1672,7 @@
                                 <TextBlock Text="  PrePress" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="4" Width="60" />
                                 <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="5" Width="60" />
 
-                                <TextBox Text="{Binding PressSetupTime}"                  Margin="52 0 0 0" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PressSetupTime, StringFormat=N2}"                  Margin="52 0 0 0" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="1" Width="60" FontSize="12" Foreground="Blue" />
                                 <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="46 0 0 0" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2" Width="60" FontSize="12" Foreground="Blue" />
@@ -1671,51 +1682,6 @@
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="4" Width="60" FontSize="12" Foreground="Blue" />
 
                             </Grid>
-
-                            <!--<DataGrid x:Name="LabData" Grid.Row="3" Margin="0,25,0,0" Width="800" VerticalAlignment="Top" Height="160" Grid.RowSpan="2" HorizontalAlignment="Center">
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Department" Width="250" Binding="{Binding Department}" >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Setup Time" Width="150" Binding="{Binding SetupTime, StringFormat=N2}" >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Cost"       Width="100" Binding="{Binding SetupCost, StringFormat=C}" >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Run Time"   Width="150" Binding="{Binding RunTime, StringFormat=0.00;;#}"   >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Cost"       Width="100" Binding="{Binding RunCost, StringFormat=0.00;;#}"   >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>-->
-
-                            <!--<Label Content="Total Sell:" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0" Padding="0" FontWeight="Bold" Height="21" Width="73" />
-                            <Label Content="Total Cost:" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0" Padding="0" FontWeight="Bold" Height="21" Width="79" />
-                            <Label Content="Gross Profit:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 0 0 0" Padding="0" FontWeight="Bold" Height="21" Width="93" />-->
 
                             <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0" >
                                 <Button x:Name="btnSaveQuote"   Margin="5 0 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
@@ -1728,8 +1694,10 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page5" Header="    Page _5" IsEnabled="False" FontSize="16">
+                <TabItem x:Name="Page5" Header="    Page _5" IsEnabled="False" FontSize="16" >
+
                     <Viewbox Height="600" Width="800">
+
                         <Grid Height="600" Width="800">
 
                             <Grid.RowDefinitions>
@@ -1811,11 +1779,11 @@
                             </StackPanel>
 
                         </Grid>
-                        
-                    </Viewbox>
-                    
-                </TabItem>
 
+                    </Viewbox>
+
+                </TabItem>
+                
             </TabControl>
 
         </Grid>

@@ -17,6 +17,8 @@ namespace ProDocEstimate
 {
     public partial class Quotations : Window, INotifyPropertyChanged
     {
+        #region Property Declarations
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
@@ -26,15 +28,13 @@ namespace ProDocEstimate
         public DataTable? dt;
         public SqlCommand? scmd;
 
-        #region Property Declarations
-
+        private bool   already; public bool   Already { get { return already; } set { already = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
         private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
 
         private float pressSetupTime; public float PressSetupTime { get { return pressSetupTime; } set { pressSetupTime = value; OnPropertyChanged(); } }
         private float pressSetupCost; public float PressSetupCost { get { return pressSetupCost; } set { pressSetupCost = value; OnPropertyChanged(); } }
         private float pressRunTime;   public float PressRunTime   { get { return pressRunTime;   } set { pressRunTime   = value; OnPropertyChanged(); } }
         private float pressRunCost;   public float PressRunCost   { get { return pressRunCost;   } set { pressRunCost   = value; OnPropertyChanged(); } }
-
 
         private string customer  = "Sample Customer";         public string Customer  { get { return customer;  } set { customer  = value; OnPropertyChanged(); } }
         private string date      = new DateOnly().ToString(); public string Date      { get { return date;      } set { date      = value; OnPropertyChanged(); } }
@@ -44,8 +44,8 @@ namespace ProDocEstimate
         private string salesRep  = "Joyce Leiner";            public string SalesRep  { get { return salesRep;  } set { salesRep  = value; OnPropertyChanged(); } }
         private string estimator;                             public string Estimator { get { return estimator; } set { estimator = value; OnPropertyChanged(); } }
 
-        private int    slowDownPct;                           public int    SlowDownPct { get { return slowDownPct; } set { slowDownPct = value; OnPropertyChanged(); } }
-        private float  hrs;                                   public float  Hrs       { get { return hrs; } set { hrs = value; OnPropertyChanged(); } }
+        private int    slowDownPct;                           public int    SlowDownPct  { get { return slowDownPct;  } set { slowDownPct  = value; OnPropertyChanged(); } }
+        private float  hrs;                                   public float  Hrs          { get { return hrs;          } set { hrs          = value; OnPropertyChanged(); } }
         private float  dollarsPerHr;                          public float  DollarsPerHr { get { return dollarsPerHr; } set { dollarsPerHr = value; OnPropertyChanged(); } }
 
         private string comboSel1; public string ComboSel1 { get { return comboSel1; } set { comboSel1 = value; OnPropertyChanged(); } }  // Are      CheckFirst();  
@@ -84,25 +84,25 @@ namespace ProDocEstimate
         private string? fsfrac2; public string? FSFRAC2 { get { return fsfrac2; } set { fsfrac2 = value; OnPropertyChanged(); } }
         private int     parts;   public int     PARTS   { get { return parts;   } set { parts   = value; OnPropertyChanged(); } }
 
-        private string? papertype; public string? PAPERTYPE { get { return papertype; } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
-        private string? rollwidth; public string? ROLLWIDTH { get { return rollwidth; } set { rollwidth = value; OnPropertyChanged(); } }
-        private string? presssize; public string? PRESSSIZE { get { return presssize; } set { presssize = value; OnPropertyChanged(); LoadCollator(); } }
-        private bool?   lineholes; public bool?   LINEHOLES  { get { return lineholes; } set { lineholes = value; OnPropertyChanged(); } }
-        private string? collatorcut;  public string? COLLATORCUT { get { return collatorcut; } set { collatorcut = value; OnPropertyChanged(); } }
+        private string? papertype;   public string? PAPERTYPE   { get { return papertype;   } set { papertype = value; OnPropertyChanged(); LoadRollWidths(); LoadItemTypes(PAPERTYPE); } }
+        private string? rollwidth;   public string? ROLLWIDTH   { get { return rollwidth;   } set { rollwidth = value; OnPropertyChanged(); } }
+        private string? presssize;   public string? PRESSSIZE   { get { return presssize;   } set { presssize = value; OnPropertyChanged(); LoadCollator(); } }
+        private bool?   lineholes;   public bool?   LINEHOLES   { get { return lineholes;   } set { lineholes = value; OnPropertyChanged(); } }
+        private string? collatorcut; public string? COLLATORCUT { get { return collatorcut; } set { collatorcut = value; OnPropertyChanged(); } }
         private float   decimalCollatorCut; public float DecimalCollatorCut { get { return decimalCollatorCut; } set { decimalCollatorCut = value; OnPropertyChanged(); } }
 
-        private string? customerName; public string? CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged(); } }
-        private string? contactName;  public string? ContactName { get { return contactName; } set { contactName = value; OnPropertyChanged(); } }
-        private string? address;      public string? Address { get { return address; } set { address = value; OnPropertyChanged(); } }
-        private string? city;         public string? City { get { return city; } set { city = value; OnPropertyChanged(); } }
-        private string? state;        public string? State { get { return state; } set { state = value; OnPropertyChanged(); } }
-        private string? zip;          public string? ZIP { get { return zip; } set { zip = value; OnPropertyChanged(); } }
-        private string? location;     public string? Location { get { return location; } set { location = value; OnPropertyChanged(); } }
-        private string? phone;        public string? Phone { get { return phone; } set { phone = value; OnPropertyChanged(); } }
-        private string? csz;          public string? CSZ { get { return csz; } set { csz = value; OnPropertyChanged(); } }
-        private string? email;        public string? Email { get { return email; } set { email = value; OnPropertyChanged(); } }
+        private string? customerName; public string? CustomerName { get { return customerName;  } set { customerName = value; OnPropertyChanged(); } }
+        private string? contactName;  public string? ContactName  { get { return contactName;   } set { contactName  = value; OnPropertyChanged(); } }
+        private string? address;      public string? Address      { get { return address;       } set { address      = value; OnPropertyChanged(); } }
+        private string? city;         public string? City         { get { return city;          } set { city         = value; OnPropertyChanged(); } }
+        private string? state;        public string? State        { get { return state;         } set { state        = value; OnPropertyChanged(); } }
+        private string? zip;          public string? ZIP          { get { return zip;           } set { zip          = value; OnPropertyChanged(); } }
+        private string? location;     public string? Location     { get { return location;      } set { location     = value; OnPropertyChanged(); } }
+        private string? phone;        public string? Phone        { get { return phone;         } set { phone        = value; OnPropertyChanged(); } }
+        private string? csz;          public string? CSZ          { get { return csz;           } set { csz          = value; OnPropertyChanged(); } }
+        private string? email;        public string? Email        { get { return email;         } set { email        = value; OnPropertyChanged(); } }
 
-        private string? activePage; public string? ActivePage { get { return activePage; } set { activePage = value; OnPropertyChanged(); } }
+        private string? activePage;   public string? ActivePage   { get { return activePage;    } set { activePage   = value; OnPropertyChanged(); } }
 
         private float? qty1a; public float? QTY1a { get { return qty1a; } set { qty1a = value; OnPropertyChanged(); } }
         private float? qty2a; public float? QTY2a { get { return qty2a; } set { qty2a = value; OnPropertyChanged(); } }
@@ -127,15 +127,15 @@ namespace ProDocEstimate
         private float? pSize; public float? PSize { get { return pSize; } set { pSize = value; OnPropertyChanged(); } }
         private float? cSize; public float? CSize { get { return cSize; } set { cSize = value; OnPropertyChanged(); } }
 
-        private int? qty1 = 1000; public int? Qty1    { get { return qty1;  } set { qty1  = value; OnPropertyChanged(); } }
-        private int? qty2 = 0;    public int? Qty2    { get { return qty2;  } set { qty2  = value; OnPropertyChanged(); } }
-        private int? qty3 = 0;    public int? Qty3    { get { return qty3;  } set { qty3  = value; OnPropertyChanged(); } }
-        private int? qty4 = 0;    public int? Qty4    { get { return qty4;  } set { qty4  = value; OnPropertyChanged(); } }
+        private int qty1 = 1000;        public int Qty1    { get { return qty1;  } set { qty1  = value; OnPropertyChanged(); } }
+        private int qty2 = 0;           public int Qty2    { get { return qty2;  } set { qty2  = value; OnPropertyChanged(); } }
+        private int qty3 = 0;           public int Qty3    { get { return qty3;  } set { qty3  = value; OnPropertyChanged(); } }
+        private int qty4 = 0;           public int Qty4    { get { return qty4;  } set { qty4  = value; OnPropertyChanged(); } }
 
-        private int?     wastePct = 5; public int? WastePct         { get { return wastePct;   } set {  wastePct  = value; OnPropertyChanged(); } }
+        private int?     wastePct = 5; public int?    WastePct      { get { return wastePct;   } set {  wastePct  = value; OnPropertyChanged(); } }
         private string?     itemType;  public string? ItemType      { get { return itemType;   } set { itemType   = value; OnPropertyChanged(); LoadPage2Combos(); } }
-        private int?           numUpp; public int? NumUpp           { get { return numUpp;     } set {  numUpp    = value; OnPropertyChanged(); } }
-        private int?      selectedQty; public int? SelectedQty      { get { return selectedQty;} set { selectedQty= value; OnPropertyChanged(); } }
+        private int?           numUpp; public int?    NumUpp        { get { return numUpp;     } set {  numUpp    = value; OnPropertyChanged(); } }
+        private int       selectedQty; public int     SelectedQty   { get { return selectedQty;} set { selectedQty= value; OnPropertyChanged(); } }
         private string?       calcMsg; public string? CalcMsg       { get { return calcMsg;    } set { calcMsg    = value; OnPropertyChanged(); } }
 
         private DataTable?   features; public DataTable? Features   { get { return features;   } set { features   = value; OnPropertyChanged(); } }
@@ -213,66 +213,12 @@ namespace ProDocEstimate
             PreviewKeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Escape) Close(); };
         }
 
-        //private bool MoveFocus_Next(UIElement uiElement)
-        //{   if (uiElement != null) { uiElement.MoveFocus(new TraversalRequest(System.Windows.Input.FocusNavigationDirection.Next)); return true; }
-        //    return false;
-        //}
-
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
             this.Height = this.Height *= 1.6;
             this.Width = this.Width *= 1.6;
             Top = 50;
         }
-
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{ EventManager.RegisterClassHandler(typeof(Window), Window.PreviewKeyUpEvent, new KeyEventHandler(Window_PreviewKeyUp)); }
-
-        //private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == System.Windows.Input.Key.Enter)
-        //    {
-        //        IInputElement inputElement = Keyboard.FocusedElement;
-        //        if (inputElement != null)
-        //        {
-        //            System.Windows.Controls.Primitives.TextBoxBase textBoxBase = inputElement as System.Windows.Controls.Primitives.TextBoxBase;
-        //            if (textBoxBase != null)
-        //            {
-        //                if (!textBoxBase.AcceptsReturn)
-        //                    MoveFocus_Next(textBoxBase);
-        //                return;
-        //            }
-        //            if (
-        //                MoveFocus_Next(inputElement as ComboBox)
-        //                ||
-        //                MoveFocus_Next(inputElement as Button)
-        //                ||
-        //                MoveFocus_Next(inputElement as DatePicker)
-        //                ||
-        //                MoveFocus_Next(inputElement as CheckBox)
-        //                ||
-        //                MoveFocus_Next(inputElement as DataGrid)
-        //                ||
-        //                MoveFocus_Next(inputElement as TabItem)
-        //                ||
-        //                MoveFocus_Next(inputElement as RadioButton)
-        //                ||
-        //                MoveFocus_Next(inputElement as ListBox)
-        //                ||
-        //                MoveFocus_Next(inputElement as ListView)
-        //                ||
-        //                MoveFocus_Next(inputElement as PasswordBox)
-        //                ||
-        //                MoveFocus_Next(inputElement as Window)
-        //                ||
-        //                MoveFocus_Next(inputElement as Page)
-        //                ||
-        //                MoveFocus_Next(inputElement as Frame)
-        //            )
-        //                return;
-        //        }
-        //    }
-        //}
 
         private void LoadAvailableCategories()
         {
@@ -306,13 +252,16 @@ namespace ProDocEstimate
             conn = new SqlConnection(ConnectionString);
             SqlDataAdapter da = new(str, conn);
             DataTable dt = new(); da.Fill(dt);
+
+            if(dt.Rows.Count == 0 ) { return; }
+
             CustomerName = dt.Rows[0]["CUST_NAME"].ToString();
-            ContactName = dt.Rows[0]["CONTACT_NAME"].ToString();
-            Address = dt.Rows[0]["ADDRESS1"].ToString();
-            City = dt.Rows[0]["CITY"].ToString().TrimEnd();
+            ContactName  = dt.Rows[0]["CONTACT_NAME"].ToString();
+            Address      = dt.Rows[0]["ADDRESS1"].ToString();
+            City  = dt.Rows[0]["CITY"].ToString().TrimEnd();
             State = dt.Rows[0]["STATE"].ToString().TrimEnd();
-            ZIP = dt.Rows[0]["ZIP"].ToString().TrimEnd();
-            CSZ = City.TrimEnd() + ", " + State + ", " + ZIP;
+            ZIP   = dt.Rows[0]["ZIP"].ToString().TrimEnd();
+            CSZ   = City.TrimEnd() + ", " + State + ", " + ZIP;
             Phone = dt.Rows[0]["Phone"].ToString();
             Email = dt.Rows[0]["E_MAIL"].ToString();
         }
@@ -750,7 +699,17 @@ namespace ProDocEstimate
 
         private void btnLoadGrid_Click(object sender, RoutedEventArgs e)
         {
-            if(ProjectType.Length==0) { MessageBox.Show("Please select a project type"); return; }
+            // NOTE: These errors can only occur on a new quote
+            string ErrorMessages = "";
+            if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
+            if (PARTS == 0) { ErrorMessages += "# Parts is required;\n"; }
+            if (PAPERTYPE.Length == 0)   { ErrorMessages += "Paper type is required;\n"; }
+            if (ROLLWIDTH.Length == 0)   { ErrorMessages += "Roll width is required;\n"; }
+            if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
+            if (PRESSSIZE.Length == 0)   { ErrorMessages += "Press size is required;\n"; }
+            if (COLLATORCUT.Length == 0) { ErrorMessages += "Collator cut size is required;\n"; }
+
+            if (ErrorMessages.Length>0) { MessageBox.Show(ErrorMessages); return; }
 
             AddDefaultDetailLines();
 
@@ -837,9 +796,9 @@ namespace ProDocEstimate
             }
 
             if (NoCostAssigned == true)
-            { CostMessage.Visibility = Visibility.Visible; }
+                {  CostMessage.Visibility = Visibility.Visible; }
             else
-            { CostMessage.Visibility = Visibility.Hidden; }
+                {  CostMessage.Visibility = Visibility.Hidden; }
 
             // SelectedCost is what goes in the "Cost used" column on page 4
 
@@ -857,7 +816,7 @@ namespace ProDocEstimate
 
         }
 
-        public void CalculateRowCost()
+        public void  CalculateRowCost()
         {
             int rownum = dgSheetsOfPaper.SelectedIndex;
             SelRowIdx = rownum;             // Needed for the Update button code
@@ -883,12 +842,12 @@ namespace ProDocEstimate
 
             // If the Description field basis doesn't match the contents that came from ESTPAPER.SubWT, fix it. TODO: This a workaround for BAD DATA
             if (dataRow[0].ToString().Contains(".")) 
-                {  // Get basis from Description starting right after the first chr(32) up to but not including the "#":
-                    int starts  = dataRow[0].ToString().IndexOf(" ") + 1;
-                    string temp = dataRow[0].ToString().Substring(starts);
-                    int ends = temp.ToString().IndexOf("#");
-                    lblBasis.Content = temp.Substring(0, ends);
-                }
+              {  // Get basis from Description starting right after the first chr(32) up to but not including the "#":
+                int starts  = dataRow[0].ToString().IndexOf(" ") + 1;
+                string temp = dataRow[0].ToString().Substring(starts);
+                int ends    = temp.ToString().IndexOf("#");
+                lblBasis.Content = temp.Substring(0, ends);
+              }
 
             lblPaperType.Content = dataRow[7].ToString().TrimEnd();
 
@@ -905,19 +864,33 @@ namespace ProDocEstimate
 
             var x = (chosen == null) ? "" : chosen.ToString();
             if (chosen != null)
-            {   // select a price if they clicked columns 12, 13 or 14
+            {
+                // ***************************************************
+                // Select a price if they clicked columns 12, 13 or 14
+                // ***************************************************
                 int idx = chosen.DisplayIndex + 10;
-
                 if (idx < 12 || idx > 14) return;    // Only three of the columns should be clickable
-                                                    
-                txtItemType.IsDropDownOpen = false; // collapse the ItemType dropdown
-                dataRow[15] = dataRow[idx];         // Use the value they clicked as the "cost to use"
-                                                    //                CostMessage.Visibility = Visibility.Hidden; // This assumes that only one cost was not assigned; TODO:
+                txtItemType.IsDropDownOpen = false;  // collapse the ItemType dropdown
+                dataRow[15] = dataRow[idx];          // Use the value they clicked as the "cost to use"
+                                                     // This assumes that only one cost was not assigned; TODO:
                 CostMessage.Visibility = Visibility.Hidden;
+
+                //***************************************
+                // Recalculate based on selected quantity
+                //***************************************
+
+                //if(!Already)
+                //{ 
+                //    if      (SelectedQty == Qty1) { Q1(); Already = true; }
+                //    else if (SelectedQty == Qty2) { Q2(); Already = true; }
+                //    else if (SelectedQty == Qty3) { Q3(); Already = true; }
+                //    else if (SelectedQty == Qty4) { Q4(); Already = true; }
+                //}
             }
 
-            double a = double.Parse(dataRow[11].ToString()) * double.Parse(dataRow[15].ToString());
-            dataRow[16] = a;
+            //                              Pounds needed           *              Price to use
+            double PaperCost = double.Parse(dataRow[11].ToString()) * double.Parse(dataRow[15].ToString());
+            dataRow[16] = PaperCost;
 
             dgSheetsOfPaper.SelectedIndex = -1;
 
@@ -1457,8 +1430,7 @@ namespace ProDocEstimate
                 + $"                                 VALUES ( '{QUOTE_NUM}', '{CUST_NUMB}', {PARTS}, '{PAPERTYPE}', '{ROLLWIDTH}', 0,         '{PRESSSIZE}', '{COLLATORCUT}', '{ProjectType}', '{Today}', {QuoteTotal} )";
             //Clipboard.SetText(cmd);
             conn = new SqlConnection(ConnectionString); conn.Open();
-            scmd.CommandText = cmd; scmd.Connection = conn; scmd.ExecuteNonQuery(); conn.Close(); 
-            MessageBox.Show(" Quote saved ", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            scmd.CommandText = cmd; scmd.Connection = conn; scmd.ExecuteNonQuery(); conn.Close();
 
             Close();
         }
@@ -1476,6 +1448,7 @@ namespace ProDocEstimate
 
         private void Page4_GotFocus(object sender, RoutedEventArgs e)
         {
+            //if(Already) { Already = false; return; }
             // Why did I add this code?
             //string cmd = $"SELECT SUM(CONVERT(Money,TotalFlatChg)) AS TotalCharge, SUM(CONVERT(Money,PerThousandChg)) As PerThouChg FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             //SqlConnection conn = new SqlConnection(ConnectionString);
@@ -1486,17 +1459,22 @@ namespace ProDocEstimate
             //conn.Close();
             //CPM1a = PerMil;
 
-            if (dgFeatures.ItemsSource == null)
-              { 
-                da.SelectCommand.CommandText
-                    = "SELECT   Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
-                    + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
-                dt = new DataTable("Features"); da.Fill(dt);
-                DataView dvFeat = dt.DefaultView;
-                conn.Close();
-                dgFeatures.Items.Clear();
-                dgFeatures.ItemsSource = dvFeat;
-              }
+            // Load features for display in the second datagrid on page 4
+            string cmd
+                = "SELECT Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
+                + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            da = new SqlDataAdapter(cmd, conn);
+            dt = new DataTable("Features"); 
+            da.Fill(dt);
+            DataView dvFeat = dt.DefaultView;
+            conn.Close();
+            dgFeatures.ItemsSource = null;
+            dgFeatures.Items.Clear();
+            dgFeatures.ItemsSource = dvFeat;
+
+//            if (Qty1 != null && Qty1 > 0) { DisplayQuantity = "(using " + Qty1.ToString() + ")"; Q1(); }
+
         }
 
         // Each of the following four methods should zero/blank out the corresponding controls
@@ -1567,7 +1545,7 @@ namespace ProDocEstimate
 
         private void CheckFirst()
         {
-            if (ComboSel1.Length == 0) { Ext2.IsEnabled = false; Ext2c.IsEnabled = false; return; }
+            if (ComboSel1.Length == 0) { Ext1.IsEnabled = false; Ext1c.IsEnabled = false; return; }
             MkUpAmt1 = 0; MkUpPct1 = 0;
             if (ComboSel1.Substring(ComboSel1.Length-1,1) == "%")
             { Ext1.IsEnabled = true; Ext1c.IsEnabled = false; Ext1.Focus(); }
@@ -1607,11 +1585,13 @@ namespace ProDocEstimate
 
         private void MarkupBasis1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Already = true;
             CheckFirst();
         }
 
         private void MarkupBasis2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Already = true;
             CheckSecond();
         }
 
@@ -1665,29 +1645,41 @@ namespace ProDocEstimate
 
         private void Select1_Click(object sender, RoutedEventArgs e)
         {
-            if (Qty1 != null && Qty1 > 0) 
-            {   DisplayQuantity = "(using " + Qty1.ToString() + ")"; Q1();
+            QBO1.Focus();
+            if (Qty1 > 0) 
+            {   DisplayQuantity = "(using " + Qty1.ToString() + ")";
+                Already = true;
+                Q1(); 
             }
         }
 
         private void Select2_Click(object sender, RoutedEventArgs e)
         {
-            if (Qty2 != null && Qty2 > 0) 
-            {   DisplayQuantity = "(using " + Qty2.ToString() + ")"; Q2();
+            QBO2.Focus();
+            if (Qty2 > 0) 
+            {   DisplayQuantity = "(using " + Qty2.ToString() + ")";
+                Already = true;
+                Q2(); 
             }
         }
 
         private void Select3_Click(object sender, RoutedEventArgs e)
         {
-            if (Qty3 != null && Qty3 > 0) 
-            {   DisplayQuantity = "(using " + Qty3.ToString() + ")"; Q3();
+            QBO3.Focus();
+            if (Qty3 > 0) 
+            {   DisplayQuantity = "(using " + Qty3.ToString() + ")";
+                Already = true;
+                Q3(); 
             }
         }
 
         private void Select4_Click(object sender, RoutedEventArgs e)
         {
-            if (Qty4 != null && Qty4 > 0) 
-            {   DisplayQuantity = "(using " + Qty4.ToString() + ")"; Q4();
+            QBO4.Focus();
+            if (Qty4 > 0) 
+            {   DisplayQuantity = "(using " + Qty4.ToString() + ")";
+                Already = true;
+                Q4(); 
             }
         }
 
@@ -1708,24 +1700,31 @@ namespace ProDocEstimate
         {
             float FeetPerPart = (float.Parse(SelectedQty.ToString()) * DecimalCollatorCut) / 12.0F;
 
-            //string ShortProjectType = ProjectType;
-            //if (ShortProjectType == "SNAP OUT") ShortProjectType = "SNAP";  // That's how it's entered in the Collator_Speeds table
-
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Press_Speeds] WHERE ";
             string WhereClause = $" Cylinder = '{PRESSSIZE}' AND {FeetPerPart} BETWEEN MinQty AND MaxQty";
             cmd += WhereClause;
 
             da = new SqlDataAdapter(cmd, ConnectionString);
             dt = new DataTable("Speeds"); da.Fill(dt); DataView dv1 = dt.DefaultView;
-            if (dv1.Count == 0) { MessageBox.Show("No matching data", WhereClause); Debugger.Break(); }
+            if (dv1.Count == 0) 
+            { 
+                MessageBox.Show("No matching data in Press_Speeds table", WhereClause);
+                Debugger.Break(); 
+            }
 
-            int FPM = int.Parse(dv1[0]["FeetPerMinute"].ToString());
+            int FPM       = int.Parse(dv1[0]["FeetPerMinute"].ToString());
+            int SetupMins = int.Parse(dv1[0]["SetupMinutes"].ToString());
 
             // Adjust for the percent slowdown for all selected features
-            da.SelectCommand.CommandText = $"SELECT SUM(SLOWDOWN_PERCENT) AS SLOWDOWN_PERCENT FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+            da.SelectCommand.CommandText = $"SELECT SUM(PressSetupMin) AS SETUPMINUTES, SUM(SLOWDOWN_PERCENT) AS SLOWDOWN_PERCENT FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             DataTable dt2 = new DataTable(); da.Fill(dt2); DataView dv2 = dt2.DefaultView;
 
-            SlowDownPct = 0; if(dv2.Count>0) { SlowDownPct = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString()); }
+            int SumSetupMin = 0;
+            int SumSlowDown = 0; 
+            if(dv2.Count>0) 
+            { SumSetupMin = int.Parse(dv2[0]["SETUPMINUTES"].ToString());
+              SumSlowDown = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString()); 
+            }
 
             float correction = (100.0F - (float)SlowDownPct)/100.0F;
             if(correction<0) { correction = 1.0F; }
@@ -1745,10 +1744,10 @@ namespace ProDocEstimate
             PressRunTime = Hrs;
             PressRunCost = DollarsPerHr;
 
-            // Do the same for setup times
-            // dv1 contains the Press_Speeds data
-
-            // int SetupMinutes = int.Parse(dv1[0]["SETUP_MINUTES"].ToString());
+            float SetupHrs = ((float)SumSetupMin + (float)SetupMins) / 60.0F;
+            PressSetupTime = SetupHrs; // make sure this is a FLOAT
+            float SetupDollars = float.Parse(dv1[0][7].ToString()) * SetupHrs;
+            PressSetupCost = SetupDollars;
 
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }
@@ -1771,6 +1770,35 @@ namespace ProDocEstimate
         private void S4_Click(object sender, RoutedEventArgs e)
         {
             txtQty4.Focus();
+        }
+
+        private void txtQty1_KeyDown(object sender, KeyEventArgs e)
+        {
+            var uiElement = e.OriginalSource as UIElement;
+            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
+        }
+
+        private void txtQty2_KeyDown(object sender, KeyEventArgs e)
+        {
+            var uiElement = e.OriginalSource as UIElement;
+            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
+        }
+
+        private void txtQty3_KeyDown(object sender, KeyEventArgs e)
+        {
+            var uiElement = e.OriginalSource as UIElement;
+            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
+        }
+
+        private void txtQty4_KeyDown(object sender, KeyEventArgs e)
+        {
+            var uiElement = e.OriginalSource as UIElement;
+            if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
+        }
+
+        private void MarkupBasis1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Debugger.Break();
         }
     }
 }

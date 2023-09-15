@@ -5,23 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
         Title="Calculating..."
-        Height="30" Width="150">
+        Loaded="OnLoad"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow"
+        Height="40" Width="400">
 
-    <Grid>
+        <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Calculating...">
-        </Label>
+            <Label Grid.Row="0" Grid.Column="0" Content="Calculating..." />
 
-    </Grid>
+        </Grid>
 
 </Window>
