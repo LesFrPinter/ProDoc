@@ -794,13 +794,7 @@
                                  IsEnabled="True"
                                  Text="{Binding Path=Qty1, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" 
                                  x:Name="txtQty1" 
-                                 KeyDown="txtQty1_KeyDown"
-                                 LostFocus="txtQty1_LostFocus"
                                  Margin="0,4,0,4" />
-
-                        <Button  x:Name="S1" Grid.Row="1" Grid.Column="2" 
-                                 Click="S1_Click"
-                                 VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <Label Grid.Column="4" HorizontalAlignment="Left" Content="Qty 2" FontSize="10" FontWeight="Bold" Margin="18,0,0,-5" VerticalAlignment="Bottom" />
 
@@ -809,12 +803,7 @@
                                  GotFocus="txtQty2_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty2, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" 
                                  x:Name="txtQty2" 
-                                 KeyDown="txtQty1_KeyDown"
-                                 LostFocus="txtQty2_LostFocus" 
                                  Margin="1,4,0,4" />
-
-                        <Button  x:Name="S2" Grid.Row="1" Grid.Column="4" Click="S2_Click"
-                                 VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <Label Grid.Column="5" HorizontalAlignment="Center" Content="Qty 3" FontSize="10" FontWeight="Bold" Margin="0 0 0 -5" VerticalAlignment="Bottom" />
 
@@ -822,13 +811,7 @@
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty3_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty3, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty3" 
-                                 KeyDown="txtQty1_KeyDown"
-                                 LostFocus="txtQty1_LostFocus"
                                  Margin="1,4,0,4" />
-
-                        <Button  x:Name="S3" Grid.Row="1" Grid.Column="5" 
-                                 Click="S3_Click"
-                                 VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
                         <Label Grid.Column="6" HorizontalAlignment="Left" Content="Qty 4" FontSize="10" FontWeight="Bold" Margin="27,0,0,-5" VerticalAlignment="Bottom"  />
 
@@ -836,20 +819,23 @@
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
 								 GotFocus="txtQty4_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty4, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty4" 
-                                 KeyDown="txtQty1_KeyDown"
-                                 LostFocus="txtQty4_LostFocus" 
                                  Margin="0,4,0,4" />
-                        <Button  x:Name="S4" Grid.Row="1" Grid.Column="6" 
-                                 Click="S4_Click"
-                                 VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
 
-                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button  x:Name="S1" Grid.Row="1" Grid.Column="2"  Click="S1_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+                        <Button  x:Name="S2" Grid.Row="1" Grid.Column="4" Click="S2_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select"  Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+                        <Button  x:Name="S3" Grid.Row="1" Grid.Column="5"  Click="S3_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+                        <Button  x:Name="S4" Grid.Row="1" Grid.Column="6"  Click="S4_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+
+                        <Button  x:Name="Calc" Grid.Row="1" Grid.Column="8" Content="Calculate" VerticalAlignment="Bottom" Margin="0 0 0 2" Padding="4" Click="Calc_Click" />
+
+
+                        <StackPanel Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" >
                             <Label Content="Selected Quantity: " VerticalAlignment="Top" />
                             <TextBlock 
                                 Foreground="White" Background="Red" 
                                 FontWeight="Bold" FontSize="11" Padding="10 2" Width="50"
-                                Text="{Binding SelectedQty, StringFormat='0,0'}" Margin="0 0 10 15"
-                                HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                Text="{Binding SelectedQty, StringFormat='0,0'}" Margin="0 0 0 0"
+                                HorizontalAlignment="Center" VerticalAlignment="Bottom" />
                         </StackPanel>
 
                         <Label Content="Paper Type" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="13,0,0,0" />
@@ -996,7 +982,7 @@
                         <Button x:Name="btnUpdate"
 						         Grid.Row="4" Grid.Column="8" Width="70" Height="24" Padding="0"
                                  Click="btnUpdate_Click" 
-                                 Content="Update" HorizontalAlignment="Left" Margin="22,0,0,0" />
+                                 Content="Update" HorizontalAlignment="Center" />
 
                         <TextBox Grid.Row="6" Grid.Column="8" 
                                  Height="24" FontSize="12" 
@@ -1686,9 +1672,9 @@
                                 <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="52 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="1" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="46,2,0,0" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="2" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
+                                         FontSize="12" Foreground="Blue" Height="17" VerticalAlignment="Top" />
                                 <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />

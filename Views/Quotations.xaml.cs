@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -226,9 +227,9 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
-            this.Height = this.Height *= 1.6;
-            this.Width = this.Width *= 1.6;
-            Top = 50;
+            this.Height = this.Height *= 1.2;
+            this.Width = this.Width *= 1.2;
+            Top = 25;
         }
 
         private void LoadAvailableCategories()
@@ -1724,17 +1725,11 @@ namespace ProDocEstimate
         {
             float FeetPerPart = (float.Parse(SelectedQty.ToString()) * DecimalCollatorCut) / 12.0F;
 
-            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Press_Speeds] WHERE ";
-            string WhereClause = $" Cylinder = '{PRESSSIZE}' AND {FeetPerPart} BETWEEN MinQty AND MaxQty";
-            cmd += WhereClause;
+            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Press_Speeds] ";
+            string WhereClause = $" WHERE Cylinder = '{PRESSSIZE}' AND {FeetPerPart} BETWEEN MinQty AND MaxQty"; cmd += WhereClause;
 
-            da = new SqlDataAdapter(cmd, ConnectionString);
-            dt = new DataTable("Speeds"); da.Fill(dt); DataView dv1 = dt.DefaultView;
-            if (dv1.Count == 0) 
-            { 
-                MessageBox.Show("No matching data in Press_Speeds table", WhereClause);
-                Debugger.Break(); 
-            }
+            da = new SqlDataAdapter(cmd, ConnectionString); dt = new DataTable("Speeds"); da.Fill(dt); DataView dv1 = dt.DefaultView;
+            if (dv1.Count == 0) { MessageBox.Show("No matching data in Press_Speeds table", WhereClause); Debugger.Break(); }
 
             int FPM       = int.Parse(dv1[0]["FeetPerMinute"].ToString());
             int SetupMins = int.Parse(dv1[0]["SetupMinutes"].ToString());
@@ -1752,19 +1747,13 @@ namespace ProDocEstimate
 
             float correction = (100.0F - (float)SlowDownPct)/100.0F;
             if(correction<0) { correction = 1.0F; }
-
             FPM = (int)(FPM * correction);
-
             float MinutesPerPart = FeetPerPart / (float)FPM;
-
             int TotalMinutes = (int)(MinutesPerPart * (float)PARTS);
             float hrs = TotalMinutes / 60.0F;
-
             hrs += .01F;    // In case hrs = .50 (.5 rounds down, .51 rounds up), force it to round up 
             Hrs = (float)Math.Round(hrs, 1);
-
             DollarsPerHr = hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());
-
             PressRunTime = Hrs;
             PressRunCost = DollarsPerHr;
 
@@ -1782,27 +1771,127 @@ namespace ProDocEstimate
             CollRunTime = SelectedQty / float.Parse(dv3[0]["StdCutsPerHr"].ToString());
             CollRunCost = CollRunTime * float.Parse(dv3[0]["DollarsPerHr"].ToString());
 
+            // **************************************************
+            // ** Calculate SetupRunTime and SetupRunCost here **
+            // **************************************************
+
+            int SetupMin = int.Parse(dv3[0]["SetupMin"].ToString());
+            //  int NumberOfRollChanges = float.Parse(dv3[0]["MaxRollChgQty"].ToString()) / (float)SelectedQty;
+
+            cmd = $"SELECT SUM(CollSetupMin) AS SETUPMINUTES FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+            DataAdapter da4 = new SqlDataAdapter(cmd, conn);
+            DataSet ds = new DataSet();   
+            DataTable dt4 = new DataTable();
+            da4.Fill(ds);
+            dt4 = ds.Tables[0];
+            DataView dv4 = dt4.DefaultView;
+
+            CollSetupTime = float.Parse(dv4[0]["SETUPMINUTES"].ToString()) + (float)SetupMin;
+            CollSetupTime /= 60.0F;
+
+            CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString());
+
+            // **************************************************
+            // ** BINDERY                                      **
+            // **************************************************
+
+            cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'FINISHING'";
+
+            // We need BindSetupMin, Value1 (books), Value2 (Cello), Value3 (Drill Holes), Value4 (Pad) and Value5 (Trim)
+
+            DataAdapter da5 = new SqlDataAdapter(cmd, conn);
+            ds = new DataSet();
+            DataTable dt5 = new DataTable();
+            da5.Fill(ds);
+            dt5 = ds.Tables[0];
+            DataView dv5 = dt5.DefaultView;
+            int BindSetupMinutes = int.Parse(dv5[0]["BindSetupMin"].ToString());
+            int p1 = 0;            int.TryParse(dv5[0]["Value1"].ToString(), out p1); int Books = p1;
+            int p2 = 0;            int.TryParse(dv5[0]["Value2"].ToString(), out p2); int Cello = p2;
+            int p3 = 0;            int.TryParse(dv5[0]["Value3"].ToString(), out p3); int DrillHoles = p3;
+            int p4 = 0;            int.TryParse(dv5[0]["Value4"].ToString(), out p4); int Pad = p4;
+            int p5 = 0;            int.TryParse(dv5[0]["Value5"].ToString(), out p5); int Trim = p5;
+
+            if(dv5[0]["Value3"].ToString() != null && dv5[0]["Value3"].ToString() == "4 -5") { DrillHoles = 4; }
+
+            // Bindery RunTime calculation:
+
+            BindRunTime = 0.0F; BindRunCost = 0.0F;
+
+            cmd = $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'  AND Quantity = {Books};"
+                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'PAD'   AND Quantity = {Pad};"
+                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'CELLO' AND Quantity = {Cello};"
+                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'DRILL HOLES' AND Quantity = {DrillHoles};"
+                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'  AND Quantity = {Trim};";
+
+            SqlDataAdapter da01 = new SqlDataAdapter(cmd,conn);
+            DataSet  ds01       = new DataSet(); da01.Fill(ds01);
+            DataView dv01       = ds01.Tables[0].DefaultView;
+            DataView dv02       = ds01.Tables[1].DefaultView;
+            DataView dv03       = ds01.Tables[2].DefaultView;
+            DataView dv04       = ds01.Tables[3].DefaultView;
+            DataView dv05       = ds01.Tables[4].DefaultView;
+
+            if (Books > 0)
+            {   float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
+                float Production_Goal = float.Parse(dv01[0]["Production_Goal"].ToString());
+                float DollarsPerHour  = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
+                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+            }
+
+            if (Pad > 0)
+            {
+                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Pad.ToString());
+                float Production_Goal = float.Parse(dv02[0]["Production_Goal"].ToString());
+                float DollarsPerHour  = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
+                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+            }
+
+            if (Cello > 0)
+            {
+                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Cello.ToString());
+                float Production_Goal = float.Parse(dv03[0]["Production_Goal"].ToString());
+                float DollarsPerHour  = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
+                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+            }
+
+            if (DrillHoles > 0)
+            {
+                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(DrillHoles.ToString());
+                float Production_Goal = float.Parse(dv04[0]["Production_Goal"].ToString());
+                float DollarsPerHour  = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
+                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+            }
+
+            if (Trim > 0)
+            {
+                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Trim.ToString());
+                float Production_Goal = float.Parse(dv05[0]["Production_Goal"].ToString());
+                float DollarsPerHour  = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
+                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+            }
+
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }
 
         private void S1_Click(object sender, RoutedEventArgs e)
         {
-            txtQty1.Focus();
+            SelectedQty = Qty1; //txtQty1.Focus();
         }
 
         private void S2_Click(object sender, RoutedEventArgs e)
         {
-            txtQty2.Focus();
+            SelectedQty = Qty2; // txtQty2.Focus();
         }
 
         private void S3_Click(object sender, RoutedEventArgs e)
         {
-            txtQty3.Focus();
+            SelectedQty = Qty3; // txtQty3.Focus();
         }
 
         private void S4_Click(object sender, RoutedEventArgs e)
         {
-            txtQty4.Focus();
+            SelectedQty = Qty4; // txtQty4.Focus();
         }
 
         private void txtQty1_KeyDown(object sender, KeyEventArgs e)
@@ -1814,5 +1903,11 @@ namespace ProDocEstimate
             if (e.Key == Key.Enter && uiElement != null) { e.Handled = true; uiElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next)); }
         }
 
+        private void Calc_Click(object sender, RoutedEventArgs e)
+        {   if(SelectedQty == Qty1) { Q1(); }
+            else if(SelectedQty == Qty2) { Q2(); }
+            else if(SelectedQty == Qty3) {  Q3(); }
+            else if(SelectedQty == Qty4 ) { Q4(); }
+        }
     }
 }

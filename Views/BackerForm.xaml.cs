@@ -172,10 +172,9 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.8;
-            this.Width = this.Width *= 1.8;
-            this.Top = 150;
-//            FirstTime = false;
+            this.Height = this.Height *= 1.2;
+            this.Width = this.Width *= 1.2;
+            this.Top = 50;
         }
 
         private void LoadQuote()
