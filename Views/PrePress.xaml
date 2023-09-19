@@ -60,7 +60,7 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -71,13 +71,27 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Content="OE" Height="16" VerticalAlignment="Center" Width="19" />
+                <Label Grid.Column="1" Content="OE" Height="16" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" />
                 <Label Grid.Column="2" Content="Plate Charge" Height="16" VerticalAlignment="Center" Width="72" />
-                <Label Grid.Column="3" Content="Pre-Press" Height="16" VerticalAlignment="Center" Width="53" />
+                <Label Grid.Column="3" Content="Pre-Press" Height="16" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="90 0 0 0" />
 
-                <telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding OrderEntry}" x:Name="M1" Grid.Row="1" ValueChanged="ValueChanged" />
-                <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PlateChg}"   x:Name="M2" Grid.Row="1" ValueChanged="ValueChanged" />
-                <telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PREPress}"   x:Name="M3" Grid.Row="1" ValueChanged="ValueChanged" />
+                <!--<telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding OrderEntry}" x:Name="M1" Grid.Row="1" ValueChanged="ValueChanged" />-->
+                <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PlateChg}"   x:Name="M2" Grid.Row="1" ValueChanged="ValueChanged" Padding="0" Margin="0" />
+                <!--<telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PREPress}"   x:Name="M3" Grid.Row="1" ValueChanged="ValueChanged" />-->
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="5" Margin="170 0 0 0">
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
+                        <RadioButton GroupName="1" Content="New"        x:Name="OE1" Margin="5 0" Checked="OE_Checked" />
+                        <RadioButton GroupName="1" Content="Exact"      x:Name="OE2" Margin="5 0" Checked="OE_Checked" />
+                        <RadioButton GroupName="1" Content="Change"     x:Name="OE3" Margin="5 0" Checked="OE_Checked" />
+                    </StackPanel>
+                    <Label Width="120" />
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
+                        <RadioButton GroupName="2" Content="New"        x:Name="PP1" Margin="5 0" Checked="PP1_Checked" />
+                        <RadioButton GroupName="2" Content="Exact"      x:Name="PP2" Margin="5 0" Checked="PP1_Checked" />
+                        <RadioButton GroupName="2" Content="Change"     x:Name="PP3" Margin="5 0" Checked="PP1_Checked" />
+                </StackPanel>
+                </StackPanel>
 
             </Grid>
 

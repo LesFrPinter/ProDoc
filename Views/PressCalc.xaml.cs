@@ -93,26 +93,51 @@ namespace ProDocEstimate.Views
             Pounds = int.Parse(Amt.ToString());
             string str = "";
 
-            try
-            {
-                str = "Select top 1 Documents from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents";
-                x2 = double.Parse(SqlHandler(str));
+            //try
+            //{
+            //    str = "Select top 1 Documents from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents";
+            //    x2 = double.Parse(SqlHandler(str));
 
-                str = "Select top 1 Rate      from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents";
-                y2 = double.Parse(SqlHandler(str));
+            //    str = "Select top 1 Rate      from EquipmentProductionRates where Documents  >= '" + NumDocs.ToString() + "' order by Documents";
+            //    y2 = double.Parse(SqlHandler(str));
 
-                str = "Select top 1 Documents from EquipmentProductionRates where Documents   < '" + NumDocs.ToString() + "' order by documents desc";
-                x1 = double.Parse(SqlHandler(str));
+            //    str = "Select top 1 Documents from EquipmentProductionRates where Documents   < '" + NumDocs.ToString() + "' order by documents desc";
+            //    x1 = double.Parse(SqlHandler(str));
 
-                str = "Select top 1 Rate      from EquipmentProductionRates where Documents   < '" + NumDocs.ToString() + "' order by documents desc";
-                y1 = double.Parse(SqlHandler(str));
+            //    str = "Select top 1 Rate      from EquipmentProductionRates where Documents   < '" + NumDocs.ToString() + "' order by documents desc";
+            //    y1 = double.Parse(SqlHandler(str));
 
-                str = "Select costperfactor from MasterInventory          where Description = '" + Material + "'";
-                Cost = double.Parse(SqlHandler(str));
+            //    str = "Select costperfactor from MasterInventory          where Description = '" + Material + "'";
+            //    Cost = double.Parse(SqlHandler(str));
 
-                Cost *= Amt;
-            }
-            catch (Exception ex) {  MessageBox.Show(ex.Message,str); }
+            //    Cost *= Amt;
+            //}
+            //catch (Exception ex) {  MessageBox.Show(ex.Message,str); }
+
+            string paper = Material.ToString().TrimEnd();
+
+            str = $"SELECT TOP 1 Documents FROM EquipmentProductionRates WHERE Documents >= {NumDocs} ORDER BY Documents;"
+                + $"SELECT TOP 1 Rate      FROM EquipmentProductionRates WHERE Documents >= {NumDocs} ORDER BY Documents;"
+                + $"SELECT TOP 1 Documents FROM EquipmentProductionRates WHERE Documents <  {NumDocs} ORDER BY Documents DESC;"
+                + $"SELECT TOP 1 Rate      FROM EquipmentProductionRates WHERE Documents <  {NumDocs} ORDER BY Documents DESC;"
+                + $"SELECT CostPerFactor   FROM MasterInventory          WHERE Description = '{paper}'";
+
+            string cs = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=PROVISIONDEV;Data Source=PDS-SQL\XMPIE;Trusted_Connection=False;User ID=lespinter;PWD=RememberMe$;";
+            SqlConnection cn = new(cs);
+            SqlDataAdapter da = new SqlDataAdapter(str, cn);
+            DataSet ds = new DataSet(); da.Fill(ds);
+
+            DataView dv1 = ds.Tables[0].DefaultView;
+            DataView dv2 = ds.Tables[1].DefaultView;
+            DataView dv3 = ds.Tables[2].DefaultView;
+            DataView dv4 = ds.Tables[3].DefaultView;
+            DataView dv5 = ds.Tables[4].DefaultView;
+
+            x2 = float.Parse(dv1[0][0].ToString());
+            y2 = float.Parse(dv2[0][0].ToString());
+            x1 = float.Parse(dv3[0][0].ToString());
+            y1 = float.Parse(dv4[0][0].ToString());
+            Cost = float.Parse(dv5[0][0].ToString());
 
             double m = (y2 -  y1) / (x2 - x1);
             double b =  y2 - (x2  * m);

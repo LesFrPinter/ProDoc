@@ -227,9 +227,9 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
-            this.Height = this.Height *= 1.2;
-            this.Width = this.Width *= 1.2;
-            Top = 25;
+            this.Height = this.Height *= 1.4;
+            this.Width = this.Width *= 1.4;
+            Top = 20;
         }
 
         private void LoadAvailableCategories()
@@ -1805,70 +1805,82 @@ namespace ProDocEstimate
             da5.Fill(ds);
             dt5 = ds.Tables[0];
             DataView dv5 = dt5.DefaultView;
-            int BindSetupMinutes = int.Parse(dv5[0]["BindSetupMin"].ToString());
-            int p1 = 0;            int.TryParse(dv5[0]["Value1"].ToString(), out p1); int Books = p1;
-            int p2 = 0;            int.TryParse(dv5[0]["Value2"].ToString(), out p2); int Cello = p2;
-            int p3 = 0;            int.TryParse(dv5[0]["Value3"].ToString(), out p3); int DrillHoles = p3;
-            int p4 = 0;            int.TryParse(dv5[0]["Value4"].ToString(), out p4); int Pad = p4;
-            int p5 = 0;            int.TryParse(dv5[0]["Value5"].ToString(), out p5); int Trim = p5;
 
-            if(dv5[0]["Value3"].ToString() != null && dv5[0]["Value3"].ToString() == "4 -5") { DrillHoles = 4; }
+            // *******************************************************************
+            // If they didn't use the "Finishing" feature, don't do the following:
+            // *******************************************************************
 
-            // Bindery RunTime calculation:
+            if (dv5.Count > 0)      
 
-            BindRunTime = 0.0F; BindRunCost = 0.0F;
-
-            cmd = $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'  AND Quantity = {Books};"
-                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'PAD'   AND Quantity = {Pad};"
-                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'CELLO' AND Quantity = {Cello};"
-                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'DRILL HOLES' AND Quantity = {DrillHoles};"
-                + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'  AND Quantity = {Trim};";
-
-            SqlDataAdapter da01 = new SqlDataAdapter(cmd,conn);
-            DataSet  ds01       = new DataSet(); da01.Fill(ds01);
-            DataView dv01       = ds01.Tables[0].DefaultView;
-            DataView dv02       = ds01.Tables[1].DefaultView;
-            DataView dv03       = ds01.Tables[2].DefaultView;
-            DataView dv04       = ds01.Tables[3].DefaultView;
-            DataView dv05       = ds01.Tables[4].DefaultView;
-
-            if (Books > 0)
-            {   float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
-                float Production_Goal = float.Parse(dv01[0]["Production_Goal"].ToString());
-                float DollarsPerHour  = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
-                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
-            }
-
-            if (Pad > 0)
             {
-                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Pad.ToString());
-                float Production_Goal = float.Parse(dv02[0]["Production_Goal"].ToString());
-                float DollarsPerHour  = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
-                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
-            }
+                int BindSetupMinutes = int.Parse(dv5[0]["BindSetupMin"].ToString());
+                int p1 = 0; int.TryParse(dv5[0]["Value1"].ToString(), out p1); int Books = p1;
+                int p2 = 0; int.TryParse(dv5[0]["Value2"].ToString(), out p2); int Cello = p2;
+                int p3 = 0; int.TryParse(dv5[0]["Value3"].ToString(), out p3); int DrillHoles = p3;
+                int p4 = 0; int.TryParse(dv5[0]["Value4"].ToString(), out p4); int Pad = p4;
+                int p5 = 0; int.TryParse(dv5[0]["Value5"].ToString(), out p5); int Trim = p5;
 
-            if (Cello > 0)
-            {
-                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Cello.ToString());
-                float Production_Goal = float.Parse(dv03[0]["Production_Goal"].ToString());
-                float DollarsPerHour  = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
-                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
-            }
+                if (dv5[0]["Value3"].ToString() != null && dv5[0]["Value3"].ToString() == "4 -5") { DrillHoles = 4; }
 
-            if (DrillHoles > 0)
-            {
-                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(DrillHoles.ToString());
-                float Production_Goal = float.Parse(dv04[0]["Production_Goal"].ToString());
-                float DollarsPerHour  = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
-                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
-            }
+                // Bindery RunTime calculation:
 
-            if (Trim > 0)
-            {
-                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Trim.ToString());
-                float Production_Goal = float.Parse(dv05[0]["Production_Goal"].ToString());
-                float DollarsPerHour  = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
-                BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                BindRunTime = 0.0F; BindRunCost = 0.0F;
+
+                cmd = $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'  AND Quantity = {Books};"
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'PAD'   AND Quantity = {Pad};"
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'CELLO' AND Quantity = {Cello};"
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'DRILL HOLES' AND Quantity = {DrillHoles};"
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'  AND Quantity = {Trim};";
+
+                SqlDataAdapter da01 = new SqlDataAdapter(cmd, conn);
+                DataSet ds01 = new DataSet(); da01.Fill(ds01);
+                DataView dv01 = ds01.Tables[0].DefaultView;
+                DataView dv02 = ds01.Tables[1].DefaultView;
+                DataView dv03 = ds01.Tables[2].DefaultView;
+                DataView dv04 = ds01.Tables[3].DefaultView;
+                DataView dv05 = ds01.Tables[4].DefaultView;
+
+                if (Books > 0)
+                {
+                    float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
+                    float Production_Goal = float.Parse(dv01[0]["Production_Goal"].ToString());
+                    float DollarsPerHour = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
+                    BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                }
+
+                if (Pad > 0)
+                {
+                    float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Pad.ToString());
+                    float Production_Goal = float.Parse(dv02[0]["Production_Goal"].ToString());
+                    float DollarsPerHour = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
+                    BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                }
+
+                if (Cello > 0)
+                {
+                    float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Cello.ToString());
+                    float Production_Goal = float.Parse(dv03[0]["Production_Goal"].ToString());
+                    float DollarsPerHour = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
+                    BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                }
+
+                if (DrillHoles > 0)
+                {
+                    //                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(DrillHoles.ToString());
+                    float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
+                    float Production_Goal = float.Parse(dv04[0]["Production_Goal"].ToString());
+                    float DollarsPerHour = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
+                    BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                }
+
+                if (Trim > 0)
+                {
+                    //                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Trim.ToString());
+                    float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
+                    float Production_Goal = float.Parse(dv05[0]["Production_Goal"].ToString());
+                    float DollarsPerHour = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
+                    BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                }
             }
 
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
@@ -1904,10 +1916,15 @@ namespace ProDocEstimate
         }
 
         private void Calc_Click(object sender, RoutedEventArgs e)
-        {   if(SelectedQty == Qty1) { Q1(); }
-            else if(SelectedQty == Qty2) { Q2(); }
-            else if(SelectedQty == Qty3) {  Q3(); }
-            else if(SelectedQty == Qty4 ) { Q4(); }
+        {   
+            //if(SelectedQty == Qty1) { Q1(); }
+            //else if(SelectedQty == Qty2) { Q2(); }
+            //else if(SelectedQty == Qty3) {  Q3(); }
+            //else if(SelectedQty == Qty4 ) { Q4(); }
+            if (Qty1 > 0) { SelectedQty = Qty1; Q1(); }
+            if (Qty2 > 0) { SelectedQty = Qty2; Q2(); }
+            if (Qty3 > 0) { SelectedQty = Qty3; Q3(); }
+            if (Qty4 > 0) { SelectedQty = Qty4; Q4(); }
         }
     }
 }

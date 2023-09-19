@@ -7,7 +7,9 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using Xceed.Wpf.Toolkit.Panels;
 
 namespace ProDocEstimate.Views
 {
@@ -40,18 +42,22 @@ namespace ProDocEstimate.Views
         public DataTable? dt;
         public SqlCommand? scmd;
 
+        // Store values entered into the two radiobutton parameter controls
+        private string oe; public string OE { get { return oe; } set { oe = value; OnPropertyChanged(); } }
+        private string pp; public string PP { get { return pp; } set { pp = value; OnPropertyChanged(); } }
+
         private int    max;         public int Max          { get { return max;       } set { max         = value; OnPropertyChanged(); } }
         private string pressSize;   public string PressSize { get { return pressSize; } set { pressSize   = value; OnPropertyChanged(); } }
         private string quoteNum;    public string QuoteNum  { get { return quoteNum;  } set { quoteNum    = value; OnPropertyChanged(); } }
         private float  flatTotal;   public float FlatTotal  { get { return flatTotal; } set { flatTotal   = value; OnPropertyChanged(); } }
 
-        private int orderEntry;     public int OrderEntry   { get { return orderEntry;} set { orderEntry  = value; OnPropertyChanged(); } }
-        private int plateChg;       public int PlateChg     { get { return plateChg;  } set { plateChg    = value; OnPropertyChanged(); } }
-        private int prePress;       public int PREPress     { get { return prePress;  } set { prePress    = value; OnPropertyChanged(); } }
+        private int   orderEntry;   public int OrderEntry   { get { return orderEntry;} set { orderEntry  = value; OnPropertyChanged(); } }
+        private int   plateChg;     public int PlateChg     { get { return plateChg;  } set { plateChg    = value; OnPropertyChanged(); } }
+        private int   prePress;     public int PREPress     { get { return prePress;  } set { prePress    = value; OnPropertyChanged(); } }
 
-        private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
+        private float flatCharge;     public float FlatCharge     { get { return flatCharge;     } set { flatCharge = value; OnPropertyChanged(); } }
         private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
-        private float flatChargePct; public float FlatChargePct { get { return flatChargePct; } set { flatChargePct = value; OnPropertyChanged(); } }
+        private float flatChargePct;  public float FlatChargePct  { get { return flatChargePct;  } set { flatChargePct = value; OnPropertyChanged(); } }
         private float calculatedflatCharge; public float CalculatedFlatCharge { get { return calculatedflatCharge; } set { calculatedflatCharge = value; OnPropertyChanged(); } }
 
         private float runCharge; public float RunCharge { get { return runCharge; } set { runCharge = value; OnPropertyChanged(); } }
@@ -144,15 +150,14 @@ namespace ProDocEstimate.Views
 
         private void LoadMaxima()
         {
-            // Retrieve value for Backer if one was previously entered 
-            string str = $"SELECT F_TYPE, MAX(Number) AS Max"
-                + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'PREPRESS-OE' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
+            string str = $"SELECT MAX(Number) AS Max FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'PREPRESS-OE' AND Press_Size = '{PressSize}' AND F_TYPE = 'PLATE CHG'";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             DataView dv = new DataView(dt);
-            dv.RowFilter = "F_TYPE='OE'";        M1.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='PLATE CHG'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='PREPRESS'";  M3.Maximum = int.Parse(dv[0]["Max"].ToString());
+            //dv.RowFilter = "F_TYPE='OE'";        M1.Maximum = int.Parse(dv[0]["Max"].ToString());
+            //dv.RowFilter = "F_TYPE='PLATE CHG'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
+            //dv.RowFilter = "F_TYPE='PREPRESS'";  M3.Maximum = int.Parse(dv[0]["Max"].ToString());
+            M2.Maximum = int.Parse(dv[0]["Max"].ToString());
         }
 
         private void LoadData()
@@ -163,17 +168,25 @@ namespace ProDocEstimate.Views
             if (dt.Rows.Count == 0) return;
             DataView dv = new DataView(dt);
 
-            int I1 = 0;
+            // Value1 contains the text for the first radiobutton; value3 contains the text for the second radiobutton
+
+            string  oeval = dv[0]["Value1"].ToString();
+            switch (oeval)
+            {   case "New":    OE1.IsChecked = true; break;
+                case "Exact":  OE2.IsChecked = true; break;
+                case "Change": OE3.IsChecked = true; break;
+            }
+
+            string  ppval = dv[0]["Value3"].ToString();
+            switch (ppval)
+            {   case "New":    PP1.IsChecked = true; break;
+                case "Exact":  PP2.IsChecked = true; break;
+                case "Change": PP3.IsChecked = true; break;
+            }
+
             int I2 = 0;
-            int I3 = 0;
-
-            int.TryParse(dv[0]["Value1"].ToString(), out I1);
             int.TryParse(dv[0]["Value2"].ToString(), out I2);
-            int.TryParse(dv[0]["Value3"].ToString(), out I3);
-
-            OrderEntry = I1;
             PlateChg = I2;
-            PREPress = I3;
 
             // Load percentages and recalculate all displayed property values
 
@@ -186,21 +199,21 @@ namespace ProDocEstimate.Views
             float F7 = 0.0F;
             float F8 = 0.0F;
 
-            float.TryParse(dv[0]["FlatChargePct"].ToString(), out F1); FlatChargePct = F1;
-            float.TryParse(dv[0]["RunChargePct"].ToString(), out F2); RunChargePct = F2;
-            float.TryParse(dv[0]["PlateChargePct"].ToString(), out F3); PlateChargePct = F3;
-            float.TryParse(dv[0]["FinishChargePct"].ToString(), out F4); FinishChargePct = F4;
-            float.TryParse(dv[0]["PressChargePct"].ToString(), out F5); PressChargePct = F5;
+            float.TryParse(dv[0]["FlatChargePct"]   .ToString(), out F1); FlatChargePct = F1;
+            float.TryParse(dv[0]["RunChargePct"]    .ToString(), out F2); RunChargePct = F2;
+            float.TryParse(dv[0]["PlateChargePct"]  .ToString(), out F3); PlateChargePct = F3;
+            float.TryParse(dv[0]["FinishChargePct"] .ToString(), out F4); FinishChargePct = F4;
+            float.TryParse(dv[0]["PressChargePct"]  .ToString(), out F5); PressChargePct = F5;
             float.TryParse(dv[0]["ConvertChargePct"].ToString(), out F6); ConvChargePct = F6;
-            float.TryParse(dv[0]["TotalFlatChg"].ToString(), out F7); FlatTotal = F7;
-            float.TryParse(dv[0]["PerThousandChg"].ToString(), out F8); CalculatedRunCharge = F8;
+            float.TryParse(dv[0]["TotalFlatChg"]    .ToString(), out F7); FlatTotal = F7;
+            float.TryParse(dv[0]["PerThousandChg"]  .ToString(), out F8); CalculatedRunCharge = F8;
 
             int l1; int.TryParse(dv[0]["PRESS_ADDL_MIN"].ToString(), out l1); LabPS = l1;
-            int l2; int.TryParse(dv[0]["COLL_ADDL_MIN"].ToString(), out l2); LabCS = l2;
-            int l3; int.TryParse(dv[0]["BIND_ADDL_MIN"].ToString(), out l3); LabBS = l3;
+            int l2; int.TryParse(dv[0]["COLL_ADDL_MIN"] .ToString(), out l2); LabCS = l2;
+            int l3; int.TryParse(dv[0]["BIND_ADDL_MIN"] .ToString(), out l3); LabBS = l3;
             int l4; int.TryParse(dv[0]["PRESS_SLOW_PCT"].ToString(), out l4); LabPSL = l4;
-            int l5; int.TryParse(dv[0]["COLL_SLOW_PCT"].ToString(), out l5); LabCSL = l5;
-            int l6; int.TryParse(dv[0]["BIND_SLOW_PCT"].ToString(), out l6); LabBSL = l6;
+            int l5; int.TryParse(dv[0]["COLL_SLOW_PCT"] .ToString(), out l5); LabCSL = l5;
+            int l6; int.TryParse(dv[0]["BIND_SLOW_PCT"] .ToString(), out l6); LabBSL = l6;
 
             GetCharges();   // Calls CalcTotal at the end
         }
@@ -322,7 +335,7 @@ namespace ProDocEstimate.Views
                 + "   PressSetupMin,  PressSlowPct,      CollSetupMin,    CollSlowPct,        BindSetupMin,        BindSlowPct   ) "
                 + " VALUES ( "
                 + $"'{QuoteNum}',    'PrePress',         7,"
-                + $" 'OE',           'Plate Chg',       'PrePress',     '{OrderEntry}',     '{PlateChg}',        '{PREPress}',"
+                + $" 'OE',           'Plate Chg',       'PrePress',     '{OE}',             '{PlateChg}',        '{PP}',"
                 + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', {SlowdownTotal}, "
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
                 + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
@@ -342,5 +355,20 @@ namespace ProDocEstimate.Views
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { Close(); }
 
+        private void OE_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton li = (sender as RadioButton);
+            //            MessageBox.Show(li.Name.ToString() + "  " + li.Content.ToString());
+            //            OE = li.Name.ToString() + "/" + li.Content.ToString();
+            OE = li.Content.ToString();
+        }
+
+        private void PP1_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton li = (sender as RadioButton);
+            //            MessageBox.Show(li.Name.ToString() + "  " + li.Content.ToString());
+            //            PP = li.Name.ToString() + "/" + li.Content.ToString();
+            PP = li.Content.ToString();
+        }
     }
 }

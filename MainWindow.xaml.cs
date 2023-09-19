@@ -15,9 +15,9 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.8;
-            this.Width = this.Width *= 1.8;
-            this.Top = 50;
+            this.Height = this.Height *= 1.4;
+            this.Width = this.Width *= 1.4;
+            this.Top = 10;
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)
