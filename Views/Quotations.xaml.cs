@@ -32,6 +32,14 @@ namespace ProDocEstimate
         private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
         private string costMsg;       public string CostMsg       { get { return costMsg;        } set { costMsg        = value; OnPropertyChanged(); } }
 
+        private string oe;            public string OE            { get { return oe;             } set { oe             = value; OnPropertyChanged(); } }
+        private string pre;           public string Pre           { get { return pre;            } set { pre            = value; OnPropertyChanged(); } }
+
+        private float preRunTime;     public float PreRunTime     { get { return preRunTime;     } set { preRunTime     = value; OnPropertyChanged(); } }
+        private float preRunCost;     public float PreRunCost     { get { return preRunCost;     } set { preRunCost     = value; OnPropertyChanged(); } }
+        private float oeRunTime;      public float OERunTime      { get { return oeRunTime;      } set { oeRunTime      = value; OnPropertyChanged(); } }
+        private float oeRunCost;      public float OERunCost      { get { return oeRunCost;      } set { oeRunCost      = value; OnPropertyChanged(); } }
+
         private float pressSetupTime; public float PressSetupTime { get { return pressSetupTime; } set { pressSetupTime = value; OnPropertyChanged(); } }
         private float pressSetupCost; public float PressSetupCost { get { return pressSetupCost; } set { pressSetupCost = value; OnPropertyChanged(); } }
         private float pressRunTime;   public float PressRunTime   { get { return pressRunTime;   } set { pressRunTime   = value; OnPropertyChanged(); } }
@@ -1882,6 +1890,27 @@ namespace ProDocEstimate
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
             }
+
+            // Fill in rows 4 and 5
+            Debugger.Break();
+
+            cmd = "SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'PREPRESS' AND QUOTE_NUM = '{QUOTE_NUM}'";
+            DataAdapter da6 = new SqlDataAdapter(cmd, conn);
+            DataSet ds6 = new DataSet(); da6.Fill(ds6); DataView dv6 = ds6.Tables[0].DefaultView;
+            Pre = dv6[0]["Value1"].ToString();
+            OE  = dv6[0]["Value3"].ToString();
+
+            cmd = "SELECT * FROM [ESTIMATING].[dbo].[PrePressOESpeeds]";
+            DataAdapter da7 = new SqlDataAdapter(cmd, conn);
+            DataSet ds7 = new DataSet(); da7.Fill(ds7); DataView dv7 = ds7.Tables[0].DefaultView;
+
+            dv6.RowFilter = $"F_TYPE = 'PREPRESS' AND NEC = '{Pre}'";
+            PreRunTime = float.Parse(dv6[0]["Hours"].ToString());
+            PreRunCost = float.Parse(dv6[0]["DollarsPerHr"].ToString());
+
+            dv6.RowFilter = $"F_TYPE = 'OE'       AND NEC = '{OE}'";
+            OERunTime  = float.Parse(dv6[0]["Hours"].ToString());
+            OERunCost  = float.Parse(dv6[0]["DollarsPerHr"].ToString());
 
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }

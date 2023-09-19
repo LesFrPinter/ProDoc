@@ -13,7 +13,9 @@ namespace ProDocEstimate
         private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
 		private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
 
-        public void OnLoad(object sender, RoutedEventArgs e)
+		private static int featureZoom; public static int FeatureZoom { get { return featureZoom; } set { featureZoom = value; } }
+
+		public void OnLoad(object sender, RoutedEventArgs e)
         {
             this.Height = this.Height *= 1.4;
             this.Width = this.Width *= 1.4;
@@ -140,5 +142,10 @@ namespace ProDocEstimate
 		private void mnuFeatureStandards_Click(object sender, RoutedEventArgs e) {
 			Feature_Standards fs = new Feature_Standards(); fs.ShowDialog();
     }
-  }
+
+        private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+			
+        }
+    }
 }

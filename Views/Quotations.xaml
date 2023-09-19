@@ -821,10 +821,10 @@
                                  Text="{Binding Path=Qty4, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty4" 
                                  Margin="0,4,0,4" />
 
-                        <Button  x:Name="S1" Grid.Row="1" Grid.Column="2"  Click="S1_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
-                        <Button  x:Name="S2" Grid.Row="1" Grid.Column="4" Click="S2_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select"  Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+                    <!--<Button  x:Name="S1" Grid.Row="1" Grid.Column="2"  Click="S1_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+                        <Button  x:Name="S2" Grid.Row="1" Grid.Column="4"  Click="S2_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select"  Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
                         <Button  x:Name="S3" Grid.Row="1" Grid.Column="5"  Click="S3_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
-                        <Button  x:Name="S4" Grid.Row="1" Grid.Column="6"  Click="S4_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
+                        <Button  x:Name="S4" Grid.Row="1" Grid.Column="6"  Click="S4_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />-->
 
                         <Button  x:Name="Calc" Grid.Row="1" Grid.Column="8" Content="Calculate" VerticalAlignment="Bottom" Margin="0 0 0 2" Padding="4" Click="Calc_Click" />
 
@@ -1687,11 +1687,25 @@
                                 <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="2" Width="60" 
                                          FontSize="12" Foreground="Blue" />
+
                                 <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />
                                 <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="4" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                
+                                <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="3" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="4" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="3" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="4" Width="60" 
                                          FontSize="12" Foreground="Blue" />
 
                             </Grid>

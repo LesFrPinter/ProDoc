@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Printing;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -74,6 +75,9 @@ namespace ProDocEstimate.Views
         private float total; public float Total { get { return total; } set { total = value; OnPropertyChanged(); } }
         private string cmd; public string Cmd { get { return cmd; } set { cmd = value; OnPropertyChanged(); } }
         private string backer; public string Backer { get { return backer; } set { backer = value; OnPropertyChanged(); } }     // Read from Quote_Details
+
+        private int backerCount; public int BackerCount { get { return backerCount; } set { backerCount = value; OnPropertyChanged(); } }
+        private int totalCount;  public int TotalCount  { get { return totalCount;  } set { totalCount  = value; OnPropertyChanged(); } }
 
         private float backerFlatCharge; public float BackerFlatCharge { get { return backerFlatCharge; } set { backerFlatCharge = value; OnPropertyChanged(); } }            // Add to other charges in CalcTotal()
         private float backerRunCharge; public float BackerRunCharge { get { return backerRunCharge; } set { backerRunCharge = value; OnPropertyChanged(); } }            //               "
@@ -287,11 +291,9 @@ namespace ProDocEstimate.Views
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
-            //if (backer == null) return;
-            //string chosen = ((System.Windows.FrameworkElement)sender).Name;
-            int backercount = (Backer.ToString().Length > 0) ? 1 : 0;
-            int totalcount = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + backercount;
-            if (totalcount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
+            BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
+            TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + BackerCount;
+            if (TotalCount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
             GetCharges();
             CalcTotal();
         }
@@ -335,11 +337,11 @@ namespace ProDocEstimate.Views
             for (int i = 0; i < dv.Count; i++)
             {
                 float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge += t1;
-                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),  out t2); BaseRunCharge += t2;
+                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"] .ToString(), out t2); BaseRunCharge += t2;
                 float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3;
-                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"].ToString(),   out t4); BaseConvCharge += t4;
-                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"].ToString(),  out t5); BasePlateCharge += t5;
-                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"].ToString(),  out t6); BasePressCharge += t6;
+                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"]  .ToString(), out t4); BaseConvCharge += t4;
+                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"] .ToString(), out t5); BasePlateCharge += t5;
+                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"] .ToString(), out t6); BasePressCharge += t6;
 
                 // Load labor costs
                 int l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup += l1;
@@ -349,6 +351,13 @@ namespace ProDocEstimate.Views
                 int l5 = 0; int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown += l5;
                 int l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"] .ToString(), out l6); BaseBinderySlowdown += l6;
             }
+            // Adjust the Base Plate Charge to reflect the use of a backer:
+            cmd = "SELECT * FROM [ESTIMATING].[dbo].[FEATURES]"
+               + $" WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE   = 'STD' AND Number = 1";
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
+            DataView dv2 = dt.DefaultView;
+            float BackerCost = float.Parse(dv2[0]["PLATE_MATL"].ToString());
+            BasePlateCharge += (BackerCount * BackerCost);
 
             CalcTotal();
         }
