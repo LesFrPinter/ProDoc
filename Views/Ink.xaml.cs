@@ -241,8 +241,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.2;
-            this.Width = this.Width *= 1.2;
+            this.Height = this.Height *= 1.6;
+            this.Width = this.Width *= 1.6;
             Top = 50;
         }
 
@@ -255,6 +255,7 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, cn); DataTable dt = new DataTable(); da.Fill(dt);
             MaxColors = Int32.Parse(dt.Rows[0]["Number"].ToString());
 
+            Backer = "";
             // Retrieve value for Backer if one was previously entered 
             str = $"SELECT PARAM1, TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
             da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
@@ -286,11 +287,11 @@ namespace ProDocEstimate.Views
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
-            if (backer == null) return;
-            string chosen = ((System.Windows.FrameworkElement)sender).Name;
+            //if (backer == null) return;
+            //string chosen = ((System.Windows.FrameworkElement)sender).Name;
             int backercount = (Backer.ToString().Length > 0) ? 1 : 0;
             int totalcount = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + backercount;
-            if (totalcount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); }
+            if (totalcount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
             GetCharges();
             CalcTotal();
         }
@@ -334,11 +335,11 @@ namespace ProDocEstimate.Views
             for (int i = 0; i < dv.Count; i++)
             {
                 float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge += t1;
-                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"].ToString(), out t2); BaseRunCharge += t2;
+                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),  out t2); BaseRunCharge += t2;
                 float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3;
-                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"].ToString(), out t4); BaseConvCharge += t4;
-                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"].ToString(), out t5); BasePlateCharge += t5;
-                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"].ToString(), out t6); BasePressCharge += t6;
+                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"].ToString(),   out t4); BaseConvCharge += t4;
+                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"].ToString(),  out t5); BasePlateCharge += t5;
+                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"].ToString(),  out t6); BasePressCharge += t6;
 
                 // Load labor costs
                 int l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup += l1;
@@ -354,12 +355,12 @@ namespace ProDocEstimate.Views
 
         private void CalcTotal()
         {
-            CalculatedFlatCharge = BaseFlatCharge * (1 + FlatChargePct / 100.00F);
-            CalculatedRunCharge = BaseRunCharge * (1 + RunChargePct / 100.00F);
-            CalculatedPlateCharge = BasePlateCharge * (1 + PlateChargePct / 100.00F);
+            CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100.00F);
+            CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct    / 100.00F);
+            CalculatedPlateCharge  = BasePlateCharge  * (1 + PlateChargePct  / 100.00F);
             CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100.00F);
-            CalculatedPressCharge = BasePressCharge * (1 + PressChargePct / 100.00F);
-            CalculatedConvCharge = BaseConvCharge * (1 + ConvChargePct / 100.00F);
+            CalculatedPressCharge  = BasePressCharge  * (1 + PressChargePct  / 100.00F);
+            CalculatedConvCharge   = BaseConvCharge   * (1 + ConvChargePct   / 100.00F);
 
             FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 

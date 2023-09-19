@@ -143,8 +143,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.2;
-            this.Width = this.Width *= 1.2;
+            this.Height = this.Height *= 1.6;
+            this.Width = this.Width *= 1.6;
             Top = 50;
         }
 
@@ -186,7 +186,7 @@ namespace ProDocEstimate.Views
 
             int I2 = 0;
             int.TryParse(dv[0]["Value2"].ToString(), out I2);
-            PlateChg = I2;
+            PlateChg = I2;      // Plate Changes
 
             // Load percentages and recalculate all displayed property values
 
@@ -225,10 +225,8 @@ namespace ProDocEstimate.Views
             string cmd = $"SELECT {FieldList}"
                        + $"  FROM [ESTIMATING].[dbo].[FEATURES]"
                        + $" WHERE CATEGORY = 'PREPRESS-OE' AND PRESS_SIZE = '{PressSize}'"
-                       + $"   AND ((F_TYPE = 'OE'         AND Number = {OrderEntry} )"
-                       + $"    OR  (F_TYPE = 'PLATE CHG'  AND Number = {PlateChg}   )"
-                       + $"    OR  (F_TYPE = 'PREPRESS'   AND Number = {PREPress}   ))"
-                       + " ORDER BY F_TYPE, NUMBER";
+                       + $"   AND  (F_TYPE = 'PLATE CHG'   AND Number = {PlateChg} )"
+                       + "  ORDER BY F_TYPE, NUMBER";
 
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
@@ -267,6 +265,7 @@ namespace ProDocEstimate.Views
                 int l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"].ToString(), out l6); BaseBinderySlowdown = l6;
 
             }
+//            BasePlateCharge = BasePlateCharge * PlateChg;  // GET THIS FROM A TABLE IN THE NEAR FUTURE
 
             CalcTotal();
         }
