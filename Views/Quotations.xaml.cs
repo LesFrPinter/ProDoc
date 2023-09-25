@@ -32,8 +32,15 @@ namespace ProDocEstimate
         private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
         private string costMsg;       public string CostMsg       { get { return costMsg;        } set { costMsg        = value; OnPropertyChanged(); } }
 
+        private float baseShip; public float BaseShip { get { return baseShip; } set { baseShip = value; OnPropertyChanged(); } }
+        private float addlShip; public float AddlShip { get { return addlShip; } set { addlShip = value; OnPropertyChanged(); } }
+        private int   numDrops; public int   NumDrops { get { return numDrops; } set { numDrops = value; OnPropertyChanged(); } }
+
         private string oe;            public string OE            { get { return oe;             } set { oe             = value; OnPropertyChanged(); } }
         private string pre;           public string Pre           { get { return pre;            } set { pre            = value; OnPropertyChanged(); } }
+
+        private float shipTime = 0.15F; public float ShipTime { get { return shipTime; } set { shipTime = value; OnPropertyChanged(); } }
+        private float shipCost = 25.0F; public float ShipCost { get { return shipCost; } set { shipCost = value; OnPropertyChanged(); } }
 
         private float preRunTime;     public float PreRunTime     { get { return preRunTime;     } set { preRunTime     = value; OnPropertyChanged(); } }
         private float preRunCost;     public float PreRunCost     { get { return preRunCost;     } set { preRunCost     = value; OnPropertyChanged(); } }
@@ -256,6 +263,7 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Combo");
             lstAvailable.Items.Add("Strike In");
             lstAvailable.Items.Add("Security");
+            lstAvailable.Items.Add("Shipping");
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
@@ -333,7 +341,7 @@ namespace ProDocEstimate
             conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY, Param1, Param2, Param3, Value1, Value2, Value3 )"
-                        + $" VALUES ( '{QUOTE_NUM}', '7', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', '1', '0', '1' )";
+                        + $" VALUES ( '{QUOTE_NUM}', '8', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', '1', '0', '1' )";
             //Clipboard.SetText(cmd);
 
             conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
@@ -1256,6 +1264,13 @@ namespace ProDocEstimate
                         Security security = new Security(PRESSSIZE, QUOTE_NUM); security.ShowDialog();
                         break;
                     }
+
+                case "Shipping":
+                    {
+                        Shipping sh = new Shipping(QUOTE_NUM); sh.ShowDialog();
+                        break;
+                    }
+
             }
 
             CheckRows();
@@ -1892,9 +1907,8 @@ namespace ProDocEstimate
             }
 
             // Fill in rows 4 and 5
-            Debugger.Break();
 
-            cmd = "SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'PREPRESS' AND QUOTE_NUM = '{QUOTE_NUM}'";
+            cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'PREPRESS' AND QUOTE_NUM = '{QUOTE_NUM}'";
             DataAdapter da6 = new SqlDataAdapter(cmd, conn);
             DataSet ds6 = new DataSet(); da6.Fill(ds6); DataView dv6 = ds6.Tables[0].DefaultView;
             Pre = dv6[0]["Value1"].ToString();
@@ -1904,13 +1918,26 @@ namespace ProDocEstimate
             DataAdapter da7 = new SqlDataAdapter(cmd, conn);
             DataSet ds7 = new DataSet(); da7.Fill(ds7); DataView dv7 = ds7.Tables[0].DefaultView;
 
-            dv6.RowFilter = $"F_TYPE = 'PREPRESS' AND NEC = '{Pre}'";
-            PreRunTime = float.Parse(dv6[0]["Hours"].ToString());
-            PreRunCost = float.Parse(dv6[0]["DollarsPerHr"].ToString());
+            dv7.RowFilter = $"F_TYPE = 'PREPRESS' AND NEC = '{Pre}'";
+            PreRunTime = float.Parse(dv7[0]["Hours"].ToString());
+            PreRunCost = float.Parse(dv7[0]["DollarsPerHr"].ToString());
+            PreRunCost *= PreRunTime;
 
-            dv6.RowFilter = $"F_TYPE = 'OE'       AND NEC = '{OE}'";
-            OERunTime  = float.Parse(dv6[0]["Hours"].ToString());
-            OERunCost  = float.Parse(dv6[0]["DollarsPerHr"].ToString());
+            dv7.RowFilter = $"F_TYPE = 'OE'       AND NEC = '{OE}'";
+            OERunTime  = float.Parse(dv7[0]["Hours"].ToString());
+            OERunCost  = float.Parse(dv7[0]["DollarsPerHr"].ToString());
+            OERunCost *= OERunTime;
+
+            cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'Shipping' AND QUOTE_NUM = '{QUOTE_NUM}'";
+            DataAdapter da8 = new SqlDataAdapter(cmd, conn);
+            DataSet ds8 = new DataSet(); da8.Fill(ds8); DataView dv8 = ds8.Tables[0].DefaultView;
+            BaseShip = float.Parse(dv8[0]["Value1"].ToString());
+            AddlShip = float.Parse(dv8[0]["Value2"].ToString());
+            NumDrops = int  .Parse(dv8[0]["Value3"].ToString());
+
+            ShipCost = BaseShip + (AddlShip * NumDrops);
+            ShipTime = 15 + (NumDrops * 5); // minutes
+            ShipTime /= 60.0F;
 
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }
