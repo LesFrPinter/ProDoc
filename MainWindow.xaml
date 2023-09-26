@@ -39,14 +39,8 @@
             </MenuItem>
                 <MenuItem Header="_Screens" VerticalAlignment="Center" Background="LightGray">
                 <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click"         />
-                <!--<MenuItem x:Name="mnuNewEstimate"       Header="New Estimate"       Click="mnuNewEstimate_Click"        />-->
                 <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"          />
-                <MenuItem x:Name="mnuStandards"         Header="Standards" >
-                <MenuItem x:Name="mnuPressStandards"	Header="Press Standards"    Click="mnuPressStandards_Click"	    />
-                <MenuItem x:Name="mnuCollatorStandards" Header="Collator Standards" Click="mnuCollatorStandards_Click"  />
-                <MenuItem x:Name="mnuFeatureStandards"  Header="Feature Standards"  Click="mnuFeatureStandards_Click"   />
-            </MenuItem>
-
+                <MenuItem x:Name="mnuConverter"         Header="Fraction Converter" Click="mnuConverter_Click" />
             </MenuItem>
         </Menu>
 
@@ -65,11 +59,6 @@
                 <DropShadowEffect Direction="320" ShadowDepth="15" BlurRadius="25" />
             </TextBox.Effect>
         </TextBox>
-
-            <!--<Label Grid.Row="2" HorizontalAlignment="Right" Margin="0 0 80 0" Content="Feature zoom %" />
-            <telerik:RadNumericUpDown 
-                Value="{Binding FeatureZoom}"
-                Grid.Row="2" HorizontalAlignment="Right" Minimum="100" Maximum="200" SmallChange="10" LargeChange="25" Margin="0 2 10 2" NumberDecimalDigits="0" ValueChanged="RadNumericUpDown_ValueChanged" />-->
 
         </Grid>
 

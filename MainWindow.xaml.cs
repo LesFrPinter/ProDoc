@@ -143,9 +143,15 @@ namespace ProDocEstimate
 			Feature_Standards fs = new Feature_Standards(); fs.ShowDialog();
     }
 
-        private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {
+        //private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        //{
 			
+        //}
+
+        private void mnuConverter_Click(object sender, RoutedEventArgs e)
+        {
+            FractionToDecimalConverter FtoD = new FractionToDecimalConverter();
+			FtoD.ShowDialog();
         }
     }
 }

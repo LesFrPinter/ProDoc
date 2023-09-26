@@ -913,6 +913,23 @@
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
                                   SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" >
 
+                            <!--<DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding GSRowBackground}" Value="0">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                                        <GradientStop Offset="0" Color="#888888"/>
+                                                        <GradientStop Offset="1" Color="#FFFFF86E"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>-->
+
                             <DataGrid.Columns>
 
                                 <DataGridTextColumn Width="205" Binding="{Binding Path=Description}" >

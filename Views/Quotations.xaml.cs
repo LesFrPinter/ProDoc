@@ -13,8 +13,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Telerik.Windows.Controls.ColorEditor.Pad;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
@@ -1851,7 +1849,9 @@ namespace ProDocEstimate
                     + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'  AND Quantity = {Trim};";
 
                 SqlDataAdapter da01 = new SqlDataAdapter(cmd, conn);
+
                 DataSet  ds01 = new DataSet(); da01.Fill(ds01);
+
                 DataView dv01 = ds01.Tables[0].DefaultView;
                 DataView dv02 = ds01.Tables[1].DefaultView;
                 DataView dv03 = ds01.Tables[2].DefaultView;
@@ -1862,7 +1862,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
                     float Production_Goal = float.Parse(dv01[0]["Production_Goal"].ToString());
-                    float DollarsPerHour = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour  = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1870,7 +1870,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Pad.ToString());
                     float Production_Goal = float.Parse(dv02[0]["Production_Goal"].ToString());
-                    float DollarsPerHour = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour  = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1878,7 +1878,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Cello.ToString());
                     float Production_Goal = float.Parse(dv03[0]["Production_Goal"].ToString());
-                    float DollarsPerHour = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour  = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1886,7 +1886,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
                     float Production_Goal = float.Parse(dv04[0]["Production_Goal"].ToString());
-                    float DollarsPerHour = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour  = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1894,22 +1894,30 @@ namespace ProDocEstimate
                 {
                     float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
                     float Production_Goal = float.Parse(dv05[0]["Production_Goal"].ToString());
-                    float DollarsPerHour = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour  = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
             }
 
-            cmd = "SELECT Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'";
+            // --------------------------------------------------------
+            // TODO: NOTE: Does it matter whether "{Book}" is 25 or 50?
+            // --------------------------------------------------------
+
+            cmd = $"SELECT Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'";
             SqlDataAdapter da10 = new SqlDataAdapter(cmd, conn);
-            DataSet ds10 = new DataSet(); da10.Fill(ds10);
+            DataSet ds10  = new DataSet(); da10.Fill(ds10);
             DataView dv10 = ds10.Tables[0].DefaultView;
 
-            float bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F;
-            BindSetupTime = bindmins;
-            BindSetupCost = float.Parse(dv10[0]["dollars_per_hr"].ToString()) * bindmins;
+            float bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F; // TODO: This uses the value (currently 12) of Quote_Details .. Category = "Finishing"
+            BindSetupTime  = bindmins;
+            BindSetupCost  = float.Parse(dv10[0]["Dollars_per_hr"].ToString()) * bindmins;
+
+            // -----------------------------------------------------------------------
+            // TODO: Do the same thing for "CELLO"  (adding AND "Quantity = {Cello}" ?
+            // -----------------------------------------------------------------------
+
 
             // Fill in rows 4 and 5
-
             cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'PREPRESS' AND QUOTE_NUM = '{QUOTE_NUM}'";
             DataAdapter da6 = new SqlDataAdapter(cmd, conn);
             DataSet ds6 = new DataSet(); da6.Fill(ds6); DataView dv6 = ds6.Tables[0].DefaultView;

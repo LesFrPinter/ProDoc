@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using SharpDX;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -22,6 +24,9 @@ namespace ProDocEstimate.Views
         public DataTable? dt;
         public SqlCommand? scmd;
         public DataView? dv;
+
+        private float linearInchCostCello; public float LinearInchCostCello { get { return linearInchCostCello; } set { linearInchCostCello = value; OnPropertyChanged(); } }
+        private float linearInchCostBook;  public float LinearInchCostBook  { get { return linearInchCostBook;  } set { linearInchCostBook  = value; OnPropertyChanged(); } }
 
         private int    max;         public int    Max         { get { return max;           } set { max = value;         OnPropertyChanged(); } }
         private string pressSize;   public string PressSize   { get { return pressSize;     } set { pressSize = value;   OnPropertyChanged(); } }
@@ -115,8 +120,22 @@ namespace ProDocEstimate.Views
             CollatorCut = COLLATORCUT;
             RollWidth   = ROLLWIDTH;
 
-            float converted = 5.5F;     //TODO: Convert the string containing the number to decimal
-            float linearfeet = converted / 12.0F;
+            StringToNumber sTOn = new StringToNumber();
+            float linearfeet    = sTOn.Convert(COLLATORCUT) / 12.0F;
+
+            // Look up the LinearInchCost from the Bindery_Materials table and store it in Value4.
+            // It will be read when Labor Costs are being calculated.
+
+            SqlConnection conn = new(ConnectionString);
+
+            string cmd =  "SELECT * FROM [ESTIMATING].[dbo].[Bindery_Materials] WHERE Category = 'Finishing' AND F_TYPE = 'Cello' "
+                       + $" AND {RollWidth} BETWEEN MinRollWidth AND MaxRollWidth";
+
+            SqlDataAdapter da = new(cmd, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt); DataView dv2 = dt.DefaultView;
+            LinearInchCostCello = float.Parse(dv2[0][6].ToString()); // Store in Value6
+
+            da.SelectCommand.CommandText = cmd.Replace("Cello", "Book"); dt.Clear(); da.Fill(dt); DataView dv3 = dt.DefaultView;
+            LinearInchCostBook  = float.Parse(dv2[0][6].ToString()); // Store in Value7
 
             LoadDropDowns();
             LoadData();
@@ -138,18 +157,19 @@ namespace ProDocEstimate.Views
 
             // Make the '4-5' entry the last one in the list. Sorting in alphabetical order doesn't work here.
             string str = $"SELECT F_TYPE, CONVERT(VARCHAR(10),CONVERT(INT,NUMBER)) AS NUMBER FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND NUMBER NOT LIKE '%-%'"
-                       + $" UNION ALL SELECT F_TYPE,                                  NUMBER FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND (NUMBER LIKE '%-%') ORDER BY F_TYPE";
+                       + $" UNION ALL SELECT F_TYPE,                                  NUMBER FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND (NUMBER LIKE '%-%')  "
+                       +  " ORDER BY F_TYPE";
 
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); dt = new(); da.Fill(dt);
             dv = dt.DefaultView;
 
-            //NOTE: To let user blank a value that was previously entered, add "" to the top of each ItemsList.
-            dv.RowFilter = "F_TYPE='BOOK'"; for (int i = 0; i < dv.Count; i++) { M1.Items.Add(dv[i]["number"].ToString()); }
-            dv.RowFilter = "F_TYPE='CELLO'"; for (int i = 0; i < dv.Count; i++) { M2.Items.Add(dv[i]["number"].ToString()); }
-            dv.RowFilter = "F_TYPE='DRILL HOLES'"; for (int i = 0; i < dv.Count; i++) { M3.Items.Add(dv[i]["number"].ToString()); }
-            dv.RowFilter = "F_TYPE='PAD'"; for (int i = 0; i < dv.Count; i++) { M4.Items.Add(dv[i]["number"].ToString()); }
-            dv.RowFilter = "F_TYPE='TRIM'"; for (int i = 0; i < dv.Count; i++) { M5.Items.Add(dv[i]["number"].ToString()); }
+            //NOTE: In order to let the user blank a value that was previously entered, " " is the first item in each ItemsList in each of the five ComboBoxes.
+            dv.RowFilter = "F_TYPE='BOOK'";         for (int i = 0; i < dv.Count; i++) { M1.Items.Add(dv[i]["number"].ToString()); }
+            dv.RowFilter = "F_TYPE='CELLO'";        for (int i = 0; i < dv.Count; i++) { M2.Items.Add(dv[i]["number"].ToString()); }
+            dv.RowFilter = "F_TYPE='DRILL HOLES'";  for (int i = 0; i < dv.Count; i++) { M3.Items.Add(dv[i]["number"].ToString()); }
+            dv.RowFilter = "F_TYPE='PAD'";          for (int i = 0; i < dv.Count; i++) { M4.Items.Add(dv[i]["number"].ToString()); }
+            dv.RowFilter = "F_TYPE='TRIM'";         for (int i = 0; i < dv.Count; i++) { M5.Items.Add(dv[i]["number"].ToString()); }
         }
 
         private void LoadBaseValues()
@@ -187,23 +207,20 @@ namespace ProDocEstimate.Views
             da.Fill(dt);
             dv = dt.DefaultView;
 
-            float t1, t2, t3, t4, t5, t6 = 0.00F;
-            int l1, l2, l3, l4, l5, l6 = 0;
-
             for (int i = 0; i < dv.Count; i++)
-            { t1 = 0.00F; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge += t1;
-                t2 = 0.00F; float.TryParse(dv[i]["RUN_CHARGE"].ToString(), out t2); BaseRunCharge += t2;
-                t3 = 0.00F; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3;
-                t4 = 0.00F; float.TryParse(dv[i]["CONV_MATL"].ToString(), out t4); BaseConvCharge += t4;
-                t5 = 0.00F; float.TryParse(dv[i]["PLATE_MATL"].ToString(), out t5); BasePlateCharge += t5;
-                t6 = 0.00F; float.TryParse(dv[i]["PRESS_MATL"].ToString(), out t6); BasePressCharge += t6;
+            {   float t1 = 0.00F; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(),     out t1); BaseFlatCharge       += t1;
+                float t2 = 0.00F; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),      out t2); BaseRunCharge        += t2;
+                float t3 = 0.00F; float.TryParse(dv[i]["FINISH_MATL"].ToString(),     out t3); BaseFinishCharge     += t3;
+                float t4 = 0.00F; float.TryParse(dv[i]["CONV_MATL"].ToString(),       out t4); BaseConvCharge       += t4;
+                float t5 = 0.00F; float.TryParse(dv[i]["PLATE_MATL"].ToString(),      out t5); BasePlateCharge      += t5;
+                float t6 = 0.00F; float.TryParse(dv[i]["PRESS_MATL"].ToString(),      out t6); BasePressCharge      += t6;
 
-                l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"].ToString(), out l1); BasePressSetup += l1;
-                l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"].ToString(), out l2); BaseCollatorSetup += l2;
-                l3 = 0; int.TryParse(dv[i]["BINDERY_SETUP"].ToString(), out l3); BaseBinderySetup += l3;
-                l4 = 0; int.TryParse(dv[i]["PRESS_SLOWDOWN"].ToString(), out l4); BasePressSlowdown += l4;
-                l5 = 0; int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown += l5;
-                l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"].ToString(), out l6); BaseBinderySlowdown += l6;
+                int l1 = 0;       int.TryParse(dv[i]["PRESS_SETUP_TIME"].ToString(),  out l1); BasePressSetup       += l1;
+                int l2 = 0;       int.TryParse(dv[i]["COLLATOR_SETUP"].ToString(),    out l2); BaseCollatorSetup    += l2;
+                int l3 = 0;       int.TryParse(dv[i]["BINDERY_SETUP"].ToString(),     out l3); BaseBinderySetup     += l3;
+                int l4 = 0;       int.TryParse(dv[i]["PRESS_SLOWDOWN"].ToString(),    out l4); BasePressSlowdown    += l4;
+                int l5 = 0;       int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown += l5;
+                int l6 = 0;       int.TryParse(dv[i]["BINDERY_SLOWDOWN"].ToString(),  out l6); BaseBinderySlowdown  += l6;
             }
 
         }
@@ -213,30 +230,32 @@ namespace ProDocEstimate.Views
             string str = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Finishing'";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
+
             if (dt.Rows.Count == 0) return;
+
             dv = dt.DefaultView;
-            Book = dv[0]["Value1"].ToString();
-            Cello = dv[0]["Value2"].ToString();
-            DrillHoles = dv[0]["Value3"].ToString();
-            Pad = dv[0]["Value4"].ToString();
-            Trim = dv[0]["Value5"].ToString();
+            Book        = dv[0]["Value1"].ToString();
+            Cello       = dv[0]["Value2"].ToString();
+            DrillHoles  = dv[0]["Value3"].ToString();
+            Pad         = dv[0]["Value4"].ToString();
+            Trim        = dv[0]["Value5"].ToString();
 
             float t = 0.00F;
-            t = 0.00F; float.TryParse(dv[0]["FlatChargePct"].ToString(), out t); FlatChargePct = t;
-            t = 0.00F; float.TryParse(dv[0]["RunChargePct"].ToString(), out t); RunChargePct = t;
-            t = 0.00F; float.TryParse(dv[0]["ConvertChargePct"].ToString(), out t); ConvChargePct = t;
-            t = 0.00F; float.TryParse(dv[0]["PlateChargePct"].ToString(), out t); PlateChargePct = t;
-            t = 0.00F; float.TryParse(dv[0]["PressChargePct"].ToString(), out t); PressChargePct = t;
-            t = 0.00F; float.TryParse(dv[0]["FinishChargePct"].ToString(), out t); FinishChargePct = t;
+            t = 0.00F; float.TryParse(dv[0]["FlatChargePct"]   .ToString(), out t); FlatChargePct   = t;
+            t = 0.00F; float.TryParse(dv[0]["RunChargePct"]    .ToString(), out t); RunChargePct    = t;
+            t = 0.00F; float.TryParse(dv[0]["ConvertChargePct"].ToString(), out t); ConvChargePct   = t;
+            t = 0.00F; float.TryParse(dv[0]["PlateChargePct"]  .ToString(), out t); PlateChargePct  = t;
+            t = 0.00F; float.TryParse(dv[0]["PressChargePct"]  .ToString(), out t); PressChargePct  = t;
+            t = 0.00F; float.TryParse(dv[0]["FinishChargePct"] .ToString(), out t); FinishChargePct = t;
 
-            //Load Labor adjustments
+            //Labor adjustments
             int k;
-            k = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"].ToString(), out k); LabPS = k;
-            k = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"].ToString(), out k); LabPSL = k;
-            k = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"].ToString(), out k); LabCS = k;
-            k = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"].ToString(), out k); LabCSL = k;
-            k = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"].ToString(), out k); LabBS = k;
-            k = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"].ToString(), out k); LabBSL = k;
+            k = 0; int.TryParse(dt.Rows[0]["PRESS_ADDL_MIN"]   .ToString(), out k); LabPS  = k;
+            k = 0; int.TryParse(dt.Rows[0]["PRESS_SLOW_PCT"]   .ToString(), out k); LabPSL = k;
+            k = 0; int.TryParse(dt.Rows[0]["COLL_ADDL_MIN"]    .ToString(), out k); LabCS  = k;
+            k = 0; int.TryParse(dt.Rows[0]["COLL_SLOW_PCT"]    .ToString(), out k); LabCSL = k;
+            k = 0; int.TryParse(dt.Rows[0]["BIND_ADDL_MIN"]    .ToString(), out k); LabBS  = k;
+            k = 0; int.TryParse(dt.Rows[0]["BIND_SLOW_PCT"]    .ToString(), out k); LabBSL = k;
 
         }
 
@@ -311,24 +330,20 @@ namespace ProDocEstimate.Views
             // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,         Category,         Sequence, "
-                + "   Param1,            Param2,           Param3,              Param4,             Param5, "
-                + "   Value1,            Value2,           Value3,              Value4,             Value5, "
-                + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,   TotalFlatChg,  PerThousandChg,"
+                + "   Param1,            Param2,           Param3,              Param4,             Param5,             Param6,                 Param7, "
+                + "   Value1,            Value2,           Value3,              Value4,             Value5,             Value6,                 Value7, "
+                + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,       TotalFlatChg,  PerThousandChg,"
                 + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT, "
                 + "   PressSetupMin,     PressSlowPct,     CollSetupMin,        CollSlowPct,        BindSetupMin,       BindSlowPct   ) "
                 + "   VALUES ( "
                 + $" '{QuoteNum}',       'Finishing',      8,"
-                + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',"
-                + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',"
-                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}',"
+                + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',             'LinearInchCostCello', 'LinearInchCostBook',"
+                + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',            {LinearInchCostCello}, {LinearInchCostBook},"
+                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',     '{FlatTotal}', '{CalculatedRunCharge}',"
                 + $"  {LabPS},           {LabCS},          {LabBS},            {LabPSL},            {LabCSL},           {LabBSL}, "
                 + $"  {PressSetup},      {PressSlowdown},  {CollatorSetup},    {CollatorSlowdown},  {BinderySetup},     {BinderySlowdown} )";
 
-            scmd.CommandText = cmd;
-            conn.Open();
-            try { scmd.ExecuteNonQuery(); }
-            catch (System.Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
+            scmd.CommandText = cmd; conn.Open(); try { scmd.ExecuteNonQuery(); } catch (System.Exception ex) { MessageBox.Show(ex.Message); } finally { conn.Close(); }
 
             this.Close();
         }

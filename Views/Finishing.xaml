@@ -57,6 +57,14 @@
 
         <Grid Width="800" Height="390" VerticalAlignment="Top">
 
+            <!--<Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="Red" Offset="0.0" />
+                    <GradientStop Color="White" Offset="0.5" />
+                    <GradientStop Color="Blue" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>-->
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
                 <RowDefinition Height="20" />
@@ -219,7 +227,7 @@
                         Content=" Labor " HorizontalAlignment="Left" Width="96" Margin="2,1,0,0" VerticalAlignment="Top"/>
                 </Border>
 
-                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Foreground="Blue"  VerticalAlignment="Center" Margin="20,0,0,0">
+                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Foreground="Blue"  VerticalAlignment="Center" Margin="15,0,0,0">
                     <TextBlock>Minutes</TextBlock>
                 </TextBlock>
 
