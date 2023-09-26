@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Telerik.Windows.Controls.ColorEditor.Pad;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
@@ -223,15 +225,6 @@ namespace ProDocEstimate
 
             // For page 3
             LoadDetails();      
-
-            // for Page 4
-            PaperData = LoadPaperCosts();
-            PaperGrid.Items.Clear();
-            PaperGrid.ItemsSource = PaperData;
-
-            //LaborData = LoadLaborCosts();
-            //LabData.Items.Clear();
-            //LabData.ItemsSource = LaborData;
 
             Date = DateTime.Now.ToString("MM/dd/yyyy");
             PrintDate = Date;
@@ -1074,40 +1067,40 @@ namespace ProDocEstimate
             // Populate the Paper ListView on Page 4
             List<Paper> Papers = new List<Paper>();
 
-            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
+//            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
+            for (r = 0; r < DVPaper.Count; r++)
             {
                 pc.NumDocs = (int)SelectedQty;
-                pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
+                DataRowView drv = (DataRowView)dgSheetsOfPaper.Items[r];
+
+                // pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
+
+                pc.Material = drv[0].ToString();
                 pc.PressSize = PRESSSIZE;
                 dgSheetsOfPaper.SelectedIndex = r;
                 pc.Calc();
-                DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r];
-                dataRow[11] = pc.Pounds;    // multiply UseThisPrice times Pounds and store in last column
-                dataRow[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(dataRow[15].ToString());
-                QuoteTotal += double.Parse(dataRow[16].ToString());
+                drv[11] = pc.Pounds;    // multiply UseThisPrice times Pounds and store in last column
+                drv[16] = float.Parse(pc.Pounds.ToString()) * float.Parse(drv[15].ToString());
+                QuoteTotal += double.Parse(drv[16].ToString());
 
                 Papers.Add( new Paper() 
-                  { Description     = dataRow[0]             .ToString(),  
-                    RunCharge       = float.Parse(dataRow[16].ToString()), 
-                    LbsPerThousand  = int.Parse  (dataRow[11].ToString()), 
-                    Extended        = float.Parse(dataRow[16].ToString()) });
-
+                  { Description     =             drv[0] .ToString(),  
+                    RunCharge       = float.Parse(drv[16].ToString()), 
+                    LbsPerThousand  = int.Parse  (drv[11].ToString()), 
+                    Extended        = float.Parse(drv[16].ToString()) });
             }
+
             c.Close();
 
+            PaperGrid.ItemsSource = null;
+            PaperGrid.Items.Clear();
             PaperGrid.ItemsSource = Papers;
 
             SumRowTotals();
         }
 
         private void SumRowTotals()
-        {
-            QuoteTotal = 0.00D; int r = 0;
-            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
-            { DataRowView dataRow = (DataRowView)dgSheetsOfPaper.Items[r]; 
-              QuoteTotal += double.Parse(dataRow[16].ToString()); 
-            }
-        }
+        {   QuoteTotal = 0.00D; for (int r = 0; r < DVPaper.Count; r++) { QuoteTotal += double.Parse(DVPaper[r][16].ToString()); } }
 
         private void txtQty1_GotFocus(object sender, RoutedEventArgs e) { txtQty1.SelectAll(); }
         private void txtQty2_GotFocus(object sender, RoutedEventArgs e) { txtQty2.SelectAll(); }
@@ -1227,9 +1220,7 @@ namespace ProDocEstimate
 
                 case "Finishing":
                     {
-                        //MessageBox.Show("In progress..."); return;
-
-                        Finishing finishing = new Finishing(PRESSSIZE, QUOTE_NUM); finishing.ShowDialog();
+                        Finishing finishing = new Finishing(QUOTE_NUM, PRESSSIZE, COLLATORCUT, ROLLWIDTH); finishing.ShowDialog();
                         break;
                     }
 
@@ -1529,6 +1520,7 @@ namespace ProDocEstimate
             CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM1a = CPM1a * 1000.00F;
             Labor_Calc();
+//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
         }
 
         private void txtQty2_LostFocus(object sender, RoutedEventArgs e)
@@ -1545,6 +1537,7 @@ namespace ProDocEstimate
             CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM2a = CPM2a * 1000.00F;
             Labor_Calc();
+//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
         }
 
         private void txtQty3_LostFocus(object sender, RoutedEventArgs e)
@@ -1561,6 +1554,7 @@ namespace ProDocEstimate
             CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM3a = CPM3a * 1000.00F;
             Labor_Calc();
+//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
         }
 
         private void txtQty4_LostFocus(object sender, RoutedEventArgs e)
@@ -1577,6 +1571,7 @@ namespace ProDocEstimate
             CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM4a = CPM4a * 1000.00F;
             Labor_Calc();
+//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
         }
 
         private void CheckFirst()
@@ -1648,15 +1643,15 @@ namespace ProDocEstimate
             public float  Extended       { get; set; }
         }
 
-        private List<Paper> LoadPaperCosts()
-        {   
-            List<Paper> PaperList = new List<Paper>();
-            PaperList.Add(new Paper() { Description = "White PV - CB Coated back NCR",  RunCharge = 19.92F, LbsPerThousand = 9.97F, Extended = 12.43F });
-            PaperList.Add(new Paper() { Description = "Canary PV - CFB Coated frt/bac", RunCharge = 23.40F, LbsPerThousand = 8.73F, Extended = 14.01F });
-            PaperList.Add(new Paper() { Description = "Pink PV - CF Coated front NCR",  RunCharge = 14.17F, LbsPerThousand = 9.60F, Extended = 9.07F });
+        //private List<Paper> LoadPaperCosts()
+        //{   
+        //    List<Paper> PaperList = new List<Paper>();
+        //    PaperList.Add(new Paper() { Description = "White PV - CB Coated back NCR",  RunCharge = 19.92F, LbsPerThousand = 9.97F, Extended = 12.43F });
+        //    PaperList.Add(new Paper() { Description = "Canary PV - CFB Coated frt/bac", RunCharge = 23.40F, LbsPerThousand = 8.73F, Extended = 14.01F });
+        //    PaperList.Add(new Paper() { Description = "Pink PV - CF Coated front NCR",  RunCharge = 14.17F, LbsPerThousand = 9.60F, Extended = 9.07F });
 
-            return PaperList;
-        }
+        //    return PaperList;
+        //}
 
         public class Labor
         {
@@ -1856,7 +1851,7 @@ namespace ProDocEstimate
                     + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'  AND Quantity = {Trim};";
 
                 SqlDataAdapter da01 = new SqlDataAdapter(cmd, conn);
-                DataSet ds01 = new DataSet(); da01.Fill(ds01);
+                DataSet  ds01 = new DataSet(); da01.Fill(ds01);
                 DataView dv01 = ds01.Tables[0].DefaultView;
                 DataView dv02 = ds01.Tables[1].DefaultView;
                 DataView dv03 = ds01.Tables[2].DefaultView;
@@ -1889,7 +1884,6 @@ namespace ProDocEstimate
 
                 if (DrillHoles > 0)
                 {
-                    //                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(DrillHoles.ToString());
                     float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
                     float Production_Goal = float.Parse(dv04[0]["Production_Goal"].ToString());
                     float DollarsPerHour = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
@@ -1898,13 +1892,21 @@ namespace ProDocEstimate
 
                 if (Trim > 0)
                 {
-                    //                float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Trim.ToString());
                     float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
                     float Production_Goal = float.Parse(dv05[0]["Production_Goal"].ToString());
                     float DollarsPerHour = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
             }
+
+            cmd = "SELECT Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'";
+            SqlDataAdapter da10 = new SqlDataAdapter(cmd, conn);
+            DataSet ds10 = new DataSet(); da10.Fill(ds10);
+            DataView dv10 = ds10.Tables[0].DefaultView;
+
+            float bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F;
+            BindSetupTime = bindmins;
+            BindSetupCost = float.Parse(dv10[0]["dollars_per_hr"].ToString()) * bindmins;
 
             // Fill in rows 4 and 5
 

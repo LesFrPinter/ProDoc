@@ -25,12 +25,15 @@ namespace ProDocEstimate.Views
 
         #endregion
 
+        // TODO: Add a "shipping charge" table with the cost per additional shipment (currently $5.00)
+
         public Shipping(string QUOTENUM)
         {
             InitializeComponent();
             DataContext = this;
             QuoteNum = QUOTENUM;
             LoadData();
+            PreviewKeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Escape) Close(); };  // ESC key activated
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)

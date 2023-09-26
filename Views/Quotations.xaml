@@ -1534,23 +1534,37 @@
                             <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
                             <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="138" VerticalAlignment="Center" Grid.ColumnSpan="3" >
+
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
+                                
                                 <DataGrid.Columns>
+
                                     <DataGridTextColumn Header="Description" Width="250" Binding="{Binding Description}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Left"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Extended"   Width="80" Binding="{Binding Extended, StringFormat=C}" >
+
+                                    <DataGridTextColumn Header="Lbs per M"   Width="80"  Binding="{Binding LbsPerThousand, StringFormat=N2}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
+
+                                    <DataGridTextColumn Header="Extended"   Width="80"   Binding="{Binding Extended, StringFormat=C}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
                                 </DataGrid.Columns>
+ 
                             </DataGrid>
 
                             <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
