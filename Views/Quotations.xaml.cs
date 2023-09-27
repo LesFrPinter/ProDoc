@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
@@ -29,12 +30,19 @@ namespace ProDocEstimate
         public DataTable? dt;
         public SqlCommand? scmd;
 
+        private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;    } set { pressMaterialCost    = value; OnPropertyChanged(); } }
+        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
+        private float binderyMaterialCost;  public float BinderyMaterialCost  { get { return binderyMaterialCost;  } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
+        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost; } set { prePressMaterialCost = value; OnPropertyChanged(); } }
+        private float oeMaterialCost;       public float OEMaterialCost       { get { return oeMaterialCost;       } set { oeMaterialCost       = value; OnPropertyChanged(); } }
+        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost; } set { shippingMaterialCost = value; OnPropertyChanged(); } }
+
         private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
         private string costMsg;       public string CostMsg       { get { return costMsg;        } set { costMsg        = value; OnPropertyChanged(); } }
 
-        private float baseShip; public float BaseShip { get { return baseShip; } set { baseShip = value; OnPropertyChanged(); } }
-        private float addlShip; public float AddlShip { get { return addlShip; } set { addlShip = value; OnPropertyChanged(); } }
-        private int   numDrops; public int   NumDrops { get { return numDrops; } set { numDrops = value; OnPropertyChanged(); } }
+        private float baseShip;       public float BaseShip { get { return baseShip; } set { baseShip = value; OnPropertyChanged(); } }
+        private float addlShip;       public float AddlShip { get { return addlShip; } set { addlShip = value; OnPropertyChanged(); } }
+        private int   numDrops;       public int   NumDrops { get { return numDrops; } set { numDrops = value; OnPropertyChanged(); } }
 
         private string oe;            public string OE            { get { return oe;             } set { oe             = value; OnPropertyChanged(); } }
         private string pre;           public string Pre           { get { return pre;            } set { pre            = value; OnPropertyChanged(); } }
@@ -1155,7 +1163,6 @@ namespace ProDocEstimate
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-//            Trace.WriteLine("Right-clicked");  // Ctrl+Alt+O
             if (lstSelected.SelectedItem == null) return;
 
             string? x = lstSelected.SelectedItem.ToString().TrimEnd();
@@ -1486,20 +1493,70 @@ namespace ProDocEstimate
 
             // Load features for display in the second datagrid on page 4
             string cmd
-                = "SELECT Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
+                =  "SELECT Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
                 + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
             SqlConnection conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable("Features"); 
             da.Fill(dt);
             DataView dvFeat = dt.DefaultView;
-            conn.Close();
             dgFeatures.ItemsSource = null;
             dgFeatures.Items.Clear();
             dgFeatures.ItemsSource = dvFeat;
 
-//            if (Qty1 != null && Qty1 > 0) { DisplayQuantity = "(using " + Qty1.ToString() + ")"; Q1(); }
+            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks" 
+                + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
+            SqlDataAdapter da8  = new SqlDataAdapter(cmd, conn);
+            DataTable dt11      = new DataTable("BookCello");da8.Fill(dt11);
+            DataView  dvx       = dt11.DefaultView;
+
+            int BookSet  = int.Parse(dvx[0]["Books"].ToString());
+            int CelloSet = int.Parse(dvx[0]["Cellos"].ToString());
+            float LinearInchCostCello = float.Parse(dvx[0]["LinearInchCostCello"].ToString());
+            float LinearInchCostBooks = float.Parse(dvx[0]["LinearInchCostBooks"].ToString());
+
+            float TotalBookCost  = 0.0F; float TotalCelloCost = 0.0F;
+
+            if (BookSet > 0) 
+            {   int NumBooks = SelectedQty / BookSet;
+                StringToNumber sTOn2 = new StringToNumber();
+                float collCuts2 = sTOn2.Convert(COLLATORCUT);
+                float linearInches   = (float)NumBooks * collCuts2;
+                TotalBookCost  = linearInches  * LinearInchCostBooks;
+            }
+
+            if (CelloSet > 0) 
+            {   int NumCellos = SelectedQty / CelloSet;
+                StringToNumber sTOn3 = new StringToNumber();
+                float collCuts3 = sTOn3.Convert(COLLATORCUT);
+                float linearInches = (float)NumCellos * collCuts3;
+                TotalCelloCost = linearInches * LinearInchCostCello;
+            }
+
+            BinderyMaterialCost = TotalBookCost + TotalCelloCost;
+
+            // ******************
+            // Collator Materials
+            // ******************
+
+            //TODO: Calculate three types of "Converting material" and store it in Quote_Details in three new columns 
+
+            //ALTER TABLE QUOTE_DETAILS ADD CONV_INK  FLOAT NOT NULL DEFAULT 0
+            //ALTER TABLE QUOTE_DETAILS ADD CONV_GLUE FLOAT NOT NULL DEFAULT 0
+            //ALTER TABLE QUOTE_DETAILS ADD CONV_TAPE FLOAT NOT NULL DEFAULT 0
+
+            cmd = $"SELECT CONV_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'CONVERTING' AND F_TYPE = 'TRANSFER TAPE'"; // PRESS_SIZE doesn't matter
+            SqlDataAdapter da12 = new SqlDataAdapter(cmd, conn);
+            DataTable dt12 = new DataTable("conv"); da12.Fill(dt12);
+            DataView dvy = dt12.DefaultView;
+            float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());
+
+            // THIS IS FOR TRANSFER TAPE:
+            StringToNumber sTOn = new StringToNumber();
+            float collCuts = sTOn.Convert(COLLATORCUT);
+            float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
+            CollatorMaterialCost = convmatl * LinearInches;
         }
 
         // Each of the following four methods should zero/blank out the corresponding controls
@@ -1983,10 +2040,6 @@ namespace ProDocEstimate
 
         private void Calc_Click(object sender, RoutedEventArgs e)
         {   
-            //if(SelectedQty == Qty1) { Q1(); }
-            //else if(SelectedQty == Qty2) { Q2(); }
-            //else if(SelectedQty == Qty3) {  Q3(); }
-            //else if(SelectedQty == Qty4 ) { Q4(); }
             if (Qty1 > 0) { SelectedQty = Qty1; Q1(); }
             if (Qty2 > 0) { SelectedQty = Qty2; Q2(); }
             if (Qty3 > 0) { SelectedQty = Qty3; Q3(); }

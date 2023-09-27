@@ -136,15 +136,18 @@ namespace ProDocEstimate.Views
 
         private void CalculateBaseFinishCharge()
         {
+            LinearInchCostCello = 0; LinearInchCostBook = 0;
             conn = conn ?? new(ConnectionString);
-            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Bindery_Materials] WHERE Category = 'Finishing' AND F_TYPE = 'Cello' "
-           + $" AND {RollWidth} BETWEEN MinRollWidth AND MaxRollWidth";
 
+            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Bindery_Materials] WHERE Category = 'Finishing' AND F_TYPE = 'Cello' "
+                       + $" AND {RollWidth} BETWEEN MinRollWidth AND MaxRollWidth";
             SqlDataAdapter da = new(cmd, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt); DataView dv2 = dt.DefaultView;
-            LinearInchCostCello = float.Parse(dv2[0]["LinearInchCost"].ToString()); // Store in Value6
+            if (Cello.ToString().TrimEnd().Length > 0) { LinearInchCostCello = float.Parse(dv2[0]["LinearInchCost"].ToString()); }
 
             da.SelectCommand.CommandText = cmd.Replace("Cello", "Book"); dt.Clear(); da.Fill(dt); DataView dv3 = dt.DefaultView;
-            LinearInchCostBook = float.Parse(dv2[0]["LinearInchCost"].ToString()); // Store in Value7
+            if (Book.ToString().TrimEnd().Length > 0) { LinearInchCostBook = float.Parse(dv2[0]["LinearInchCost"].ToString()); }
+
+//            LinearInchCostBook = float.Parse(dv2[0]["LinearInchCost"].ToString()); // Store in Value7
 
             LinearInchCostBook *= LinearFeet;
             LinearInchCostCello *= LinearFeet;
@@ -155,8 +158,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.2;
-            this.Width = this.Width *= 1.2;
+            this.Height = this.Height *= 1.6;
+            this.Width = this.Width *= 1.6;
             Top = 50;
         }
 
@@ -277,7 +280,7 @@ namespace ProDocEstimate.Views
         private void SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             LoadBaseValues();
-//            CalculateBaseFinishCharge();        // I just added this...
+            CalculateBaseFinishCharge();
             GrandTotal();
         }
 
@@ -340,10 +343,10 @@ namespace ProDocEstimate.Views
             // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,         Category,         Sequence, "
-                + "   Param1,            Param2,           Param3,              Param4,             Param5,             Param6,                 Param7, "
+                + "   Param1,            Param2,           Param3,              Param4,             Param5,             Param6,                 Param7,"
                 + "   Value1,            Value2,           Value3,              Value4,             Value5,             Value6,                 Value7, "
                 + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,       TotalFlatChg,       PerThousandChg,"
-                + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT, "
+                + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT,"
                 + "   PressSetupMin,     PressSlowPct,     CollSetupMin,        CollSlowPct,        BindSetupMin,       BindSlowPct,            SETUP_MINUTES,      SLOWDOWN_PERCENT ) "
                 + "   VALUES ( "
                 + $" '{QuoteNum}',       'Finishing',      8,"

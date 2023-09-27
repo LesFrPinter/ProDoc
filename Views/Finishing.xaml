@@ -174,7 +174,7 @@
                 <telerik:RadNumericUpDown     Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CFPct" ValueChanged="PctChanged"/>
                 <Label HorizontalAlignment="Left"       Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="165,0,0,0" Content="%" Height="16" Width="14" />
 
-                <TextBox        Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedConvCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" Height="20" />
+                <TextBox        Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Text="{Binding CalculatedConvCharge,   StringFormat='C3'}" HorizontalContentAlignment="Right" Height="20" />
                 <telerik:RadNumericUpDown     Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="100,0,0,0" Value="{Binding ConvChargePct,UpdateSourceTrigger=PropertyChanged}"   x:Name="CCPct" ValueChanged="PctChanged" />
                 <Label HorizontalAlignment="Left"       Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="165,0,0,0" Content="%" Height="16" Width="14" />
 

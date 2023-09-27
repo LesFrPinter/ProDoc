@@ -1649,10 +1649,11 @@
                             </DataGrid>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" >
-                                <Label  Content="Labor:"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,2,0,0"    Padding="0" FontWeight="Bold" />
-                                <Button Content="Labor Calc" x:Name="btnLaborCalc" Click="btnLaborCalc_Click" Padding="5 3" HorizontalAlignment="Left" Height="24" Margin="20,2,0,0" Width="67" VerticalAlignment="Top" Visibility="Hidden" />
-                                <Label  Content="[SETUP]" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="170,22,0,0" Padding="0" FontSize="11" />
-                                <Label  Content="[RUN]"   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="285,22,0,0" Padding="0" FontSize="11" />
+                                <Label  Content="Labor"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,2,0,0"    Padding="0" FontWeight="Bold" />
+                                <Button Content="Labor Calc" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0"   Padding="5 3" Height="24" Width="67" Visibility="Hidden" x:Name="btnLaborCalc" Click="btnLaborCalc_Click"  />
+                                <Label  Content="[SETUP]"    VerticalAlignment="Top" Margin="70,15,0,0" Padding="0" FontSize="12" />
+                                <Label  Content="[RUN]"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="155,15,0,0" Padding="0" FontSize="11" />
+                                <Label  Content="Material"   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="135,2,0,0"    Padding="0" FontWeight="Bold" />
                             </StackPanel>
 
                             <Grid Grid.Row="3" Height="150" Margin="10 30 0 0" Grid.ColumnSpan="3" >
@@ -1667,11 +1668,12 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="200"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Department" Padding="10 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="0" />
@@ -1679,6 +1681,7 @@
                                 <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="2"  />
                                 <TextBlock Text="Time"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="3"  />
                                 <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="4"  />
+                                <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="5"  />
 
                                 <TextBlock Text="  Press"    Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="1" Width="60" />
                                 <TextBlock Text="  Collator" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="2" Width="60" />
@@ -1687,65 +1690,90 @@
                                 <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="5" Width="60" />
                                 <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6"  />
 
-                                <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="52 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="1" Width="60" 
+                                <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="3" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="4" Width="60" 
+                                <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="2" Width="60" 
                                          FontSize="12" Foreground="Blue" />
 
-                                <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="52 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="1" Width="60" 
+                                <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="46,2,0,0" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="2" Width="60" 
+                                <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="4" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="2" Width="60" 
                                          FontSize="12" Foreground="Blue" Height="17" VerticalAlignment="Top" />
-                                <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="3" Width="60" 
+                                <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="4" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
-
-                                <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="52 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="1" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="2" Width="60" 
+                                <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="2" Grid.Column="4" Width="60" 
                                          FontSize="12" Foreground="Blue" />
 
-                                <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="3" Width="60" 
+                                <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="1" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="4" Width="60" 
+                                <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="2" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="3" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="4" Width="60" 
                                          FontSize="12" Foreground="Blue" />
                                 
-                                <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="3" Width="60" 
+                                <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="4" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
-
-                                <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="3" Width="60" 
-                                         FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="4" Width="60" 
+                                <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="4" Width="60" 
                                          FontSize="12" Foreground="Blue" />
 
-                                <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="44 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="3" Width="60" 
+                                <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="5" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />
-                                <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="46 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="4" Width="60" 
+                                <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="5" Grid.Column="4" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="6" Grid.Column="3" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+                                <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="6" Grid.Column="4" Width="60" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="5" Width="90" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="5" Width="90" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="5" Width="90" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="5" Width="90" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding OEMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="5" Width="90" 
+                                         FontSize="12" Foreground="Blue" />
+
+                                <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="5" Width="90" 
                                          FontSize="12" Foreground="Blue" />
 
                             </Grid>
