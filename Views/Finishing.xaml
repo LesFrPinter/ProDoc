@@ -170,7 +170,7 @@
                 <telerik:RadNumericUpDown     Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" Value="{Binding PlateChargePct,UpdateSourceTrigger=PropertyChanged}"  x:Name="PCPct" ValueChanged="PctChanged" />
                 <Label HorizontalAlignment="Left"       Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="165,0,0,0" Content="%" Height="16" Width="14" />
 
-                <TextBox        Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFinishCharge, StringFormat='C'}" HorizontalContentAlignment="Right" Height="20" />
+                <TextBox        Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding CalculatedFinishCharge, StringFormat='N5'}" HorizontalContentAlignment="Right" Height="20" />
                 <telerik:RadNumericUpDown     Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" Value="{Binding FinishChargePct,UpdateSourceTrigger=PropertyChanged}" x:Name="CFPct" ValueChanged="PctChanged"/>
                 <Label HorizontalAlignment="Left"       Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="165,0,0,0" Content="%" Height="16" Width="14" />
 

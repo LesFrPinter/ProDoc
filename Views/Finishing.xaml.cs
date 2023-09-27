@@ -27,6 +27,7 @@ namespace ProDocEstimate.Views
 
         private float linearInchCostCello; public float LinearInchCostCello { get { return linearInchCostCello; } set { linearInchCostCello = value; OnPropertyChanged(); } }
         private float linearInchCostBook;  public float LinearInchCostBook  { get { return linearInchCostBook;  } set { linearInchCostBook  = value; OnPropertyChanged(); } }
+        private float linearFeet;          public float LinearFeet          { get { return linearFeet;          } set { linearFeet          = value; OnPropertyChanged(); } }
 
         private int    max;         public int    Max         { get { return max;           } set { max = value;         OnPropertyChanged(); } }
         private string pressSize;   public string PressSize   { get { return pressSize;     } set { pressSize = value;   OnPropertyChanged(); } }
@@ -115,33 +116,41 @@ namespace ProDocEstimate.Views
             Title = "Quote #: " + QUOTENUM;
 
             // Local properties (variables)
-            QuoteNum    = QUOTENUM;
-            PressSize   = PRESSSIZE;
+            QuoteNum = QUOTENUM;
+            PressSize = PRESSSIZE;
             CollatorCut = COLLATORCUT;
-            RollWidth   = ROLLWIDTH;
+            RollWidth = ROLLWIDTH;
 
             StringToNumber sTOn = new StringToNumber();
-            float linearfeet    = sTOn.Convert(COLLATORCUT) / 12.0F;
-
-            // Look up the LinearInchCost from the Bindery_Materials table and store it in Value4.
-            // It will be read when Labor Costs are being calculated.
+            LinearFeet = sTOn.Convert(COLLATORCUT) / 12.0F;
 
             SqlConnection conn = new(ConnectionString);
-
-            string cmd =  "SELECT * FROM [ESTIMATING].[dbo].[Bindery_Materials] WHERE Category = 'Finishing' AND F_TYPE = 'Cello' "
-                       + $" AND {RollWidth} BETWEEN MinRollWidth AND MaxRollWidth";
-
-            SqlDataAdapter da = new(cmd, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt); DataView dv2 = dt.DefaultView;
-            LinearInchCostCello = float.Parse(dv2[0][6].ToString()); // Store in Value6
-
-            da.SelectCommand.CommandText = cmd.Replace("Cello", "Book"); dt.Clear(); da.Fill(dt); DataView dv3 = dt.DefaultView;
-            LinearInchCostBook  = float.Parse(dv2[0][6].ToString()); // Store in Value7
 
             LoadDropDowns();
             LoadData();
             LoadBaseValues();   // This should initially use any saved dropdown combobox values for the five parameters
+            CalculateBaseFinishCharge();
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
+
+        private void CalculateBaseFinishCharge()
+        {
+            conn = conn ?? new(ConnectionString);
+            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Bindery_Materials] WHERE Category = 'Finishing' AND F_TYPE = 'Cello' "
+           + $" AND {RollWidth} BETWEEN MinRollWidth AND MaxRollWidth";
+
+            SqlDataAdapter da = new(cmd, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt); DataView dv2 = dt.DefaultView;
+            LinearInchCostCello = float.Parse(dv2[0]["LinearInchCost"].ToString()); // Store in Value6
+
+            da.SelectCommand.CommandText = cmd.Replace("Cello", "Book"); dt.Clear(); da.Fill(dt); DataView dv3 = dt.DefaultView;
+            LinearInchCostBook = float.Parse(dv2[0]["LinearInchCost"].ToString()); // Store in Value7
+
+            LinearInchCostBook *= LinearFeet;
+            LinearInchCostCello *= LinearFeet;
+
+            BaseFinishCharge = LinearInchCostBook + LinearInchCostCello;
+            CalculatedFinishCharge = BaseFinishCharge;
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)
@@ -178,7 +187,7 @@ namespace ProDocEstimate.Views
 
             BaseFlatCharge = 0;
             BaseRunCharge = 0;
-            BaseFinishCharge = 0;
+//            BaseFinishCharge = 0;
             BaseConvCharge = 0;
             BasePlateCharge = 0;
             BasePressCharge = 0;
@@ -210,7 +219,7 @@ namespace ProDocEstimate.Views
             for (int i = 0; i < dv.Count; i++)
             {   float t1 = 0.00F; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(),     out t1); BaseFlatCharge       += t1;
                 float t2 = 0.00F; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),      out t2); BaseRunCharge        += t2;
-                float t3 = 0.00F; float.TryParse(dv[i]["FINISH_MATL"].ToString(),     out t3); BaseFinishCharge     += t3;
+//                float t3 = 0.00F; float.TryParse(dv[i]["FINISH_MATL"].ToString(),     out t3); BaseFinishCharge     += t3;
                 float t4 = 0.00F; float.TryParse(dv[i]["CONV_MATL"].ToString(),       out t4); BaseConvCharge       += t4;
                 float t5 = 0.00F; float.TryParse(dv[i]["PLATE_MATL"].ToString(),      out t5); BasePlateCharge      += t5;
                 float t6 = 0.00F; float.TryParse(dv[i]["PRESS_MATL"].ToString(),      out t6); BasePressCharge      += t6;
@@ -240,6 +249,9 @@ namespace ProDocEstimate.Views
             Pad         = dv[0]["Value4"].ToString();
             Trim        = dv[0]["Value5"].ToString();
 
+            float BookLinearInchCost  = float.Parse(dv[0]["Value6"].ToString());
+            float CelloLinearInchCost = float.Parse(dv[0]["Value7"].ToString());
+
             float t = 0.00F;
             t = 0.00F; float.TryParse(dv[0]["FlatChargePct"]   .ToString(), out t); FlatChargePct   = t;
             t = 0.00F; float.TryParse(dv[0]["RunChargePct"]    .ToString(), out t); RunChargePct    = t;
@@ -265,6 +277,7 @@ namespace ProDocEstimate.Views
         private void SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             LoadBaseValues();
+//            CalculateBaseFinishCharge();        // I just added this...
             GrandTotal();
         }
 
@@ -275,12 +288,12 @@ namespace ProDocEstimate.Views
 
         private void CalcAll()
         {
-            CalculatedConvCharge = BaseConvCharge * (1 + (ConvChargePct / 100));
+            CalculatedConvCharge   = BaseConvCharge   * (1 + (ConvChargePct   / 100));
             CalculatedFinishCharge = BaseFinishCharge * (1 + (FinishChargePct / 100));
-            CalculatedFlatCharge = BaseFlatCharge * (1 + (FlatChargePct / 100));
-            CalculatedRunCharge = BaseRunCharge * (1 + (RunChargePct / 100));
-            CalculatedPlateCharge = BasePlateCharge * (1 + (PlateChargePct / 100));
-            CalculatedPressCharge = BasePressCharge * (1 + (PressChargePct / 100));
+            CalculatedFlatCharge   = BaseFlatCharge   * (1 + (FlatChargePct   / 100));
+            CalculatedRunCharge    = BaseRunCharge    * (1 + (RunChargePct    / 100));
+            CalculatedPlateCharge  = BasePlateCharge  * (1 + (PlateChargePct  / 100));
+            CalculatedPressCharge  = BasePressCharge  * (1 + (PressChargePct  / 100));
 
             FlatTotal =
                   CalculatedConvCharge
@@ -289,14 +302,8 @@ namespace ProDocEstimate.Views
                 + CalculatedPlateCharge
                 + CalculatedPressCharge;
 
-            CalcMaterials();
-
+            //CalculateBaseFinishCharge();        // I just added this...
             CalculateLabor();
-        }
-
-        private void CalcMaterials()
-        {
-            
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -320,30 +327,37 @@ namespace ProDocEstimate.Views
         private void btnSave_Click  (object sender, RoutedEventArgs e)
         {
             // Delete 'Finishing' quote_detail line, then re-insert one.
-            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Finishing'";
+            string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QuoteNum}' AND Category = 'Finishing'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
 
             try { scmd.ExecuteNonQuery(); }
             catch (System.Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
+            string FlatChg = FlatTotal.ToString("F6");
+            float FC = float.Parse(FlatChg.ToString());
+
             // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,         Category,         Sequence, "
                 + "   Param1,            Param2,           Param3,              Param4,             Param5,             Param6,                 Param7, "
                 + "   Value1,            Value2,           Value3,              Value4,             Value5,             Value6,                 Value7, "
-                + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,       TotalFlatChg,  PerThousandChg,"
+                + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,       TotalFlatChg,       PerThousandChg,"
                 + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT, "
-                + "   PressSetupMin,     PressSlowPct,     CollSetupMin,        CollSlowPct,        BindSetupMin,       BindSlowPct   ) "
+                + "   PressSetupMin,     PressSlowPct,     CollSetupMin,        CollSlowPct,        BindSetupMin,       BindSlowPct,            SETUP_MINUTES,      SLOWDOWN_PERCENT ) "
                 + "   VALUES ( "
                 + $" '{QuoteNum}',       'Finishing',      8,"
                 + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',             'LinearInchCostCello', 'LinearInchCostBook',"
                 + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',            {LinearInchCostCello}, {LinearInchCostBook},"
-                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',     '{FlatTotal}', '{CalculatedRunCharge}',"
+                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',     '{FC}',             '{CalculatedRunCharge}',"
                 + $"  {LabPS},           {LabCS},          {LabBS},            {LabPSL},            {LabCSL},           {LabBSL}, "
-                + $"  {PressSetup},      {PressSlowdown},  {CollatorSetup},    {CollatorSlowdown},  {BinderySetup},     {BinderySlowdown} )";
+                + $"  {PressSetup},      {PressSlowdown},  {CollatorSetup},    {CollatorSlowdown},  {BinderySetup},     {BinderySlowdown},     {SetupTotal},       {SlowdownTotal} )";
 
-            scmd.CommandText = cmd; conn.Open(); try { scmd.ExecuteNonQuery(); } catch (System.Exception ex) { MessageBox.Show(ex.Message); } finally { conn.Close(); }
+            scmd.CommandText = cmd; 
+            conn.Open(); 
+            try { scmd.ExecuteNonQuery(); } 
+            catch (System.Exception ex) { MessageBox.Show(ex.Message); } 
+            finally { conn.Close(); }
 
             this.Close();
         }
