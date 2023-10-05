@@ -1,28 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProDocEstimate.Editors
 {
-    /// <summary>
-    /// Interaction logic for FinishingSpeeds.xaml
-    /// </summary>
     public partial class FinishingSpeeds : Window, INotifyPropertyChanged
     {
         #region Properties
@@ -50,9 +38,13 @@ namespace ProDocEstimate.Editors
             dv = dt.DefaultView;
             grdData.ItemsSource = dv;
             DataContext = this;
-        }
 
-        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
+    };
+
+
+    private void mnuFileExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

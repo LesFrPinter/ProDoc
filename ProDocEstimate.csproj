@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <None Remove="Images\PDS-logo-lrg.png" />
+    <None Remove="Images\WinKey.jpg" />
     <None Remove="Screenshots\WaterMark.txt" />
   </ItemGroup>
 
@@ -69,6 +70,12 @@
     <Content Include="Images\PDS-logo-lrg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\WinKey.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

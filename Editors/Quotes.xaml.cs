@@ -37,6 +37,8 @@ namespace ProDocEstimate.Editors
             dv = dt.DefaultView;
             grdData.ItemsSource = dv;
             DataContext = this;
+
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)

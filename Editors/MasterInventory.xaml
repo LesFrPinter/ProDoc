@@ -30,7 +30,7 @@
                 <TextBlock Text="Master Inventory" FontSize="28" Background="Green" Width="230" Foreground="White" Margin="5 0 0 0" />
             </Border>
 
-            <DataGrid 
+        <DataGrid 
                 x:Name="grdData" FontSize="24"
                 Width="1200"
                 AutoGenerateColumns="True" Grid.Row="2" 
