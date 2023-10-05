@@ -37,11 +37,11 @@ namespace ProDocEstimate.Views
         private string quoteNum; public string QuoteNum { get { return quoteNum; } set { quoteNum = value; OnPropertyChanged(); } }
         private string quoteNo; public string QuoteNo { get { return quoteNo; } set { quoteNo = value; } }
 
-        private string book; public string Book { get { return book; } set { book = value; OnPropertyChanged(); } }
-        private string cello; public string Cello { get { return cello; } set { cello = value; OnPropertyChanged(); } }
-        private string drillHoles; public string DrillHoles { get { return drillHoles; } set { drillHoles = value; OnPropertyChanged(); } }
-        private string pad; public string Pad { get { return pad; } set { pad = value; OnPropertyChanged(); } }
-        private string trim; public string Trim { get { return trim; } set { trim = value; OnPropertyChanged(); } }
+        private string book = "";        public string Book       { get { return book;       } set { book        = value; OnPropertyChanged(); } }
+        private string cello = "";       public string Cello      { get { return cello;      } set { cello       = value; OnPropertyChanged(); } }
+        private string drillHoles = "";  public string DrillHoles { get { return drillHoles; } set { drillHoles  = value; OnPropertyChanged(); } }
+        private string pad = "";         public string Pad        { get { return pad;        } set { pad         = value; OnPropertyChanged(); } }
+        private string trim = "";        public string Trim       { get { return trim;       } set { trim        = value; OnPropertyChanged(); } }
 
         private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
         private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }

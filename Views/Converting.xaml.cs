@@ -129,6 +129,12 @@ namespace ProDocEstimate.Views
         private int slowdownTotal; public int SlowdownTotal { get { return slowdownTotal; } set { slowdownTotal = value; OnPropertyChanged(); } }
         private int setupTotal; public int SetupTotal { get { return setupTotal; } set { setupTotal = value; OnPropertyChanged(); } }
 
+        // Added three "converting" charges to QUOTE_DETAILS
+
+        private float convInk;  public float ConvInk  { get { return convInk;  } set { convInk  = value; OnPropertyChanged(); } }
+        private float convGlue; public float ConvGlue { get { return convGlue; } set { convGlue = value; OnPropertyChanged(); } }
+        private float convTape; public float ConvTape { get { return convTape; } set { convTape = value; OnPropertyChanged(); } }
+
         #endregion
 
         public Converting(string PRESSSIZE, string QUOTENUM)
@@ -310,7 +316,13 @@ namespace ProDocEstimate.Views
         { CalcTotals(); }
 
         private void ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        { LoadBaseValues(); CalcTotals(); CalculateLabor(); }
+        {
+            //TODO: Calculate ConvInk, ConvGlue, ConvTape here? Or in btnSave_Click?
+
+            LoadBaseValues(); 
+            CalcTotals(); 
+            CalculateLabor(); 
+        }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -327,14 +339,16 @@ namespace ProDocEstimate.Views
                 + "    Value1,          Value2,                  Value3,             Value4,            Value5,               Value6,             Value7,            Value8,            Value9,"
                 + "    TotalFlatChg,    PerThousandChg,          FlatChargePct,      RunChargePct,      FinishChargePct,      PressChargePct,     ConvertChargePct,  PlateChargePct,"
                 + "    PRESS_ADDL_MIN,  COLL_ADDL_MIN,           BIND_ADDL_MIN,      PRESS_SLOW_PCT,    COLL_SLOW_PCT,        BIND_SLOW_PCT, "
-                + "    PressSetupMin,   PressSlowPct,            CollSetupMin,       CollSlowPct,       BindSetupMin,         BindSlowPct   ) "
+                + "    PressSetupMin,   PressSlowPct,            CollSetupMin,       CollSlowPct,       BindSetupMin,         BindSlowPct,"
+                + "    CONV_INK,        CONV_GLUE,               CONV_TAPE ) "
                 + " VALUES ( "
                 + $" '{QuoteNum}',     'Converting',             10, "
                 + "  '2 CRASH NUMB',   'BLACK NUMB',            'SNAP GLUE 2-4',    'SNAP GLUE 5-12',  'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING',          'TRANSFER TAPE',  'ConvMatlCharge', "
                 + $" '{Crash}',        '{Black}',               '{Snap2}',          '{Snap5}',         '{Cont2}',            '{Cont5}',          '{Fold}',           '{Tape}',         {CalculatedConvCharge}"
                 + $" '{FlatTotal}',    '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}',  '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}',  '{PlateChargePct}', "
                 + $"  {LabPS},          {LabCS},                 {LabBS},            {LabPSL},          {LabCSL},             {LabBSL}, "
-                + $"  {PressSetup},     {PressSlowdown},         {CollatorSetup},    {CollatorSlowdown},{BinderySetup},       {BinderySlowdown} )";
+                + $"  {PressSetup},     {PressSlowdown},         {CollatorSetup},    {CollatorSlowdown},{BinderySetup},       {BinderySlowdown},"
+                + $"  {ConvInk},        {ConvGlue},              {ConvTape} )";
 
             //Clipboard.SetText(cmd);
             //Debugger.Break();

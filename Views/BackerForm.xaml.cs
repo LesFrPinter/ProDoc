@@ -270,9 +270,9 @@ namespace ProDocEstimate.Views
 
             Total = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
-            float fPressSetup = 0.0F;
-            float fCollatorSetup = 0.0F;
-            float fBinderySetup = 0.0F;
+            //float fPressSetup = 0.0F;
+            //float fCollatorSetup = 0.0F;
+            //float fBinderySetup = 0.0F;
 
             float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"].ToString(), out F2); BasePressSetup    = (int)(F2 * 60);
             float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]  .ToString(), out F3); BaseCollatorSetup = (int)(F3 * 60);

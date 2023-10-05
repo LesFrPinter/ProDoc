@@ -1,14 +1,18 @@
-﻿using System.Configuration;
+﻿using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using System.Windows;
-using Telerik.Pivot.Queryable.Filtering;
-using Telerik.Windows.Controls.DataServices;
 
 namespace ProDocEstimate.Views
 {
-    public partial class Shipping : Window
+    public partial class Shipping : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
         #region Properties
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
@@ -19,9 +23,9 @@ namespace ProDocEstimate.Views
 
         private string quoteNum; public string QuoteNum { get { return quoteNum; } set { quoteNum = value; } }
 
-        private float baseCharge; public float BaseCharge { get { return baseCharge; } set { baseCharge = value; } }
-        private float addlCharge; public float AddlCharge { get { return addlCharge; } set { addlCharge = value; } }
-        private int   numDrops;   public int   NumDrops   { get { return numDrops;   } set { numDrops   = value; } }
+        private float baseCharge; public float BaseCharge { get { return baseCharge; } set { baseCharge = value; OnPropertyChanged(); } }
+        private float addlCharge; public float AddlCharge { get { return addlCharge; } set { addlCharge = value; OnPropertyChanged(); } }
+        private int   numDrops;   public int   NumDrops   { get { return numDrops;   } set { numDrops   = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -50,9 +54,16 @@ namespace ProDocEstimate.Views
             da = new SqlDataAdapter(cmd, conn); 
             dt = new DataTable();
             da.Fill(dt); DataView dv = dt.DefaultView;
-            BaseCharge = float.Parse(dv[0]["Value1"].ToString());
-            AddlCharge = float.Parse(dv[0]["Value2"].ToString());
-            NumDrops   = int  .Parse(dv[0]["Value3"].ToString());
+
+            BaseCharge = 0.0F;
+            AddlCharge = 0.0F;
+            NumDrops = 0;
+
+            if (dv.Count > 0 ) { 
+                BaseCharge = float.Parse(dv[0]["Value1"].ToString());
+                AddlCharge = float.Parse(dv[0]["Value2"].ToString());
+                NumDrops   = int  .Parse(dv[0]["Value3"].ToString());
+            }
             conn.Close();
         }
 
@@ -78,6 +89,11 @@ namespace ProDocEstimate.Views
         private void btnCanc_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void nDrops_LostFocus(object sender, RoutedEventArgs e)
+        {
+            AddlCharge = NumDrops * 5.00F;
         }
     }
 }

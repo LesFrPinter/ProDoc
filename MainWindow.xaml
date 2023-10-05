@@ -35,12 +35,15 @@
 
         <Menu HorizontalContentAlignment="Left" HorizontalAlignment="Left" Background="LightGray">
                 <MenuItem Header="_File"  VerticalAlignment="Center" Background="LightGray">
-                <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
-            </MenuItem>
+                    <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
+                </MenuItem>
                 <MenuItem Header="_Screens" VerticalAlignment="Center" Background="LightGray">
                 <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click"         />
                 <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"          />
                 <MenuItem x:Name="mnuConverter"         Header="Fraction Converter" Click="mnuConverter_Click" />
+            </MenuItem>
+            <MenuItem Header="_Tables"  VerticalAlignment="Center" Background="LightGray">
+                <MenuItem x:Name="mnuEditFeatures" Header="Features"                Click="mnuEditFeatures_Click" />
             </MenuItem>
         </Menu>
 

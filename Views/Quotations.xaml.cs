@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate
 {
@@ -339,8 +338,10 @@ namespace ProDocEstimate
 
             conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
+            //TODO: See what should be used as defaults in the PrePress entry
+
             cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY, Param1, Param2, Param3, Value1, Value2, Value3 )"
-                        + $" VALUES ( '{QUOTE_NUM}', '8', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', '1', '0', '1' )";
+                        + $" VALUES ( '{QUOTE_NUM}', '8', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', 'New', '0', 'New' )";
             //Clipboard.SetText(cmd);
 
             conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
@@ -1158,7 +1159,6 @@ namespace ProDocEstimate
             COLLATORCUT = "";
 
             LoadAvailableCategories();
-//            AddDefaultDetailLines();        // NOT where this call goes!
         }
 
         private void lstSelected_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -1192,7 +1192,7 @@ namespace ProDocEstimate
 
                 case "Ink Color":
                     {
-                        Ink Ink = new Ink(PRESSSIZE, QUOTE_NUM); Ink.ShowDialog();
+                        Ink Ink = new Ink(PRESSSIZE, QUOTE_NUM, PARTS, COLLATORCUT); Ink.ShowDialog();
                         break;
                     }
 
@@ -1286,6 +1286,9 @@ namespace ProDocEstimate
             da   = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+
+//                this.Title = dt.Rows[i]["Category"].ToString();
+
                 string V1 = dt.Rows[i]["Value1"].ToString();
                 string V2 = dt.Rows[i]["Value2"].ToString();
                 string V3 = dt.Rows[i]["Value3"].ToString();
@@ -1318,6 +1321,10 @@ namespace ProDocEstimate
                 bool B8 = int.TryParse(dt.Rows[i]["Value8"].ToString(), out I8);
                 bool B9 = int.TryParse(dt.Rows[i]["Value9"].ToString(), out I9);
                 bool B10 = int.TryParse(dt.Rows[i]["Value10"].ToString(), out I10);
+
+                // Fix for PrePress, which has nothing but two non-numeric parameters
+                if ((dt.Rows[i]["Category"].ToString() == "PrePress") && (dt.Rows[i]["Value1"].ToString().Length > 0))
+                { B1 = true; I1 = 1; }
 
                 Int32 RowTotal = 0;
 
@@ -1439,16 +1446,19 @@ namespace ProDocEstimate
 
             if(lstSelected.Items.Count == 0 || cmbPressSize.SelectedIndex == -1) return;
             if(cmbPressSize.Text == cmbPressSize.SelectedItem.ToString()) return;
-            if (MessageBox.Show("This will delete any selected features; continue?", "Feature selection depends on Press Size", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.No)
-            {   //TODO: Should this also delete Base Charges, Ink and Backer?
-                string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
+            if (MessageBox
+            .Show("This will delete any selected features; continue?", 
+            "Feature selection depends on Press Size", 
+            MessageBoxButton.YesNo, 
+            MessageBoxImage.Question, 
+            MessageBoxResult.No) != MessageBoxResult.No)
+            {   string cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
                 conn.Close();
-                lstSelected.Items.Clear(); 
-                LoadPressSizes();
-                MessageBox.Show("Features removed.", "Done", MessageBoxButton.OK, MessageBoxImage.Information );
+                lstSelected.Items.Clear();
+                LoadAvailableCategories();
             }
         }
 
@@ -1804,7 +1814,7 @@ namespace ProDocEstimate
             da = new SqlDataAdapter(cmd, ConnectionString); dt = new DataTable("Speeds"); da.Fill(dt); DataView dv1 = dt.DefaultView;
             if (dv1.Count == 0) { MessageBox.Show("No matching data in Press_Speeds table", WhereClause); Debugger.Break(); }
 
-            int FPM       = int.Parse(dv1[0]["FeetPerMinute"].ToString());
+            int FPM = int.Parse(dv1[0]["FeetPerMinute"].ToString());
             int SetupMins = int.Parse(dv1[0]["SetupMinutes"].ToString());
 
             // Adjust for the percent slowdown for all selected features
@@ -1812,14 +1822,14 @@ namespace ProDocEstimate
             DataTable dt2 = new DataTable(); da.Fill(dt2); DataView dv2 = dt2.DefaultView;
 
             int SumSetupMin = 0;
-            int SumSlowDown = 0; 
-            if(dv2.Count>0) 
+            int SumSlowDown = 0;
+            if (dv2.Count > 0)
             { SumSetupMin = int.Parse(dv2[0]["SETUPMINUTES"].ToString());
-              SumSlowDown = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString()); 
+                SumSlowDown = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString());
             }
 
-            float correction = (100.0F - (float)SlowDownPct)/100.0F;
-            if(correction<0) { correction = 1.0F; }
+            float correction = (100.0F - (float)SlowDownPct) / 100.0F;
+            if (correction < 0) { correction = 1.0F; }
             FPM = (int)(FPM * correction);
             float MinutesPerPart = FeetPerPart / (float)FPM;
             int TotalMinutes = (int)(MinutesPerPart * (float)PARTS);
@@ -1841,19 +1851,23 @@ namespace ProDocEstimate
             da = new SqlDataAdapter(cmd, ConnectionString);
             dt = new DataTable("Speeds"); da.Fill(dt); DataView dv3 = dt.DefaultView;
 
-            CollRunTime = SelectedQty / float.Parse(dv3[0]["StdCutsPerHr"].ToString());
-            CollRunCost = CollRunTime * float.Parse(dv3[0]["DollarsPerHr"].ToString());
+            CollRunTime = 0; CollRunCost = 0; int SetupMin = 0; CollSetupCost = 0;
+            if (dv3.Count > 0)
+            {
+                CollRunTime = SelectedQty / float.Parse(dv3[0]["StdCutsPerHr"].ToString());
+                CollRunCost = CollRunTime * float.Parse(dv3[0]["DollarsPerHr"].ToString());
+                SetupMin = int.Parse(dv3[0]["SetupMin"].ToString());
+            }
 
             // **************************************************
             // ** Calculate SetupRunTime and SetupRunCost here **
             // **************************************************
 
-            int SetupMin = int.Parse(dv3[0]["SetupMin"].ToString());
             //  int NumberOfRollChanges = float.Parse(dv3[0]["MaxRollChgQty"].ToString()) / (float)SelectedQty;
 
             cmd = $"SELECT SUM(CollSetupMin) AS SETUPMINUTES FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             DataAdapter da4 = new SqlDataAdapter(cmd, conn);
-            DataSet ds = new DataSet();   
+            DataSet ds = new DataSet();
             DataTable dt4 = new DataTable();
             da4.Fill(ds);
             dt4 = ds.Tables[0];
@@ -1862,7 +1876,8 @@ namespace ProDocEstimate
             CollSetupTime = float.Parse(dv4[0]["SETUPMINUTES"].ToString()) + (float)SetupMin;
             CollSetupTime /= 60.0F;
 
-            CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString());
+            if (dv3.Count > 0) { CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString()); }
+
 
             // **************************************************
             // ** BINDERY                                      **
@@ -1883,7 +1898,7 @@ namespace ProDocEstimate
             // If they didn't use the "Finishing" feature, don't do the following:
             // *******************************************************************
 
-            if (dv5.Count > 0)      
+            if (dv5.Count > 0)
 
             {
                 int BindSetupMinutes = int.Parse(dv5[0]["BindSetupMin"].ToString());
@@ -1907,7 +1922,7 @@ namespace ProDocEstimate
 
                 SqlDataAdapter da01 = new SqlDataAdapter(cmd, conn);
 
-                DataSet  ds01 = new DataSet(); da01.Fill(ds01);
+                DataSet ds01 = new DataSet(); da01.Fill(ds01);
 
                 DataView dv01 = ds01.Tables[0].DefaultView;
                 DataView dv02 = ds01.Tables[1].DefaultView;
@@ -1919,7 +1934,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
                     float Production_Goal = float.Parse(dv01[0]["Production_Goal"].ToString());
-                    float DollarsPerHour  = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1927,7 +1942,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Pad.ToString());
                     float Production_Goal = float.Parse(dv02[0]["Production_Goal"].ToString());
-                    float DollarsPerHour  = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour = float.Parse(dv02[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1935,7 +1950,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Cello.ToString());
                     float Production_Goal = float.Parse(dv03[0]["Production_Goal"].ToString());
-                    float DollarsPerHour  = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour = float.Parse(dv03[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1943,7 +1958,7 @@ namespace ProDocEstimate
                 {
                     float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
                     float Production_Goal = float.Parse(dv04[0]["Production_Goal"].ToString());
-                    float DollarsPerHour  = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour = float.Parse(dv04[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
@@ -1951,23 +1966,20 @@ namespace ProDocEstimate
                 {
                     float NumBooks = int.Parse(SelectedQty.ToString()) / 100;
                     float Production_Goal = float.Parse(dv05[0]["Production_Goal"].ToString());
-                    float DollarsPerHour  = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
+                    float DollarsPerHour = float.Parse(dv05[0]["Dollars_Per_Hr"].ToString());
                     BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
             }
 
-            // --------------------------------------------------------
-            // TODO: NOTE: Does it matter whether "{Book}" is 25 or 50?
-            // --------------------------------------------------------
-
             cmd = $"SELECT Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'";
             SqlDataAdapter da10 = new SqlDataAdapter(cmd, conn);
-            DataSet ds10  = new DataSet(); da10.Fill(ds10);
+            DataSet ds10 = new DataSet(); da10.Fill(ds10);
             DataView dv10 = ds10.Tables[0].DefaultView;
 
-            float bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F; // TODO: This uses the value (currently 12) of Quote_Details .. Category = "Finishing"
-            BindSetupTime  = bindmins;
-            BindSetupCost  = float.Parse(dv10[0]["Dollars_per_hr"].ToString()) * bindmins;
+            float bindmins = 0;
+            if (dv5.Count > 0) bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F; // TODO: This uses the value (currently 12) of Quote_Details .. Category = "Finishing"
+            BindSetupTime = bindmins;
+            BindSetupCost = float.Parse(dv10[0]["Dollars_per_hr"].ToString()) * bindmins;
 
             // -----------------------------------------------------------------------
             // TODO: Do the same thing for "CELLO"  (adding AND "Quantity = {Cello}" ?
@@ -1975,32 +1987,45 @@ namespace ProDocEstimate
 
 
             // Fill in rows 4 and 5
-            cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'PREPRESS' AND QUOTE_NUM = '{QUOTE_NUM}'";
+            cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'PREPRESS'";
             DataAdapter da6 = new SqlDataAdapter(cmd, conn);
-            DataSet ds6 = new DataSet(); da6.Fill(ds6); DataView dv6 = ds6.Tables[0].DefaultView;
-            Pre = dv6[0]["Value1"].ToString();
-            OE  = dv6[0]["Value3"].ToString();
+            DataSet ds6 = new DataSet(); da6.Fill(ds6);
+
+            Pre = ""; OE = "";
+            if (ds6.Tables.Count > 0)
+            { DataView dv6 = ds6.Tables[0].DefaultView; Pre = dv6[0]["Value1"].ToString(); OE = dv6[0]["Value3"].ToString(); }
 
             cmd = "SELECT * FROM [ESTIMATING].[dbo].[PrePressOESpeeds]";
             DataAdapter da7 = new SqlDataAdapter(cmd, conn);
             DataSet ds7 = new DataSet(); da7.Fill(ds7); DataView dv7 = ds7.Tables[0].DefaultView;
 
-            dv7.RowFilter = $"F_TYPE = 'PREPRESS' AND NEC = '{Pre}'";
-            PreRunTime = float.Parse(dv7[0]["Hours"].ToString());
-            PreRunCost = float.Parse(dv7[0]["DollarsPerHr"].ToString());
-            PreRunCost *= PreRunTime;
+            PreRunTime = 0; PreRunCost = 0; OERunTime = 0; OERunCost = 0;
 
-            dv7.RowFilter = $"F_TYPE = 'OE'       AND NEC = '{OE}'";
-            OERunTime  = float.Parse(dv7[0]["Hours"].ToString());
-            OERunCost  = float.Parse(dv7[0]["DollarsPerHr"].ToString());
-            OERunCost *= OERunTime;
+            if (dv7.Count > 0)
+            {
+                dv7.RowFilter = $"F_TYPE = 'PREPRESS' AND NEC = '{Pre}'";
+                PreRunTime = float.Parse(dv7[0]["Hours"].ToString());
+                PreRunCost = float.Parse(dv7[0]["DollarsPerHr"].ToString());
+                PreRunCost *= PreRunTime;
 
-            cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'Shipping' AND QUOTE_NUM = '{QUOTE_NUM}'";
+                dv7.RowFilter = $"F_TYPE = 'OE'       AND NEC = '{OE}'";
+                OERunTime = float.Parse(dv7[0]["Hours"].ToString());
+                OERunCost = float.Parse(dv7[0]["DollarsPerHr"].ToString());
+                OERunCost *= OERunTime;
+            }
+
+            cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Shipping'";
             DataAdapter da8 = new SqlDataAdapter(cmd, conn);
             DataSet ds8 = new DataSet(); da8.Fill(ds8); DataView dv8 = ds8.Tables[0].DefaultView;
-            BaseShip = float.Parse(dv8[0]["Value1"].ToString());
-            AddlShip = float.Parse(dv8[0]["Value2"].ToString());
-            NumDrops = int  .Parse(dv8[0]["Value3"].ToString());
+
+            BaseShip = 0;AddlShip = 0; NumDrops = 0; ShipCost = 0; ShipTime = 0;
+
+            if(dv8.Count>0)
+            { 
+                BaseShip = float.Parse(dv8[0]["Value1"].ToString());
+                AddlShip = float.Parse(dv8[0]["Value2"].ToString());
+                NumDrops = int  .Parse(dv8[0]["Value3"].ToString());
+            }
 
             ShipCost = BaseShip + (AddlShip * NumDrops);
             ShipTime = 15 + (NumDrops * 5); // minutes

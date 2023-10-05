@@ -3,12 +3,9 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Printing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -32,10 +29,12 @@ namespace ProDocEstimate.Views
         // WHERE CATEGORY = 'INK'
         //   AND PRESS_SIZE = '11'
 
-        private int maxColors; public int MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
+        private int    maxColors; public int    MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
         private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
-        private string quoteNum; public string QuoteNum { get { return quoteNum; } set { quoteNum = value; OnPropertyChanged(); } }
-        private string quoteNo; public string QuoteNo { get { return quoteNo; } set { quoteNo = value; OnPropertyChanged(); } }
+        private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
+        private string quoteNo;   public string QuoteNo   { get { return quoteNo;   } set { quoteNo   = value; OnPropertyChanged(); } }
+        private int    parts;     public int    Parts     { get { return parts;     } set { parts     = value; OnPropertyChanged(); } }
+        private string collcut;   public string CollatorCut { get { return collcut; } set {  collcut = value; OnPropertyChanged(); } }  
 
         private int std; public int Std { get { return std; } set { std = value; OnPropertyChanged(); } }
         private int blackStd; public int BlackStd { get { return blackStd; } set { blackStd = value; OnPropertyChanged(); } }
@@ -158,7 +157,7 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        public Ink(string PRESSSIZE, string QUOTENUM)
+        public Ink(string PRESSSIZE, string QUOTENUM, int PARTS, string COLLATORCUT)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -166,6 +165,8 @@ namespace ProDocEstimate.Views
             Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
+            Parts = PARTS;
+            CollatorCut = COLLATORCUT;
 
             FieldList = "F_TYPE, FLAT_CHARGE, RUN_CHARGE, PLATE_MATL, FINISH_MATL, CONV_MATL, PRESS_MATL";
 
@@ -296,6 +297,50 @@ namespace ProDocEstimate.Views
             if (TotalCount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
             GetCharges();
             CalcTotal();
+
+            // TODO: Calculate the Cost per pound using the new Ink_Cost table and store it in Press_Materials for later use in the Quotation calculation
+
+            string cmd = ""; string root = "";
+            if (PressSize.ToString().Contains("SP"))
+                { root = "SELECT Ink, CostPerInch FROM [ESTIMATING].[dbo].[Ink_Cost] WHERE (SP LIKE '%SP')"; }
+            else
+                { root = "SELECT Ink, CostPerInch FROM [ESTIMATING].[dbo].[Ink_Cost] WHERE (SP NOT LIKE '%SP')"; }
+
+            string addon = " AND ";
+            if (Std       > 0) { addon += "(Ink = 'STD')           OR"; }
+            if (BlackStd  > 0) { addon += "(Ink = 'BLK & STD')     OR"; }
+            if (PMS       > 0) { addon += "(Ink = 'PMS')           OR"; }
+            if (Thermo    > 0) { addon += "(Ink = 'THERMO')        OR"; }
+            if (Desens    > 0) { addon += "(Ink = 'DESENSITIZED')  OR"; }
+            if (Split     > 0) { addon += "(Ink = 'SPLIT FTN')     OR"; }
+            if (WaterMark > 0) { addon += "(Ink = 'WATERMARK')     OR"; }
+            if (FluorSel  > 0) { addon += "(Ink = 'FLUOR SEL')     OR"; }
+            if (FourColor > 0) { addon += "(Ink = '4 CLR PRO')     OR"; }
+
+            addon = addon.Substring(0, addon.Length - 3);
+            if (addon.Length < 10) return;
+
+            cmd = root + addon;
+            conn = new SqlConnection(ConnectionString);
+            SqlDataAdapter da = new SqlDataAdapter(cmd, conn);
+            DataTable dtInkCost = new DataTable(); da.Fill(dtInkCost); DataView dvInkCost = dtInkCost.DefaultView;
+
+            float TotalInkCost = 0.0F;
+            for(int i=0; i<dvInkCost.Count; i++)
+            {
+                if (dvInkCost[i]["Ink"].ToString() == "STD")           { TotalInkCost += (Std       * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "BLK & STD")     { TotalInkCost += (BlackStd  * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "PMS")           { TotalInkCost += (PMS       * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "THERMO")        { TotalInkCost += (Thermo    * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "DESENSITIZED")  { TotalInkCost += (Desens    * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "SPLIT FTN")     { TotalInkCost += (Split     * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "WATERMARK")     { TotalInkCost += (WaterMark * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "FLUOR SEL")     { TotalInkCost += (FluorSel  * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "4 CLR PRO")     { TotalInkCost += (FourColor * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+            }
+//TODO: See if this is correct.
+            BasePressCharge = TotalInkCost * Parts;
+            CalcTotal();        // If this isn't here, it fills in the bogus test data that I loaded for Press Material...
         }
 
         private void GetCharges()
@@ -359,7 +404,7 @@ namespace ProDocEstimate.Views
             float BackerCost = float.Parse(dv2[0]["PLATE_MATL"].ToString());
             BasePlateCharge += (BackerCount * BackerCost);
 
-            CalcTotal();
+//            CalcTotal();
         }
 
         private void CalcTotal()

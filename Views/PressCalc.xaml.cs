@@ -87,7 +87,7 @@ namespace ProDocEstimate.Views
 
         public void Calc()
         {
-            Documents = (((double.Parse(WastePct.ToString()) / 100.0D + 1) * (double.Parse(NumDocs.ToString()) / double.Parse(Up.ToString())) * double.Parse(PressSize) / 12.0D));
+            Documents = (((double.Parse(WastePct.ToString()) / 100.0D + 1) * (double.Parse(NumDocs.ToString()) / double.Parse(Up.ToString())) * double.Parse(PressSize.ToString().Replace("SP","")) / 12.0D));
             LinearFt = Convert.ToInt32(Documents);
             Amt = LinearFt_LBS(LinearFt, Material);
             Pounds = int.Parse(Amt.ToString());

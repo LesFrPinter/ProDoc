@@ -20,7 +20,7 @@
             <Setter Property="FontSize"  Value="16" />
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="IsEnabled" Value="True" />
             <Setter Property="FontSize"  Value="16" />
         </Style>
     </Window.Resources>
@@ -51,18 +51,18 @@
         </Label>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="100 0 0 0" HorizontalAlignment="Left" >
-            <Label Content="Base charge" HorizontalAlignment="Right" Width="160" HorizontalContentAlignment="Right" />
-            <TextBox Text="{Binding BaseCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="57" />
+            <Label Content="Base charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
+            <TextBox Text="{Binding BaseCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="100 0 0 0" HorizontalAlignment="Left" >
-            <Label Content="Additional shipments" HorizontalAlignment="Right" Width="160" HorizontalContentAlignment="Right" />
-            <TextBox Text="{Binding NumDrops, StringFormat=N0}" Margin="10 0" VerticalAlignment="Center" Width="40" />
+            <Label Content="Additional shipments" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
+            <TextBox x:Name="nDrops" Text="{Binding NumDrops, StringFormat=N0}" Margin="10 0" VerticalAlignment="Center" Width="60" LostFocus="nDrops_LostFocus" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="100 0 0 0" HorizontalAlignment="Left" >
-            <Label Content="Total additional charge" HorizontalAlignment="Right" Width="160" HorizontalContentAlignment="Right" />
-            <TextBox Text="{Binding AddlCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="57" />
+            <Label Content="Total additional charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
+            <TextBox Text="{Binding AddlCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" />
         </StackPanel>
 
         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" >
