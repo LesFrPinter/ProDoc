@@ -1521,30 +1521,37 @@ namespace ProDocEstimate
             DataTable dt11      = new DataTable("BookCello");da8.Fill(dt11);
             DataView  dvx       = dt11.DefaultView;
 
-            int BookSet  = int.Parse(dvx[0]["Books"].ToString());
-            int CelloSet = int.Parse(dvx[0]["Cellos"].ToString());
-            float LinearInchCostCello = float.Parse(dvx[0]["LinearInchCostCello"].ToString());
-            float LinearInchCostBooks = float.Parse(dvx[0]["LinearInchCostBooks"].ToString());
+            //TODO: Don't do the following if there IS no Finishing entry...
 
-            float TotalBookCost  = 0.0F; float TotalCelloCost = 0.0F;
+            int BookSet = 0; int CelloSet = 0; 
+            float LinearInchCostCello = 0.0F; float LinearInchCostBooks = 0.0F;
+            float TotalBookCost = 0.0F; float TotalCelloCost = 0.0F;
 
-            if (BookSet > 0) 
-            {   int NumBooks = SelectedQty / BookSet;
-                StringToNumber sTOn2 = new StringToNumber();
-                float collCuts2 = sTOn2.Convert(COLLATORCUT);
-                float linearInches   = (float)NumBooks * collCuts2;
-                TotalBookCost  = linearInches  * LinearInchCostBooks;
+            if (dvx.Count>0)
+            { 
+                BookSet  = int.Parse(dvx[0]["Books"].ToString());
+                CelloSet = int.Parse(dvx[0]["Cellos"].ToString());
+                LinearInchCostCello = float.Parse(dvx[0]["LinearInchCostCello"].ToString());
+                LinearInchCostBooks = float.Parse(dvx[0]["LinearInchCostBooks"].ToString());
+
+                if (BookSet > 0) 
+                {   int NumBooks = SelectedQty / BookSet;
+                    StringToNumber sTOn2 = new StringToNumber();
+                    float collCuts2 = sTOn2.Convert(COLLATORCUT);
+                    float linearInches   = (float)NumBooks * collCuts2;
+                    TotalBookCost  = linearInches  * LinearInchCostBooks;
+                }
+
+                if (CelloSet > 0) 
+                {   int NumCellos = SelectedQty / CelloSet;
+                    StringToNumber sTOn3 = new StringToNumber();
+                    float collCuts3 = sTOn3.Convert(COLLATORCUT);
+                    float linearInches = (float)NumCellos * collCuts3;
+                    TotalCelloCost = linearInches * LinearInchCostCello;
+                }
+
+                BinderyMaterialCost = TotalBookCost + TotalCelloCost;
             }
-
-            if (CelloSet > 0) 
-            {   int NumCellos = SelectedQty / CelloSet;
-                StringToNumber sTOn3 = new StringToNumber();
-                float collCuts3 = sTOn3.Convert(COLLATORCUT);
-                float linearInches = (float)NumCellos * collCuts3;
-                TotalCelloCost = linearInches * LinearInchCostCello;
-            }
-
-            BinderyMaterialCost = TotalBookCost + TotalCelloCost;
 
             // ******************
             // Collator Materials

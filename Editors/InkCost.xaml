@@ -1,0 +1,41 @@
+﻿<Window x:Class="ProDocEstimate.Editors.InkCost"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Editors"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="LightGray"
+        Title="Ink Cost" Height="750" Width="1200">
+
+    <Viewbox Stretch="Uniform">
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <Menu Margin="10 0 0 0">
+            <MenuItem Header="File" >
+                <MenuItem Header="E_xit" Name="mnuFileExit" Click="mnuFileExit_Click" />
+            </MenuItem>
+        </Menu>
+
+        <Border Grid.Row="1" CornerRadius="10" Background="Green" BorderBrush="Green" BorderThickness="1" HorizontalAlignment="Left" Width="135" Height="40" Margin="20 0 0 0 " >
+            <TextBlock Text="Ink Cost" FontSize="28" Background="Green" Width="110" Foreground="White" />
+        </Border>
+
+        <DataGrid x:Name="grdData" AutoGenerateColumns="True" Grid.Row="2" CellEditEnding="grdData_CellEditEnding" />
+
+        <Button Content="Close" x:Name="btnCloseWindow" Grid.Row="3" Click="btnCloseWindow_Click" Padding="5,2"  />
+
+    </Grid>
+
+    </Viewbox>
+
+</Window>

@@ -38,12 +38,22 @@
                     <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
                 </MenuItem>
                 <MenuItem Header="_Screens" VerticalAlignment="Center" Background="LightGray">
-                <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click"         />
-                <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"          />
-                <MenuItem x:Name="mnuConverter"         Header="Fraction Converter" Click="mnuConverter_Click" />
+                <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click" />
+                <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"  />
+                <MenuItem x:Name="mnuConverter"         Header="Fraction Converter" Click="mnuConverter_Click"  />
             </MenuItem>
             <MenuItem Header="_Tables"  VerticalAlignment="Center" Background="LightGray">
+                <MenuItem x:Name="mnuQuotes"       Header="Quotes"                  Click="mnuQuotes_Click"       />
+                <MenuItem x:Name="mnuDetails"      Header="Quote Details"           Click="mnuDetails_Click"      />
                 <MenuItem x:Name="mnuEditFeatures" Header="Features"                Click="mnuEditFeatures_Click" />
+                <MenuItem x:Name="mnuEditInkCost"  Header="Ink Cost"                Click="mnuEditInkCost_Click"  />
+                <MenuItem x:Name="mnuPressSpeeds"  Header="Press Speeds"            Click="mnuPressSpeeds_Click"  />
+                <MenuItem x:Name="mnuBindery"      Header="Bindery Materials"       Click="mnuBindery_Click"      />
+                <MenuItem x:Name="mnuCollator"     Header="Collator Speeds"         Click="mnuCollator_Click"     />
+                <MenuItem x:Name="mnuFinishing"    Header="Finishing Speeds"        Click="mnuFinishing_Click"    />
+                <MenuItem x:Name="mnuPrePress"     Header="PrePress/OE"             Click="mnuPrePress_Click"     />
+                <MenuItem x:Name="mnuPressColors"  Header="Press Size Colors"       Click="mnuPressColors_Click"  />
+                <MenuItem x:Name="mnuInventory"    Header="Master Inventory"        Click="mnuInventory_Click"    />
             </MenuItem>
         </Menu>
 

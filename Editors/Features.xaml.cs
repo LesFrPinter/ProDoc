@@ -1,5 +1,4 @@
-﻿using SharpDX.Direct2D1;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -17,6 +16,7 @@ namespace ProDocEstimate.Editors
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
+        #region Properties
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection conn;
         public SqlDataAdapter da;
@@ -28,6 +28,7 @@ namespace ProDocEstimate.Editors
         private string searchCategory = ""; public string SearchCategory { get { return searchCategory; } set { searchCategory  = value; OnPropertyChanged(); Filter(); } }
         private string searchSize     = ""; public string SearchSize     { get { return searchSize;     } set { searchSize      = value; OnPropertyChanged(); Filter(); } }
         private string searchFType    = ""; public string SearchFType    { get { return searchFType;    } set { searchFType     = value; OnPropertyChanged(); Filter(); } }
+        #endregion
 
         public Features()
         {

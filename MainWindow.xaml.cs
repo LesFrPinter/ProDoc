@@ -153,5 +153,55 @@ namespace ProDocEstimate
         {
 			Editors.Features feat = new Editors.Features(); feat.ShowDialog();
         }
+
+        private void mnuEditInkCost_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.InkCost inkCost = new Editors.InkCost(); inkCost.ShowDialog();
+        }
+
+        private void mnuPressSpeeds_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.PressSpeeds pressSpeeds = new Editors.PressSpeeds(); pressSpeeds.ShowDialog();
+        }
+
+        private void mnuBindery_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.Bindery bindery = new Editors.Bindery(); bindery.ShowDialog();
+        }
+
+        private void mnuCollator_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.CollatorSpeeds collatorSpeeds = new Editors.CollatorSpeeds(); collatorSpeeds.ShowDialog();
+        }
+
+        private void mnuFinishing_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.FinishingSpeeds finishingSpeeds = new Editors.FinishingSpeeds(); finishingSpeeds.ShowDialog();
+        }
+
+        private void mnuPrePress_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.PrePress prePress = new Editors.PrePress(); prePress.ShowDialog();
+        }
+
+        private void mnuPressColors_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.PressSizeColors colors = new Editors.PressSizeColors(); colors.ShowDialog();
+        }
+
+        private void mnuDetails_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.QuoteDetails details = new Editors.QuoteDetails(); details.ShowDialog();		
+        }
+
+        private void mnuQuotes_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.Quotes quotes = new Editors.Quotes(); quotes.ShowDialog();
+        }
+
+        private void mnuInventory_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.MasterInventory inventory = new Editors.MasterInventory(); inventory.ShowDialog();
+        }
     }
 }

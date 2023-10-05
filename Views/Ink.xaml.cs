@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -29,12 +30,14 @@ namespace ProDocEstimate.Views
         // WHERE CATEGORY = 'INK'
         //   AND PRESS_SIZE = '11'
 
-        private int    maxColors; public int    MaxColors { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
-        private string pressSize; public string PressSize { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
-        private string quoteNum;  public string QuoteNum  { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
-        private string quoteNo;   public string QuoteNo   { get { return quoteNo;   } set { quoteNo   = value; OnPropertyChanged(); } }
-        private int    parts;     public int    Parts     { get { return parts;     } set { parts     = value; OnPropertyChanged(); } }
-        private string collcut;   public string CollatorCut { get { return collcut; } set {  collcut = value; OnPropertyChanged(); } }  
+        private float makeReadyInkCost; public float MakeReadyInkCost { get { return makeReadyInkCost; } set { makeReadyInkCost = value; OnPropertyChanged(); } }
+
+        private int    maxColors; public int    MaxColors   { get { return maxColors; } set { maxColors = value; OnPropertyChanged(); } }
+        private string pressSize; public string PressSize   { get { return pressSize; } set { pressSize = value; OnPropertyChanged(); } }
+        private string quoteNum;  public string QuoteNum    { get { return quoteNum;  } set { quoteNum  = value; OnPropertyChanged(); } }
+        private string quoteNo;   public string QuoteNo     { get { return quoteNo;   } set { quoteNo   = value; OnPropertyChanged(); } }
+        private int    parts;     public int    Parts       { get { return parts;     } set { parts     = value; OnPropertyChanged(); } }
+        private string collcut;   public string CollatorCut { get { return collcut;   } set { collcut   = value; OnPropertyChanged(); } }
 
         private int std; public int Std { get { return std; } set { std = value; OnPropertyChanged(); } }
         private int blackStd; public int BlackStd { get { return blackStd; } set { blackStd = value; OnPropertyChanged(); } }
@@ -292,21 +295,27 @@ namespace ProDocEstimate.Views
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
+            //TODO: This is being called ten times, once for each numeric ink count.
+            string s = sender.ToString(); // Add to Watch window...
+
+            if (e.OldValue == null && e.NewValue == 0) return;
+
             BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
             TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + BackerCount;
             if (TotalCount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
+
             GetCharges();
             CalcTotal();
 
-            // TODO: Calculate the Cost per pound using the new Ink_Cost table and store it in Press_Materials for later use in the Quotation calculation
+            // Calculate the Cost per pound using the new Ink_Cost table and store it in Press_Materials for later use in the Quotation calculation
 
             string cmd = ""; string root = "";
             if (PressSize.ToString().Contains("SP"))
-                { root = "SELECT Ink, CostPerInch FROM [ESTIMATING].[dbo].[Ink_Cost] WHERE (SP LIKE '%SP')"; }
+                { root = "SELECT Ink, CostPerInch, MakeReady, CostPerLb FROM [ESTIMATING].[dbo].[Ink_Cost] WHERE (SP = 'SP')"; }
             else
-                { root = "SELECT Ink, CostPerInch FROM [ESTIMATING].[dbo].[Ink_Cost] WHERE (SP NOT LIKE '%SP')"; }
+                { root = "SELECT Ink, CostPerInch, MakeReady, CostPerLb FROM [ESTIMATING].[dbo].[Ink_Cost] WHERE (SP = '  ')"; }
 
-            string addon = " AND ";
+            string addon = " AND (";
             if (Std       > 0) { addon += "(Ink = 'STD')           OR"; }
             if (BlackStd  > 0) { addon += "(Ink = 'BLK & STD')     OR"; }
             if (PMS       > 0) { addon += "(Ink = 'PMS')           OR"; }
@@ -317,7 +326,7 @@ namespace ProDocEstimate.Views
             if (FluorSel  > 0) { addon += "(Ink = 'FLUOR SEL')     OR"; }
             if (FourColor > 0) { addon += "(Ink = '4 CLR PRO')     OR"; }
 
-            addon = addon.Substring(0, addon.Length - 3);
+            addon = addon.Substring(0, addon.Length - 3) + ")";
             if (addon.Length < 10) return;
 
             cmd = root + addon;
@@ -325,22 +334,50 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new SqlDataAdapter(cmd, conn);
             DataTable dtInkCost = new DataTable(); da.Fill(dtInkCost); DataView dvInkCost = dtInkCost.DefaultView;
 
-            float TotalInkCost = 0.0F;
+            float TotalInkCost = 0.0F; 
+            MakeReadyInkCost   = 0.0F;
+
             for(int i=0; i<dvInkCost.Count; i++)
             {
-                if (dvInkCost[i]["Ink"].ToString() == "STD")           { TotalInkCost += (Std       * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "BLK & STD")     { TotalInkCost += (BlackStd  * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "PMS")           { TotalInkCost += (PMS       * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "THERMO")        { TotalInkCost += (Thermo    * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "DESENSITIZED")  { TotalInkCost += (Desens    * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "SPLIT FTN")     { TotalInkCost += (Split     * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "WATERMARK")     { TotalInkCost += (WaterMark * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "FLUOR SEL")     { TotalInkCost += (FluorSel  * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
-                if (dvInkCost[i]["Ink"].ToString() == "4 CLR PRO")     { TotalInkCost += (FourColor * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); }
+                if (dvInkCost[i]["Ink"].ToString() == "STD")           
+                { TotalInkCost     += (Std       * float.Parse(dvInkCost[i]["CostPerInch"].ToString())); 
+                  MakeReadyInkCost += (Std       * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "BLK & STD")     
+                { TotalInkCost     += (BlackStd  * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (BlackStd  * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "PMS")           
+                { TotalInkCost     += (PMS       * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (PMS       * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "THERMO")        
+                { TotalInkCost     += (Thermo    * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (Thermo    * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "DESENSITIZED")
+                { TotalInkCost     += (Desens    * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (Desens    * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "SPLIT FTN")
+                { TotalInkCost     += (Split     * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (Split     * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "WATERMARK")
+                { TotalInkCost     += (WaterMark * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (WaterMark * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "FLUOR SEL")
+                { TotalInkCost     += (FluorSel * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (FluorSel * float.Parse(dvInkCost[i]["MakeReady"]  .ToString()))  * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
+
+                if (dvInkCost[i]["Ink"].ToString() == "4 CLR PRO")
+                { TotalInkCost     += (FourColor * float.Parse(dvInkCost[i]["CostPerInch"].ToString()));
+                  MakeReadyInkCost += (FourColor * float.Parse(dvInkCost[i]["MakeReady"]  .ToString())) * float.Parse(dvInkCost[i]["CostPerLb"].ToString()); }
             }
-//TODO: See if this is correct.
+
             BasePressCharge = TotalInkCost * Parts;
-            CalcTotal();        // If this isn't here, it fills in the bogus test data that I loaded for Press Material...
+            CalcTotal(); // If this isn't here, it fills in the bogus test data that I loaded for Press Material...
         }
 
         private void GetCharges()
@@ -445,6 +482,8 @@ namespace ProDocEstimate.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(MakeReadyInkCost.ToString("C"), "MakeReadyInkCost");
+
             // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
@@ -458,13 +497,13 @@ namespace ProDocEstimate.Views
                 + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,        Value7,        Value8,       Value9, "
                 + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,  PerThousandChg, "
                 + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,  "
-                + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct )   " 
+                + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
                 + " VALUES ( "
                 + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',      'Watermark',   'FluorSel',   'FourColor', "
                 + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',    '{WaterMark}', '{FluorSel}', '{FourColor}', "
                 + $" '{FLAT_CHARGE}', '{FlatCharge}',  '{FlatChargePct}', '{RunChargePct}',  '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
                 + $"  {LabPS},         {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
-                + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown} )";
+                + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
 
             scmd.CommandText = cmd;
             conn.Open();
