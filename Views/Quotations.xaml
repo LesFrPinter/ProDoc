@@ -1599,7 +1599,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Flats" Width="70"        Binding="{Binding NumFlats,       StringFormat=N0}" >
+                                    <DataGridTextColumn Header="Cost" Width="70"        Binding="{Binding Amount,       StringFormat=C}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Right"></Setter>

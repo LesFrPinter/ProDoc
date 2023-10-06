@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProDocEstimate.Editors
 {
@@ -29,6 +20,10 @@ namespace ProDocEstimate.Editors
         public SqlCommand scmd;
         public DataTable dt;
         public DataView dv;
+
+        private string preEditCellValue; public string PreEditCellValue { get { return preEditCellValue; } set { preEditCellValue = value; OnPropertyChanged(); } }
+        private DataGridCellInfo activeCellAtEdit { get; set; }
+
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -65,6 +60,10 @@ namespace ProDocEstimate.Editors
             string ID = selectedRow[0].ToString();
             TextBox t = e.EditingElement as TextBox;
             string editedCellValue = t.Text.ToString();
+
+            string s = activeCellAtEdit.ToString();
+//            if ( == editedCellValue)
+
             string colName = e.Column.SortMemberPath.ToString();
 
             // Put the new value in quotes if it contains non-numeric characters:
@@ -90,5 +89,9 @@ namespace ProDocEstimate.Editors
             Close();
         }
 
+        private void grdData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            activeCellAtEdit = grdData.CurrentCell;
+        }
     }
 }

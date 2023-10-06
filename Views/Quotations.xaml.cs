@@ -1006,7 +1006,8 @@ namespace ProDocEstimate
 
         private void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
         {
-            txtItemType.Focus();  // TODO: Provide a visual cue that combobox itemlists have been refreshed and they need to pick anything they want to change
+            txtItemType.Focus();  
+            // TODO: Provide a visual cue that combobox itemlists have been refreshed and they need to pick anything they want to change
             PickMsg.Visibility = Visibility.Visible;
             txtItemType.IsDropDownOpen = true;
         }
@@ -1503,7 +1504,7 @@ namespace ProDocEstimate
 
             // Load features for display in the second datagrid on page 4
             string cmd
-                =  "SELECT Category, 0 as NumFlats, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
+                =  "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
                 + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
             SqlConnection conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);

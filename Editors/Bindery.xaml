@@ -36,7 +36,7 @@
             </StackPanel>
 
             <DataGrid x:Name="grdData" FontSize="24"
-                  AutoGenerateColumns="True" Grid.Row="2" CellEditEnding="grdData_CellEditEnding" />
+                  AutoGenerateColumns="True" Grid.Row="2" CellEditEnding="grdData_CellEditEnding" BeginningEdit="grdData_BeginningEdit" />
 
             <Button Content="Close" x:Name="btnCloseWindow" Grid.Row="3" Click="btnCloseWindow_Click" Padding="5,2"  />
 

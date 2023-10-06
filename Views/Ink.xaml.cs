@@ -1,12 +1,19 @@
-﻿using System;
+﻿using ProDocEstimate.Editors;
+using SharpDX.Direct2D1;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Telerik.Windows.Controls.FieldList;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
+using Xceed.Wpf.Toolkit;
 
 namespace ProDocEstimate.Views
 {
@@ -418,30 +425,46 @@ namespace ProDocEstimate.Views
 
             for (int i = 0; i < dv.Count; i++)
             {
-                float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge += t1;
-                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"] .ToString(), out t2); BaseRunCharge += t2;
-                float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3;
-                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"]  .ToString(), out t4); BaseConvCharge += t4;
-                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"] .ToString(), out t5); BasePlateCharge += t5;
-                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"] .ToString(), out t6); BasePressCharge += t6;
+                // Load material costs
+                float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"]    .ToString(), out t1); BaseFlatCharge += t1;
+                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"]     .ToString(), out t2); BaseRunCharge += t2;
+                float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"]    .ToString(), out t3); BaseFinishCharge += t3;
+                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"]      .ToString(), out t4); BaseConvCharge += t4;
+                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"]     .ToString(), out t5); BasePlateCharge += t5;
+                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"]     .ToString(), out t6); BasePressCharge += t6;
 
                 // Load labor costs
-                int l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup += l1;
-                int l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"]   .ToString(), out l2); BaseCollatorSetup += l2;
-                int l3 = 0; int.TryParse(dv[i]["BINDERY_SETUP"]    .ToString(), out l3); BaseBinderySetup += l3;
-                int l4 = 0; int.TryParse(dv[i]["PRESS_SLOWDOWN"]   .ToString(), out l4); BasePressSlowdown += l4;
-                int l5 = 0; int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown += l5;
-                int l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"] .ToString(), out l6); BaseBinderySlowdown += l6;
+                int l1 = 0;   int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup += l1;
+                int l2 = 0;   int.TryParse(dv[i]["COLLATOR_SETUP"]   .ToString(), out l2); BaseCollatorSetup += l2;
+                int l3 = 0;   int.TryParse(dv[i]["BINDERY_SETUP"]    .ToString(), out l3); BaseBinderySetup += l3;
+                int l4 = 0;   int.TryParse(dv[i]["PRESS_SLOWDOWN"]   .ToString(), out l4); BasePressSlowdown += l4;
+                int l5 = 0;   int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown += l5;
+                int l6 = 0;   int.TryParse(dv[i]["BINDERY_SLOWDOWN"] .ToString(), out l6); BaseBinderySlowdown += l6;
             }
-            // Adjust the Base Plate Charge to reflect the use of a backer:
-            cmd = "SELECT * FROM [ESTIMATING].[dbo].[FEATURES]"
-               + $" WHERE CATEGORY = 'INK' AND PRESS_SIZE = '{PressSize}' AND F_TYPE   = 'STD' AND Number = 1";
-            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
-            DataView dv2 = dt.DefaultView;
-            float BackerCost = float.Parse(dv2[0]["PLATE_MATL"].ToString());
-            BasePlateCharge += (BackerCount * BackerCost);
 
-//            CalcTotal();
+            // Adjust the Base Plate Charge to reflect the use of a backer:
+            // Load backer ink cost if there's a Backer record
+            cmd = $"SELECT BACKER_INK_COST FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND F_TYPE = '{Backer}'";
+            da = new SqlDataAdapter(cmd, conn);  dt = new DataTable();  da.Fill(dt);
+            float Backer_Ink_Cost = 0.0F;
+            if(dt.Rows.Count>0) {  DataView dv2 = dt.DefaultView; Backer_Ink_Cost = float.Parse(dv2[0]["BACKER_INK_COST"].ToString()); }
+            BasePressCharge = BasePressCharge + Backer_Ink_Cost;
+
+            //TODO: -------------------------------------------------------
+            //Calculate
+            //    STD          value times Std Ink_Cost.MakeReadyCost
+            //  + BLK - REFLEX value times BLK & STD Ink_Cost.MakeReadyCost
+            //  + PMS          value times PMS Ink_Cost.MakeReadyCost
+            //  + THERMO ?
+            //
+            //Multiply the number of inks times one of these:
+            //  FEATURES.BACKER_INK_MAKEREADY_COST?
+            //  QUOTE_DETAILS.MAKE_READY_INK?
+            //
+            //Put the result where? QUOTE_DETAILS.Amount ?
+            //-------------------------------------------------------------
+            //
+            // Save this in the AMOUNT column
         }
 
         private void CalcTotal()
@@ -482,7 +505,7 @@ namespace ProDocEstimate.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(MakeReadyInkCost.ToString("C"), "MakeReadyInkCost");
+//            MessageBox.Show(MakeReadyInkCost.ToString("C"), "MakeReadyInkCost");
 
             // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
@@ -501,7 +524,7 @@ namespace ProDocEstimate.Views
                 + " VALUES ( "
                 + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',      'Watermark',   'FluorSel',   'FourColor', "
                 + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',    '{WaterMark}', '{FluorSel}', '{FourColor}', "
-                + $" '{FLAT_CHARGE}', '{FlatCharge}',  '{FlatChargePct}', '{RunChargePct}',  '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
+                + $" '{CalculatedPressCharge}', '{FlatCharge}',  '{FlatChargePct}', '{RunChargePct}',  '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
                 + $"  {LabPS},         {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
                 + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
 

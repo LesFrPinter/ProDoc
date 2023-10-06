@@ -203,5 +203,11 @@ namespace ProDocEstimate
         {
 			Editors.MasterInventory inventory = new Editors.MasterInventory(); inventory.ShowDialog();
         }
+
+        private void mnuAddTest_Click(object sender, RoutedEventArgs e)
+        {
+			Editors.TestAddingRow testAddingRow = new Editors.TestAddingRow(); testAddingRow.ShowDialog();
+        }
+
     }
 }
