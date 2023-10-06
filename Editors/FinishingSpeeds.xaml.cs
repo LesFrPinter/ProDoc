@@ -40,11 +40,10 @@ namespace ProDocEstimate.Editors
             DataContext = this;
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+
         }
-    };
 
-
-    private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

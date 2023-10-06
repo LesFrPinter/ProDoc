@@ -14,9 +14,17 @@
     <Window.Resources>
 
         <Style TargetType="MenuItem">
-            <Setter Property="FontSize"   Value="18"    />
-            <Setter Property="Foreground" Value="Blue" />
+            <Setter Property="FontSize"   Value="16"    />
+            <Setter Property="Foreground" Value="Purple" />
             <Setter Property="Padding"    Value="4"     />
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
         </Style>
 
     </Window.Resources>
@@ -25,53 +33,58 @@
 
         <Grid Background="LightGray" Margin="5" Height="750" Width="1050">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-         </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
 
-        <!--Set MenuDropAlignment to 0 in RegEdit-->
+            <!--Set MenuDropAlignment to 0 in RegEdit-->
 
-        <Menu HorizontalContentAlignment="Left" HorizontalAlignment="Left" Background="LightGray">
+            <Menu HorizontalContentAlignment="Left" HorizontalAlignment="Left" Background="LightGray">
                 <MenuItem Header="_File"  VerticalAlignment="Center" Background="LightGray">
                     <MenuItem x:Name="mnuFileExit" Header="E_xit" Click="mnuFileExit_Click" VerticalAlignment="Center" />
                 </MenuItem>
                 <MenuItem Header="_Screens" VerticalAlignment="Center" Background="LightGray">
-                <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click" />
-                <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"  />
-                <MenuItem x:Name="mnuConverter"         Header="Fraction Converter" Click="mnuConverter_Click"  />
-            </MenuItem>
-            <MenuItem Header="_Tables"  VerticalAlignment="Center" Background="LightGray">
-                <MenuItem x:Name="mnuQuotes"       Header="Quotes"                  Click="mnuQuotes_Click"       />
-                <MenuItem x:Name="mnuDetails"      Header="Quote Details"           Click="mnuDetails_Click"      />
-                <MenuItem x:Name="mnuEditFeatures" Header="Features"                Click="mnuEditFeatures_Click" />
-                <MenuItem x:Name="mnuEditInkCost"  Header="Ink Cost"                Click="mnuEditInkCost_Click"  />
-                <MenuItem x:Name="mnuPressSpeeds"  Header="Press Speeds"            Click="mnuPressSpeeds_Click"  />
-                <MenuItem x:Name="mnuBindery"      Header="Bindery Materials"       Click="mnuBindery_Click"      />
-                <MenuItem x:Name="mnuCollator"     Header="Collator Speeds"         Click="mnuCollator_Click"     />
-                <MenuItem x:Name="mnuFinishing"    Header="Finishing Speeds"        Click="mnuFinishing_Click"    />
-                <MenuItem x:Name="mnuPrePress"     Header="PrePress/OE"             Click="mnuPrePress_Click"     />
-                <MenuItem x:Name="mnuPressColors"  Header="Press Size Colors"       Click="mnuPressColors_Click"  />
-                <MenuItem x:Name="mnuInventory"    Header="Master Inventory"        Click="mnuInventory_Click"    />
-            </MenuItem>
-        </Menu>
+                    <MenuItem x:Name="mnuQuotations"        Header="_Quotations"        Click="mnuQuotations_Click" />
+                    <MenuItem x:Name="mnuCustomers"         Header="_Customers"         Click="mnuCustomers_Click"  />
+                    <MenuItem x:Name="mnuConverter"         Header="Fraction Converter" Click="mnuConverter_Click"  />
+                </MenuItem>
+                <MenuItem Header="_Tables"  VerticalAlignment="Center" Background="LightGray">
+                    <MenuItem x:Name="mnuQuotes"       Header="Quotes"                  Click="mnuQuotes_Click"       />
+                    <MenuItem x:Name="mnuDetails"      Header="Quote Details"           Click="mnuDetails_Click"      />
+                    <MenuItem x:Name="mnuEditFeatures" Header="Features"                Click="mnuEditFeatures_Click" />
+                    <MenuItem x:Name="mnuEditInkCost"  Header="Ink Cost"                Click="mnuEditInkCost_Click"  />
+                    <MenuItem x:Name="mnuPressSpeeds"  Header="Press Speeds"            Click="mnuPressSpeeds_Click"  />
+                    <MenuItem x:Name="mnuBindery"      Header="Bindery Materials"       Click="mnuBindery_Click"      />
+                    <MenuItem x:Name="mnuCollator"     Header="Collator Speeds"         Click="mnuCollator_Click"     />
+                    <MenuItem x:Name="mnuFinishing"    Header="Finishing Speeds"        Click="mnuFinishing_Click"    />
+                    <MenuItem x:Name="mnuPrePress"     Header="PrePress/OE"             Click="mnuPrePress_Click"     />
+                    <MenuItem x:Name="mnuPressColors"  Header="Press Size Colors"       Click="mnuPressColors_Click"  />
+                    <MenuItem x:Name="mnuInventory"    Header="Master Inventory"        Click="mnuInventory_Click"    />
+                </MenuItem>
+            </Menu>
 
-        <Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
+            <Image Grid.Row="1" Source="/Images/PDS-logo-lrg.png" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30" />
 
-        <TextBox 
-            Grid.Row="1"
-            Text="NOTE: I have changed some of the values stored in the FEATURES table so that the software could be more easily tested. Restore correct data after testing is done." 
-            TextWrapping="Wrap" 
-            Height="110" Padding="5" 
-            Width="380" 
-            FontSize="16"
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Center" >
-            <TextBox.Effect>
-                <DropShadowEffect Direction="320" ShadowDepth="15" BlurRadius="25" />
-            </TextBox.Effect>
-        </TextBox>
+            <Border CornerRadius="15" Grid.Row="1" Margin="0 250 0 0" >
+                <TextBox BorderThickness="0"
+                    Text="Job Cost Estimator" 
+                    TextWrapping="Wrap" 
+                    Padding="30 20" 
+                    Background="AntiqueWhite"
+                    FontSize="64"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" >
+                    <TextBox.Effect>
+                        <DropShadowEffect Direction="320" ShadowDepth="15" BlurRadius="25" />
+                    </TextBox.Effect>
+                    <TextBox.RenderTransform>
+                        <RotateTransform Angle="350" />
+                    </TextBox.RenderTransform>
+                </TextBox>
+            </Border>
+
 
         </Grid>
 
