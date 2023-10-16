@@ -36,7 +36,7 @@ namespace ProDocEstimate
         private float oeMaterialCost;       public float OEMaterialCost       { get { return oeMaterialCost;       } set { oeMaterialCost       = value; OnPropertyChanged(); } }
         private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost; } set { shippingMaterialCost = value; OnPropertyChanged(); } }
 
-        private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recauculating 
+        private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recalculating 
         private string costMsg;       public string CostMsg       { get { return costMsg;        } set { costMsg        = value; OnPropertyChanged(); } }
 
         private float baseShip;       public float BaseShip { get { return baseShip; } set { baseShip = value; OnPropertyChanged(); } }
@@ -328,10 +328,7 @@ namespace ProDocEstimate
             // Don't add them twice
             string cmd = $"SELECT COUNT(*) AS HowMany FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = {QUOTE_NUM}";
             conn = new SqlConnection(ConnectionString); conn.Open();
-            da = new SqlDataAdapter(cmd, conn);
-            dt = new DataTable(); da.Fill(dt);
-            conn.Close();
-
+            da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt); conn.Close();
             if (int.Parse(dt.Rows[0]["HowMany"].ToString()) > 0) return;
 
             lstSelected.Items.Clear();
@@ -340,9 +337,8 @@ namespace ProDocEstimate
 
             //TODO: See what should be used as defaults in the PrePress entry
 
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY, Param1, Param2, Param3, Value1, Value2, Value3 )"
-                        + $" VALUES ( '{QUOTE_NUM}', '8', 'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', 'New', '0', 'New' )";
-            //Clipboard.SetText(cmd);
+            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+                                                     + $" VALUES ( '{QUOTE_NUM}', '8',   'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', 'New',   '0',   'New'   )";
 
             conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
 
@@ -1475,7 +1471,7 @@ namespace ProDocEstimate
             conn = new SqlConnection(ConnectionString); conn.Open();
             scmd.CommandText = cmd; scmd.Connection = conn; scmd.ExecuteNonQuery(); conn.Close();
 
-            Close();
+            Close();    //TODO: Should they just save and continue?
         }
 
         private void btnCancelQuote_Click(object sender, RoutedEventArgs e)

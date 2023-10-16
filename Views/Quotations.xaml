@@ -821,11 +821,6 @@
                                  Text="{Binding Path=Qty4, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty4" 
                                  Margin="0,4,0,4" />
 
-                    <!--<Button  x:Name="S1" Grid.Row="1" Grid.Column="2"  Click="S1_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
-                        <Button  x:Name="S2" Grid.Row="1" Grid.Column="4"  Click="S2_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select"  Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
-                        <Button  x:Name="S3" Grid.Row="1" Grid.Column="5"  Click="S3_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />
-                        <Button  x:Name="S4" Grid.Row="1" Grid.Column="6"  Click="S4_Click" VerticalAlignment="Bottom" Height="16" Padding="10 0" Content="Select" Background="Green" Foreground="White" FontSize="9" Margin="0 0 0 4" />-->
-
                         <Button  x:Name="Calc" Grid.Row="1" Grid.Column="8" Content="Calculate" VerticalAlignment="Bottom" Margin="0 0 0 2" Padding="4" Click="Calc_Click" />
 
                         <StackPanel Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" >
@@ -912,23 +907,6 @@
 						          VerticalAlignment="Top"
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
                                   SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" >
-
-                            <!--<DataGrid.RowStyle>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding GSRowBackground}" Value="0">
-                                            <Setter Property="Background">
-                                                <Setter.Value>
-                                                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                                                        <GradientStop Offset="0" Color="#888888"/>
-                                                        <GradientStop Offset="1" Color="#FFFFF86E"/>
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.RowStyle>-->
 
                             <DataGrid.Columns>
 
@@ -1064,6 +1042,7 @@
 	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" />
 
                             <Expander Grid.Row="3"
+                                      ToolTip="What is this grid? Do we need it?"
                                       VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="4"
                                       ExpandDirection="Right" Height="200" Width="690" >
 

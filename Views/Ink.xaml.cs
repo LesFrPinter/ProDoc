@@ -305,7 +305,7 @@ namespace ProDocEstimate.Views
             //TODO: This is being called ten times, once for each numeric ink count.
             string s = sender.ToString(); // Add to Watch window...
 
-            if (e.OldValue == null && e.NewValue == 0) return;
+            if (e.OldValue == null && e.NewValue == 0) return; // Don't run the following code if the parameter value didn't change
 
             BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
             TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + BackerCount;
