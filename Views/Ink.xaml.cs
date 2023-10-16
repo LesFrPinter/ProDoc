@@ -309,7 +309,7 @@ namespace ProDocEstimate.Views
 
             BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
             TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + BackerCount;
-            if (TotalCount > MaxColors) { MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
+            if (TotalCount > MaxColors) { System.Windows.MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
 
             GetCharges();
             CalcTotal();
@@ -512,7 +512,7 @@ namespace ProDocEstimate.Views
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
 
             try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
@@ -531,7 +531,7 @@ namespace ProDocEstimate.Views
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
             finally { conn.Close(); scmd = null; conn = null; }
 
             this.Close();

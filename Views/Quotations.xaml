@@ -1563,8 +1563,41 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
+                                    
+                                    <!-- If we need to display these two columns, add them to the PAPERS object around line 1105
+                                    (Class Paper is defined around line 1712)
+                                    
+                                    <DataGridTextColumn 
+                                         Width="90" 
+                                         Binding="{Binding Path=Pounds}" 
+                                         ElementStyle="{StaticResource CellRightAlign}" >
+                                        <DataGridTextColumn.Header>
+                                            <Label HorizontalAlignment="Right"
+										       Content="Lbs Needed"
+										       FontSize="10" />
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="Lbs per M"   Width="80"  Binding="{Binding LbsPerThousand, StringFormat=N2}" >
+                                    <DataGridTextColumn 
+                                         IsReadOnly="True" 
+                                         Width="90" 
+                                         Binding="{Binding Path=LastPOCost, StringFormat=C2}" 
+                                         ElementStyle="{StaticResource CellRightAlign}">
+                                        <DataGridTextColumn.Header>
+                                            <Label HorizontalAlignment="Right"
+										       Content="Last P/O"
+										       FontSize="10" />
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>-->
+
+                                    <DataGridTextColumn Header="Lbs per M"   Width="80"  Binding="{Binding LbsPerThousand, StringFormat=N2}" FontSize="11" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="10" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
@@ -1572,10 +1605,18 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="Extended"   Width="80"   Binding="{Binding Extended, StringFormat=C}" >
+                                    <DataGridTextColumn Header=" Extended" Width="80" Binding="{Binding Extended, StringFormat=C}" FontSize="11" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontSize"              Value="10" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                                <Setter Property="FontSize"              Value="11" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
@@ -1586,7 +1627,7 @@
 
                             <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="118" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3">
+                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="118" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Blue" FontSize="11">
 
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
@@ -1595,42 +1636,42 @@
                                     <DataGridTextColumn Header="Feature" Width="150"     Binding="{Binding Category}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Left"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Cost" Width="70"        Binding="{Binding Amount,       StringFormat=C}" >
+                                    <DataGridTextColumn Header="Cost"  Width="70"        Binding="{Binding Amount,       StringFormat=C}"  >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Runs"  Width="70"        Binding="{Binding NumRuns,        StringFormat=N0}" >
+                                    <DataGridTextColumn Header="Runs"  Width="70"        Binding="{Binding NumRuns,      StringFormat=N0}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Flat Charge" Width="100" Binding="{Binding TotalFlatChg, StringFormat=C2}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Run Charge"  Width="100" Binding="{Binding PerThousandChg, StringFormat=C2}" >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Press Slowdown"  Width="130" Binding="{Binding Slowdown_Percent, StringFormat=N2}"   >
+                                    <DataGridTextColumn Header="Press Slowdown" Width="130" Binding="{Binding Slowdown_Percent, StringFormat=N2}"   >
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>

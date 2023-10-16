@@ -1709,6 +1709,7 @@ namespace ProDocEstimate
             CheckFourth();
         }
 
+        // To add weight and selected cost in the PAPER grid on page 4, add those two columns here and load the values around line 1567
         public class Paper
         {   public string Description    { get; set; }
             public float  RunCharge      { get; set; }
