@@ -49,7 +49,6 @@ namespace ProDocEstimate.Editors
 
         private void grdData_CellEditEnding(object sender, System.Windows.Controls.DataGridCellEditEndingEventArgs e)
         {
-
             SqlConnection conn = new SqlConnection(ConnectionString);
             var selectedRow = grdData.SelectedItem as DataRowView;
             string ID = selectedRow[0].ToString();

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -42,7 +43,7 @@ namespace ProDocEstimate.Editors
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
-        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+        private void mnuFileExit_Click([NotNull] object sender, RoutedEventArgs e)
         {
             Close();
         }

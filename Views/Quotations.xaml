@@ -6,7 +6,7 @@
         xmlns:local2="clr-namespace:ProDocEstimate.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-        Title="Quotations" Width="900" Height="770"
+        Title="Quotations" Width="1000" Height="955"
         WindowStartupLocation="CenterScreen"
         Loaded="OnLoad"
         mc:Ignorable="d">
@@ -28,12 +28,10 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="pink" />
                     <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontSize"   Value="14" />
                 </Trigger>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Foreground" Value="Blue" />
                     <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontSize"   Value="14" />
                 </Trigger>
             </Style.Triggers>
             <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="dtgTest_PreviewMouseDown"/>-->
@@ -100,7 +98,7 @@
 
             <TabControl x:Name="Tabs" Grid.Row="1" Grid.RowSpan="2" Background="LightGray" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged">
 
-                <TabItem x:Name="Page1"
+                <TabItem x:Name="Page1" VerticalAlignment="Top"
                          FontSize="16" Header="    Page _1    ">
 
                     <Grid Height="650">
@@ -726,10 +724,10 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page2" 
+                <TabItem x:Name="Page2" VerticalAlignment="Top"
                          FontSize="16" Header="    Page _2    " IsEnabled="False" GotFocus="Page2_GotFocus">
 
-                    <Grid Height="600">
+                    <Grid Height="600"  VerticalAlignment="Top">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
@@ -991,13 +989,13 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page3"
+                <TabItem x:Name="Page3" VerticalAlignment="Top"
 				         FontSize="16"
 				         Header="    Page _3    "
                          GotFocus="Page3_GotFocus"
-				         IsEnabled="True" VerticalAlignment="Top">
+				         IsEnabled="True">
 
-                    <Viewbox>
+                    <Viewbox VerticalAlignment="Top">
 
                         <Grid Height="570" VerticalAlignment="Top" >
 
@@ -1529,16 +1527,25 @@
 
                             <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                            <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="138" VerticalAlignment="Center" Grid.ColumnSpan="3" >
+                            <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="138" VerticalAlignment="Center" Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
 
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
                                 
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="Description" Width="250" Binding="{Binding Description}" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Left" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Left"></Setter>
+                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                                <Setter Property="FontWeight" Value="Bold" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
@@ -1572,8 +1579,9 @@
                                     <DataGridTextColumn Header="Lbs per M"   Width="80"  Binding="{Binding LbsPerThousand, StringFormat=N2}" FontSize="11" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="10" />
+                                                <Setter Property="FontSize"              Value="11" />
                                                 <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
@@ -1587,9 +1595,10 @@
                                     <DataGridTextColumn Header=" Extended" Width="80" Binding="{Binding Extended, StringFormat=C}" FontSize="11" >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                                <Setter Property="FontSize"              Value="11" />
                                                 <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontSize"              Value="10" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
@@ -1606,13 +1615,21 @@
 
                             <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="118" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Blue" FontSize="11">
+                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="118" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontWeight="Bold" FontSize="11">
 
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="Feature" Width="150"     Binding="{Binding Category}" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Left" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Left"></Setter>
@@ -1620,13 +1637,29 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Cost"  Width="70"        Binding="{Binding Amount,       StringFormat=C}"  >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Runs"  Width="70"        Binding="{Binding NumRuns,      StringFormat=N0}" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
@@ -1634,6 +1667,14 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Flat Charge" Width="100" Binding="{Binding TotalFlatChg, StringFormat=C2}" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
@@ -1641,6 +1682,14 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Run Charge"  Width="100" Binding="{Binding PerThousandChg, StringFormat=C2}" >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
@@ -1648,6 +1697,14 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Press Slowdown" Width="130" Binding="{Binding Slowdown_Percent, StringFormat=N2}"   >
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
@@ -1657,6 +1714,14 @@
 
                                     <DataGridTextColumn Header="Coll. Slowdown"  Width="130" >
                                         <!--Not sure we collect this value-->
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="FontSize"              Value="11" />
+                                                <Setter Property="Foreground"            Value="Blue" />
+                                                <Setter Property="FontWeight"            Value="Bold" />
+                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Right"></Setter>
@@ -1799,8 +1864,8 @@
                             </Grid>
 
                             <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
-                                <Button x:Name="btnSaveQuote"   Margin="5 0 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
-                                <Button x:Name="btnCancelQuote" Margin="5 0 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
+                                <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
+                                <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
                             </StackPanel>
 
                         </Grid>
@@ -1809,10 +1874,10 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page5" 
+                <TabItem x:Name="Page5" VerticalAlignment="Top"
                          Header="    Page _5" IsEnabled="False" FontSize="16" >
 
-                    <Viewbox Height="600" Width="800">
+                    <Viewbox Height="600" Width="800" VerticalAlignment="Top">
 
                         <Grid Height="600" Width="800">
 

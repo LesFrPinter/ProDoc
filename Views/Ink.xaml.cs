@@ -94,10 +94,10 @@ namespace ProDocEstimate.Views
 
         private string fieldList; public string FieldList { get { return fieldList; } set { fieldList = value; OnPropertyChanged(); } }
 
-        private float flatCharge; public float FlatCharge { get { return flatCharge; } set { flatCharge = value; OnPropertyChanged(); } }
-        private float baseflatCharge; public float BaseFlatCharge { get { return baseflatCharge; } set { baseflatCharge = value; OnPropertyChanged(); } }
-        private float flatChargePct; public float FlatChargePct { get { return flatChargePct; } set { flatChargePct = value; OnPropertyChanged(); } }
-        private float calculatedflatCharge; public float CalculatedFlatCharge { get { return calculatedflatCharge; } set { calculatedflatCharge = value; OnPropertyChanged(); } }
+        private float flatCharge;           public float FlatCharge             { get { return flatCharge;           } set { flatCharge           = value; OnPropertyChanged(); } }
+        private float baseflatCharge;       public float BaseFlatCharge         { get { return baseflatCharge;       } set { baseflatCharge       = value; OnPropertyChanged(); } }
+        private float flatChargePct;        public float FlatChargePct          { get { return flatChargePct;        } set { flatChargePct        = value; OnPropertyChanged(); } }
+        private float calculatedflatCharge; public float CalculatedFlatCharge   { get { return calculatedflatCharge; } set { calculatedflatCharge = value; OnPropertyChanged(); } }
 
         private float runCharge; public float RunCharge { get { return runCharge; } set { runCharge = value; OnPropertyChanged(); } }
         private float baserunCharge; public float BaseRunCharge { get { return baserunCharge; } set { baserunCharge = value; OnPropertyChanged(); } }

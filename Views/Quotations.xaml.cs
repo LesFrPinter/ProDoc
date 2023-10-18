@@ -86,7 +86,7 @@ namespace ProDocEstimate
         private string comboSel3; public string ComboSel3 { get { return comboSel3; } set { comboSel3 = value; OnPropertyChanged(); } }  // needed   CheckThird();  
         private string comboSel4; public string ComboSel4 { get { return comboSel4; } set { comboSel4 = value; OnPropertyChanged(); } }  // now?     CheckFourth();
 
-        private string selectedQuantity; public string SelectedQuantity { get { return selectedQuantity; } set { selectedQuantity = value;  OnPropertyChanged(); } }
+        private string selectedQuantity; public string SelectedQuantity { get { return selectedQuantity; } set { selectedQuantity = value;  OnPropertyChanged(); CalcNow(); } }
         private string displayQuantity = "None selected";  public string DisplayQuantity  { get { return displayQuantity;  } set { displayQuantity  = value; OnPropertyChanged(); } }
 
         private int mkuppct1; public int MkUpPct1 { get { return mkuppct1; } set { mkuppct1 = value; OnPropertyChanged(); } }
@@ -337,8 +337,9 @@ namespace ProDocEstimate
 
             //TODO: See what should be used as defaults in the PrePress entry
 
-            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( QUOTE_NUM, SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
-                                                     + $" VALUES ( '{QUOTE_NUM}', '8',   'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', 'New',   '0',   'New'   )";
+            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
+                +            "( QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+                + $" VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', 'New',   '0',   'New'   )";
 
             conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
 
@@ -1573,8 +1574,6 @@ namespace ProDocEstimate
             CollatorMaterialCost = convmatl * LinearInches;
         }
 
-        // Each of the following four methods should zero/blank out the corresponding controls
-
         private void txtQty1_LostFocus(object sender, RoutedEventArgs e)
         {
             Q1();
@@ -2069,7 +2068,13 @@ namespace ProDocEstimate
         }
 
         private void Calc_Click(object sender, RoutedEventArgs e)
-        {   
+        {
+            CPM1a = 0; CPM2a = 0; CPM3a = 0; CPM4a = 0;
+            CalcNow(); 
+        }
+
+        private void CalcNow()
+        {
             if (Qty1 > 0) { SelectedQty = Qty1; Q1(); }
             if (Qty2 > 0) { SelectedQty = Qty2; Q2(); }
             if (Qty3 > 0) { SelectedQty = Qty3; Q3(); }

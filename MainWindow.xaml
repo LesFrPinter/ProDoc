@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ProDocEstimate"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
         mc:Ignorable="d"
-        Background="LightGray"
+        Background="AntiqueWhite"
         WindowStartupLocation="CenterScreen"
         Loaded="OnLoad" Left="100"
         Title="MainWindow" Height="750" Width="1020">
@@ -75,8 +75,8 @@
                     Padding="30 20" 
                     Background="AntiqueWhite"
                     FontSize="64"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center" >
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Center" Margin="0,69,0,0" >
                     <TextBox.Effect>
                         <DropShadowEffect Direction="320" ShadowDepth="15" BlurRadius="25" />
                     </TextBox.Effect>
