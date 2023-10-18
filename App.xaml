@@ -121,19 +121,16 @@
 			</Style.Triggers>
 		</Style>
 
-		<Style
-			x:Key="MainTitle"
-			x:Name="MainTitle"
-			TargetType="Label">
+        <Style x:Key="MainTitle" TargetType="Label" x:Name="MainTitle" >
             <Setter Property="FontFamily" Value="Brush Script MT Italic" />
-            <Setter Property="FontSize" Value="48" />
+            <Setter Property="FontSize"   Value="48" />
 			<Setter Property="Foreground" Value="Black" />
 			<Setter Property="Background" Value="Gray" />
-			<Setter Property="VerticalAlignment" Value="Center" />
-			<Setter Property="HorizontalAlignment" Value="Center" />
-			<Setter Property="Padding" Value="0" />
-			<Setter Property="Margin" Value="2" />
-		</Style>
+			<Setter Property="Padding"    Value="0" />
+			<Setter Property="Margin"     Value="2" />
+            <Setter Property="VerticalAlignment"   Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
 
 		<Style x:Key="TitleBorderStyle" TargetType="Border">
 			<Setter Property="BorderBrush" Value="White" />

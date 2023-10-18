@@ -762,13 +762,14 @@
 						    Grid.Column="0"
 						    Width="22"
 						    Height="24"
-						    Padding="0"
+						    Padding="2"
                             Margin="80,0,0,0"
 						    HorizontalAlignment="Left"
 						    VerticalAlignment="Center"
 						    VerticalContentAlignment="Center"
 						    FontFamily="Courier New"
-						    FontSize="10"
+                            FontWeight="Bold"
+						    FontSize="11"
 						    IsInteger="True"
 						    LargeChange="1"
 						    Maximum="30"
@@ -898,6 +899,7 @@
 						          Grid.ColumnSpan="9"
                                   Grid.RowSpan="2"
 						          Width="775"
+                                  FontWeight="Bold"
 						          Height="370"
                                   Margin="2,30,0,0"
                                   CanUserAddRows="False"
@@ -1776,17 +1778,17 @@
                                 <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6"  />
 
                                 <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Width="60" 
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="1" Width="60" 
                                          FontSize="12" Foreground="Blue" />
                                 <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="2" Width="60" 
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2" Width="60" 
                                          FontSize="12" Foreground="Blue" />
 
                                 <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="3" Width="60" 
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="3" Width="60" 
                                          FontSize="12" Foreground="Blue" />
                                 <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
-                                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Grid.Column="4" Width="60" 
+                                         HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="4" Width="60" 
                                          FontSize="12" Foreground="Blue" />
 
                                 <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"

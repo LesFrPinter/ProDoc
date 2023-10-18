@@ -28,7 +28,7 @@
             <Setter Property="Height"   Value="20"                      />
             <Setter Property="Minimum"  Value="0"                       />
             <Setter Property="NumberDecimalDigits" Value="0"            />
-            <Setter Property="HorizontalAlignment" Value="Center"       />
+            <Setter Property="HorizontalAlignment" Value="Right"        />
             <Setter Property="VerticalContentAlignment" Value="Center"  />
             <Setter Property="IsTabStop" Value="True"                   />
             <Setter Property="Padding"   Value="1"                      />
@@ -172,15 +172,16 @@
 
                 <TextBox Width="60" Height="20"         Grid.Row="1" Grid.Column="1" Text="{Binding CalculatedFlatCharge,   StringFormat='C'}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="4,4,0,2" />
 
-                <telerik:RadNumericUpDown Width="60" MinWidth="60"
-                                          Grid.Row="1" Grid.Column="1" 
-                                          Margin="71 0 0 0" Height="24"
-                                          Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}" 
-                                          x:Name="FCPct" Padding="1"
-                                          ValueChanged="PctChanged" 
-                                          HorizontalAlignment="Left" 
-                                          HorizontalContentAlignment="Right" 
-                                          ValueFormat="Numeric" />
+                <telerik:RadNumericUpDown 
+                 Width="60" MinWidth="60"
+                 Grid.Row="1" Grid.Column="1" 
+                 Margin="71 0 0 0" Height="24"
+                 Value="{Binding FlatChargePct, UpdateSourceTrigger=PropertyChanged}" 
+                 x:Name="FCPct" Padding="1"
+                 ValueChanged="PctChanged" 
+                 HorizontalAlignment="Left" 
+                 HorizontalContentAlignment="Right" 
+                 ValueFormat="Numeric" />
 
                 <Label                                  Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="%" HorizontalAlignment="Left" Height="22" Margin="4,0,0,0" Width="15" />
 

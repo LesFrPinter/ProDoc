@@ -29,6 +29,8 @@ namespace ProDocEstimate
         public DataTable? dt;
         public SqlCommand? scmd;
 
+        private DataView  dvFeatr; public DataView  DVFeat { get { return dvFeatr; } set { dvFeatr = value; OnPropertyChanged(); } }
+
         private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;    } set { pressMaterialCost    = value; OnPropertyChanged(); } }
         private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
         private float binderyMaterialCost;  public float BinderyMaterialCost  { get { return binderyMaterialCost;  } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
@@ -229,7 +231,7 @@ namespace ProDocEstimate
             COLLATORCUT = "11";
 
             // For page 3
-            LoadDetails();      
+            LoadDetails();   
 
             Date = DateTime.Now.ToString("MM/dd/yyyy");
             PrintDate = Date;
@@ -1488,17 +1490,6 @@ namespace ProDocEstimate
 
         private void Page4_GotFocus(object sender, RoutedEventArgs e)
         {
-            //if(Already) { Already = false; return; }
-            // Why did I add this code?
-            //string cmd = $"SELECT SUM(CONVERT(Money,TotalFlatChg)) AS TotalCharge, SUM(CONVERT(Money,PerThousandChg)) As PerThouChg FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
-            //SqlConnection conn = new SqlConnection(ConnectionString);
-            //da = new SqlDataAdapter(cmd, conn);
-            //dt = new DataTable("Tot"); da.Fill(dt);
-            //float FlatTotal = float.Parse(dt.Rows[0]["TotalCharge"].ToString());
-            //float PerMil = float.Parse(dt.Rows[0]["PerThouChg"].ToString());
-            //conn.Close();
-            //CPM1a = PerMil;
-
             // Load features for display in the second datagrid on page 4
             string cmd
                 =  "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
@@ -1507,10 +1498,11 @@ namespace ProDocEstimate
             da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable("Features"); 
             da.Fill(dt);
-            DataView dvFeat = dt.DefaultView;
+
+            DVFeat = dt.DefaultView;
             dgFeatures.ItemsSource = null;
             dgFeatures.Items.Clear();
-            dgFeatures.ItemsSource = dvFeat;
+            dgFeatures.ItemsSource = DVFeat;
 
             cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks" 
                 + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
@@ -1519,13 +1511,15 @@ namespace ProDocEstimate
             DataTable dt11      = new DataTable("BookCello");da8.Fill(dt11);
             DataView  dvx       = dt11.DefaultView;
 
-            //TODO: Don't do the following if there IS no Finishing entry...
+            //-----------------------------------------------------
+            //Don't do the following if there IS no Finishing entry
+            //-----------------------------------------------------
 
             int BookSet = 0; int CelloSet = 0; 
             float LinearInchCostCello = 0.0F; float LinearInchCostBooks = 0.0F;
             float TotalBookCost = 0.0F; float TotalCelloCost = 0.0F;
 
-            if (dvx.Count>0)
+            if (dvx.Count>0)  // If there was a "Finishing" feature row
             { 
                 BookSet  = int.Parse(dvx[0]["Books"].ToString());
                 CelloSet = int.Parse(dvx[0]["Cellos"].ToString());
@@ -1572,6 +1566,28 @@ namespace ProDocEstimate
             float collCuts = sTOn.Convert(COLLATORCUT);
             float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
             CollatorMaterialCost = convmatl * LinearInches;
+
+            InkCalc();
+
+        }
+
+        private void InkCalc()
+        {
+            if (DVFeat == null) return;
+
+            string cmdstr = $"SELECT Amount, MAKE_READY_INK FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Ink Color'";
+            SqlDataAdapter da9 = new SqlDataAdapter(cmdstr, conn);
+            DataTable dt14 = new DataTable("CostPerInch"); da9.Fill(dt14);
+            DataView dvz = dt14.DefaultView;
+
+            float f = float.Parse(dvz[0]["Amount"].ToString());
+            decimal a = (decimal)f;
+            decimal b = decimal.Parse(PARTS.ToString());
+            decimal c = decimal.Parse(DecimalCollatorCut.ToString());
+            decimal d = decimal.Parse(SelectedQty.ToString());
+            float MakeReady = float.Parse(dvz[0]["MAKE_READY_INK"].ToString());
+            decimal InkRunCost = (a * b * c * d) + decimal.Parse(MakeReady.ToString());
+            DVFeat[0][1] = InkRunCost;
         }
 
         private void txtQty1_LostFocus(object sender, RoutedEventArgs e)
@@ -1588,7 +1604,7 @@ namespace ProDocEstimate
             CPM1a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM1a = CPM1a * 1000.00F;
             Labor_Calc();
-//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
+            InkCalc();
         }
 
         private void txtQty2_LostFocus(object sender, RoutedEventArgs e)
@@ -1605,7 +1621,7 @@ namespace ProDocEstimate
             CPM2a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM2a = CPM2a * 1000.00F;
             Labor_Calc();
-//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
+            InkCalc();
         }
 
         private void txtQty3_LostFocus(object sender, RoutedEventArgs e)
@@ -1622,7 +1638,7 @@ namespace ProDocEstimate
             CPM3a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM3a = CPM3a * 1000.00F;
             Labor_Calc();
-//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
+            InkCalc();
         }
 
         private void txtQty4_LostFocus(object sender, RoutedEventArgs e)
@@ -1639,7 +1655,7 @@ namespace ProDocEstimate
             CPM4a = float.Parse(QuoteTotal.ToString()) / float.Parse(SelectedQty.ToString());
             CPM4a = CPM4a * 1000.00F;
             Labor_Calc();
-//            PaperGrid.ItemsSource = DVPaper;  // NOTE: Col 16 = Col 11 (Qty) * Col 15 (selected cost)
+            InkCalc();
         }
 
         private void CheckFirst()

@@ -1,19 +1,11 @@
-﻿using ProDocEstimate.Editors;
-using SharpDX.Direct2D1;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using Telerik.Windows.Controls.FieldList;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
-using Xceed.Wpf.Toolkit;
 
 namespace ProDocEstimate.Views
 {
@@ -46,15 +38,15 @@ namespace ProDocEstimate.Views
         private int    parts;     public int    Parts       { get { return parts;     } set { parts     = value; OnPropertyChanged(); } }
         private string collcut;   public string CollatorCut { get { return collcut;   } set { collcut   = value; OnPropertyChanged(); } }
 
-        private int std; public int Std { get { return std; } set { std = value; OnPropertyChanged(); } }
-        private int blackStd; public int BlackStd { get { return blackStd; } set { blackStd = value; OnPropertyChanged(); } }
-        private int pms; public int PMS { get { return pms; } set { pms = value; OnPropertyChanged(); } }
-        private int desens; public int Desens { get { return desens; } set { desens = value; OnPropertyChanged(); } }
-        private int split; public int Split { get { return split; } set { split = value; OnPropertyChanged(); } }
-        private int thermo; public int Thermo { get { return thermo; } set { thermo = value; OnPropertyChanged(); } }
-        private int fourColor; public int FourColor { get { return fourColor; } set { fourColor = value; OnPropertyChanged(); } }
-        private int waterMark; public int WaterMark { get { return waterMark; } set { waterMark = value; OnPropertyChanged(); } }
-        private int fluorSel; public int FluorSel { get { return fluorSel; } set { fluorSel = value; OnPropertyChanged(); } }
+        private int std;          public int Std            { get { return std;       } set { std       = value; OnPropertyChanged(); } }
+        private int blackStd;     public int BlackStd       { get { return blackStd;  } set { blackStd  = value; OnPropertyChanged(); } }
+        private int pms;          public int PMS            { get { return pms;       } set { pms       = value; OnPropertyChanged(); } }
+        private int desens;       public int Desens         { get { return desens;    } set { desens    = value; OnPropertyChanged(); } }
+        private int split;        public int Split          { get { return split;     } set { split     = value; OnPropertyChanged(); } }
+        private int thermo;       public int Thermo         { get { return thermo;    } set { thermo    = value; OnPropertyChanged(); } }
+        private int fourColor;    public int FourColor      { get { return fourColor; } set { fourColor = value; OnPropertyChanged(); } }
+        private int waterMark;    public int WaterMark      { get { return waterMark; } set { waterMark = value; OnPropertyChanged(); } }
+        private int fluorSel;     public int FluorSel       { get { return fluorSel;  } set { fluorSel  = value; OnPropertyChanged(); } }
 
         private float stdCharge = 0.00F; public float StdCharge { get { return stdCharge; } set { stdCharge = value; OnPropertyChanged(); } }
         private float blackstdChg = 0.00F; public float BlackStdChg { get { return blackstdChg; } set { blackstdChg = value; OnPropertyChanged(); } }
@@ -79,7 +71,7 @@ namespace ProDocEstimate.Views
         private float totPT = 0.00F; public float TotPT { get { return totPT; } set { totPT = value; OnPropertyChanged(); } }
         private float totFlat = 0.00F; public float TotFlat { get { return totFlat; } set { totFlat = value; OnPropertyChanged(); } }
         private float flatTotal; public float FlatTotal { get { return flatTotal; } set { flatTotal = value; OnPropertyChanged(); } }
-        private int max; public int Max { get { return max; } set { max = value; OnPropertyChanged(); } }
+        private int   max; public int Max { get { return max; } set { max = value; OnPropertyChanged(); } }
         private float flat_charge; public float FLAT_CHARGE { get { return flat_charge; } set { flat_charge = value; OnPropertyChanged(); } }
         private float total; public float Total { get { return total; } set { total = value; OnPropertyChanged(); } }
         private string cmd; public string Cmd { get { return cmd; } set { cmd = value; OnPropertyChanged(); } }
@@ -522,9 +514,9 @@ namespace ProDocEstimate.Views
                 + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,  "
                 + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
                 + " VALUES ( "
-                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',      'Watermark',   'FluorSel',   'FourColor', "
-                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',    '{WaterMark}', '{FluorSel}', '{FourColor}', "
-                + $" '{CalculatedPressCharge}', '{FlatCharge}',  '{FlatChargePct}', '{RunChargePct}',  '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
+                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',   'FourColor', "
+                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',        '{WaterMark}', '{FluorSel}', '{FourColor}', "
+                + $"  {CalculatedPressCharge},         '{FlatCharge}',    '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '{FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
                 + $"  {LabPS},         {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
                 + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
 
