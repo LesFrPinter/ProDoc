@@ -1064,6 +1064,9 @@ namespace ProDocEstimate
 
         private void GridCalc()
         {
+
+            if (DVPaper == null || DVPaper.Count == 0) return;
+
             Calculating c = new Calculating(); c.Show();    // Show the "busy" message...
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
