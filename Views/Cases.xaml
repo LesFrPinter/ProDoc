@@ -1,4 +1,4 @@
-﻿<Window x:Class="ProDocEstimate.Views.Shipping"
+﻿<Window x:Class="ProDocEstimate.Views.Cases"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
-        Title="Shipping" Height="450" Width="800">
+        Title="Cases" Height="450" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -32,44 +32,50 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="*"  />
+            <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        
-        <Label Content="Shipping" 
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="125" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Cases" 
                 HorizontalAlignment="Center" 
                 HorizontalContentAlignment="Center" 
                 VerticalContentAlignment="Center" 
                 FontSize="28" 
                 Foreground="Red" 
                 Padding="2 0" 
+                Grid.ColumnSpan="4"
                 Height="38" >
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect ShadowDepth="5" Direction="260" Opacity="75" />
             </Label.BitmapEffect>
         </Label>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="100 0 0 0" HorizontalAlignment="Left" >
-            <Label Content="Base charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
-            <TextBox Text="{Binding BaseCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
-        </StackPanel>
+        <RadioButton x:Name="chkStandard" Content="Standard" GroupName="x" Grid.Row="1" Grid.Column="1" FontSize="16" 
+                     IsChecked="{Binding Standard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <RadioButton x:Name="chkCustom"   Content="Custom"   GroupName="x" Grid.Row="2" Grid.Column="1" FontSize="16" 
+                     IsChecked="{Binding Custom,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox  
+            x:Name="txtCustomCost"
+            Grid.Row="2" 
+            Grid.Column="2" 
+            Width="80" 
+            Text="{Binding Cost, StringFormat=C}" 
+            Height="20" 
+            Visibility="Hidden"
+            HorizontalContentAlignment="Right" />
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="100 0 0 0" HorizontalAlignment="Left" >
-            <Label Content="Additional shipments" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
-            <TextBox x:Name="nDrops" Text="{Binding NumDrops, StringFormat=N0}" Margin="10 0" VerticalAlignment="Center" Width="60" LostFocus="nDrops_LostFocus" HorizontalContentAlignment="Right"  />
+        <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="4" VerticalAlignment="Center" >
+            <Button Content="Save"   x:Name="btnSave" Click="btnSave_Click" Margin="5 0" VerticalAlignment="Center" />
+            <Button Content="Cancel" x:Name="btnCanc" Click="btnCanc_Click" Margin="5 0" VerticalAlignment="Center" />
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="100 0 0 0" HorizontalAlignment="Left" >
-            <Label Content="Total additional charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
-            <TextBox Text="{Binding AddlCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Button x:Name="btnSave" Content="Save" Width="80" Margin="10 0" Click="btnSave_Click" FontSize="16" />
-            <Button x:Name="btnCanc" Content="Cencel" Width="80" Click="btnCanc_Click" FontSize="16" />
-        </StackPanel>
-
+        
     </Grid>
 
 </Window>

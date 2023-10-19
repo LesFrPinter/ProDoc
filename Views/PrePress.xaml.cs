@@ -220,7 +220,7 @@ namespace ProDocEstimate.Views
 
         private void GetCharges()
         {
-            //if(OrderEntry + PlateChg + PREPress == 0) return;   
+            //NOTE: PlateChg is "# of Plate Changes", it's used as the value of "Number" in the FEATURES table lookup 
 
             string cmd = $"SELECT {FieldList}"
                        + $"  FROM [ESTIMATING].[dbo].[FEATURES]"
@@ -265,7 +265,6 @@ namespace ProDocEstimate.Views
                 int l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"].ToString(), out l6); BaseBinderySlowdown = l6;
 
             }
-//            BasePlateCharge = BasePlateCharge * PlateChg;  // GET THIS FROM A TABLE IN THE NEAR FUTURE
 
             CalcTotal();
         }
@@ -355,19 +354,10 @@ namespace ProDocEstimate.Views
         { Close(); }
 
         private void OE_Checked(object sender, RoutedEventArgs e)
-        {
-            RadioButton li = (sender as RadioButton);
-            //            MessageBox.Show(li.Name.ToString() + "  " + li.Content.ToString());
-            //            OE = li.Name.ToString() + "/" + li.Content.ToString();
-            OE = li.Content.ToString();
-        }
+          { RadioButton li = (sender as RadioButton); OE = li.Content.ToString(); }
 
         private void PP1_Checked(object sender, RoutedEventArgs e)
-        {
-            RadioButton li = (sender as RadioButton);
-            //            MessageBox.Show(li.Name.ToString() + "  " + li.Content.ToString());
-            //            PP = li.Name.ToString() + "/" + li.Content.ToString();
-            PP = li.Content.ToString();
-        }
+          { RadioButton li = (sender as RadioButton); PP = li.Content.ToString(); }
+
     }
 }

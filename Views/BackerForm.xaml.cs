@@ -179,7 +179,7 @@ namespace ProDocEstimate.Views
 
         private void LoadQuote()
         {
-            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '" + QuoteNo + "' AND CATEGORY = 'Backer'";
+            string cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QuoteNo}' AND CATEGORY = 'Backer'";
             dt   = new DataTable("Details");
             conn = new SqlConnection(ConnectionString);
             da   = new SqlDataAdapter(cmd, conn); da.Fill(dt);
@@ -270,10 +270,6 @@ namespace ProDocEstimate.Views
 
             Total = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
-            //float fPressSetup = 0.0F;
-            //float fCollatorSetup = 0.0F;
-            //float fBinderySetup = 0.0F;
-
             float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"].ToString(), out F2); BasePressSetup    = (int)(F2 * 60);
             float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]  .ToString(), out F3); BaseCollatorSetup = (int)(F3 * 60);
             float F4 = 0; float.TryParse(dv[0]["BINDERY_SETUP"]   .ToString(), out F4); BaseBinderySetup  = (int)(F4 * 60);
@@ -281,8 +277,6 @@ namespace ProDocEstimate.Views
             int I2 = 0; int.TryParse(dv[0]["PRESS_SLOWDOWN"]      .ToString(), out I2); BasePressSlowdown = I2;
             int I3 = 0; int.TryParse(dv[0]["COLLATOR_SLOWDOWN"]   .ToString(), out I3); BaseCollatorSlowdown = I3;
             int I4 = 0; int.TryParse(dv[0]["BINDERY_SLOWDOWN"]    .ToString(), out I4); BaseBinderySlowdown = I4;
-
-            // the "Lab..." values were retrieved from QUOTE_DETAILS
 
             PressSlowdown    = BasePressSlowdown    + LabPSS1Pct;
             CollatorSlowdown = BaseCollatorSlowdown + LabCSS2Pct;

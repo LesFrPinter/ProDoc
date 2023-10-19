@@ -37,13 +37,15 @@ namespace ProDocEstimate.Views
             DataContext = this;
             QuoteNum = QUOTENUM;
             LoadData();
+
             PreviewKeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Escape) Close(); };  // ESC key activated
+
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.6;
-            this.Width = this.Width *= 1.6;
+            //this.Height = this.Height *= 1.6;
+            //this.Width = this.Width *= 1.6;
             Top = 50;
         }
 
@@ -74,9 +76,9 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( "
-                +  "  QUOTE_NUM,    Category,   Param1,       Param2,       Param3,     Value1,       Value2,       Value3    )"
+                +  "  QUOTE_NUM,    Category,  Sequence, Param1,       Param2,       Param3,     Value1,       Value2,       Value3    )"
                 +  " VALUES ( "
-                + $" '{QuoteNum}', 'Shipping', 'BaseCharge', 'AddlCharge', 'NumDrops', {BaseCharge}, {AddlCharge}, {NumDrops} )";
+                + $" '{QuoteNum}', 'Shipping', 12,      'BaseCharge', 'AddlCharge', 'NumDrops', {BaseCharge}, {AddlCharge}, {NumDrops} )";
 
             conn.Open();
             scmd.Connection = conn;

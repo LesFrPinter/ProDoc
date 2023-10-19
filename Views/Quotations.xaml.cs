@@ -38,18 +38,20 @@ namespace ProDocEstimate
         private float oeMaterialCost;       public float OEMaterialCost       { get { return oeMaterialCost;       } set { oeMaterialCost       = value; OnPropertyChanged(); } }
         private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost; } set { shippingMaterialCost = value; OnPropertyChanged(); } }
 
-        private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } }     // to get out of infinite loop when recalculating 
+        private bool   already;       public bool   Already       { get { return already;        } set { already        = value; OnPropertyChanged(); } } // to exit infinite loop
         private string costMsg;       public string CostMsg       { get { return costMsg;        } set { costMsg        = value; OnPropertyChanged(); } }
 
-        private float baseShip;       public float BaseShip { get { return baseShip; } set { baseShip = value; OnPropertyChanged(); } }
-        private float addlShip;       public float AddlShip { get { return addlShip; } set { addlShip = value; OnPropertyChanged(); } }
-        private int   numDrops;       public int   NumDrops { get { return numDrops; } set { numDrops = value; OnPropertyChanged(); } }
+        private float caseCost;       public float CaseCost       { get { return caseCost;       } set { caseCost       = value; OnPropertyChanged(); } }
+
+        private float baseShipChg;    public float BaseShipChg    { get { return baseShipChg;    } set { baseShipChg    = value; OnPropertyChanged(); } }
+        private float addlShipChg;    public float AddlShipChg    { get { return addlShipChg;    } set { addlShipChg    = value; OnPropertyChanged(); } }
+        private int   numDrops;       public int   NumDrops       { get { return numDrops;       } set { numDrops       = value; OnPropertyChanged(); } }
 
         private string oe;            public string OE            { get { return oe;             } set { oe             = value; OnPropertyChanged(); } }
         private string pre;           public string Pre           { get { return pre;            } set { pre            = value; OnPropertyChanged(); } }
 
-        private float shipTime = 0.15F; public float ShipTime { get { return shipTime; } set { shipTime = value; OnPropertyChanged(); } }
-        private float shipCost = 25.0F; public float ShipCost { get { return shipCost; } set { shipCost = value; OnPropertyChanged(); } }
+        private float shipTime = 0.15F; public float ShipTime     { get { return shipTime;       } set { shipTime       = value; OnPropertyChanged(); } }
+        private float shipCost = 25.0F; public float ShipCost     { get { return shipCost;       } set { shipCost       = value; OnPropertyChanged(); } }
 
         private float preRunTime;     public float PreRunTime     { get { return preRunTime;     } set { preRunTime     = value; OnPropertyChanged(); } }
         private float preRunCost;     public float PreRunCost     { get { return preRunCost;     } set { preRunCost     = value; OnPropertyChanged(); } }
@@ -220,18 +222,17 @@ namespace ProDocEstimate
             LoadPaperTypes();
             LoadAvailableCategories();
 
-            // set some defaults for testing
-            MaxColors = 5;
-            QUOTE_NUM = "10001";
+            // Defaults for testing
+            MaxColors   = 5;
+            QUOTE_NUM   = "10001";
             ProjectType = "CONTINUOUS";
-            PARTS = 3;
-            PAPERTYPE = "BOND";
-            ROLLWIDTH = "10";
-            PRESSSIZE = "11";
+            PARTS       = 3;
+            PAPERTYPE   = "BOND";
+            ROLLWIDTH   = "10";
+            PRESSSIZE   = "11";
             COLLATORCUT = "11";
 
-            // For page 3
-            LoadDetails();   
+            LoadDetails();   // For page 3
 
             Date = DateTime.Now.ToString("MM/dd/yyyy");
             PrintDate = Date;
@@ -264,6 +265,7 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Strike In");
             lstAvailable.Items.Add("Security");
             lstAvailable.Items.Add("Shipping");
+            lstAvailable.Items.Add("Cases");
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
@@ -335,14 +337,14 @@ namespace ProDocEstimate
 
             lstSelected.Items.Clear();
 
-            conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
+//TODO WHY WAS THIS HERE? Left over from a previous row addition, I imagine...
+//          conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
             //TODO: See what should be used as defaults in the PrePress entry
 
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
                 +            "( QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
-                + $" VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PREPress', 'New',   '0',   'New'   )";
-
+                + $" VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )";
             conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
 
             LoadDetails();
@@ -1005,8 +1007,8 @@ namespace ProDocEstimate
 
         private void dgSheetsOfPaper_CurrentCellChanged(object sender, System.EventArgs e)
         {
-            txtItemType.Focus();  
-            // TODO: Provide a visual cue that combobox itemlists have been refreshed and they need to pick anything they want to change
+            txtItemType.Focus();
+            // Provide a visual cue that combobox itemlists have been refreshed and they need to pick anything they want to change
             PickMsg.Visibility = Visibility.Visible;
             txtItemType.IsDropDownOpen = true;
         }
@@ -1077,13 +1079,10 @@ namespace ProDocEstimate
             // Populate the Paper ListView on Page 4
             List<Paper> Papers = new List<Paper>();
 
-//            for (r = 0; r < dgSheetsOfPaper.Items.Count; r++)
             for (r = 0; r < DVPaper.Count; r++)
             {
                 pc.NumDocs = (int)SelectedQty;
                 DataRowView drv = (DataRowView)dgSheetsOfPaper.Items[r];
-
-                // pc.Material = ((System.Data.DataRowView)dgSheetsOfPaper.Items[r]).Row.ItemArray[0].ToString();
 
                 pc.Material = drv[0].ToString();
                 pc.PressSize = PRESSSIZE;
@@ -1267,6 +1266,12 @@ namespace ProDocEstimate
                 case "Shipping":
                     {
                         Shipping sh = new Shipping(QUOTE_NUM); sh.ShowDialog();
+                        break;
+                    }
+
+                case "Cases":
+                    {
+                        Cases cases = new Cases(QUOTE_NUM); cases.ShowDialog();
                         break;
                     }
 
@@ -1477,7 +1482,7 @@ namespace ProDocEstimate
             conn = new SqlConnection(ConnectionString); conn.Open();
             scmd.CommandText = cmd; scmd.Connection = conn; scmd.ExecuteNonQuery(); conn.Close();
 
-            Close();    //TODO: Should they just save and continue?
+            Close(); // Should I just save and continue?
         }
 
         private void btnCancelQuote_Click(object sender, RoutedEventArgs e)
@@ -2000,7 +2005,7 @@ namespace ProDocEstimate
             DataView dv10 = ds10.Tables[0].DefaultView;
 
             float bindmins = 0;
-            if (dv5.Count > 0) bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F; // TODO: This uses the value (currently 12) of Quote_Details .. Category = "Finishing"
+            if (dv5.Count > 0) bindmins = float.Parse(dv5[0]["BindSetupMin"].ToString()) / 60.0F;   // This uses the value (currently 12) of Quote_Details .. Category = "Finishing"
             BindSetupTime = bindmins;
             BindSetupCost = float.Parse(dv10[0]["Dollars_per_hr"].ToString()) * bindmins;
 
@@ -2037,22 +2042,66 @@ namespace ProDocEstimate
                 OERunCost *= OERunTime;
             }
 
+            //------------------------------------
+            // SHIPPING cost calculation goes here
+            //------------------------------------
+
+            //TODO: Read the shipping costs from the SHIPPING table
+
+
             cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Shipping'";
             DataAdapter da8 = new SqlDataAdapter(cmd, conn);
             DataSet ds8 = new DataSet(); da8.Fill(ds8); DataView dv8 = ds8.Tables[0].DefaultView;
 
-            BaseShip = 0;AddlShip = 0; NumDrops = 0; ShipCost = 0; ShipTime = 0;
+            BaseShipChg = 0;AddlShipChg = 0; NumDrops = 0; ShipCost = 0; ShipTime = 0;
 
             if(dv8.Count>0)
             { 
-                BaseShip = float.Parse(dv8[0]["Value1"].ToString());
-                AddlShip = float.Parse(dv8[0]["Value2"].ToString());
+                BaseShipChg = float.Parse(dv8[0]["Value1"].ToString());
+                AddlShipChg = float.Parse(dv8[0]["Value2"].ToString());
                 NumDrops = int  .Parse(dv8[0]["Value3"].ToString());
             }
 
-            ShipCost = BaseShip + (AddlShip * NumDrops);
+            ShipCost = BaseShipChg + (AddlShipChg * NumDrops);
             ShipTime = 15 + (NumDrops * 5); // minutes
-            ShipTime /= 60.0F;
+            ShipTime /= 60.0F;  // Fraction of an hour. TODO: WHERE DOES THIS GO?
+
+            if (DVFeat != null && DVFeat.Count > 0)
+              { for (int i = 0; i < DVFeat.Count; i++) { if (DVFeat[i][0].ToString() == "Shipping") { DVFeat[i][1] = ShipCost; } } } 
+
+            //---------------------------------
+            // CASES cost calculation goes here
+            //---------------------------------
+
+            cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Cases'";
+            DataAdapter da14 = new SqlDataAdapter(cmd, conn);
+            DataSet ds14 = new DataSet(); da14.Fill(ds14); 
+            DataView dv14 = ds14.Tables[0].DefaultView;
+
+            // If standard case cost, read from a table; otherwise, use the custom cost that was entered
+            int stdUsed = 0; float custCost = 0.0F;
+            if (dv14.Count > 0)
+            {   stdUsed  = int  .Parse(dv14[0]["Value1"].ToString()); // if stdUsed == 1, get standard case number from a table
+                custCost = float.Parse(dv14[0]["Value2"].ToString());
+            }
+
+            // Standard cost comes from the CASES table, and is based on RollWidth
+
+            cmd = $"SELECT SmallWidthCost, LargeWidthCost, DocsPerCase FROM [ESTIMATING].[dbo].[CASES] WHERE NumParts = {PARTS}";
+            DataAdapter da15 = new SqlDataAdapter(cmd, conn);
+            DataSet     ds15 = new DataSet(); da15.Fill(ds15);
+            DataView    dv15 = ds15.Tables[0].DefaultView;
+
+            float rollwidth      = float.Parse(ROLLWIDTH.ToString());
+            float BaseCaseCharge = (rollwidth < 12) ? float.Parse(dv15[0]["SmallWidthCost"].ToString()) : float.Parse(dv15[0]["LargeWidthCost"].ToString());
+            int docspercase      = int.Parse(dv15[0]["DocsPerCase"].ToString());
+            int CasesNeeded      = (SelectedQty / docspercase);
+            if (float.Parse(SelectedQty.ToString()) / float.Parse(docspercase.ToString()) != CasesNeeded)
+                { CasesNeeded++; }
+            CaseCost             = BaseCaseCharge * CasesNeeded;
+
+            if (DVFeat == null || DVFeat.Count == 0) return;
+            for (int i = 0; i < DVFeat.Count; i++) { if (DVFeat[i][0].ToString() == "Cases") { DVFeat[i][1] = CaseCost; } }   // ShippingMaterialCost = CaseCost;
 
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
         }
