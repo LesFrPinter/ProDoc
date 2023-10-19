@@ -209,5 +209,10 @@ namespace ProDocEstimate
 			Editors.TestAddingRow testAddingRow = new Editors.TestAddingRow(); testAddingRow.ShowDialog();
         }
 
+        private void mnuCases_Click(object sender, RoutedEventArgs e)
+        {
+            Editors.Cases cases = new Editors.Cases(); cases.ShowDialog();
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="ProDocEstimate.Editors.Bindery"
+﻿<Window x:Class="ProDocEstimate.Editors.Cases"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
-        Title="Bindery Materials" Height="750" Width="1200">
+        Title="Cases" Height="750" Width="1200">
 
     <Viewbox Stretch="Uniform" VerticalAlignment="Top">
 
@@ -27,7 +27,7 @@
             </Menu>
 
             <Border Grid.Row="1" CornerRadius="10" Background="Green" BorderBrush="Green" BorderThickness="1" HorizontalAlignment="Left" Width="250" Height="40" Margin="10 0 0 0 " >
-                <TextBlock Text=" Bindery Materials" FontSize="28" Background="Green" Width="220" Foreground="White" Margin="5 0 0 0" />
+                <TextBlock Text=" Cases" FontSize="28" Background="Green" Width="220" Foreground="White" Margin="5 0 0 0" />
             </Border>
 
             <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Width="250">
