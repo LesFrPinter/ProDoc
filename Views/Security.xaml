@@ -209,7 +209,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
-                        <RowDefinition Height="2" />
+                        <RowDefinition Height="0" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -294,7 +294,7 @@
                     <RowDefinition Height="24" />
                     <RowDefinition Height="24" />
                     <RowDefinition Height="24" />
-                    <RowDefinition Height="22" />
+                    <RowDefinition Height="24" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -371,9 +371,9 @@
 
             </Grid>
 
-            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 10 0" >
-                <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click"   />
-                <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 10 0" Height="28" >
+                <Button x:Name="btnSave"   Content="Save"   Padding="12 2" VerticalAlignment="Center" Click="btnSave_Click"   Height="26"  />
+                <Button x:Name="btnCancel" Content="Cancel" Padding="12 2" VerticalAlignment="Center" Click="btnCancel_Click" Height="26" />
             </StackPanel>
 
         </Grid>

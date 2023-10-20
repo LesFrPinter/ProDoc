@@ -67,13 +67,13 @@
             Grid.Column="2" 
             Width="80" 
             Text="{Binding Cost, StringFormat=C}" 
-            Height="20" 
+            Height="24" 
             Visibility="Hidden"
             HorizontalContentAlignment="Right" />
 
-        <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="4" VerticalAlignment="Center" >
-            <Button Content="Save"   x:Name="btnSave" Click="btnSave_Click" Margin="5 0" VerticalAlignment="Center" />
-            <Button Content="Cancel" x:Name="btnCanc" Click="btnCanc_Click" Margin="5 0" VerticalAlignment="Center" />
+        <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Right" Grid.ColumnSpan="4" VerticalAlignment="Center" >
+            <Button Content="Save"   x:Name="btnSave" Click="btnSave_Click" Margin="5 0" VerticalAlignment="Center" Padding="12 3" />
+            <Button Content="Cancel" x:Name="btnCanc" Click="btnCanc_Click" Margin="5 0" VerticalAlignment="Center" Padding="12 3" />
         </StackPanel>
         
     </Grid>

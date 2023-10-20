@@ -122,6 +122,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -550,7 +551,7 @@
 						       Padding="0"
 						       HorizontalAlignment="Left"
 						       Content="Customer:"
-						       FontSize="18"
+						       FontSize="16"
 						       FontWeight="bold"
 						       Foreground="blue" />
 
@@ -914,17 +915,17 @@
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Description"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
                                 <DataGridTextColumn 
-                                    Width="90" 
+                                    Width="93" 
                                     Binding="{Binding Path=Pounds}" ElementStyle="{StaticResource CellRightAlign}" >
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Lbs Needed"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
@@ -932,7 +933,7 @@
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Last P/O"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
@@ -940,7 +941,7 @@
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Avg Cost"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
@@ -948,7 +949,7 @@
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Mast Cost"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
@@ -957,15 +958,15 @@
                                         <Label HorizontalAlignment="Right"
                                                Background="{Binding ProblemColor}"
 										       Content="Cost Used"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="90" Binding="{Binding Path=PaperCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                <DataGridTextColumn Width="94" Binding="{Binding Path=PaperCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
                                     <DataGridTextColumn.Header>
                                         <Label HorizontalAlignment="Right"
 										       Content="Paper Cost"
-										       FontSize="10" />
+										       FontSize="12" FontWeight="Bold" />
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
 

@@ -9,8 +9,6 @@
         Background="LightGray"
         Title="Master Inventory" Height="800" Width="1200">
 
-    <!--<Viewbox Stretch="Uniform" VerticalAlignment="Top">-->
-
         <Grid>
 
             <Grid.RowDefinitions>
@@ -26,20 +24,25 @@
                 </MenuItem>
             </Menu>
 
-            <Border Grid.Row="1" CornerRadius="10" Background="Green" BorderBrush="Green" BorderThickness="1" HorizontalAlignment="Left" Width="270" Height="40" Margin="10 0 0 0 " >
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Border CornerRadius="10" Background="Green" BorderBrush="Green" BorderThickness="1" HorizontalAlignment="Left" Width="270" Height="40" Margin="10 0 0 0 " >
                 <TextBlock Text="Master Inventory" FontSize="28" Background="Green" Width="230" Foreground="White" Margin="5 0 0 0" />
             </Border>
+            <Label Content="   Descriptions matching " Grid.Row="1" HorizontalAlignment="Left" />
+            <TextBox Width="150" FontSize="16" VerticalContentAlignment="Center" x:Name="MatchDesc" LostFocus="MatchDesc_LostFocus" Text="{Binding MatchThis, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+            <Button Margin="10 0 0 0" Content="Show matches" x:Name="btnShow" Padding="10 2" FontSize="14" />
+            <Label  Margin="10 0 0 0" Content="{Binding RowCount,UpdateSourceTrigger=PropertyChanged}" Width="150" Height="32" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+            <Button Margin="20 0 0 0" Content="Clear filter" x:Name="btnClear" Click="btnClear_Click" Padding="10 2" FontSize="14" />
+        </StackPanel>
 
         <DataGrid 
                 x:Name="grdData" FontSize="24"
-                Width="1200"
+                Width="2200"
                 AutoGenerateColumns="True" Grid.Row="2" 
                 CellEditEnding="grdData_CellEditEnding" />
 
             <Button Content="Close" x:Name="btnCloseWindow" Grid.Row="3" Click="btnCloseWindow_Click" Padding="5,2"  />
 
         </Grid>
-
-    <!--</Viewbox>-->
 
 </Window>

@@ -20,6 +20,10 @@ namespace ProDocEstimate.Editors
         public SqlCommand scmd;
         public DataTable dt;
         public DataView dv;
+
+        private string matchThis; public string MatchThis { get { return matchThis  ; } set { matchThis = value; OnPropertyChanged(); } }
+        private string rowCount;  public string RowCount  { get { return rowCount;    } set { rowCount  = value; OnPropertyChanged(); } }
+
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -79,5 +83,17 @@ namespace ProDocEstimate.Editors
             Close();
         }
 
+        private void MatchDesc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            dv.RowFilter = $"Description LIKE '*{MatchThis}*'";
+            RowCount = dv.Count.ToString() + " matches";
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            dv.RowFilter = "";
+            MatchThis = "";
+            RowCount = dv.Count.ToString() + " matches";
+        }
     }
 }

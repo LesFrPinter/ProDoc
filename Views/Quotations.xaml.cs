@@ -732,26 +732,27 @@ namespace ProDocEstimate
             // NOTE: These errors can only occur on a new quote
             string ErrorMessages = "";
             if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
-            if (PARTS == 0) { ErrorMessages += "# Parts is required;\n"; }
-            if (PAPERTYPE.Length == 0)   { ErrorMessages += "Paper type is required;\n"; }
-            if (ROLLWIDTH.Length == 0)   { ErrorMessages += "Roll width is required;\n"; }
+            if (PARTS              == 0) { ErrorMessages += "# Parts is required;\n"; }
+            if (PAPERTYPE.Length   == 0) { ErrorMessages += "Paper type is required;\n"; }
+            if (ROLLWIDTH.Length   == 0) { ErrorMessages += "Roll width is required;\n"; }
             if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
-            if (PRESSSIZE.Length == 0)   { ErrorMessages += "Press size is required;\n"; }
+            if (PRESSSIZE.Length   == 0) { ErrorMessages += "Press size is required;\n"; }
             if (COLLATORCUT.Length == 0) { ErrorMessages += "Collator cut size is required;\n"; }
 
             if (ErrorMessages.Length>0) { MessageBox.Show(ErrorMessages); return; }
 
             AddDefaultDetailLines();
 
-            int setNum       = int.Parse(PartsSpinner.Value.ToString());
+            int    setNum    = int.Parse(PartsSpinner.Value.ToString());  // Isn't this the same as PARTS?
             string formType  = ProjectType.Substring(0, 1);
             string paperType = PAPERTYPE.Substring(0, 1);
             string rollWidth = ROLLWIDTH.ToString();
 
-            string cmd = "SELECT M.Description," +
+            string cmd = "SELECT " +
+                "M.Description," +
                 "M.ItemType," +
                 "M.SubWT," +
-                "M.COLOR AS MCOLOR," +
+                "M.COLOR            AS MCOLOR," +
                 "E.PAPER," +
                 "E.SETNUM," +
                 "E.SEQ," +
@@ -759,12 +760,12 @@ namespace ProDocEstimate
                 "E.COLOR," +
                 "E.FORMTYPE," +
                 "E.PAPERTYPE," +
-                "0.00 AS Pounds," +
-                "0.00 AS LastPOCost," +
-                "0.00 AS AverageCost," +
-                "M.COSTPERFACTOR AS MastInvCost," +
-                "0.00 AS SelectedCost," +
-                "0.00 AS PaperCost" +
+                "0.00               AS Pounds," +
+                "0.00               AS LastPOCost," +
+                "0.00               AS AverageCost," +
+                "M.COSTPERFACTOR    AS MastInvCost," +
+                "0.00               AS SelectedCost," +
+                "0.00               AS PaperCost" +
                 " FROM             PROVISIONDEV.DBO.MasterInventory M" +
                 " RIGHT OUTER JOIN PROVISIONDEV.DBO.ESTPAPER        E" +
                 "  ON M.ITEMTYPE    = E.PTYPE"       +
@@ -777,7 +778,7 @@ namespace ProDocEstimate
                 " AND Inventoryable = 1"             +
                 " ORDER BY E.SETNUM, E.SEQ";
 
-            //Clipboard.SetText(cmd);
+            Clipboard.SetText(cmd);     // see what's going on in SSMC
 
             SqlConnection cn = new(ConnectionString); cn.Open();
             SqlDataAdapter da = new(cmd, cn);
@@ -1499,9 +1500,7 @@ namespace ProDocEstimate
         private void Page4_GotFocus(object sender, RoutedEventArgs e)
         {
             // Load features for display in the second datagrid on page 4
-            string cmd
-                =  "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent"
-                + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+            string cmd = $"SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
             SqlConnection conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn);
             dt = new DataTable("Features"); 
@@ -1512,8 +1511,7 @@ namespace ProDocEstimate
             dgFeatures.Items.Clear();
             dgFeatures.ItemsSource = DVFeat;
 
-            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks" 
-                + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
+            cmd = $"SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
             SqlDataAdapter da8  = new SqlDataAdapter(cmd, conn);
             DataTable dt11      = new DataTable("BookCello");da8.Fill(dt11);
@@ -2092,7 +2090,11 @@ namespace ProDocEstimate
             DataSet     ds15 = new DataSet(); da15.Fill(ds15);
             DataView    dv15 = ds15.Tables[0].DefaultView;
 
-            float rollwidth      = float.Parse(ROLLWIDTH.ToString());
+            //TODO: Convert fraction to decimal
+            // float rollwidth      = float.Parse(ROLLWIDTH.ToString());
+            StringToNumber stn = new StringToNumber();
+            float rollwidth = stn.Convert(ROLLWIDTH.ToString());
+
             float BaseCaseCharge = (rollwidth < 12) ? float.Parse(dv15[0]["SmallWidthCost"].ToString()) : float.Parse(dv15[0]["LargeWidthCost"].ToString());
             int docspercase      = int.Parse(dv15[0]["DocsPerCase"].ToString());
             int CasesNeeded      = (SelectedQty / docspercase);

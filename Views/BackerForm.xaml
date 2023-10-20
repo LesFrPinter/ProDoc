@@ -243,9 +243,9 @@
             <Label Content="Total Slowdown:"        Grid.Row="12" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,10,0" Height="30"  HorizontalContentAlignment="Right" FontWeight="Bold" />
             <TextBox Width="80"                     Grid.Row="12" Grid.Column="5" HorizontalAlignment="Left" Text="{Binding SlowdownTotal,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="10,3,0,3" />
 
-            <StackPanel Orientation="Horizontal"    Grid.Row="13" Grid.Column="6" HorizontalAlignment="Center" Width="108" Margin="0,0,0,0" VerticalAlignment="Top" Height="34" >
-                <Button x:Name="btnSave"            Grid.Column="3" Content="Save"   FontSize="16" Padding="4 2" Click="btnSave_Click" />
-                <Button x:Name="btnCancel"          Grid.Column="3" Content="Cancel" FontSize="16" Padding="4 2" Click="btnCancel_Click"/>
+            <StackPanel Orientation="Horizontal"    Grid.Row="13" Grid.Column="6" HorizontalAlignment="Center" Margin="0,0,10,0" VerticalAlignment="Center" Height="30" >
+                <Button x:Name="btnSave"            Grid.Column="3" Content="Save"   FontSize="16" Padding="12 2" Click="btnSave_Click" />
+                <Button x:Name="btnCancel"          Grid.Column="3" Content="Cancel" FontSize="16" Padding="12 2" Click="btnCancel_Click"/>
             </StackPanel>
 
         </Grid>

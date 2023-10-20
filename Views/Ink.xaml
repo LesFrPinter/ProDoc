@@ -297,9 +297,9 @@
 
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="682,0,0,0" Height="22" Width="98" >
-                <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
-                <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" >
+                <Button x:Name="btnSave"   Content="Save"   Padding="12 2" VerticalAlignment="Bottom" Click="btnSave_Click"  />
+                <Button x:Name="btnCancel" Content="Cancel" Padding="12 2" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
             </StackPanel>
 
         </Grid>

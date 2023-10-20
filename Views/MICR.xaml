@@ -233,9 +233,9 @@
             </Grid>
 
 
-            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="6" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 20 0" >
-                <Button x:Name="btnSave"   Content="Save"   Padding="6 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
-                <Button x:Name="btnCancel" Content="Cancel" Padding="6 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="6" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0" >
+                <Button x:Name="btnSave"   Content="Save"   Padding="12 2" VerticalAlignment="Bottom" Click="btnSave_Click" />
+                <Button x:Name="btnCancel" Content="Cancel" Padding="12 2" VerticalAlignment="Bottom" Click="btnCancel_Click" />
             </StackPanel>
 
         </Grid>
