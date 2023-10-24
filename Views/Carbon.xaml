@@ -1,0 +1,62 @@
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="ProDocEstimate.Views.Carbon"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProDocEstimate.Views"
+        mc:Ignorable="d"
+        Background="LightGray"
+        Loaded="OnLoad"
+        WindowStartupLocation="CenterScreen"
+        Title="Carbon" Height="250" Width="700">
+
+    <Viewbox>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+
+            <Label Content="Carbon" FontSize="24" Foreground="Red" HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
+
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10 0" >
+                <Label Content="Stock/Premium" Width="200" />
+                <CheckBox Content="Black" Margin="10 0" FontSize="14" x:Name="StockRadio1" Checked="StockRadio1_Checked" Unchecked="StockRadio1_Unchecked" IsChecked="{Binding BlackStock}" />
+                <CheckBox Content="Blue"  Margin="10 0" FontSize="14" x:Name="StockRadio2" Checked="StockRadio2_Checked" Unchecked="StockRadio2_Unchecked" IsChecked="{Binding BlueStock}"  />
+                <telerik:RadNumericUpDown Value="{Binding StockNum}" Minimum="0" Maximum="12" Margin="10 0" Height="22" NumberDecimalDigits="0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="10 0" >
+                <Label Content="Pattern/Area Coated Rolls" Width="200" />
+                <CheckBox Content="Black" Margin="10 0" FontSize="14" x:Name="PatternRadio1" Checked="PatternRadio1_Checked" Unchecked="PatternRadio1_Unchecked" IsChecked="{Binding BlackPattern}" />
+                <CheckBox Content="Blue"  Margin="10 0" FontSize="14" x:Name="PatternRadio2" Checked="PatternRadio2_Checked" Unchecked="PatternRadio2_Unchecked" IsChecked="{Binding BluePattern}"  />
+                <telerik:RadNumericUpDown Value="{Binding PatternNum}" Minimum="0" Maximum="12" Margin="10 0" Height="22" NumberDecimalDigits="0" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10 0">
+                <Label Content="Collator setup" HorizontalAlignment="Left" Target="{Binding ElementName=S2}" VerticalAlignment="Center" Width="212" />
+                <TextBox IsEnabled="False" Width="60"   Text= "{Binding CalcCollSetup, StringFormat='N0'}" Height="22" />
+                <telerik:RadNumericUpDown               Value="{Binding CollDelta,     UpdateSourceTrigger=PropertyChanged}" ValueChanged="CalcLabor" HorizontalAlignment="Left" Margin="6,0,0,0" Width="60" Height="22" NumberDecimalDigits="0" />
+                <Label Content="Collator slowdown:"     Margin="5 0 0 0" Width="160"/>
+                <TextBox IsEnabled="False" Width="60"   Text= "{Binding CalcCollSlow,  StringFormat='N0'}" HorizontalContentAlignment="Right" Height="22" Margin="10 2 10 2" />
+                <telerik:RadNumericUpDown               Value="{Binding CollSlowDelta, UpdateSourceTrigger=PropertyChanged}" ValueChanged="CalcLabor" HorizontalAlignment="Left" Margin="0 2 0 2" Width="60" Height="22" NumberDecimalDigits="0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Right" Margin="10 0">
+                <Button Content="Save"   x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 0" Padding="10 0" Height="22" HorizontalContentAlignment="Right" />
+                <Button Content="Cancel" x:Name="btnCanc" Click="btnCanc_Click" Margin="5 0 0 0" Padding="10 0" Height="22" HorizontalContentAlignment="Right" />
+            </StackPanel>
+
+        </Grid>
+
+    </Viewbox>
+
+</Window>

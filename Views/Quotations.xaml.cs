@@ -266,6 +266,7 @@ namespace ProDocEstimate
             lstAvailable.Items.Add("Security");
             lstAvailable.Items.Add("Shipping");
             lstAvailable.Items.Add("Cases");
+            lstAvailable.Items.Add("Carbon");
         }
 
         private void btnLookup_Click(object sender, RoutedEventArgs e)
@@ -328,7 +329,8 @@ namespace ProDocEstimate
 
         private void AddDefaultDetailLines()
         {
-            Trace.WriteLine("--------------------------------\nADDING DEFAULT DETAIL LINES\n--------------------------------");
+            //TODO Add other features installed by default 
+
             // Don't add them twice
             string cmd = $"SELECT COUNT(*) AS HowMany FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = {QUOTE_NUM}";
             conn = new SqlConnection(ConnectionString); conn.Open();
@@ -337,18 +339,18 @@ namespace ProDocEstimate
 
             lstSelected.Items.Clear();
 
-//TODO WHY WAS THIS HERE? Left over from a previous row addition, I imagine...
-//          conn.Open(); scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
+            cmd = $"INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
+                +  "( QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+                +  " VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )"; // <--- TODO: See if "New" and "New" should be the PrePress defaults
 
-            //TODO: See what should be used as defaults in the PrePress entry
-
-            cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
-                +            "( QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
-                + $" VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )";
-            conn.Open(); scmd.Connection = conn; scmd.CommandText = cmd; scmd.ExecuteNonQuery(); conn.Close();
+            conn.Open();
+            scmd = new SqlCommand(cmd, conn);
+            scmd.ExecuteNonQuery(); 
+            conn.Close();
 
             LoadDetails();
 
+            // Remove the default features from the "Available" list
             //lstAvailable.Items.Remove("Base Charges");
             lstAvailable.Items.Remove("PrePress");
 
@@ -1276,6 +1278,12 @@ namespace ProDocEstimate
                         break;
                     }
 
+                case "Carbon":
+                    {
+                        Carbon carbon = new Carbon(QUOTE_NUM); carbon.ShowDialog();
+                        break;
+                    }
+
             }
 
             CheckRows();
@@ -2105,7 +2113,56 @@ namespace ProDocEstimate
             if (DVFeat == null || DVFeat.Count == 0) return;
             for (int i = 0; i < DVFeat.Count; i++) { if (DVFeat[i][0].ToString() == "Cases") { DVFeat[i][1] = CaseCost; } }   // ShippingMaterialCost = CaseCost;
 
+            // -----------------------------------------------------
+            // Calculate carbon cost and stick into the DVFeat table
+            // -----------------------------------------------------
+
+            cmd = "SELECT * FROM [ESTIMATING].[dbo].[Carbon]";
+
+            DataAdapter da16 = new SqlDataAdapter(cmd, conn);
+            DataSet     ds16 = new DataSet(); da16.Fill(ds16);
+            DataView    dv16 = ds16.Tables[0].DefaultView;
+
+            float CarbonCost = 0.0F;
+            StringToNumber sTOn = new StringToNumber();
+            float DecimalCollatorCutSize = sTOn.Convert(COLLATORCUT.ToString());
+            float TotalInches = DecimalCollatorCutSize * SelectedQty;
+            float TotalFeet   = TotalInches / 12;
+            float CarbonWidth = sTOn.Convert(ROLLWIDTH);
+            CarbonWidth -= 0.25F;
+            float Units = (TotalFeet / 1000.0F) * CarbonWidth;
+
+            float StockCarbonMaterialCost = 0.00F;
+            float PatternCarbonMaterialCost = 0.00F;
+
+            // Look up cost in the new Carbon table and multiply it times Units, and store it in DVFeat[i][2]; 
+            cmd =  "SELECT Value1 as StockColor, Value2 as PatternColor, Value3 AS StockNum, Value4 AS PatternNum"
+                + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Carbon'";
+            DataAdapter da17 = new SqlDataAdapter(cmd, conn);
+            DataSet ds17 = new DataSet(); da17.Fill(ds17);
+            DataView dv17 = ds17.Tables[0].DefaultView;
+
+            string StockColor   = dv17[0]["StockColor"].ToString();
+            string PatternColor = dv17[0]["PatternColor"].ToString();
+            int StockNum        = int.Parse(dv17[0]["StockNum"].ToString());
+            int PatternNum      = int.Parse(dv17[0]["PatternNum"].ToString());
+
+            dv16.RowFilter = $"Color = '{StockColor}' AND Carbon = 'Stock'"; 
+            StockCarbonMaterialCost = float.Parse(dv16[0]["UnitPrice"].ToString());
+
+            dv16.RowFilter = $"Color = '{PatternColor}' AND Carbon = 'Pattern'"; 
+            PatternCarbonMaterialCost = float.Parse(dv16[0]["UnitPrice"].ToString());
+
+            float StockCarbonCost = StockCarbonMaterialCost * StockNum * Units;
+            float PatternCarbonCost = PatternCarbonMaterialCost * PatternNum * Units;
+
+            float TotalCarbonCost = StockCarbonCost + PatternCarbonCost;
+
+            for (int i = 0; i < DVFeat.Count; i++) { if (DVFeat[i][0].ToString() == "Carbon") { DVFeat[i][1] = TotalCarbonCost; } }
+
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
+
+
         }
 
         private void S1_Click(object sender, RoutedEventArgs e)

@@ -71,7 +71,7 @@
 				       Foreground="White" />
             </Border>
 
-            <Label FontSize="20" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Visibility="Visible" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
+            <Label FontSize="20" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
 
             <Border Grid.RowSpan="2"
 			        Grid.Column="0"

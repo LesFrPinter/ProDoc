@@ -143,6 +143,8 @@ namespace ProDocEstimate.Views
         //ALTER TABLE QUOTE_DETAILS ADD SLOWDOWN_PERCENT INTEGER NOT NULL DEFAULT 0;
         #endregion
 
+        //TODO: Even if there are no changes, add 1 backer to calculate PLATE MATERIAL
+
         public BackerForm(string PSize, string QUOTENUM)
         {
             InitializeComponent();
