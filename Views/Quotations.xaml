@@ -75,7 +75,7 @@
 
             <Border Grid.RowSpan="2"
 			        Grid.Column="0"
-			        Width="100"
+			        Width="110"
 			        Height="52"
 			        Margin="0,0,10,0"
 			        HorizontalAlignment="Right"
@@ -1026,7 +1026,7 @@
 
                             <ListBox x:Name="lstAvailable" Grid.Row="2" 
                                      FontFamily="Courier New" FontSize="11"
-                                     Height="230" VerticalAlignment="Center"
+                                     Height="270" VerticalAlignment="Center"
                                      MouseDoubleClick="lstAvailable_MouseDoubleClick" Grid.ColumnSpan="2" />
 
                             <Label Content="Selected                                                         (Right-click to view/change)"
@@ -1038,7 +1038,7 @@
                                      Grid.Row="2" Grid.Column="3"
                                      FontFamily="Courier New" FontSize="11" 
                                      Width="180" HorizontalAlignment="Left"
-                                     Height="230" VerticalAlignment="Center"
+                                     Height="270" VerticalAlignment="Center"
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
 	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" />
 
@@ -1066,14 +1066,15 @@
 
                 </TabItem>
 
-                <TabItem x:Name="Page4"
+                <TabItem x:Name="Page4" VerticalAlignment="Top" 
 				         FontSize="16"
                          GotFocus="Page4_GotFocus"
-				         Header="Page _4" Height="27" Margin="-2,-2,-2,0" VerticalAlignment="Top" >
+				         Header="Page _4" Height="27" Margin="-2,-2,-2,0" >
 
                     <Viewbox>
 
                         <Grid Width="800" Height="650" >
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="149*"/>
                                 <ColumnDefinition Width="106*"/>
@@ -1082,8 +1083,8 @@
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="150" />
-                                <RowDefinition Height="140" />
-                                <RowDefinition Height="140" />
+                                <RowDefinition Height="90" />
+                                <RowDefinition Height="185" />
                                 <RowDefinition Height="180" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
@@ -1530,7 +1531,7 @@
 
                             <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                            <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="138" VerticalAlignment="Center" Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                            <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="90" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
 
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
                                 
@@ -1618,7 +1619,7 @@
 
                             <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="118" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontWeight="Bold" FontSize="11">
+                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="220" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontWeight="Bold" FontSize="11">
 
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
@@ -1635,17 +1636,17 @@
                                         </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Left"></Setter>
+                                                <Setter Property="HorizontalAlignment"   Value="Left" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Cost"  Width="70"        Binding="{Binding Amount,       StringFormat=C}"  >
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
+                                                <Setter Property="FontSize"              Value="11"     />
+                                                <Setter Property="Foreground"            Value="Blue"  />
+                                                <Setter Property="FontWeight"            Value="Bold"   />
+                                                <Setter Property="HorizontalAlignment"   Value="Right"  />
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>

@@ -29,7 +29,7 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        // TODO: Add a "shipping charge" table with the cost per additional shipment (currently $5.00)
+        // TODO: Load the default charges from the SHIPPING table
 
         public Shipping(string QUOTENUM)
         {

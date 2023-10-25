@@ -74,6 +74,8 @@ namespace ProDocEstimate.Views
             da.Fill(dt); 
             dv = dt.DefaultView;
 
+            if (dv.Count == 0) return;  // There is no CARBON entry in QUOTE_DETAILS   
+
             string StockColor = dv[0]["Value1"].ToString();
             BlackStock = StockColor == "Black" ? true : false;
             BlueStock = !BlackStock;

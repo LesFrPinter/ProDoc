@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ProDocEstimate.Views
 {
@@ -12,8 +11,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            Top = 350;
-            Left = 1300;
+            this.Left = this.Owner.Left + 50;
+            this.Top  = this.Owner.Top + 262;
         }
 
     }

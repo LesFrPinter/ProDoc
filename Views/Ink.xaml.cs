@@ -3,9 +3,12 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using Telerik.Windows.Controls;
 
 namespace ProDocEstimate.Views
 {
@@ -16,6 +19,20 @@ namespace ProDocEstimate.Views
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
         #region Properties
+
+        private bool one;    public bool One     { get { return one;     } set { one     = value; OnPropertyChanged(); Button1 = (One)   ? 1 : 0; } }
+        private bool two;    public bool Two     { get { return two;     } set { two     = value; OnPropertyChanged(); Button2 = (Two)   ? 1 : 0; } }
+        private bool three;  public bool Three   { get { return three;   } set { three   = value; OnPropertyChanged(); Button3 = (Three) ? 1 : 0; } }
+        private bool four;   public bool Four    { get { return four;    } set { four    = value; OnPropertyChanged(); Button4 = (Four) ? 1 : 0; } }
+
+        private int button1; public int  Button1 { get { return button1; } set { button1 = value; OnPropertyChanged(); } }
+        private int button2; public int  Button2 { get { return button2; } set { button2 = value; OnPropertyChanged(); } }
+        private int button3; public int  Button3 { get { return button3; } set { button3 = value; OnPropertyChanged(); } }
+        private int button4; public int  Button4 { get { return button4; } set { button4 = value; OnPropertyChanged(); } }
+
+        // TODO: Add the name of the property whose value should be decremented when BACKER changes...
+
+        private string prevBacker; public string PrevBacker { get { return prevBacker; } set { prevBacker = value; } }
 
         // Test data that I added:
         //UPDATE FEATURES
@@ -174,6 +191,7 @@ namespace ProDocEstimate.Views
 
             LoadMaxColors();
             LoadSavedDetails();
+            LoadBacker();
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
@@ -206,15 +224,25 @@ namespace ProDocEstimate.Views
                 int.TryParse(dt.Rows[0]["Value8"].ToString(), out I8);
                 int.TryParse(dt.Rows[0]["Value9"].ToString(), out I9);
 
-                Std = I1;
+                Std = I1; 
                 BlackStd = I2;
                 PMS = I3;
                 Desens = I4;
                 Split = I5;
                 Thermo = I6;
-                FourColor = I7;
-                WaterMark = I8;
+                WaterMark = I7;
+                FourColor = I8;
                 FluorSel = I9;
+
+                Backer = dt.Rows[0]["Value10"].ToString();
+                PrevBacker = Backer;
+
+                     if (Backer.Contains("WATERMARK")) { One = true; }
+                else if (Backer.Contains("STD")) { Two = true; }
+                else if (Backer.Contains("PMS")) { Three = true; }
+                else Four = true;
+
+                if ((FourColor == 1) || (FluorSel==1)) Debugger.Break();
 
                 int.TryParse(dt.Rows[0]["FlatChargePct"]   .ToString(), out I1);
                 int.TryParse(dt.Rows[0]["RunChargePct"]    .ToString(), out I2);
@@ -262,18 +290,20 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, cn); DataTable dt = new DataTable(); da.Fill(dt);
             MaxColors = Int32.Parse(dt.Rows[0]["Number"].ToString());
 
-            Backer = "";
-            // Retrieve value for Backer if one was previously entered 
-            str = $"SELECT PARAM1, TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
-            da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
+            //Backer = "";
+            //// Retrieve value for Backer if one was previously entered 
+            //str = $"SELECT PARAM1, TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
+            //da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
 
-            if (dt.Rows.Count > 0)
-            {
-                Backer = dt.Rows[0]["Param1"].ToString();
-                float t1 = 0; float.TryParse(dt.Rows[0]["TotalFlatChg"].ToString(), out t1); BackerFlatCharge = t1;
-                float t2 = 0; float.TryParse(dt.Rows[0]["PerThousandChg"].ToString(), out t2); BackerRunCharge = t2;
-                BackerDetails = t1.ToString("c");
-            }
+            //if (dt.Rows.Count > 0)
+            //{
+            //    Backer = dt.Rows[0]["Param1"].ToString();
+            //    float t1 = 0; float.TryParse(dt.Rows[0]["TotalFlatChg"].ToString(), out t1); BackerFlatCharge = t1;
+            //    float t2 = 0; float.TryParse(dt.Rows[0]["PerThousandChg"].ToString(), out t2); BackerRunCharge = t2;
+            //    BackerDetails = t1.ToString("c");
+
+            //    PrevBacker = Backer;
+            //}
 
             str = $"SELECT F_TYPE, MAX(Number) AS MaxColors"
                 + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'INK' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
@@ -281,27 +311,70 @@ namespace ProDocEstimate.Views
 
             DataView dv = new DataView(dt);
 
-            dv.RowFilter = "F_TYPE='STD'"; Std1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='BLK & STD'"; Blk1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='DESENSITIZED'"; Des1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='PMS'"; Pms1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='SPLIT FTN'"; Spl1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='THERMO'"; The1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='STD'";           Std1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='BLK & STD'";     Blk1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='DESENSITIZED'";  Des1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='PMS'";           Pms1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='SPLIT FTN'";     Spl1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+            dv.RowFilter = "F_TYPE='THERMO'";        The1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
             dv.RowFilter = "F_TYPE='ART WATERMARK'"; Wat1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='FLUOR SEL'"; Flo1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
-            dv.RowFilter = "F_TYPE='4 CLR PRO'"; if (dv.Count > 0) { Fou1.Maximum = int.Parse(dv[0]["MaxColors"].ToString()); }
+            dv.RowFilter = "F_TYPE='FLUOR SEL'";     Flo1.Maximum = int.Parse(dv[0]["MaxColors"].ToString());
+
+            if (dv[0]["F_TYPE"].ToString().Contains("SP")) { dv.RowFilter = "F_TYPE='4 CLR PRO'"; Fou1.Maximum = int.Parse(dv[0]["MaxColors"].ToString()); }
+
+        }
+
+        private void LoadBacker()
+        {
+            //Backer = "";    // Retrieve value for Backer if one was previously entered 
+            //string str = $"SELECT PARAM1 FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
+            //da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
+            //if(dt.Rows.Count==0) { return; }
+
+            //Backer = dt.Rows[0]["Param1"].ToString();
+
+            //if ( Backer == "BACKER STD")                        { Std       += 1; }
+            //if ((Backer == "BACKER PMS")       && PMS==0)       { PMS       += 1; }
+            //if ((Backer == "BACKER WATERMARK") && waterMark==0) { WaterMark += 1; }
         }
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
             //TODO: This is being called ten times, once for each numeric ink count.
-            string s = sender.ToString(); // Add to Watch window...
 
             if (e.OldValue == null && e.NewValue == 0) return; // Don't run the following code if the parameter value didn't change
 
             BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
-            TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel + BackerCount;
-            if (TotalCount > MaxColors) { System.Windows.MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
+            BackerCount = 0;        // Already added to the appropriate counter...
+
+            //switch (Backer)
+            //{
+            //    case "Standard": Std += 1;break;
+            //    case "Standard Watermark": Std += 1; break;
+            //    case "Standard PMS": Std += 1; break;
+            //    case "Standard ": Std += 1; break;
+            //}
+
+            TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel;
+            if (TotalCount > MaxColors) 
+            { 
+                System.Windows.MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString());
+                string s = sender.ToString(); // No longer used...
+                string n = (sender as RadNumericUpDown).Name;
+
+                switch (n)
+                {
+                    case "Std1": Std = Std - 1; break;
+                    case "Blk1": BlackStd = BlackStd - 1; break;
+                    case "Pms1": PMS = PMS - 1; break;
+                    case "Des1": Desens = Desens - 1; break;
+                    case "Spl1": Split = Split - 1; break;
+                    case "The1": Thermo = Thermo - 1; break;
+                    case "Fou1": FourColor = FourColor - 1; break;
+                    case "Flo1": FluorSel = FluorSel - 1; break;
+                }
+                return; 
+            }
 
             GetCharges();
             CalcTotal();
@@ -393,6 +466,9 @@ namespace ProDocEstimate.Views
                        + $"    OR  (F_TYPE = '4 CLR PRO'     AND Number = {FourColor})"
                        + $"    OR  (F_TYPE = 'THERMO'        AND Number = {Thermo}) )"
                        + "    ORDER BY F_TYPE, NUMBER";
+
+            //Clipboard.SetText(cmd);
+            //Debugger.Break();
 
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
@@ -497,9 +573,7 @@ namespace ProDocEstimate.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-//            MessageBox.Show(MakeReadyInkCost.ToString("C"), "MakeReadyInkCost");
 
-            // Delete current detail line
             string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
             conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
 
@@ -507,15 +581,17 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
+            if ((FourColor == 1) || (FluorSel == 1)) Debugger.Break();
+
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,        Param7,        Param8,       Param9, "
-                + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,        Value7,        Value8,       Value9, "
-                + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,  PerThousandChg, "
+                + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,            Param7,        Param8,       Param9,  Param10, "
+                + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,            Value7,        Value8,       Value9,  Value10, "
+                + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,      PerThousandChg, "
                 + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,  "
                 + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
                 + " VALUES ( "
-                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',   'FourColor', "
-                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',        '{WaterMark}', '{FluorSel}', '{FourColor}', "
+                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',   'FourColor',  'Backer',  "
+                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',        '{WaterMark}', '{FluorSel}', '{FourColor}','{Backer}', "
                 + $"  {CalculatedPressCharge},         '{FlatCharge}',    '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '{FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
                 + $"  {LabPS},         {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
                 + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
@@ -531,6 +607,29 @@ namespace ProDocEstimate.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Close(); }
+
+        private void Checked(object sender, RoutedEventArgs e)
+        {
+            Backer = (sender as RadioButton).Content.ToString();
+
+            if (Backer != "No backer")
+            {
+                Backer = Backer.Substring(Backer.IndexOf('_') + 1);
+                Backer = "BACKER " + Backer.ToUpper();
+            }
+
+            if (PrevBacker != null)
+              { if (PrevBacker.Contains("PMS")) { PMS = PMS - 1; }
+                if (PrevBacker.Contains("WATERMARK")) { WaterMark = WaterMark - 1; }
+                if (PrevBacker.Contains("STD")) { Std = Std - 1; }
+              }
+        
+            if (Backer.Contains("PMS")) { PMS = PMS + 1; }
+            if (Backer.Contains("WATERMARK")) { WaterMark = WaterMark + 1; }
+            if (Backer.Contains("STD")) { Std = Std + 1; }
+
+            PrevBacker = Backer;
+        }
 
     }
 }

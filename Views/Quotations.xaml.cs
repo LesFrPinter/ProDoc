@@ -243,16 +243,16 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
-            this.Height = this.Height *= 1.4;
-            this.Width = this.Width *= 1.4;
-            Top = 20;
+            this.Height = this.Height *= 1.2;
+            this.Width = this.Width *= 1.2;
+            Top = 15;
         }
 
         private void LoadAvailableCategories()
         {
             lstAvailable.Items.Clear();
             lstAvailable.Items.Add("Base Charges");
-            lstAvailable.Items.Add("Backer");
+//          lstAvailable.Items.Add("Backer");
             lstAvailable.Items.Add("Ink Color");
             lstAvailable.Items.Add("MICR");
             lstAvailable.Items.Add("Perfing");
@@ -340,18 +340,29 @@ namespace ProDocEstimate
             lstSelected.Items.Clear();
 
             cmd = $"INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
-                +  "( QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
-                +  " VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )"; // <--- TODO: See if "New" and "New" should be the PrePress defaults
+                +  "        (   QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+                + $" VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )"; // <--- TODO: See if "New" and "New" should be the PrePress defaults
 
-            conn.Open();
-            scmd = new SqlCommand(cmd, conn);
-            scmd.ExecuteNonQuery(); 
-            conn.Close();
+// TODO: Insert the default charges from the SHIPPING table
+            //conn.Open();
+            //scmd = new SqlCommand(cmd, conn);
+            //scmd.ExecuteNonQuery(); 
+            //conn.Close();
+
+            //cmd = $"INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
+            //    +  "        (   QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+            //    + $" VALUES ( '{QUOTE_NUM}', '8',      'Shipping', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )"; // <--- TODO: See if "New" and "New" should be the PrePress defaults
+
+            //conn.Open();
+            //scmd = new SqlCommand(cmd, conn);
+            //scmd.ExecuteNonQuery(); 
+            //conn.Close();
 
             LoadDetails();
 
             // Remove the default features from the "Available" list
             //lstAvailable.Items.Remove("Base Charges");
+            //lstAvailable.Items.Remove("Shipping");
             lstAvailable.Items.Remove("PrePress");
 
         }
@@ -731,7 +742,6 @@ namespace ProDocEstimate
 
         private void btnLoadGrid_Click(object sender, RoutedEventArgs e)
         {
-            // NOTE: These errors can only occur on a new quote
             string ErrorMessages = "";
             if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
             if (PARTS              == 0) { ErrorMessages += "# Parts is required;\n"; }
@@ -1072,7 +1082,10 @@ namespace ProDocEstimate
 
             if (DVPaper == null || DVPaper.Count == 0) return;
 
-            Calculating c = new Calculating(); c.Show();    // Show the "busy" message...
+            Calculating c = new Calculating();
+            c.Owner = this;
+            c.Show();    // Show the "busy" message...
+
             PressCalc pc = new PressCalc();
             pc.WastePct = (int)WastePct;
             pc.Up = int.Parse(lblUp.Content.ToString());
@@ -1343,6 +1356,8 @@ namespace ProDocEstimate
                 if ((dt.Rows[i]["Category"].ToString() == "PrePress") && (dt.Rows[i]["Value1"].ToString().Length > 0))
                 { B1 = true; I1 = 1; }
 
+ //               if (dt.Rows[i]["Category"].ToString() == "Carbon") Debugger.Break();
+
                 Int32 RowTotal = 0;
 
                 string? CheckCategory = dt.Rows[i]["Category"].ToString();
@@ -1350,6 +1365,7 @@ namespace ProDocEstimate
                 if (CheckCategory.ToUpper().Contains("BASE"))     { RowTotal = 1; }
                 if (CheckCategory.ToUpper().Contains("BACKER"))   { RowTotal = 1; }
                 if (CheckCategory.ToUpper().Contains("SECURITY")) { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("CARBON"))   { RowTotal = 1; }
 
                 if (B1 == true) { RowTotal += I1; }
                 if (B2 == true) { RowTotal += I2; }
@@ -1507,19 +1523,24 @@ namespace ProDocEstimate
 
         private void Page4_GotFocus(object sender, RoutedEventArgs e)
         {
-            // Load features for display in the second datagrid on page 4
-            string cmd = $"SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
-            SqlConnection conn = new SqlConnection(ConnectionString);
-            da = new SqlDataAdapter(cmd, conn);
-            dt = new DataTable("Features"); 
-            da.Fill(dt);
+            string cmd = "";
+            if(DVFeat==null || dgFeatures.ItemsSource==null)
+            { 
+                cmd =  "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
+                    + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+                SqlConnection conn = new SqlConnection(ConnectionString);
+                da = new SqlDataAdapter(cmd, conn);
+                dt = new DataTable("Features"); 
+                da.Fill(dt);
 
-            DVFeat = dt.DefaultView;
-            dgFeatures.ItemsSource = null;
-            dgFeatures.Items.Clear();
-            dgFeatures.ItemsSource = DVFeat;
+                DVFeat = dt.DefaultView;
+                dgFeatures.ItemsSource = null;
+                dgFeatures.Items.Clear();
+                dgFeatures.ItemsSource = DVFeat;
+            }
 
-            cmd = $"SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
+            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks "
+                + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
             SqlDataAdapter da8  = new SqlDataAdapter(cmd, conn);
             DataTable dt11      = new DataTable("BookCello");da8.Fill(dt11);
@@ -1593,6 +1614,8 @@ namespace ProDocEstimate
             SqlDataAdapter da9 = new SqlDataAdapter(cmdstr, conn);
             DataTable dt14 = new DataTable("CostPerInch"); da9.Fill(dt14);
             DataView dvz = dt14.DefaultView;
+
+            if (dvz.Count == 0) return;     // There is no INK entry in QUOTE_DETAILS
 
             float f = float.Parse(dvz[0]["Amount"].ToString());
             decimal a = (decimal)f;
@@ -1912,12 +1935,11 @@ namespace ProDocEstimate
 
             if (dv3.Count > 0) { CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString()); }
 
-
             // **************************************************
             // ** BINDERY                                      **
             // **************************************************
 
-            cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'FINISHING'";
+            cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Finishing'";
 
             // We need BindSetupMin, Value1 (books), Value2 (Cello), Value3 (Drill Holes), Value4 (Pad) and Value5 (Trim)
 
@@ -1948,11 +1970,11 @@ namespace ProDocEstimate
 
                 BindRunTime = 0.0F; BindRunCost = 0.0F;
 
-                cmd = $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'  AND Quantity = {Books};"
-                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'PAD'   AND Quantity = {Pad};"
-                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'CELLO' AND Quantity = {Cello};"
+                cmd = $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'BOOK'        AND Quantity = {Books};"
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'PAD'         AND Quantity = {Pad};"
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'CELLO'       AND Quantity = {Cello};"
                     + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'DRILL HOLES' AND Quantity = {DrillHoles};"
-                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'  AND Quantity = {Trim};";
+                    + $"SELECT Production_Goal, Dollars_Per_Hr FROM [ESTIMATING].[dbo].[Finishing_Speeds] WHERE ProjectType = 'TRIM'        AND Quantity = {Trim};";
 
                 SqlDataAdapter da01 = new SqlDataAdapter(cmd, conn);
 
@@ -2018,7 +2040,6 @@ namespace ProDocEstimate
             // -----------------------------------------------------------------------
             // TODO: Do the same thing for "CELLO"  (adding AND "Quantity = {Cello}" ?
             // -----------------------------------------------------------------------
-
 
             // Fill in rows 4 and 5
             cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'PREPRESS'";
@@ -2092,7 +2113,6 @@ namespace ProDocEstimate
             }
 
             // Standard cost comes from the CASES table, and is based on RollWidth
-
             cmd = $"SELECT SmallWidthCost, LargeWidthCost, DocsPerCase FROM [ESTIMATING].[dbo].[CASES] WHERE NumParts = {PARTS}";
             DataAdapter da15 = new SqlDataAdapter(cmd, conn);
             DataSet     ds15 = new DataSet(); da15.Fill(ds15);
@@ -2123,7 +2143,6 @@ namespace ProDocEstimate
             DataSet     ds16 = new DataSet(); da16.Fill(ds16);
             DataView    dv16 = ds16.Tables[0].DefaultView;
 
-            float CarbonCost = 0.0F;
             StringToNumber sTOn = new StringToNumber();
             float DecimalCollatorCutSize = sTOn.Convert(COLLATORCUT.ToString());
             float TotalInches = DecimalCollatorCutSize * SelectedQty;
@@ -2135,34 +2154,34 @@ namespace ProDocEstimate
             float StockCarbonMaterialCost = 0.00F;
             float PatternCarbonMaterialCost = 0.00F;
 
-            // Look up cost in the new Carbon table and multiply it times Units, and store it in DVFeat[i][2]; 
+            // Look up cost in the new Carbon table 
             cmd =  "SELECT Value1 as StockColor, Value2 as PatternColor, Value3 AS StockNum, Value4 AS PatternNum"
                 + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Carbon'";
             DataAdapter da17 = new SqlDataAdapter(cmd, conn);
-            DataSet ds17 = new DataSet(); da17.Fill(ds17);
-            DataView dv17 = ds17.Tables[0].DefaultView;
+            DataSet     ds17 = new DataSet(); da17.Fill(ds17);
+            DataView    dv17 = ds17.Tables[0].DefaultView;
 
+            if (dv17.Count == 0) return;    // The is no Carbon entry in QUOTE_DETAILS
+            
             string StockColor   = dv17[0]["StockColor"].ToString();
             string PatternColor = dv17[0]["PatternColor"].ToString();
             int StockNum        = int.Parse(dv17[0]["StockNum"].ToString());
             int PatternNum      = int.Parse(dv17[0]["PatternNum"].ToString());
 
-            dv16.RowFilter = $"Color = '{StockColor}' AND Carbon = 'Stock'"; 
-            StockCarbonMaterialCost = float.Parse(dv16[0]["UnitPrice"].ToString());
+            dv16.RowFilter = $"Color  = '{StockColor}' AND Carbon = 'Stock'"; 
+            StockCarbonMaterialCost   = float.Parse(dv16[0]["UnitPrice"].ToString());
 
-            dv16.RowFilter = $"Color = '{PatternColor}' AND Carbon = 'Pattern'"; 
+            dv16.RowFilter = $"Color  = '{PatternColor}' AND Carbon = 'Pattern'"; 
             PatternCarbonMaterialCost = float.Parse(dv16[0]["UnitPrice"].ToString());
 
+            // Multiply it times Units, and store it in the DVFeat table:
             float StockCarbonCost = StockCarbonMaterialCost * StockNum * Units;
             float PatternCarbonCost = PatternCarbonMaterialCost * PatternNum * Units;
-
             float TotalCarbonCost = StockCarbonCost + PatternCarbonCost;
 
             for (int i = 0; i < DVFeat.Count; i++) { if (DVFeat[i][0].ToString() == "Carbon") { DVFeat[i][1] = TotalCarbonCost; } }
 
             CalcPanel.Visibility = Visibility.Visible;  // On Page 5
-
-
         }
 
         private void S1_Click(object sender, RoutedEventArgs e)
@@ -2207,5 +2226,6 @@ namespace ProDocEstimate
             if (Qty3 > 0) { SelectedQty = Qty3; Q3(); }
             if (Qty4 > 0) { SelectedQty = Qty4; Q4(); }
         }
+
     }
 }

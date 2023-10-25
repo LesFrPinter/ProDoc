@@ -193,10 +193,12 @@ namespace ProDocEstimate.Views
 
                 switch (F_TYPE)
                 {
-                    case "BACKER": One = true; break;
-                    case "BACKER STD": Two = true; break;
+                    case "BACKER":     One   = true; break;
+                    case "BACKER STD": Two   = true; break;
                     case "BACKER PMS": Three = true; break;
                 }
+
+                //TODO: See if this is where a change has to be added for the backer...
 
                 // Retrieve the number of changes and the total amount 
                 int I1 = 0; int.TryParse(dt.Rows[0]["Value2"].ToString(), out I1); Changes = I1;
@@ -255,13 +257,13 @@ namespace ProDocEstimate.Views
             DataView dv = dt.DefaultView;
 
             float fc = 0.00F; float.TryParse(dv[0]["FLAT_CHARGE"].ToString(), out fc); BaseFlatCharge = fc;
-            float rc = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(), out rc); BaseRunCharge = rc;
-            float pm = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(), out pm); BasePlateCharge = pm;
+            float rc = 0.00F; float.TryParse(dv[0]["RUN_CHARGE"].ToString(),  out rc); BaseRunCharge = rc;
+            float pm = 0.00F; float.TryParse(dv[0]["PLATE_MATL"].ToString(),  out pm); BasePlateCharge = pm;
             float fm = 0.00F; float.TryParse(dv[0]["FINISH_MATL"].ToString(), out fm); BaseFinishCharge = fm;
-            float pr = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(), out pr); BasePressCharge = pr;
-            float cm = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(), out cm); BaseConvCharge = cm;
+            float pr = 0.00F; float.TryParse(dv[0]["PRESS_MATL"].ToString(),  out pr); BasePressCharge = pr;
+            float cm = 0.00F; float.TryParse(dv[0]["CONV_MATL"].ToString(),   out cm); BaseConvCharge = cm;
 
-            BasePlateCharge = Changes * pm;
+            BasePlateCharge = (Changes + 1) * pm;       // Added one for the backer
 
             CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100);
             CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct    / 100);
@@ -272,63 +274,33 @@ namespace ProDocEstimate.Views
 
             Total = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
-            float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"].ToString(), out F2); BasePressSetup    = (int)(F2 * 60);
-            float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]  .ToString(), out F3); BaseCollatorSetup = (int)(F3 * 60);
-            float F4 = 0; float.TryParse(dv[0]["BINDERY_SETUP"]   .ToString(), out F4); BaseBinderySetup  = (int)(F4 * 60);
+            float F2 = 0; float.TryParse(dv[0]["PRESS_SETUP_TIME"]  .ToString(), out F2); BasePressSetup    = (int)(F2 * 60);
+            float F3 = 0; float.TryParse(dv[0]["COLLATOR_SETUP"]    .ToString(), out F3); BaseCollatorSetup = (int)(F3 * 60);
+            float F4 = 0; float.TryParse(dv[0]["BINDERY_SETUP"]     .ToString(), out F4); BaseBinderySetup  = (int)(F4 * 60);
 
-            int I2 = 0; int.TryParse(dv[0]["PRESS_SLOWDOWN"]      .ToString(), out I2); BasePressSlowdown = I2;
-            int I3 = 0; int.TryParse(dv[0]["COLLATOR_SLOWDOWN"]   .ToString(), out I3); BaseCollatorSlowdown = I3;
-            int I4 = 0; int.TryParse(dv[0]["BINDERY_SLOWDOWN"]    .ToString(), out I4); BaseBinderySlowdown = I4;
+            int I2 = 0;   int  .TryParse(dv[0]["PRESS_SLOWDOWN"]    .ToString(), out I2); BasePressSlowdown = I2;
+            int I3 = 0;   int  .TryParse(dv[0]["COLLATOR_SLOWDOWN"] .ToString(), out I3); BaseCollatorSlowdown = I3;
+            int I4 = 0;   int  .TryParse(dv[0]["BINDERY_SLOWDOWN"]  .ToString(), out I4); BaseBinderySlowdown = I4;
 
             PressSlowdown    = BasePressSlowdown    + LabPSS1Pct;
             CollatorSlowdown = BaseCollatorSlowdown + LabCSS2Pct;
             BinderySlowdown  = BaseBinderySlowdown  + LabBSS2Pct;
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
-            if((Button1+Button2+Button3)==0) { MessageBox.Show("Please select an option."); return; } 
+            // So which is it - times # parts or not?
+            PressSetup = Parts * (BasePressSetup + LabPS1);
+            CollatorSetup = Parts * (BaseCollatorSetup + LabCS2);
+            BinderySetup = Parts * (BaseBinderySetup + LabBS2);
 
-            // Delete current detail line
-            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNo + "' AND Category = 'Backer'";
-            conn = new SqlConnection(ConnectionString);
-            SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
-            try     { scmd.ExecuteNonQuery(); }
-            catch   ( Exception ex ) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
+            SetupTotal = PressSetup + CollatorSetup + BinderySetup;
 
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( " 
-                + " Quote_Num, Category, Sequence, Param1, Param2, Value2, "
-                + " FlatChargePct, RunChargePct, PlateChargePct, FinishChargePct, ConvertChargePct, PressChargePct, " 
-                + " TotalFlatChg, PerThousandChg, FlatCharge, Amount, "
-                + " PRESS_ADDL_MIN, COLL_ADDL_MIN, BIND_ADDL_MIN, PRESS_SLOW_PCT, COLL_SLOW_PCT, BIND_SLOW_PCT, " 
-                + " SETUP_MINUTES, SLOWDOWN_PERCENT,"
-                + " PressSetupMin,       PressSlowPct,      CollSetupMin,       CollSlowPct,         BindSetupMin,       BindSlowPct   ) "
-                + " VALUES ";
+            PressSlowdown = BasePressSlowdown + LabPSS1Pct;
+            CollatorSlowdown = BaseCollatorSlowdown + LabCSS2Pct;
+            BinderySlowdown = BaseBinderySlowdown + LabBSS2Pct;
 
-            cmd += $"( '{QuoteNo}', 'Backer', 1, ";
-
-            // This goes in Param1 (should go in VALUE1...)
-            if (Button1 == 1) { cmd += "'BACKER',    "; }   // Which radio
-            if (Button2 == 1) { cmd += "'BACKER STD',"; }   // button was
-            if (Button3 == 1) { cmd += "'BACKER PMS',"; }   // selected?
-
-            // Param2 is 'Changes'; number of changes goes in Value2
-            cmd += $" 'Changes', '{Changes}', ";
-            cmd += $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{ConvChargePct}', "
-                +  $" '{PressChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', '{FlatTotal}', '{Total}', "
-                +  $" '{LabPS1}', '{LabCS2}', '{LabBS2}', '{LabPSS1Pct}', '{LabCSS2Pct}', '{LabBSS2Pct}', '{SetupTotal}', '{SlowdownTotal}',"
-                +  $"  {PressSetup},       {PressSlowdown},   {CollatorSetup},    {CollatorSlowdown},  {BinderySetup},     {BinderySlowdown} )";
-
-            conn = new SqlConnection(ConnectionString);
-            conn.Open();
-            scmd.Connection = conn;
-            scmd.CommandText = cmd; 
-            try     { scmd.ExecuteNonQuery(); }
-            catch   ( Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
-            
-            this.Close();
+            SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
         }
 
         private void GetGrandTotal()
@@ -360,24 +332,53 @@ namespace ProDocEstimate.Views
             GetGrandTotal();
         }
 
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if ((Button1 + Button2 + Button3) == 0) { MessageBox.Show("Please select an option."); return; }
+
+            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNo + "' AND Category = 'Backer'";
+            conn = new SqlConnection(ConnectionString);
+            SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ( "
+                + " Quote_Num, Category, Sequence,  Param1, Param2, Value2, "
+                + " FlatChargePct,  RunChargePct,   PlateChargePct, FinishChargePct, ConvertChargePct, PressChargePct, "
+                + " TotalFlatChg,   PerThousandChg, FlatCharge,     Amount, "
+                + " PRESS_ADDL_MIN, COLL_ADDL_MIN,  BIND_ADDL_MIN,  PRESS_SLOW_PCT,  COLL_SLOW_PCT, BIND_SLOW_PCT, "
+                + " SETUP_MINUTES,  SLOWDOWN_PERCENT,"
+                + " PressSetupMin,  PressSlowPct,   CollSetupMin,   CollSlowPct,     BindSetupMin, BindSlowPct ) "
+                + " VALUES ";
+
+            cmd += $"( '{QuoteNo}', 'Backer', 1, ";
+
+            // This goes in Param1 (should it go in VALUE1?)
+            if (Button1 == 1) { cmd += "'BACKER WATERMARK', "; } // Which radio
+            if (Button2 == 1) { cmd += "'BACKER STD',"; }        // button was
+            if (Button3 == 1) { cmd += "'BACKER PMS',"; }        // selected?
+
+            // Param2 is 'Changes'; number of changes goes in Value2
+            cmd += $" 'Changes',          '{Changes}', " ;
+            cmd += $" '{FlatChargePct}',  '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{ConvChargePct}', "
+                +  $" '{PressChargePct}', '{FlatTotal}',    '{CalculatedRunCharge}', '{FlatTotal}',  '{Total}', "
+                +  $" '{LabPS1}',         '{LabCS2}',       '{LabBS2}',         '{LabPSS1Pct}',      '{LabCSS2Pct}', '{LabBSS2Pct}', '{SetupTotal}', '{SlowdownTotal}',"
+                +  $"  {PressSetup},       {PressSlowdown},  {CollatorSetup},    {CollatorSlowdown},  {BinderySetup}, {BinderySlowdown} )";
+
+            conn = new SqlConnection(ConnectionString);
+            conn.Open();
+            scmd.Connection = conn;
+            scmd.CommandText = cmd;
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            this.Close();
+        }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { Close(); }
-
-        private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {
-            // So which is it - times # parts or not?
-            PressSetup       = Parts * (BasePressSetup + LabPS1);
-            CollatorSetup    = Parts * (BaseCollatorSetup + LabCS2);
-            BinderySetup     = Parts * (BaseBinderySetup + LabBS2);
-
-            SetupTotal       = PressSetup + CollatorSetup + BinderySetup;
-
-            PressSlowdown    = BasePressSlowdown + LabPSS1Pct;
-            CollatorSlowdown = BaseCollatorSlowdown + LabCSS2Pct;
-            BinderySlowdown  = BaseBinderySlowdown + LabBSS2Pct;
-
-            SlowdownTotal    = PressSlowdown + CollatorSlowdown + BinderySlowdown;
-        }
 
     }
 }

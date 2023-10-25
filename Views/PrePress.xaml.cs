@@ -188,6 +188,9 @@ namespace ProDocEstimate.Views
             int.TryParse(dv[0]["Value2"].ToString(), out I2);
             PlateChg = I2;      // Plate Changes
 
+            //TODO add 1 for the backer...
+            PlateChg += 1;
+
             // Load percentages and recalculate all displayed property values
 
             float F1 = 0.0F;
