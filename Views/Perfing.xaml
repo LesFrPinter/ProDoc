@@ -112,6 +112,7 @@
 
                 <Border 
                     Grid.Row="1"
+                    Margin="10 0 0 0"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     BorderThickness="1,1,1,1"
@@ -132,7 +133,7 @@
                             FontSize="18" Width="82" Height="32"
                             VerticalAlignment="Top"
                             Foreground="Blue" Padding="0"
-                            Content="Material"/>
+                            Content=" Material"/>
                     </Border>
                 </Border>
 
@@ -202,13 +203,13 @@
                         <Label 
                         BorderThickness="1"
                         FontSize="18" 
-                        Width="80" 
+                        Width="82" 
                         Height="28"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
                         Foreground="Blue" 
                         Padding="0"
-                        Content="Labor" >
+                        Content=" Labor" >
                         </Label>
                     </Border>
                 </Border>

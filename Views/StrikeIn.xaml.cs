@@ -143,10 +143,10 @@ namespace ProDocEstimate.Views
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)
-        { 
-            this.Height = this.Height *= 1.6; 
-            this.Width = this.Width *= 1.6; 
-            Top = 50; 
+        {
+            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
+            Top = 50;
         }
 
         private void StrkIn_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)

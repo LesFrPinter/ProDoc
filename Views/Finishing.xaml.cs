@@ -158,8 +158,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.6;
-            this.Width = this.Width *= 1.6;
+            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
             Top = 50;
         }
 
@@ -343,16 +343,16 @@ namespace ProDocEstimate.Views
             // Store in Quote_Detail table:
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,         Category,         Sequence, "
-                + "   Param1,            Param2,           Param3,              Param4,             Param5,             Param6,                 Param7,"
+                + "   Param1,            Param2,           Param3,              Param4,             Param5,             Param6,                 Param7, "
                 + "   Value1,            Value2,           Value3,              Value4,             Value5,             Value6,                 Value7, "
                 + "   FlatChargePct,     RunChargePct,     PlateChargePct,      FinishChargePct,    PressChargePct,     ConvertChargePct,       TotalFlatChg,       PerThousandChg,"
                 + "   PRESS_ADDL_MIN,    COLL_ADDL_MIN,    BIND_ADDL_MIN,       PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT,"
                 + "   PressSetupMin,     PressSlowPct,     CollSetupMin,        CollSlowPct,        BindSetupMin,       BindSlowPct,            SETUP_MINUTES,      SLOWDOWN_PERCENT ) "
                 + "   VALUES ( "
                 + $" '{QuoteNum}',       'Finishing',      8,"
-                + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',             'LinearInchCostCello', 'LinearInchCostBook',"
-                + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',            {LinearInchCostCello}, {LinearInchCostBook},"
-                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',     '{FC}',             '{CalculatedRunCharge}',"
+                + "   'Book',            'Cello',          'Drill Holes',      'Pad',               'Trim',             'LinearInchCostCello', 'LinearInchCostBook', "
+                + $" '{Book}',          '{Cello}',        '{DrillHoles}',     '{Pad}',             '{Trim}',            {LinearInchCostCello}, {LinearInchCostBook}, "
+                + $" '{FlatChargePct}', '{RunChargePct}', '{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}',     '{FC}',               '{CalculatedRunCharge}',"
                 + $"  {LabPS},           {LabCS},          {LabBS},            {LabPSL},            {LabCSL},           {LabBSL}, "
                 + $"  {PressSetup},      {PressSlowdown},  {CollatorSetup},    {CollatorSlowdown},  {BinderySetup},     {BinderySlowdown},     {SetupTotal},       {SlowdownTotal} )";
 

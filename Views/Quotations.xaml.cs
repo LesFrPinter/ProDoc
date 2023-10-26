@@ -31,6 +31,8 @@ namespace ProDocEstimate
 
         private DataView  dvFeatr; public DataView  DVFeat { get { return dvFeatr; } set { dvFeatr = value; OnPropertyChanged(); } }
 
+        private float finishMaterial;       public float FinishMaterial       { get { return finishMaterial;       } set { finishMaterial       = value; OnPropertyChanged(); } }
+
         private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;    } set { pressMaterialCost    = value; OnPropertyChanged(); } }
         private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
         private float binderyMaterialCost;  public float BinderyMaterialCost  { get { return binderyMaterialCost;  } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
@@ -243,8 +245,8 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         { 
-            this.Height = this.Height *= 1.2;
-            this.Width = this.Width *= 1.2;
+            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            this.Width  = this.Width  *= (1.0F + MainWindow.FeatureZoom);
             Top = 15;
         }
 
@@ -1539,22 +1541,25 @@ namespace ProDocEstimate
                 dgFeatures.ItemsSource = DVFeat;
             }
 
-            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 as LinearInchCostCello, Value7 as LinearInchCostBooks "
+            //-----------------------------------------------------
+            // Finishing
+            //-----------------------------------------------------
+
+            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 AS LinearInchCostCello, Value7 AS LinearInchCostBooks "
                 + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
             SqlDataAdapter da8  = new SqlDataAdapter(cmd, conn);
             DataTable dt11      = new DataTable("BookCello");da8.Fill(dt11);
             DataView  dvx       = dt11.DefaultView;
 
-            //-----------------------------------------------------
-            //Don't do the following if there IS no Finishing entry
-            //-----------------------------------------------------
+            int BookSet               = 0; 
+            int CelloSet              = 0; 
+            float LinearInchCostCello = 0.0F; 
+            float LinearInchCostBooks = 0.0F;
+            float TotalBookCost       = 0.0F; 
+            float TotalCelloCost      = 0.0F;
 
-            int BookSet = 0; int CelloSet = 0; 
-            float LinearInchCostCello = 0.0F; float LinearInchCostBooks = 0.0F;
-            float TotalBookCost = 0.0F; float TotalCelloCost = 0.0F;
-
-            if (dvx.Count>0)  // If there was a "Finishing" feature row
+            if (dvx.Count>0)  // Only if there was a "Finishing" feature row...
             { 
                 BookSet  = int.Parse(dvx[0]["Books"].ToString());
                 CelloSet = int.Parse(dvx[0]["Cellos"].ToString());
@@ -1562,22 +1567,22 @@ namespace ProDocEstimate
                 LinearInchCostBooks = float.Parse(dvx[0]["LinearInchCostBooks"].ToString());
 
                 if (BookSet > 0) 
-                {   int NumBooks = SelectedQty / BookSet;
+                {   int NumBooks         = SelectedQty / BookSet;
                     StringToNumber sTOn2 = new StringToNumber();
-                    float collCuts2 = sTOn2.Convert(COLLATORCUT);
+                    float collCuts2      = sTOn2.Convert(COLLATORCUT);
                     float linearInches   = (float)NumBooks * collCuts2;
-                    TotalBookCost  = linearInches  * LinearInchCostBooks;
+                    TotalBookCost        = linearInches * LinearInchCostBooks; // TODO LinearInchCostBooks is FinishMaterialCost for Books
                 }
 
                 if (CelloSet > 0) 
-                {   int NumCellos = SelectedQty / CelloSet;
+                {   int NumCellos        = SelectedQty / CelloSet;
                     StringToNumber sTOn3 = new StringToNumber();
-                    float collCuts3 = sTOn3.Convert(COLLATORCUT);
-                    float linearInches = (float)NumCellos * collCuts3;
-                    TotalCelloCost = linearInches * LinearInchCostCello;
+                    float collCuts3      = sTOn3.Convert(COLLATORCUT);
+                    float linearInches   = (float)NumCellos * collCuts3;
+                    TotalCelloCost       = linearInches * LinearInchCostCello; // TODO LinearInchCostCello is FinishMaterialCost for Cello
                 }
 
-                BinderyMaterialCost = TotalBookCost + TotalCelloCost;
+                BinderyMaterialCost = TotalBookCost + TotalCelloCost;           // Which I'm told will "almost never" happen...
             }
 
             // ******************
@@ -1878,12 +1883,18 @@ namespace ProDocEstimate
             da.SelectCommand.CommandText = $"SELECT SUM(PressSetupMin) AS SETUPMINUTES, SUM(SLOWDOWN_PERCENT) AS SLOWDOWN_PERCENT FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
             DataTable dt2 = new DataTable(); da.Fill(dt2); DataView dv2 = dt2.DefaultView;
 
+            if (dv2.Count == 0) return; // If there are not yet any rows in the QUOTE_DETAILS table     
+
             int SumSetupMin = 0;
             int SumSlowDown = 0;
+
             if (dv2.Count > 0)
-            { SumSetupMin = int.Parse(dv2[0]["SETUPMINUTES"].ToString());
-                SumSlowDown = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString());
-            }
+              { if    ((dv2[0]["SETUPMINUTES"].ToString() != null) 
+                    && (dv2[0]["SETUPMINUTES"].ToString().Length > 0))
+                { SumSetupMin = int.Parse(dv2[0]["SETUPMINUTES"].ToString());
+                  SumSlowDown = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString());
+                }
+              }
 
             float correction = (100.0F - (float)SlowDownPct) / 100.0F;
             if (correction < 0) { correction = 1.0F; }
@@ -1930,8 +1941,15 @@ namespace ProDocEstimate
             dt4 = ds.Tables[0];
             DataView dv4 = dt4.DefaultView;
 
-            CollSetupTime = float.Parse(dv4[0]["SETUPMINUTES"].ToString()) + (float)SetupMin;
-            CollSetupTime /= 60.0F;
+            if (dv4.Count > 0)
+            {
+                if  ((dv4[0]["SETUPMINUTES"].ToString() != null)
+                  && (dv4[0]["SETUPMINUTES"].ToString().Length > 0))
+                {
+                    CollSetupTime = float.Parse(dv4[0]["SETUPMINUTES"].ToString()) + (float)SetupMin;
+                    CollSetupTime /= 60.0F;
+                }
+            }
 
             if (dv3.Count > 0) { CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString()); }
 
@@ -2039,24 +2057,24 @@ namespace ProDocEstimate
 
             // -----------------------------------------------------------------------
             // TODO: Do the same thing for "CELLO"  (adding AND "Quantity = {Cello}" ?
+            // NOTE: I did something with "BOOK" and "CELLO" somewhere...
             // -----------------------------------------------------------------------
 
             // Fill in rows 4 and 5
             cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'PREPRESS'";
             DataAdapter da6 = new SqlDataAdapter(cmd, conn);
-            DataSet ds6 = new DataSet(); da6.Fill(ds6);
+            DataSet     ds6 = new DataSet(); da6.Fill(ds6); DataView dv6 = ds6.Tables[0].DefaultView;
 
             Pre = ""; OE = "";
-            if (ds6.Tables.Count > 0)
-            { DataView dv6 = ds6.Tables[0].DefaultView; Pre = dv6[0]["Value1"].ToString(); OE = dv6[0]["Value3"].ToString(); }
+            if (dv6.Count > 0) { Pre = dv6[0]["Value1"].ToString(); OE  = dv6[0]["Value3"].ToString(); }
 
             cmd = "SELECT * FROM [ESTIMATING].[dbo].[PrePressOESpeeds]";
             DataAdapter da7 = new SqlDataAdapter(cmd, conn);
-            DataSet ds7 = new DataSet(); da7.Fill(ds7); DataView dv7 = ds7.Tables[0].DefaultView;
+            DataSet     ds7 = new DataSet(); da7.Fill(ds7); DataView dv7 = ds7.Tables[0].DefaultView;
 
             PreRunTime = 0; PreRunCost = 0; OERunTime = 0; OERunCost = 0;
 
-            if (dv7.Count > 0)
+            if (dv7.Count > 0 && Pre.Length > 0 && OE.Length > 0)
             {
                 dv7.RowFilter = $"F_TYPE = 'PREPRESS' AND NEC = '{Pre}'";
                 PreRunTime = float.Parse(dv7[0]["Hours"].ToString());
@@ -2075,21 +2093,16 @@ namespace ProDocEstimate
 
             //TODO: Read the shipping costs from the SHIPPING table
 
-
-            cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Shipping'";
+            cmd = $"SELECT Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Shipping'";
             DataAdapter da8 = new SqlDataAdapter(cmd, conn);
             DataSet ds8 = new DataSet(); da8.Fill(ds8); DataView dv8 = ds8.Tables[0].DefaultView;
 
-            BaseShipChg = 0;AddlShipChg = 0; NumDrops = 0; ShipCost = 0; ShipTime = 0;
-
-            if(dv8.Count>0)
-            { 
-                BaseShipChg = float.Parse(dv8[0]["Value1"].ToString());
-                AddlShipChg = float.Parse(dv8[0]["Value2"].ToString());
-                NumDrops = int  .Parse(dv8[0]["Value3"].ToString());
+            ShipCost = 0; if(dv8.Count>0) 
+            {  
+                ShipCost = float.Parse(dv8[0]["Value2"].ToString()); 
+                NumDrops = int.Parse(dv8[0]["Value3"].ToString());
             }
 
-            ShipCost = BaseShipChg + (AddlShipChg * NumDrops);
             ShipTime = 15 + (NumDrops * 5); // minutes
             ShipTime /= 60.0F;  // Fraction of an hour. TODO: WHERE DOES THIS GO?
 

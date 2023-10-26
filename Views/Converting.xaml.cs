@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -158,8 +159,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.6;
-            this.Width = this.Width *= 1.6;
+            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
             Top = 50;
         }
 
@@ -343,7 +344,7 @@ namespace ProDocEstimate.Views
                 + " VALUES ( "
                 + $" '{QuoteNum}',     'Converting',             10, "
                 + "  '2 CRASH NUMB',   'BLACK NUMB',            'SNAP GLUE 2-4',    'SNAP GLUE 5-12',  'CONT GLUE 2-4',      'CONT GLUE 5-12',   'FOLDING',          'TRANSFER TAPE',  'ConvMatlCharge', "
-                + $" '{Crash}',        '{Black}',               '{Snap2}',          '{Snap5}',         '{Cont2}',            '{Cont5}',          '{Fold}',           '{Tape}',         {CalculatedConvCharge}"
+                + $" '{Crash}',        '{Black}',               '{Snap2}',          '{Snap5}',         '{Cont2}',            '{Cont5}',          '{Fold}',           '{Tape}',         {CalculatedConvCharge}, "
                 + $" '{FlatTotal}',    '{CalculatedRunCharge}', '{FlatChargePct}',  '{RunChargePct}',  '{FinishChargePct}',  '{PressChargePct}', '{ConvChargePct}',  '{PlateChargePct}', "
                 + $"  {LabPS},          {LabCS},                 {LabBS},            {LabPSL},          {LabCSL},             {LabBSL}, "
                 + $"  {PressSetup},     {PressSlowdown},         {CollatorSetup},    {CollatorSlowdown},{BinderySetup},       {BinderySlowdown},"

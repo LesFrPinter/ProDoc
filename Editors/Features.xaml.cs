@@ -23,6 +23,7 @@ namespace ProDocEstimate.Editors
         public SqlDataAdapter da;
         public SqlCommand scmd;
         public DataTable dt;
+        public DataTable dt2;
         public DataView dv;
 
         private bool   editing;             public bool   Editing        { get { return editing;        } set { editing         = value; OnPropertyChanged(); } }
@@ -43,6 +44,7 @@ namespace ProDocEstimate.Editors
             da.Fill(dt);
             dv = dt.DefaultView;
             grdData.ItemsSource = dv;
+
             DataContext = this;
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
@@ -50,11 +52,12 @@ namespace ProDocEstimate.Editors
 
         private void Filter()
         {
-                string filt = "";
+            string filt = "";
             if (SearchCategory.Length > 0) { filt += $" AND CATEGORY   LIKE '{SearchCategory.ToString().TrimEnd()}%'"; }
             if (SearchSize.Length     > 0) { filt += $" AND PRESS_SIZE    = '{SearchSize.ToString().TrimEnd()}'"; }
             if (SearchFType.Length    > 0) { filt += $" AND F_TYPE     LIKE '{SearchFType.ToString().TrimEnd()}%'"; }
             if (filt.Length>0) dv.RowFilter = filt.Substring(5); // remove the first 4 character, which will contain "AND "
+            CatChanged();
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)
@@ -81,7 +84,7 @@ namespace ProDocEstimate.Editors
         {
             Editing = false;
             SqlConnection conn = new SqlConnection(ConnectionString);
-        var selectedRow = grdData.SelectedItem as DataRowView;
+            var selectedRow = grdData.SelectedItem as DataRowView;
             string ID = selectedRow[0].ToString();
             TextBox t = e.EditingElement as TextBox;
             string editedCellValue = t.Text.ToString();
@@ -130,5 +133,35 @@ namespace ProDocEstimate.Editors
             this.Visibility = Visibility.Hidden;
             Close();
         }
+
+        private void CAT_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CatChanged();            
+        }
+
+        private void CatChanged()
+        {
+            if (SearchCategory == null || SearchCategory.ToString().Length == 0) return;
+
+            string cmd = $"SELECT DISTINCT PRESS_SIZE, CASE WHEN PRESS_SIZE LIKE '%SP' THEN 1 ELSE 0 END AS GRP FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = '{SearchCategory}' AND PRESS_SIZE NOT LIKE '%SP' UNION SELECT DISTINCT PRESS_SIZE, CASE WHEN PRESS_SIZE LIKE '%SP' THEN 1 ELSE 0 END AS GRP FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = '{SearchCategory}' AND PRESS_SIZE LIKE '%SP' ORDER BY GRP";
+
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            SqlDataAdapter da = new SqlDataAdapter(cmd, conn);
+            dt = new DataTable("Sizes");
+            da.Fill(dt);
+            DataView dv = dt.DefaultView;
+            cmbSize.Items.Clear();
+            for (int i = 0; i < dv.Count; i++) { cmbSize.Items.Add(dv[i][0].ToString()); }
+
+            cmd = $"SELECT DISTINCT F_TYPE FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = '{SearchCategory}' ORDER BY F_TYPE";
+
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd, conn);
+            dt2 = new DataTable("FTypes");
+            da2.Fill(dt2);
+            DataView dv2 = dt2.DefaultView;
+            cmbFType.Items.Clear();
+            for (int i = 0; i < dv2.Count; i++) { cmbFType.Items.Add(dv2[i][0].ToString()); }
+        }
+
     }
 }

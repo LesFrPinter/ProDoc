@@ -276,8 +276,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.6;
-            this.Width = this.Width *= 1.6;
+            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
             Top = 50;
         }
 
@@ -343,6 +343,9 @@ namespace ProDocEstimate.Views
             //TODO: This is being called ten times, once for each numeric ink count.
 
             if (e.OldValue == null && e.NewValue == 0) return; // Don't run the following code if the parameter value didn't change
+
+            // Program blew up because Backer was null. Will this fix it?
+            if(Backer==null) return;
 
             BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
             BackerCount = 0;        // Already added to the appropriate counter...

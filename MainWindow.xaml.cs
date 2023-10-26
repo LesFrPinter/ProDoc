@@ -7,19 +7,38 @@ namespace ProDocEstimate
 {
     public partial class MainWindow : Window
 	{
-		public MainWindow() { InitializeComponent(); PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
-        }
+
+        #region Properties
 
         private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
-		private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
+        private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
+        private static double featureZoom; public static double FeatureZoom { get { return featureZoom; } set { featureZoom = value; } }
 
-		private static int featureZoom; public static int FeatureZoom { get { return featureZoom; } set { featureZoom = value; } }
+        #endregion
+
+        public MainWindow() { 
+			InitializeComponent();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+        }
 
 		public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= 1.4;
-            this.Width = this.Width *= 1.4;
+            double ScreenWidth = SystemParameters.VirtualScreenWidth;
+            double ScreenHeight = SystemParameters.VirtualScreenHeight;
+
+            if (ScreenWidth < 1200) FeatureZoom = 0.1F;
+            else if (ScreenWidth >= 1200 && ScreenWidth < 1441) { FeatureZoom = 0.2F; }
+            else FeatureZoom = 0.4F;
+
+//          FeatureZoom = 0.0F; // Uncomment to see design dimensions
+
+            this.Height = this.Height *= ( 1.0F + FeatureZoom);
+            this.Width  = this.Width  *= ( 1.0F + FeatureZoom);
             this.Top = 10;
+
+            Title = "(" + ScreenWidth.ToString() + ", " + ScreenHeight.ToString()
+                  + ")   (" + this.Width.ToString("N0").Replace(",","") + ", " + this.Height.ToString("N0").Replace(",", "") + ")";
+
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)
