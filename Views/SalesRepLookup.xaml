@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Sales Rep Lookup" 
-				Height="450" Width="500">
+        Title="Sales Rep Lookup"
+        Height="450" Width="500">
 				
 	<Grid Background="{StaticResource AllForms}">
 
@@ -16,7 +16,6 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="30" />
 		</Grid.RowDefinitions>
-
 
 		<StackPanel Orientation="Horizontal" Grid.Row="0">
 			<ComboBox x:Name="cmbSearchBy" Width="120" VerticalContentAlignment="Center" Margin="10 4 0 4" >

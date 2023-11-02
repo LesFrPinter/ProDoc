@@ -1,5 +1,7 @@
 ﻿using ProDocEstimate.Views;
 using System;
+using System.Reflection;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -18,6 +20,7 @@ namespace ProDocEstimate
 
         public MainWindow() { 
 			InitializeComponent();
+
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
@@ -28,17 +31,17 @@ namespace ProDocEstimate
 
             if (ScreenWidth < 1200) FeatureZoom = 0.1F;
             else if (ScreenWidth >= 1200 && ScreenWidth < 1441) { FeatureZoom = 0.2F; }
-            else FeatureZoom = 0.4F;
-
-//          FeatureZoom = 0.0F; // Uncomment to see design dimensions
+            else FeatureZoom = 0.3F;
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);
             this.Top = 10;
 
-            Title = "(" + ScreenWidth.ToString() + ", " + ScreenHeight.ToString()
-                  + ")   (" + this.Width.ToString("N0").Replace(",","") + ", " + this.Height.ToString("N0").Replace(",", "") + ")";
+            Title =   " Screen (" + ScreenWidth.ToString() + ", "                     + ScreenHeight.ToString()
+                  + ")  Window ( " + this.Width.ToString("N0").Replace(",", "") + ", " + this.Height.ToString("N0").Replace(",", "") + ") "
+                  + "   Zoom = " + FeatureZoom.ToString("N1");
 
+            Title = Title + "   Version 1.0.21";
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)
@@ -88,17 +91,9 @@ namespace ProDocEstimate
 		{
     }
 
-		private void mnuPressStandards_Click(object sender, RoutedEventArgs e) {
-			Press_Standards ps = new Press_Standards(); ps.ShowDialog();
-    }
-
-		private void mnuCollatorStandards_Click(object sender, RoutedEventArgs e) {
-			Collator_Standards cs = new Collator_Standards(); cs.ShowDialog();
-    }
-
-		private void mnuFeatureStandards_Click(object sender, RoutedEventArgs e) {
-			Feature_Standards fs = new Feature_Standards(); fs.ShowDialog();
-    }
+		//private void mnuPressStandards_Click(object sender, RoutedEventArgs e) {
+		//	Press_Standards ps = new Press_Standards(); ps.ShowDialog();
+  //  }
 
         private void mnuConverter_Click(object sender, RoutedEventArgs e)
         {

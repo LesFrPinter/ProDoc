@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -137,20 +136,27 @@ namespace ProDocEstimate.Views
 
         #endregion
 
+        private string whereWasI = "Starting";
+        public string WhereWasI { get { return WhereWasI; } set { whereWasI = value; OnPropertyChanged(); } }
+
         public Converting(string PRESSSIZE, string QUOTENUM)
         {
             InitializeComponent();
             this.DataContext = this;
-
+//            MessageBox.Show("1");
             Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
 
             Starting = true;
+//            MessageBox.Show("2");
 
             LoadMaxima();
+//            MessageBox.Show("3");
             LoadQuote();
+//            MessageBox.Show("4");
             LoadBaseValues();
+//            MessageBox.Show("5");
 
             Starting = false;
 
@@ -159,9 +165,11 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
+//            MessageBox.Show("6");
             this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
             this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
             Top = 50;
+//            MessageBox.Show("7");
         }
 
         private void LoadMaxima()
@@ -170,20 +178,25 @@ namespace ProDocEstimate.Views
             string str =  "SELECT F_TYPE, MAX(Number) AS Max FROM [ESTIMATING].[dbo].[FEATURES] " 
                        + $" WHERE Category = 'Converting' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
 
+            WhereWasI = "LoadMaxima";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
 
-            DataView dv  = dt.DefaultView;
-            dv.RowFilter = "F_TYPE='2 CRASH NUMB'";   M1.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='BLACK NUMB'";     M2.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'";  M3.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='SNAP GLUE 5-12'"; M4.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='FOLDING'";        M5.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";  M6.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='CONT GLUE 5-12'"; M7.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dv.RowFilter = "F_TYPE='TRANSFER TAPE'";  M8.Maximum = int.Parse(dv[0]["Max"].ToString());
-            dt.Clear();
+            try
+            {
+                DataView dv = dt.DefaultView;
+                dv.RowFilter = "F_TYPE='2 CRASH NUMB'"; M1.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='BLACK NUMB'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'"; M3.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='SNAP GLUE 5-12'"; M4.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='FOLDING'"; M5.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='CONT GLUE 2-4'"; M6.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='CONT GLUE 5-12'"; M7.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='TRANSFER TAPE'"; M8.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dt.Clear();
+            }
+            catch (Exception Ex) { MessageBox.Show(Ex.Message.ToString() + Environment.NewLine + Ex.InnerException.Message.ToString()); }
 
             return;
         }
@@ -193,36 +206,40 @@ namespace ProDocEstimate.Views
             string str = $"SELECT * FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Converting'";
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
-
             if (dt.Rows.Count == 0) return;
-
             DataView dv = new DataView(dt);
 
-            Crash = int.Parse(dv[0]["Value1"].ToString());
-            Black = int.Parse(dv[0]["Value2"].ToString());
-            Snap2 = int.Parse(dv[0]["Value3"].ToString());
-            Snap5 = int.Parse(dv[0]["Value4"].ToString());
-            Cont2 = int.Parse(dv[0]["Value5"].ToString());
-            Cont5 = int.Parse(dv[0]["Value6"].ToString());
-            Fold  = int.Parse(dv[0]["Value7"].ToString());
-            Tape  = int.Parse(dv[0]["Value8"].ToString());
+            WhereWasI = "LoadQuote";
+            try
+            {
+                Crash = int.Parse(dv[0]["Value1"].ToString());
+                Black = int.Parse(dv[0]["Value2"].ToString());
+                Snap2 = int.Parse(dv[0]["Value3"].ToString());
+                Snap5 = int.Parse(dv[0]["Value4"].ToString());
+                Cont2 = int.Parse(dv[0]["Value5"].ToString());
+                Cont5 = int.Parse(dv[0]["Value6"].ToString());
+                Fold = int.Parse(dv[0]["Value7"].ToString());
+                Tape = int.Parse(dv[0]["Value8"].ToString());
 
-            FlatTotal = float.Parse(dv[0]["TotalFlatChg"].ToString());
-            CalculatedRunCharge = float.Parse(dv[0]["PerThousandChg"].ToString());
+                FlatTotal = float.Parse(dv[0]["TotalFlatChg"].ToString());
+                CalculatedRunCharge = float.Parse(dv[0]["PerThousandChg"].ToString());
 
-            int t1 = 0; int.TryParse(dv[0]["FlatChargePct"].ToString(), out t1); FlatChargePct = t1;
-            int t2 = 0; int.TryParse(dv[0]["RunChargePct"].ToString(), out t2); RunChargePct = t2;
-            int t3 = 0; int.TryParse(dv[0]["FinishChargePct"].ToString(), out t3); FinishChargePct = t3;
-            int t4 = 0; int.TryParse(dv[0]["PressChargePct"].ToString(), out t4); PressChargePct = t4;
-            int t5 = 0; int.TryParse(dv[0]["ConvertChargePct"].ToString(), out t5); ConvChargePct = t5;
-            int t6 = 0; int.TryParse(dv[0]["PlateChargePct"].ToString(), out t6); PlateChargePct = t6;
+                int t1 = 0; int.TryParse(dv[0]["FlatChargePct"].ToString(), out t1); FlatChargePct = t1;
+                int t2 = 0; int.TryParse(dv[0]["RunChargePct"].ToString(), out t2); RunChargePct = t2;
+                int t3 = 0; int.TryParse(dv[0]["FinishChargePct"].ToString(), out t3); FinishChargePct = t3;
+                int t4 = 0; int.TryParse(dv[0]["PressChargePct"].ToString(), out t4); PressChargePct = t4;
+                int t5 = 0; int.TryParse(dv[0]["ConvertChargePct"].ToString(), out t5); ConvChargePct = t5;
+                int t6 = 0; int.TryParse(dv[0]["PlateChargePct"].ToString(), out t6); PlateChargePct = t6;
 
-            LabPS  = int.Parse(dv[0]["PRESS_ADDL_MIN"].ToString());
-            LabPSL = int.Parse(dv[0]["PRESS_SLOW_PCT"].ToString());
-            LabCS  = int.Parse(dv[0]["COLL_ADDL_MIN"].ToString());
-            LabCSL = int.Parse(dv[0]["COLL_SLOW_PCT"].ToString());
-            LabBS  = int.Parse(dv[0]["BIND_ADDL_MIN"].ToString());
-            LabBSL = int.Parse(dv[0]["BIND_SLOW_PCT"].ToString());
+                LabPS = int.Parse(dv[0]["PRESS_ADDL_MIN"].ToString());
+                LabPSL = int.Parse(dv[0]["PRESS_SLOW_PCT"].ToString());
+                LabCS = int.Parse(dv[0]["COLL_ADDL_MIN"].ToString());
+                LabCSL = int.Parse(dv[0]["COLL_SLOW_PCT"].ToString());
+                LabBS = int.Parse(dv[0]["BIND_ADDL_MIN"].ToString());
+                LabBSL = int.Parse(dv[0]["BIND_SLOW_PCT"].ToString());
+            }
+            catch (Exception Ex) { MessageBox.Show(Ex.Message.ToString() + Environment.NewLine + Ex.InnerException.Message.ToString(), WhereWasI); }
+
         }
 
         private void LoadBaseValues()
@@ -260,24 +277,30 @@ namespace ProDocEstimate.Views
             if (dt3.Rows.Count == 0) return;
             DataView dv3 = dt3.DefaultView;
 
-            float t = 0.00F;
-            // Add costs for all rows of each f_type that currently have a value greater than zero
-            for (int i = 0; i < dv3.Count; i++)
-            {   t = 0.00F; float.TryParse(dv3[i]["FLAT_CHARGE"].ToString(), out t); BaseFlatCharge   += t;
-                t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(),  out t); BaseRunCharge    += t;
-                t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(),  out t); BasePlateCharge  += t;
-                t = 0.00F; float.TryParse(dv3[i]["FINISH_MATL"].ToString(), out t); BaseFinishCharge += t;
-                t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(),  out t); BasePressCharge  += t;
-                t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(),   out t); BaseConvCharge   += t;
+            WhereWasI = "LoadBaseValues";
+            try
+            {
+                float t = 0.00F; int u;
+                // Add costs for all rows of each f_type that currently have a value greater than zero
+                for (int i = 0; i < dv3.Count; i++)
+                {
+                    t = 0.00F; float.TryParse(dv3[i]["FLAT_CHARGE"].ToString(), out t); BaseFlatCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(), out t); BaseRunCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(), out t); BasePlateCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["FINISH_MATL"].ToString(), out t); BaseFinishCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(), out t); BasePressCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(), out t); BaseConvCharge += t;
 
-            // Load labor costs
-                BasePressSetup       += int.Parse(dv3[i]["PRESS_SETUP_TIME"].ToString());
-                BaseCollatorSetup    += int.Parse(dv3[i]["COLLATOR_SETUP"].ToString());
-                BaseBinderySetup     += int.Parse(dv3[i]["BINDERY_SETUP"].ToString());
-                BasePressSlowdown    += int.Parse(dv3[i]["PRESS_SLOWDOWN"].ToString());
-                BaseCollatorSlowdown += int.Parse(dv3[i]["COLLATOR_SLOWDOWN"].ToString());
-                BaseBinderySlowdown  += int.Parse(dv3[i]["BINDERY_SLOWDOWN"].ToString());
+                    // Load labor costs
+                    u = 0; int.TryParse(dv3[i]["PRESS_SETUP_TIME"].ToString(), out u); BasePressSetup += u;
+                    u = 0; int.TryParse(dv3[i]["COLLATOR_SETUP"].ToString(), out u); BaseCollatorSetup += u;
+                    u = 0; int.TryParse(dv3[i]["BINDERY_SETUP"].ToString(), out u); BaseBinderySetup += u;
+                    u = 0; int.TryParse(dv3[i]["PRESS_SLOWDOWN"].ToString(), out u); BasePressSlowdown += u;
+                    u = 0; int.TryParse(dv3[i]["COLLATOR_SLOWDOWN"].ToString(), out u); BaseCollatorSlowdown += u;
+                    u = 0; int.TryParse(dv3[i]["BINDERY_SLOWDOWN"].ToString(), out u); BaseBinderySlowdown += u;
+                }
             }
+            catch (Exception Ex) { MessageBox.Show(Ex.Message.ToString() + Environment.NewLine + Ex.InnerException.Message.ToString(), WhereWasI); }
 
             CalcTotals();
         }

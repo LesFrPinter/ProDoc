@@ -75,9 +75,7 @@
                 <Label Grid.Column="2" Content="Plate Changes" Height="16" VerticalAlignment="Center" />
                 <Label Grid.Column="3" Content="Pre-Press" Height="16" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="90 0 0 0" />
 
-                <!--<telerik:RadNumericUpDown Grid.Column="1" Width="60" Value="{Binding OrderEntry}" x:Name="M1" Grid.Row="1" ValueChanged="ValueChanged" />-->
                 <telerik:RadNumericUpDown Grid.Column="2" Width="60" Value="{Binding PlateChg}"   x:Name="M2" Grid.Row="1" ValueChanged="ValueChanged" Padding="0" Margin="0" />
-                <!--<telerik:RadNumericUpDown Grid.Column="3" Width="60" Value="{Binding PREPress}"   x:Name="M3" Grid.Row="1" ValueChanged="ValueChanged" />-->
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="5" Margin="170 0 0 0">
                     <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">

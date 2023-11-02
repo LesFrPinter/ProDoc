@@ -32,6 +32,7 @@ namespace ProDocEstimate
         private DataView  dvFeatr; public DataView  DVFeat { get { return dvFeatr; } set { dvFeatr = value; OnPropertyChanged(); } }
 
         private float finishMaterial;       public float FinishMaterial       { get { return finishMaterial;       } set { finishMaterial       = value; OnPropertyChanged(); } }
+        private float prePressPerMilChg;    public float PrePressPerMilChg    { get { return prePressPerMilChg;    } set { prePressPerMilChg    = value; OnPropertyChanged(); } }
 
         private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;    } set { pressMaterialCost    = value; OnPropertyChanged(); } }
         private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
@@ -744,21 +745,143 @@ namespace ProDocEstimate
 
         private void btnLoadGrid_Click(object sender, RoutedEventArgs e)
         {
+            LoadGrid();
+
+            #region Old LoadGrid code
+            //string ErrorMessages = "";
+            //if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
+            //if (PARTS              == 0) { ErrorMessages += "# Parts is required;\n"; }
+            //if (PAPERTYPE.Length   == 0) { ErrorMessages += "Paper type is required;\n"; }
+            //if (ROLLWIDTH.Length   == 0) { ErrorMessages += "Roll width is required;\n"; }
+            //if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
+            //if (PRESSSIZE.Length   == 0) { ErrorMessages += "Press size is required;\n"; }
+            //if (COLLATORCUT.Length == 0) { ErrorMessages += "Collator cut size is required;\n"; }
+
+            //if (ErrorMessages.Length>0) { MessageBox.Show(ErrorMessages); return; }
+
+            //AddDefaultDetailLines();
+
+            //int    setNum    = int.Parse(PartsSpinner.Value.ToString());  // Isn't this the same as PARTS?
+            //string formType  = ProjectType.Substring(0, 1);
+            //string paperType = PAPERTYPE.Substring(0, 1);
+            //string rollWidth = ROLLWIDTH.ToString();
+
+            //string cmd = "SELECT " +
+            //    "M.Description," +
+            //    "M.ItemType," +
+            //    "M.SubWT," +
+            //    "M.COLOR            AS MCOLOR," +
+            //    "E.PAPER," +
+            //    "E.SETNUM," +
+            //    "E.SEQ," +
+            //    "E.PTYPE," +
+            //    "E.COLOR," +
+            //    "E.FORMTYPE," +
+            //    "E.PAPERTYPE," +
+            //    "0.00               AS Pounds," +
+            //    "0.00               AS LastPOCost," +
+            //    "0.00               AS AverageCost," +
+            //    "M.COSTPERFACTOR    AS MastInvCost," +
+            //    "0.00               AS SelectedCost," +
+            //    "0.00               AS PaperCost" +
+            //    " FROM             PROVISIONDEV.DBO.MasterInventory M" +
+            //    " RIGHT OUTER JOIN PROVISIONDEV.DBO.ESTPAPER        E" +
+            //    "  ON M.ITEMTYPE    = E.PTYPE"       +
+            //    " AND M.COLOR       = E.COLOR"       +
+            //    " AND M.SubWT       = E.WEIGHT"      +
+            //   $" WHERE E.FORMTYPE  = '{formType}'"  +
+            //   $"   AND E.PAPERTYPE = '{paperType}'" +
+            //   $"   AND M.SIZE      = '{rollWidth}'" +
+            //   $"   AND E.SETNUM    =  {setNum}"     +
+            //    " AND Inventoryable = 1"             +
+            //    " ORDER BY E.SETNUM, E.SEQ";
+
+            //Clipboard.SetText(cmd);     // see what's going on in SSMC
+
+            //SqlConnection cn = new(ConnectionString); cn.Open();
+            //SqlDataAdapter da = new(cmd, cn);
+            //DataSet ds = new("Papers");
+            //da.Fill(ds);
+            //DataTable? dt = ds.Tables[0];
+
+            //if(dt.DefaultView.Count==0) { MessageBox.Show("No data was returned; the SELECT command was stored in your ClipBoard."); return; }
+
+            //bool NoCostAssigned = false;
+            //for (int r = 0; r < dt.DefaultView.Count; r++)
+            //{
+            //    string? clr  = dt.Rows[r]["Color"].ToString();
+            //    string? wt   = dt.Rows[r]["SubWT"].ToString();
+            //    string? it   = dt.Rows[r]["PType"].ToString();
+            //    it = (it == null) ? "" : it.Substring(0, 1) + "%";
+            //    string? size = cmbRollWidth.SelectedValue.ToString();
+            //    size = (size is null) ? "" : size.TrimEnd();
+
+            //    string? projType = cmbProjectType.SelectedValue.ToString();
+            //    projType = (projType == "SHEET") ? "SHT" : "ROLL";   // Sheet or Continuous
+
+            //    dt.Rows[r]["Pounds"] = 0;    // Zero out all Pounds; PaperCalc will calculate them.
+
+            //    // Get the most recent and the average costs for this paper type:
+            //    SqlDataAdapter da4 = new SqlDataAdapter("MostRecentCost", ConnectionString);
+            //    da4.SelectCommand.CommandType = CommandType.StoredProcedure;
+            //    da4.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = dt.Rows[r][0]; //desc; 
+            //    DataTable dtRec = new("Rec");
+            //    da4.Fill( dtRec);
+            //    if (dtRec.Rows.Count > 0) 
+            //        {  dt.Rows[r]["LastPOCost"] = dtRec.Rows[0][0].ToString(); }
+
+            //    SqlDataAdapter da5 = new SqlDataAdapter("AverageCost", ConnectionString);
+            //    da5.SelectCommand.CommandType = CommandType.StoredProcedure;
+            //    da5.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = dt.Rows[r][0]; // desc;
+            //    DataTable dtAvg = new("Avg");
+            //    da5.Fill(dtAvg);
+            //    if(dtAvg.Rows.Count>0) 
+            //        {  dt.Rows[r]["AverageCost"]  = dtAvg.Rows[0][0].ToString();    // I rewrote the query to return just one column (average cost)
+            //           dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();    // SelectedCost defaults to average cost
+            //        }
+            //    else { dt.Rows[r]["SelectedCost"] = dt.Rows[r]["LastPOCost"]; }     // Default is AverageCost unless it was zero
+
+            //    if (float.Parse(dt.Rows[r]["SelectedCost"].ToString()) == 0.0F) { NoCostAssigned = true; }
+            //}
+
+            //if (NoCostAssigned == true)
+            //    {  CostMessage.Visibility = Visibility.Visible; }
+            //else
+            //    {  CostMessage.Visibility = Visibility.Hidden; }
+
+            //// SelectedCost is what goes in the "Cost used" column on page 4
+
+            //dgSheetsOfPaper.ItemsSource = dt.DefaultView;
+            //DVPaper = dt.DefaultView;       // used on page 4
+
+            //Page2.IsEnabled = true;
+            //Page3.IsEnabled = true;
+            //Page5.IsEnabled = true;
+
+            //Page2.Focus();
+
+            //dgSheetsOfPaper.SelectedIndex = -1;     // Force loading of labels 
+            //dgSheetsOfPaper.SelectedIndex = 0;      //  using the first row description
+            #endregion
+        }
+
+        public void LoadGrid()
+        {
             string ErrorMessages = "";
             if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
-            if (PARTS              == 0) { ErrorMessages += "# Parts is required;\n"; }
-            if (PAPERTYPE.Length   == 0) { ErrorMessages += "Paper type is required;\n"; }
-            if (ROLLWIDTH.Length   == 0) { ErrorMessages += "Roll width is required;\n"; }
+            if (PARTS == 0) { ErrorMessages += "# Parts is required;\n"; }
+            if (PAPERTYPE.Length == 0) { ErrorMessages += "Paper type is required;\n"; }
+            if (ROLLWIDTH.Length == 0) { ErrorMessages += "Roll width is required;\n"; }
             if (ProjectType.Length == 0) { ErrorMessages += "Project type is required;\n"; }
-            if (PRESSSIZE.Length   == 0) { ErrorMessages += "Press size is required;\n"; }
+            if (PRESSSIZE.Length == 0) { ErrorMessages += "Press size is required;\n"; }
             if (COLLATORCUT.Length == 0) { ErrorMessages += "Collator cut size is required;\n"; }
 
-            if (ErrorMessages.Length>0) { MessageBox.Show(ErrorMessages); return; }
+            if (ErrorMessages.Length > 0) { MessageBox.Show(ErrorMessages); return; }
 
             AddDefaultDetailLines();
 
-            int    setNum    = int.Parse(PartsSpinner.Value.ToString());  // Isn't this the same as PARTS?
-            string formType  = ProjectType.Substring(0, 1);
+            int setNum = int.Parse(PartsSpinner.Value.ToString());  // Isn't this the same as PARTS?
+            string formType = ProjectType.Substring(0, 1);
             string paperType = PAPERTYPE.Substring(0, 1);
             string rollWidth = ROLLWIDTH.ToString();
 
@@ -782,14 +905,14 @@ namespace ProDocEstimate
                 "0.00               AS PaperCost" +
                 " FROM             PROVISIONDEV.DBO.MasterInventory M" +
                 " RIGHT OUTER JOIN PROVISIONDEV.DBO.ESTPAPER        E" +
-                "  ON M.ITEMTYPE    = E.PTYPE"       +
-                " AND M.COLOR       = E.COLOR"       +
-                " AND M.SubWT       = E.WEIGHT"      +
-               $" WHERE E.FORMTYPE  = '{formType}'"  +
+                "  ON M.ITEMTYPE    = E.PTYPE" +
+                " AND M.COLOR       = E.COLOR" +
+                " AND M.SubWT       = E.WEIGHT" +
+               $" WHERE E.FORMTYPE  = '{formType}'" +
                $"   AND E.PAPERTYPE = '{paperType}'" +
                $"   AND M.SIZE      = '{rollWidth}'" +
-               $"   AND E.SETNUM    =  {setNum}"     +
-                " AND Inventoryable = 1"             +
+               $"   AND E.SETNUM    =  {setNum}" +
+                " AND Inventoryable = 1" +
                 " ORDER BY E.SETNUM, E.SEQ";
 
             Clipboard.SetText(cmd);     // see what's going on in SSMC
@@ -800,14 +923,14 @@ namespace ProDocEstimate
             da.Fill(ds);
             DataTable? dt = ds.Tables[0];
 
-            if(dt.DefaultView.Count==0) { MessageBox.Show("No data was returned; the SELECT command was stored in your ClipBoard."); return; }
+            if (dt.DefaultView.Count == 0) { MessageBox.Show("No data was returned; the SELECT command was stored in your ClipBoard."); return; }
 
             bool NoCostAssigned = false;
             for (int r = 0; r < dt.DefaultView.Count; r++)
             {
-                string? clr  = dt.Rows[r]["Color"].ToString();
-                string? wt   = dt.Rows[r]["SubWT"].ToString();
-                string? it   = dt.Rows[r]["PType"].ToString();
+                string? clr = dt.Rows[r]["Color"].ToString();
+                string? wt = dt.Rows[r]["SubWT"].ToString();
+                string? it = dt.Rows[r]["PType"].ToString();
                 it = (it == null) ? "" : it.Substring(0, 1) + "%";
                 string? size = cmbRollWidth.SelectedValue.ToString();
                 size = (size is null) ? "" : size.TrimEnd();
@@ -822,34 +945,35 @@ namespace ProDocEstimate
                 da4.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da4.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = dt.Rows[r][0]; //desc; 
                 DataTable dtRec = new("Rec");
-                da4.Fill( dtRec);
-                if (dtRec.Rows.Count > 0) 
-                    {  dt.Rows[r]["LastPOCost"] = dtRec.Rows[0][0].ToString(); }
+                da4.Fill(dtRec);
+                if (dtRec.Rows.Count > 0)
+                { dt.Rows[r]["LastPOCost"] = dtRec.Rows[0][0].ToString(); }
 
                 SqlDataAdapter da5 = new SqlDataAdapter("AverageCost", ConnectionString);
                 da5.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da5.SelectCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = dt.Rows[r][0]; // desc;
                 DataTable dtAvg = new("Avg");
                 da5.Fill(dtAvg);
-                if(dtAvg.Rows.Count>0) 
-                    {  dt.Rows[r]["AverageCost"]  = dtAvg.Rows[0][0].ToString();    // I rewrote the query to return just one column (average cost)
-                       dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();    // SelectedCost defaults to average cost
-                    }
+                if (dtAvg.Rows.Count > 0)
+                {
+                    dt.Rows[r]["AverageCost"] = dtAvg.Rows[0][0].ToString();    // I rewrote the query to return just one column (average cost)
+                    dt.Rows[r]["SelectedCost"] = dtAvg.Rows[0][0].ToString();    // SelectedCost defaults to average cost
+                }
                 else { dt.Rows[r]["SelectedCost"] = dt.Rows[r]["LastPOCost"]; }     // Default is AverageCost unless it was zero
 
                 if (float.Parse(dt.Rows[r]["SelectedCost"].ToString()) == 0.0F) { NoCostAssigned = true; }
             }
 
             if (NoCostAssigned == true)
-                {  CostMessage.Visibility = Visibility.Visible; }
+            { CostMessage.Visibility = Visibility.Visible; }
             else
-                {  CostMessage.Visibility = Visibility.Hidden; }
+            { CostMessage.Visibility = Visibility.Hidden; }
 
             // SelectedCost is what goes in the "Cost used" column on page 4
 
             dgSheetsOfPaper.ItemsSource = dt.DefaultView;
             DVPaper = dt.DefaultView;       // used on page 4
-                        
+
             Page2.IsEnabled = true;
             Page3.IsEnabled = true;
             Page5.IsEnabled = true;
@@ -858,7 +982,6 @@ namespace ProDocEstimate
 
             dgSheetsOfPaper.SelectedIndex = -1;     // Force loading of labels 
             dgSheetsOfPaper.SelectedIndex = 0;      //  using the first row description
-
         }
 
         public void  CalculateRowCost()
@@ -1356,9 +1479,10 @@ namespace ProDocEstimate
 
                 // Fix for PrePress, which has nothing but two non-numeric parameters
                 if ((dt.Rows[i]["Category"].ToString() == "PrePress") && (dt.Rows[i]["Value1"].ToString().Length > 0))
-                { B1 = true; I1 = 1; }
-
- //               if (dt.Rows[i]["Category"].ToString() == "Carbon") Debugger.Break();
+                { 
+                    B1 = true; I1 = 1; 
+                    PrePressPerMilChg = float.Parse(dt.Rows[i]["PerThousandChg"].ToString()); 
+                }
 
                 Int32 RowTotal = 0;
 
@@ -1528,7 +1652,7 @@ namespace ProDocEstimate
             string cmd = "";
             if(DVFeat==null || dgFeatures.ItemsSource==null)
             { 
-                cmd =  "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,round(PerThousandChg,2)) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
+                cmd =  "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,PerThousandChg) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
                     + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
                 SqlConnection conn = new SqlConnection(ConnectionString);
                 da = new SqlDataAdapter(cmd, conn);
@@ -2006,10 +2130,10 @@ namespace ProDocEstimate
 
                 if (Books > 0)
                 {
-                    float NumBooks = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
-                    float Production_Goal = float.Parse(dv01[0]["Production_Goal"].ToString());
-                    float DollarsPerHour = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
-                    BindRunTime += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
+                    float NumBooks          = float.Parse(SelectedQty.ToString()) / float.Parse(Books.ToString());
+                    float Production_Goal   = float.Parse(dv01[0]["Production_Goal"].ToString());
+                    float DollarsPerHour    = float.Parse(dv01[0]["Dollars_Per_Hr"].ToString());
+                    BindRunTime            += (NumBooks / Production_Goal); BindRunCost += (DollarsPerHour * BindRunTime);
                 }
 
                 if (Pad > 0)
@@ -2061,12 +2185,15 @@ namespace ProDocEstimate
             // -----------------------------------------------------------------------
 
             // Fill in rows 4 and 5
-            cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'PREPRESS'";
+            cmd = $"SELECT Value1, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'PrePress'";
             DataAdapter da6 = new SqlDataAdapter(cmd, conn);
             DataSet     ds6 = new DataSet(); da6.Fill(ds6); DataView dv6 = ds6.Tables[0].DefaultView;
 
             Pre = ""; OE = "";
             if (dv6.Count > 0) { Pre = dv6[0]["Value1"].ToString(); OE  = dv6[0]["Value3"].ToString(); }
+
+            if (DVFeat != null && DVFeat.Count > 0)
+            { for (int i = 0; i < DVFeat.Count; i++) { if (DVFeat[i][0].ToString() == "PrePress") { DVFeat[i][1] = PrePressPerMilChg * (SelectedQty/1000); } } }
 
             cmd = "SELECT * FROM [ESTIMATING].[dbo].[PrePressOESpeeds]";
             DataAdapter da7 = new SqlDataAdapter(cmd, conn);
@@ -2238,6 +2365,11 @@ namespace ProDocEstimate
             if (Qty2 > 0) { SelectedQty = Qty2; Q2(); }
             if (Qty3 > 0) { SelectedQty = Qty3; Q3(); }
             if (Qty4 > 0) { SelectedQty = Qty4; Q4(); }
+        }
+
+        private void cmbCollatorCut_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //LoadGrid();
         }
 
     }

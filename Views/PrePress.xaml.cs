@@ -154,9 +154,6 @@ namespace ProDocEstimate.Views
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             DataView dv = new DataView(dt);
-            //dv.RowFilter = "F_TYPE='OE'";        M1.Maximum = int.Parse(dv[0]["Max"].ToString());
-            //dv.RowFilter = "F_TYPE='PLATE CHG'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
-            //dv.RowFilter = "F_TYPE='PREPRESS'";  M3.Maximum = int.Parse(dv[0]["Max"].ToString());
             M2.Maximum = int.Parse(dv[0]["Max"].ToString());
         }
 
@@ -167,8 +164,6 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt);
             if (dt.Rows.Count == 0) return;
             DataView dv = new DataView(dt);
-
-            // Value1 contains the text for the first radiobutton; value3 contains the text for the second radiobutton
 
             string  oeval = dv[0]["Value1"].ToString();
             switch (oeval)
@@ -340,9 +335,6 @@ namespace ProDocEstimate.Views
                 + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', {SlowdownTotal}, "
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
                 + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
-
-            //Clipboard.SetText(cmd);
-            //Debugger.Break();
 
             scmd.CommandText = cmd;
             conn.Open();

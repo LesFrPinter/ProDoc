@@ -36,7 +36,7 @@ namespace ProDocEstimate.Editors
         {
             InitializeComponent();
 
-            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[FEATURES] ORDER BY GUID";
+            string cmd = "SELECT *, CAST(REPLACE(Number,' -','') AS Integer) AS NUMBER2 FROM [ESTIMATING].[dbo].[FEATURES]";
             
             SqlConnection conn = new SqlConnection(ConnectionString);
             SqlDataAdapter da = new SqlDataAdapter(cmd, conn);
@@ -47,7 +47,11 @@ namespace ProDocEstimate.Editors
 
             DataContext = this;
 
-            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+            PreviewKeyDown += (s, e) =>
+            {
+                if (e.Key == Key.Escape) { Close(); }
+                else if (e.Key == Key.Delete) { e.Handled = true; }
+            };
         }
 
         private void Filter()

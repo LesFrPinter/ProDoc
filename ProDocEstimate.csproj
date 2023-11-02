@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\PDSLogo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,20 +18,27 @@
   <ItemGroup>
     <Compile Remove="CodeSnippets\LaborStuff.cs" />
     <Compile Remove="Views\ChargesBlock.xaml.cs" />
+    <Compile Remove="Views\Collator_Standards.xaml.cs" />
     <Compile Remove="Views\Customers.xaml.cs" />
     <Compile Remove="Views\CustomerSearch.xaml.cs" />
     <Compile Remove="Views\CustSearchTreeView.xaml.cs" />
     <Compile Remove="Views\DetailFeatures.xaml.cs" />
+    <Compile Remove="Views\EstimatorLookup.xaml.cs" />
     <Compile Remove="Views\FeatureCharges.xaml.cs" />
     <Compile Remove="Views\FeaturePicker.xaml.cs" />
+    <Compile Remove="Views\Feature_Standards.xaml.cs" />
     <Compile Remove="Views\HistoricalPrices.xaml.cs" />
     <Compile Remove="Views\InkColors.xaml.cs" />
     <Compile Remove="Views\Items.xaml.cs" />
     <Compile Remove="Views\LaborPart.xaml.cs" />
     <Compile Remove="Views\NewCustomer.xaml.cs" />
     <Compile Remove="Views\NewEstimate.xaml.cs" />
+    <Compile Remove="Views\Press_Standards.xaml.cs" />
     <Compile Remove="Views\PV01.xaml.cs" />
     <Compile Remove="Views\PV02.xaml.cs" />
+    <Compile Remove="Views\SalesRep.xaml.cs" />
+    <Compile Remove="Views\SalesRepLookup.xaml.cs" />
+    <Compile Remove="Views\Saved.xaml.cs" />
     <Compile Remove="Views\Test.xaml.cs" />
     <Compile Remove="Views\Tests.xaml.cs" />
     <Compile Remove="Views\TreeViewCustSearch.xaml.cs" />
@@ -46,20 +54,27 @@
   <ItemGroup>
     <Page Remove="CodeSnippets\LaborStuff.xaml" />
     <Page Remove="Views\ChargesBlock.xaml" />
+    <Page Remove="Views\Collator_Standards.xaml" />
     <Page Remove="Views\Customers.xaml" />
     <Page Remove="Views\CustomerSearch.xaml" />
     <Page Remove="Views\CustSearchTreeView.xaml" />
     <Page Remove="Views\DetailFeatures.xaml" />
+    <Page Remove="Views\EstimatorLookup.xaml" />
     <Page Remove="Views\FeatureCharges.xaml" />
     <Page Remove="Views\FeaturePicker.xaml" />
+    <Page Remove="Views\Feature_Standards.xaml" />
     <Page Remove="Views\HistoricalPrices.xaml" />
     <Page Remove="Views\InkColors.xaml" />
     <Page Remove="Views\Items.xaml" />
     <Page Remove="Views\LaborPart.xaml" />
     <Page Remove="Views\NewCustomer.xaml" />
     <Page Remove="Views\NewEstimate.xaml" />
+    <Page Remove="Views\Press_Standards.xaml" />
     <Page Remove="Views\PV01.xaml" />
     <Page Remove="Views\PV02.xaml" />
+    <Page Remove="Views\SalesRep.xaml" />
+    <Page Remove="Views\SalesRepLookup.xaml" />
+    <Page Remove="Views\Saved.xaml" />
     <Page Remove="Views\Test.xaml" />
     <Page Remove="Views\Tests.xaml" />
     <Page Remove="Views\TreeViewCustSearch.xaml" />
@@ -70,6 +85,7 @@
     <Content Include="Images\PDS-logo-lrg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\PDSLogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
