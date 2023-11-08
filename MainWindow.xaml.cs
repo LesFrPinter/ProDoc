@@ -31,7 +31,7 @@ namespace ProDocEstimate
 
             if (ScreenWidth < 1200) FeatureZoom = 0.1F;
             else if (ScreenWidth >= 1200 && ScreenWidth < 1441) { FeatureZoom = 0.2F; }
-            else FeatureZoom = 0.3F;
+            else FeatureZoom = 0.2F;    // was 0.3F
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);
@@ -41,7 +41,7 @@ namespace ProDocEstimate
                   + ")  Window ( " + this.Width.ToString("N0").Replace(",", "") + ", " + this.Height.ToString("N0").Replace(",", "") + ") "
                   + "   Zoom = " + FeatureZoom.ToString("N1");
 
-            Title = Title + "   Version 1.0.21";
+            Title = Title + "   Version 1.0.22";
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)

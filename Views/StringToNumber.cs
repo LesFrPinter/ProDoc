@@ -4,7 +4,8 @@ namespace ProDocEstimate.Views
 {
     class StringToNumber {
         public float Convert(string s)
-        {   float result = 0.0F; float IntPart = 0.0F; float FracPart = 0.0F;
+        {   if(s.Length== 0) return 0;      // See if this fixes the problem
+            float result = 0.0F; float IntPart = 0.0F; float FracPart = 0.0F;
 
             int blankloc = s.IndexOf(' ');
             if (blankloc == -1) { blankloc = s.Length; }
