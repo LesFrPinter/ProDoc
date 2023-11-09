@@ -242,7 +242,7 @@ namespace ProDocEstimate.Views
                 else if (Backer.Contains("PMS")) { Three = true; }
                 else Four = true;
 
-                if ((FourColor == 1) || (FluorSel==1)) Debugger.Break();
+                //if ((FourColor == 1) || (FluorSel==1)) Debugger.Break();      // Why is this here?
 
                 int.TryParse(dt.Rows[0]["FlatChargePct"]   .ToString(), out I1);
                 int.TryParse(dt.Rows[0]["RunChargePct"]    .ToString(), out I2);
@@ -584,7 +584,7 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            if ((FourColor == 1) || (FluorSel == 1)) Debugger.Break();
+            //if ((FourColor == 1) || (FluorSel == 1)) Debugger.Break();
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,            Param7,        Param8,       Param9,  Param10, "
