@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Images\PDSLogo.ico</ApplicationIcon>
+    <PackageIcon>PDSLogo.ico</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -82,13 +82,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\PDS-logo-lrg.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\PDSLogo.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Images\WinKey.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -100,6 +93,13 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="Microsoft.NETCore.Targets.NETFramework" Version="4.6.1-beta-23516" />
     <PackageReference Include="telerik.ui.for.wpf.netcore.xaml" Version="2023.1.315" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\PDSLogo.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -33,6 +33,9 @@ namespace ProDocEstimate
 
         private string noChgMsg; public string NoChgMsg { get { return noChgMsg; } set { noChgMsg = value; OnPropertyChanged(); } }
 
+        private string numWidePress = "1";     public string NumWidePress     { get { return numWidePress;         } set { numWidePress         = value; OnPropertyChanged(); } }
+        private string numWideConverter = "1"; public string NumWideConverter { get { return numWideConverter;     } set { numWideConverter     = value; OnPropertyChanged(); } }
+
         private float finishMaterial;       public float FinishMaterial       { get { return finishMaterial;       } set { finishMaterial       = value; OnPropertyChanged(); } }
         private float prePressPerMilChg;    public float PrePressPerMilChg    { get { return prePressPerMilChg;    } set { prePressPerMilChg    = value; OnPropertyChanged(); } }
 
@@ -1891,10 +1894,17 @@ namespace ProDocEstimate
             FPM = (int)(FPM * correction);
             float MinutesPerPart = FeetPerPart / (float)FPM;
             int TotalMinutes = (int)(MinutesPerPart * (float)PARTS);
+
             float hrs = TotalMinutes / 60.0F;
             hrs += .01F;    // In case hrs = .50 (.5 rounds down, .51 rounds up), force it to round up 
             Hrs = (float)Math.Round(hrs, 1);
-            DollarsPerHr = hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());
+
+            //TODO: Adjust for Press 2 up, Converter 3 up
+            int NumWide = int.Parse(NumWidePress.ToString());
+
+            Hrs = Hrs / NumWide;
+
+            DollarsPerHr = Hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());    // TODO: Why was this "hrs" instead of "Hrs" ?
             PressRunTime = Hrs;
             PressRunCost = DollarsPerHr;
 
@@ -2124,8 +2134,8 @@ namespace ProDocEstimate
             DataSet     ds15 = new DataSet(); da15.Fill(ds15);
             DataView    dv15 = ds15.Tables[0].DefaultView;
 
-            //TODO: Convert fraction to decimal
-            // float rollwidth      = float.Parse(ROLLWIDTH.ToString());
+            //TODO: Handle conversions of RollWidths that contain extra stuff at the end...
+
             StringToNumber stn = new StringToNumber();
             float rollwidth = stn.Convert(ROLLWIDTH.ToString());
 
