@@ -10,6 +10,7 @@
         Title="Quotations" Width="1000" Height="955"
         WindowStartupLocation="CenterScreen"
         Loaded="OnLoad"
+        Unloaded="SaveCheck"
         mc:Ignorable="d">
 
     <Window.Resources>
@@ -48,24 +49,21 @@
 
     </Window.Resources>
 
-    <!--<Viewbox Stretch="Fill" StretchDirection="DownOnly">-->
-    <!--<Viewbox Stretch="Uniform" StretchDirection="DownOnly">-->
-    <Viewbox Stretch="UniformToFill" StretchDirection="Both" VerticalAlignment="Top">
-    <!--<Viewbox Stretch="Fill" StretchDirection="DownOnly">-->
+    <Viewbox Stretch="UniformToFill" StretchDirection="Both" VerticalAlignment="Top" MaxWidth="1500">
 
-            <Grid Background="LightGray">
+        <Grid Background="LightGray">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="55" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <Border Width="160"
+            <Border Width="160"
 			        HorizontalAlignment="Left"
 			        Background="Purple"
 			        BorderThickness="2"
 			        CornerRadius="10">
-                    <Label Width="138"
+                <Label Width="138"
 				       Margin="10,0,0,0"
 				       Padding="10"
 				       HorizontalAlignment="Left"
@@ -73,11 +71,11 @@
 				       Content="Quotations"
 				       FontSize="24"
 				       Foreground="White" />
-                </Border>
+            </Border>
 
-                <Label FontSize="20" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
+            <Label FontSize="20" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
 
-                <Border Grid.RowSpan="2"
+            <Border Grid.RowSpan="2"
 			        Grid.Column="0"
 			        Width="110"
 			        Height="52"
@@ -87,7 +85,7 @@
 			        Background="Purple"
 			        BorderThickness="2"
 			        CornerRadius="10">
-                    <Label x:Name="lblPageName"
+                <Label x:Name="lblPageName"
 				       Grid.RowSpan="2"
 				       Width="auto"
 				       Height="42"
@@ -98,47 +96,47 @@
 				       Content="{Binding Path=ActivePage, Mode=OneWayToSource}"
 				       FontSize="24"
 				       Foreground="White" />
-                </Border>
+            </Border>
 
-                <TabControl x:Name="Tabs" Grid.Row="1" Grid.RowSpan="2" Background="LightGray" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged">
+            <TabControl x:Name="Tabs" Grid.Row="1" Background="LightGray" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged" >
 
-                    <TabItem x:Name="Page1" VerticalAlignment="Top" FontSize="16" Header="    Page _1    " >
+                <TabItem x:Name="Page1" VerticalAlignment="Top" FontSize="16" Header="    Page _1    " >
 
-                        <Grid Height="800" VerticalAlignment="Top" HorizontalAlignment="Left" Width="950">
+                    <Grid Height="762" VerticalAlignment="Top" HorizontalAlignment="Center" Width="900">
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition Height="0" />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition Height="6*"/>
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="0" />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="6*"/>
+                        </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="88*" />
-                                <ColumnDefinition Width="88*" />
-                                <ColumnDefinition Width="220.922" />
-                                <ColumnDefinition Width="46.918"/>
-                                <ColumnDefinition Width="158*" />
-                                <ColumnDefinition Width="117*" />
-                                <ColumnDefinition Width="124*" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="88*" />
+                            <ColumnDefinition Width="88*" />
+                            <ColumnDefinition Width="220.922" />
+                            <ColumnDefinition Width="46.918"/>
+                            <ColumnDefinition Width="158*" />
+                            <ColumnDefinition Width="117*" />
+                            <ColumnDefinition Width="124*" />
+                        </Grid.ColumnDefinitions>
 
-                            <Button x:Name="btnNewQuote"
+                        <Button x:Name="btnNewQuote"
 						        Height="24"
 						        Margin="7,0,0,0"
 						        Padding="10,2"
@@ -146,7 +144,7 @@
                                 Click="btnNewQuote_Click"
 						        Content="New quote" Grid.Column="1" />
 
-                            <Button x:Name="btnLookup"
+                        <Button x:Name="btnLookup"
 						        Grid.Column="2"
 						        Height="24"
 						        Margin="6,0,0,0"
@@ -155,18 +153,18 @@
 						        Click="btnCopy_Click"
 						        Content="Lookup" />
 
-                            <Button x:Name="btnAssignNewQuoteNum"
+                        <Button x:Name="btnAssignNewQuoteNum"
 						        Grid.Column="2"
 						        Height="24"
-						        Margin="76,0,0,0"
+						        Margin="86,0,0,0"
 						        Padding="10,2"
 						        HorizontalAlignment="Left"
                                 Click="btnAssignNewQuoteNum_Click"
 						        Content="Copy and Assign a new Quote #" Grid.ColumnSpan="3" />
 
-                            <Label Grid.Row="1" HorizontalAlignment="Right" Content="Quote #" Grid.Column="1" />
+                        <Label Grid.Row="1" HorizontalAlignment="Right" Content="Quote #" Grid.Column="1" />
 
-                            <TextBox x:Name="txtQuoteNum"
+                        <TextBox x:Name="txtQuoteNum"
 						         Grid.Row="1"
 						         Grid.Column="2"
 						         Width="85" Height="24"
@@ -176,14 +174,13 @@
 						         LostFocus="txtQuoteNum_LostFocus"
 						         Text="{Binding QUOTE_NUM}" />
 
-                            <Label Grid.Row="2"
+                        <Label Grid.Row="2"
 						       Grid.ColumnSpan="2"
-						       Margin="0,4,4,0"
 						       Padding="0"
-						       VerticalAlignment="Top"
+						       VerticalAlignment="Center"
 						       Content="Project Type:" />
 
-                            <ComboBox x:Name="cmbProjectType"
+                        <ComboBox x:Name="cmbProjectType"
 						          Grid.Row="2"
 						          Grid.Column="2"
 						          Width="145" Height="24"
@@ -191,14 +188,14 @@
 						          Foreground="Black"
 						          Text="{Binding ProjectType}" />
 
-                            <Label Grid.Row="3"
+                        <Label Grid.Row="3"
 						       Grid.Column="1"
 						       Margin="15,0,0,0"
 						       Padding="0"
 						       HorizontalAlignment="Left"
 						       Content="Final Size:" />
 
-                            <ComboBox x:Name="cmbFinalSizeInches1"
+                        <ComboBox x:Name="cmbFinalSizeInches1"
 						          Grid.Row="3"
 						          Grid.Column="2"
 						          Width="50"
@@ -208,26 +205,26 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSINT1}">
-                                <ComboBoxItem Content="1" />
-                                <ComboBoxItem Content="2" />
-                                <ComboBoxItem Content="3" />
-                                <ComboBoxItem Content="4" />
-                                <ComboBoxItem Content="5" />
-                                <ComboBoxItem Content="6" />
-                                <ComboBoxItem Content="7" />
-                                <ComboBoxItem Content="8" />
-                                <ComboBoxItem Content="9" />
-                                <ComboBoxItem Content="10" />
-                                <ComboBoxItem Content="11" />
-                                <ComboBoxItem Content="12" />
-                                <ComboBoxItem Content="13" />
-                                <ComboBoxItem Content="14" />
-                                <ComboBoxItem Content="15" />
-                                <ComboBoxItem Content="16" />
-                                <ComboBoxItem Content="17" />
-                            </ComboBox>
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="6" />
+                            <ComboBoxItem Content="7" />
+                            <ComboBoxItem Content="8" />
+                            <ComboBoxItem Content="9" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="11" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="13" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="15" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="17" />
+                        </ComboBox>
 
-                            <ComboBox x:Name="cmbFinalSizeFrac1"
+                        <ComboBox x:Name="cmbFinalSizeFrac1"
 						          Grid.Row="3"
 						          Grid.Column="2"
 						          Width="90"
@@ -238,47 +235,47 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSFRAC1}">
-                                <ComboBoxItem Content="" />
-                                <ComboBoxItem Content="1/32" />
-                                <ComboBoxItem Content="1/16" />
-                                <ComboBoxItem Content="3/32" />
-                                <ComboBoxItem Content="1/8" />
-                                <ComboBoxItem Content="5/32" />
-                                <ComboBoxItem Content="3/16" />
-                                <ComboBoxItem Content="7/32" />
-                                <ComboBoxItem Content="1/4" />
-                                <ComboBoxItem Content="9/32" />
-                                <ComboBoxItem Content="5/16" />
-                                <ComboBoxItem Content="11/32" />
-                                <ComboBoxItem Content="3/8" />
-                                <ComboBoxItem Content="13/32" />
-                                <ComboBoxItem Content="7/16" />
-                                <ComboBoxItem Content="15/32" />
-                                <ComboBoxItem Content="1/2" />
-                                <ComboBoxItem Content="17/32" />
-                                <ComboBoxItem Content="9/16" />
-                                <ComboBoxItem Content="19/32" />
-                                <ComboBoxItem Content="5/8" />
-                                <ComboBoxItem Content="21/32" />
-                                <ComboBoxItem Content="11/16" />
-                                <ComboBoxItem Content="23/32" />
-                                <ComboBoxItem Content="3/4" />
-                                <ComboBoxItem Content="25/32" />
-                                <ComboBoxItem Content="13/16" />
-                                <ComboBoxItem Content="27/32" />
-                                <ComboBoxItem Content="7/8" />
-                                <ComboBoxItem Content="29/32" />
-                                <ComboBoxItem Content="15/16" />
-                                <ComboBoxItem Content="31/32" />
-                            </ComboBox>
+                            <ComboBoxItem Content="" />
+                            <ComboBoxItem Content="1/32" />
+                            <ComboBoxItem Content="1/16" />
+                            <ComboBoxItem Content="3/32" />
+                            <ComboBoxItem Content="1/8" />
+                            <ComboBoxItem Content="5/32" />
+                            <ComboBoxItem Content="3/16" />
+                            <ComboBoxItem Content="7/32" />
+                            <ComboBoxItem Content="1/4" />
+                            <ComboBoxItem Content="9/32" />
+                            <ComboBoxItem Content="5/16" />
+                            <ComboBoxItem Content="11/32" />
+                            <ComboBoxItem Content="3/8" />
+                            <ComboBoxItem Content="13/32" />
+                            <ComboBoxItem Content="7/16" />
+                            <ComboBoxItem Content="15/32" />
+                            <ComboBoxItem Content="1/2" />
+                            <ComboBoxItem Content="17/32" />
+                            <ComboBoxItem Content="9/16" />
+                            <ComboBoxItem Content="19/32" />
+                            <ComboBoxItem Content="5/8" />
+                            <ComboBoxItem Content="21/32" />
+                            <ComboBoxItem Content="11/16" />
+                            <ComboBoxItem Content="23/32" />
+                            <ComboBoxItem Content="3/4" />
+                            <ComboBoxItem Content="25/32" />
+                            <ComboBoxItem Content="13/16" />
+                            <ComboBoxItem Content="27/32" />
+                            <ComboBoxItem Content="7/8" />
+                            <ComboBoxItem Content="29/32" />
+                            <ComboBoxItem Content="15/16" />
+                            <ComboBoxItem Content="31/32" />
+                        </ComboBox>
 
-                            <Label Grid.Row="3"
+                        <Label Grid.Row="3"
 						       Grid.Column="2"
 						       Margin="156,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="X" />
 
-                            <ComboBox x:Name="cmbFinalSizeInches2"
+                        <ComboBox x:Name="cmbFinalSizeInches2"
 						          Grid.Row="3"
 						          Grid.Column="4"
 						          Width="50"
@@ -288,26 +285,26 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSINT2}">
-                                <ComboBoxItem Content="1" />
-                                <ComboBoxItem Content="2" />
-                                <ComboBoxItem Content="3" />
-                                <ComboBoxItem Content="4" />
-                                <ComboBoxItem Content="5" />
-                                <ComboBoxItem Content="6" />
-                                <ComboBoxItem Content="7" />
-                                <ComboBoxItem Content="8" />
-                                <ComboBoxItem Content="9" />
-                                <ComboBoxItem Content="10" />
-                                <ComboBoxItem Content="11" />
-                                <ComboBoxItem Content="12" />
-                                <ComboBoxItem Content="13" />
-                                <ComboBoxItem Content="14" />
-                                <ComboBoxItem Content="15" />
-                                <ComboBoxItem Content="16" />
-                                <ComboBoxItem Content="17" />
-                            </ComboBox>
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="6" />
+                            <ComboBoxItem Content="7" />
+                            <ComboBoxItem Content="8" />
+                            <ComboBoxItem Content="9" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="11" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="13" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="15" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="17" />
+                        </ComboBox>
 
-                            <ComboBox x:Name="cmbFinalSizeFrac2"
+                        <ComboBox x:Name="cmbFinalSizeFrac2"
 						          Grid.Row="3"
 						          Grid.Column="4"
 						          Width="90"
@@ -318,41 +315,41 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSFRAC2}" Grid.ColumnSpan="2">
-                                <ComboBoxItem Content="" />
-                                <ComboBoxItem Content="1/32" />
-                                <ComboBoxItem Content="1/16" />
-                                <ComboBoxItem Content="3/32" />
-                                <ComboBoxItem Content="1/8" />
-                                <ComboBoxItem Content="5/32" />
-                                <ComboBoxItem Content="3/16" />
-                                <ComboBoxItem Content="7/32" />
-                                <ComboBoxItem Content="1/4" />
-                                <ComboBoxItem Content="9/32" />
-                                <ComboBoxItem Content="5/16" />
-                                <ComboBoxItem Content="11/32" />
-                                <ComboBoxItem Content="3/8" />
-                                <ComboBoxItem Content="13/32" />
-                                <ComboBoxItem Content="7/16" />
-                                <ComboBoxItem Content="15/32" />
-                                <ComboBoxItem Content="1/2" />
-                                <ComboBoxItem Content="17/32" />
-                                <ComboBoxItem Content="9/16" />
-                                <ComboBoxItem Content="19/32" />
-                                <ComboBoxItem Content="5/8" />
-                                <ComboBoxItem Content="21/32" />
-                                <ComboBoxItem Content="11/16" />
-                                <ComboBoxItem Content="23/32" />
-                                <ComboBoxItem Content="3/4" />
-                                <ComboBoxItem Content="25/32" />
-                                <ComboBoxItem Content="13/16" />
-                                <ComboBoxItem Content="27/32" />
-                                <ComboBoxItem Content="7/8" />
-                                <ComboBoxItem Content="29/32" />
-                                <ComboBoxItem Content="15/16" />
-                                <ComboBoxItem Content="31/32" />
-                            </ComboBox>
+                            <ComboBoxItem Content="" />
+                            <ComboBoxItem Content="1/32" />
+                            <ComboBoxItem Content="1/16" />
+                            <ComboBoxItem Content="3/32" />
+                            <ComboBoxItem Content="1/8" />
+                            <ComboBoxItem Content="5/32" />
+                            <ComboBoxItem Content="3/16" />
+                            <ComboBoxItem Content="7/32" />
+                            <ComboBoxItem Content="1/4" />
+                            <ComboBoxItem Content="9/32" />
+                            <ComboBoxItem Content="5/16" />
+                            <ComboBoxItem Content="11/32" />
+                            <ComboBoxItem Content="3/8" />
+                            <ComboBoxItem Content="13/32" />
+                            <ComboBoxItem Content="7/16" />
+                            <ComboBoxItem Content="15/32" />
+                            <ComboBoxItem Content="1/2" />
+                            <ComboBoxItem Content="17/32" />
+                            <ComboBoxItem Content="9/16" />
+                            <ComboBoxItem Content="19/32" />
+                            <ComboBoxItem Content="5/8" />
+                            <ComboBoxItem Content="21/32" />
+                            <ComboBoxItem Content="11/16" />
+                            <ComboBoxItem Content="23/32" />
+                            <ComboBoxItem Content="3/4" />
+                            <ComboBoxItem Content="25/32" />
+                            <ComboBoxItem Content="13/16" />
+                            <ComboBoxItem Content="27/32" />
+                            <ComboBoxItem Content="7/8" />
+                            <ComboBoxItem Content="29/32" />
+                            <ComboBoxItem Content="15/16" />
+                            <ComboBoxItem Content="31/32" />
+                        </ComboBox>
 
-                            <Label Grid.Row="3"
+                        <Label Grid.Row="3"
 						       Grid.Column="5"
 						       Width="auto"
 						       Height="22"
@@ -363,7 +360,7 @@
 						       VerticalContentAlignment="center"
 						       Content="(" />
 
-                            <Label x:Name="Decimal1"
+                        <Label x:Name="Decimal1"
 						       Grid.Row="3"
 						       Grid.Column="5"
 						       Width="70"
@@ -374,7 +371,7 @@
 						       VerticalContentAlignment="center"
 						       Background="ivory" />
 
-                            <Label Grid.Row="3"
+                        <Label Grid.Row="3"
 						       Grid.Column="6"
 						       Width="auto"
 						       Height="22"
@@ -384,7 +381,7 @@
 						       VerticalContentAlignment="center"
 						       Content="X" />
 
-                            <Label x:Name="Decimal2"
+                        <Label x:Name="Decimal2"
 						       Grid.Row="3"
 						       Grid.Column="6"
 						       Width="70"
@@ -395,7 +392,7 @@
 						       VerticalContentAlignment="center"
 						       Background="ivory" />
 
-                            <Label Grid.Row="3"
+                        <Label Grid.Row="3"
 						       Grid.Column="6"
 						       Width="auto"
 						       Height="22"
@@ -406,12 +403,12 @@
 						       VerticalContentAlignment="center"
 						       Content=")" />
 
-                            <WrapPanel Grid.Row="3" Height="24" Background="LightGray" Grid.ColumnSpan="6" Margin="14,0,0,0" Grid.Column="1" />
-                            <!--Hides the controls indicating paper size-->
+                        <WrapPanel Grid.Row="3" Height="24" Background="LightGray" Grid.ColumnSpan="6" Margin="14,0,0,0" Grid.Column="1" />
+                        <!--Hides the controls indicating paper size-->
 
-                            <Label Grid.Row="4" HorizontalAlignment="Right" Content="Parts:" Grid.Column="1" />
+                        <Label Grid.Row="4" HorizontalAlignment="Right" Content="Parts:" Grid.Column="1" />
 
-                            <telerik:RadNumericUpDown x:Name="PartsSpinner"
+                        <telerik:RadNumericUpDown x:Name="PartsSpinner"
 						    Grid.Row="4"
 						    Grid.Column="2"
 						    Width="60"
@@ -430,9 +427,9 @@
 						    NumberDecimalDigits="0"
 						    Value="{Binding Path=PARTS}" />
 
-                            <Label Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" Content="Paper Type:" />
+                        <Label Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" Content="Paper Type:" />
 
-                            <ComboBox x:Name="cmbPaperType"
+                        <ComboBox x:Name="cmbPaperType"
 						          Grid.Row="5"
 						          Grid.Column="2"
                                   VerticalAlignment="Center"
@@ -440,11 +437,11 @@
 						          Margin="4,0,0,0"
                                   LostFocus="cmbPaperType_LostFocus"
 						          IsSynchronizedWithCurrentItem="True"
-						          Text="{Binding Path=PAPERTYPE, UpdateSourceTrigger=LostFocus}" />
+						          Text="{Binding Path=PAPERTYPE, UpdateSourceTrigger=PropertyChanged}" />
 
-                            <Label Grid.Row="6" HorizontalAlignment="Right" Content="Roll Width:" Grid.Column="1" />
+                        <Label Grid.Row="6" HorizontalAlignment="Right" Content="Roll Width:" Grid.Column="1" />
 
-                            <ComboBox x:Name="cmbRollWidth"
+                        <ComboBox x:Name="cmbRollWidth"
 						          Grid.Row="6"
 						          Grid.Column="2"
                                   VerticalAlignment="Center"
@@ -452,11 +449,11 @@
 						          Margin="4,0,0,0"
 						          Text="{Binding Path=ROLLWIDTH}" />
 
-                            <Label Grid.Row="6" Grid.Column="2" HorizontalAlignment="Right" FontSize="11" Grid.ColumnSpan="3">S/B equal to FinalSize (or next size up)</Label>
+                        <Label Grid.Row="6" Grid.Column="2" HorizontalAlignment="Right" FontSize="11" Grid.ColumnSpan="3">S/B equal to FinalSize (or next size up)</Label>
 
-                            <Label Grid.Row="7" HorizontalAlignment="Right" Content="Press Size:" Grid.Column="1" />
+                        <Label Grid.Row="7" HorizontalAlignment="Right" Content="Press Size:" Grid.Column="1" />
 
-                            <ComboBox x:Name="cmbPressSize"
+                        <ComboBox x:Name="cmbPressSize"
 						          Grid.Row="7"
 						          Grid.Column="2"
                                   VerticalAlignment="Center"
@@ -464,27 +461,27 @@
 						          Margin="4,0,0,0" SelectionChanged="cmbPressSize_SelectionChanged_1"
 						          Text="{Binding PRESSSIZE}" />
 
-                            <Label Grid.Row="7"
+                        <Label Grid.Row="7"
 						       Grid.Column="2"
 						       Margin="100,0,0,0"
 						       HorizontalAlignment="Left"
 						       FontSize="11">
-                                (Cylinders)
-                            </Label>
+                            (Cylinders)
+                        </Label>
 
-                            <Label Grid.Row="8"
+                        <Label Grid.Row="8"
 						       Padding="0"
 						       HorizontalAlignment="Center"
 						       Content="Lineholes out:" Grid.Column="1" />
 
-                            <Label Grid.Row="10"
+                        <Label Grid.Row="10"
 						       Padding="0"
                                Grid.Column="0"
                                Margin="86,0,0,0" Grid.ColumnSpan="2"
 						       HorizontalAlignment="Left"
 						       Content="Collator cut size:" />
 
-                            <ComboBox x:Name="cmbCollatorCut"
+                        <ComboBox x:Name="cmbCollatorCut"
 						          Grid.Row="10"
 						          Grid.Column="2"
 						          Width="90"
@@ -494,7 +491,7 @@
                                   LostFocus="cmbCollatorCut_LostFocus"
 						          Text="{Binding Path=COLLATORCUT}" />
 
-                            <Label x:Name="lblUp"
+                        <Label x:Name="lblUp"
 							   Grid.Row="10"
 						       Grid.Column="2"
 						       Margin="132,0,0,0"
@@ -503,7 +500,7 @@
 						       Content="1"
 						       FontSize="11" />
 
-                            <Label x:Name="lblUpMessage"
+                        <Label x:Name="lblUpMessage"
                                Grid.Row="10"
 						       Grid.Column="2"
 						       Margin="144,0,0,0"
@@ -512,7 +509,7 @@
 						       Content="UP"
 						       FontSize="11" />
 
-                            <Button x:Name="btnLoadGrid"
+                        <Button x:Name="btnLoadGrid"
 						        Grid.Row="10" 
                                 Height="24" 
 						        Grid.Column="3" 
@@ -521,11 +518,11 @@
                                 Grid.ColumnSpan="2" 
                                 HorizontalAlignment="Left" 
 						        Click="btnLoadGrid_Click" >
-                            </Button>
+                        </Button>
 
-                            <Label Grid.Row="11" Grid.Column="1" HorizontalAlignment="Right" Content="Customer:" FontSize="16" FontWeight="bold" Foreground="blue" />
+                        <Label Grid.Row="11" Grid.Column="1" HorizontalAlignment="Right" Content="Customer:" FontSize="16" FontWeight="bold" Foreground="blue" />
 
-                            <Button x:Name="btnNew"
+                        <Button x:Name="btnNew"
 						        Grid.Row="11"
 						        Grid.Column="2"
 						        Height="24"
@@ -535,7 +532,7 @@
 						        Click="btnNew_Click"
 						        Content="New" />
 
-                            <Button x:Name="btnQuoteLookup"
+                        <Button x:Name="btnQuoteLookup"
 						        Grid.Row="11"
 						        Grid.Column="2"
 						        Height="24"
@@ -545,13 +542,13 @@
 						        Click="btnLookup_Click"
 						        Content="Lookup" />
 
-                            <Label Grid.Row="12"
+                        <Label Grid.Row="12"
 						       Padding="0"
                                Grid.Column="0"
                                Margin="85,0,0,0" Grid.ColumnSpan="2"
 						       HorizontalAlignment="Left"
 						       Content="Customer Name:" />
-                            <TextBox x:Name="txtCustomerName"
+                        <TextBox x:Name="txtCustomerName"
 						         Grid.Row="12"
 						         Grid.Column="2"
 						         Grid.ColumnSpan="3"
@@ -561,29 +558,28 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding CustomerName}" />
 
-                            <Label Grid.Row="12"
-						       Grid.Column="5"
-						       HorizontalAlignment="Left"
+                        <Label Grid.Row="12"
+						       Grid.Column="4"
+						       HorizontalAlignment="Right"
 						       Content="Num:" Margin="2,0,0,0" />
-                            <TextBox x:Name="txtCustomerNum"
+                        <TextBox x:Name="txtCustomerNum"
                                  Grid.Row="12"
 						         Grid.Column="5"
 						         Width="65"
-						         Margin="52,6,0,7"
 						         LostFocus="txtCustomerNum_LostFocus"
 						         MouseDoubleClick="txtCustomerNum_MouseDoubleClick"
 						         Style="{StaticResource TextField}"
-						         Text="{Binding CUST_NUMB}" Grid.ColumnSpan="2" />
+						         Text="{Binding CUST_NUMB, UpdateSourceTrigger=PropertyChanged}" />
 
-                            <CheckBox x:Name="chkProspect"
+                        <CheckBox x:Name="chkProspect"
 						          Grid.Row="12"
 						          Grid.Column="6"
 						          Margin="10,0,0,0" FontSize="16"
 						          Content="Prospect"
 						          IsEnabled="False" />
 
-                            <Label Grid.Row="13" Content="Contact:" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <TextBox x:Name="txtContactName"
+                        <Label Grid.Row="13" Content="Contact:" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        <TextBox x:Name="txtContactName"
 						         Grid.Row="13"
 						         Grid.Column="2"
 						         Grid.ColumnSpan="3"
@@ -593,12 +589,12 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding ContactName}" />
 
-                            <Label Grid.Row="14"
+                        <Label Grid.Row="14"
 						       Margin="0,4,4,0"
 						       Padding="0"
 						       VerticalAlignment="Top"
 						       Content="Address:" Grid.Column="1" />
-                            <TextBox x:Name="txtAddress"
+                        <TextBox x:Name="txtAddress"
 						         Grid.Row="14"
 						         Grid.Column="2"
 						         Grid.ColumnSpan="5"
@@ -608,7 +604,7 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Address}" />
 
-                            <TextBox x:Name="txtCity"
+                        <TextBox x:Name="txtCity"
 						         Grid.Row="15"
 						         Grid.Column="2"
 						         Grid.ColumnSpan="5"
@@ -618,12 +614,11 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Path=CSZ, Mode=OneWay}" Margin="10,5,0,0" />
 
-                            <Label Grid.Row="16"
-						       Margin="35,0,0,0"
+                        <Label Grid.Row="16"
 						       Padding="0"
-						       HorizontalAlignment="Left"
+						       HorizontalAlignment="Right"
 						       Content="Phone:" Grid.Column="1" />
-                            <TextBox x:Name="txtPhone"
+                        <TextBox x:Name="txtPhone"
 						         Grid.Row="16"
 						         Grid.Column="2"
 						         Grid.ColumnSpan="3"
@@ -633,12 +628,11 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Phone}" />
 
-                            <Label Grid.Row="17"
-						       Margin="42,0,0,0"
+                        <Label Grid.Row="17"
 						       Padding="0"
-						       HorizontalAlignment="Left"
+						       HorizontalAlignment="Right"
 						       Content="Email:" Grid.Column="1" />
-                            <TextBox x:Name="txtEmail"
+                        <TextBox x:Name="txtEmail"
 						         Grid.Row="17"
 						         Grid.Column="2"
 						         Grid.ColumnSpan="3"
@@ -648,7 +642,7 @@
 						         Style="{StaticResource TextField}"
 						         Text="{Binding Email}" />
 
-                            <RadioButton Grid.Row="8"
+                        <RadioButton Grid.Row="8"
 						             Grid.Column="2"
                                      FontSize="14"
                                      Width="40"
@@ -656,7 +650,7 @@
 						             Margin="4,0,0,0"
 						             VerticalAlignment="Center"
 						             Content="Yes" />
-                            <RadioButton Grid.Row="8"
+                        <RadioButton Grid.Row="8"
 						             Grid.Column="2"
                                      FontSize="14"
                                      Width="40"
@@ -665,9 +659,9 @@
 						             Content="No"
 						             IsChecked="True" />
 
-                            <Label Grid.Row="9" Grid.Column="1" Content="Press" Margin="0,0,5,0" VerticalAlignment="Top" />
+                        <Label Grid.Row="9" Grid.Column="1" Content="Press:" VerticalAlignment="Top" />
 
-                            <ComboBox x:Name="NumUp1"
+                        <ComboBox x:Name="NumUp1"
 						          Grid.Row="9"
 						          Grid.Column="2"
 						          Width="40"
@@ -675,17 +669,17 @@
 						          Margin="4,0,0,0"
                                   Text="{Binding NumWidePress}"
 						          VerticalAlignment="Center">
-                                <ComboBoxItem Content="1" />
-                                <ComboBoxItem Content="2" />
-                                <ComboBoxItem Content="3" />
-                                <ComboBoxItem Content="4" />
-                            </ComboBox>
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                        </ComboBox>
 
-                            <Label Grid.Row="9" Grid.Column="2" Margin="51,0,0,0" HorizontalAlignment="Left" Content="wide" />
+                        <Label Grid.Row="9" Grid.Column="2" Margin="51,0,0,0" HorizontalAlignment="Left" Content="wide" />
 
-                            <Label Grid.Row="9" Grid.Column="2" Content="Converter" VerticalAlignment="Center" />
+                        <Label Grid.Row="9" Grid.Column="2" Content="Converter" VerticalAlignment="Center" />
 
-                            <ComboBox x:Name="NumUp2"
+                        <ComboBox x:Name="NumUp2"
 						          Grid.Row="9"
 						          Grid.Column="3"
 						          Width="40"
@@ -693,126 +687,126 @@
 						          Margin="5,0,0,0"
                                   Text="{Binding NumWideConverter}"
 						          VerticalAlignment="Center">
-                                <ComboBoxItem Content="1" />
-                                <ComboBoxItem Content="2" />
-                                <ComboBoxItem Content="3" />
-                                <ComboBoxItem Content="4" />
-                            </ComboBox>
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                        </ComboBox>
 
-                            <Label Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="18" Padding="0" 
+                        <Label Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="18" Padding="0" 
                                Content="wide" Margin="4,0,0,0" />
 
-                        </Grid>
+                    </Grid>
 
-                    </TabItem>
+                </TabItem>
 
-                    <TabItem x:Name="Page2" VerticalAlignment="Top"
+                <TabItem x:Name="Page2" VerticalAlignment="Top"
                          FontSize="16" Header="    Page _2    " IsEnabled="False" GotFocus="Page2_GotFocus">
 
-                        <Grid Height="680" Width="820" VerticalAlignment="Top" HorizontalAlignment="Left"  >
+                    <Grid Height="680" Width="820" VerticalAlignment="Top" HorizontalAlignment="Left"  >
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="100" />
+                            <RowDefinition Height="500" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left"  >
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="70" />
-                                <RowDefinition Height="100" />
-                                <RowDefinition Height="500" />
+                                <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left"  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"  />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="80"  />
+                                <ColumnDefinition Width="80"  />
+                                <ColumnDefinition Width="80"  />
+                                <ColumnDefinition Width="80"  />
+                                <ColumnDefinition Width="80"  />
+                                <ColumnDefinition Width="150"  />
+                            </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30" />
-                                    <RowDefinition Height="30" />
-                                </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Content="Waste" HorizontalAlignment="Left" Padding="0" FontSize="11" FontWeight="Bold" Margin="20,0,0,0" />
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"  />
-                                    <ColumnDefinition Width="150" />
-                                    <ColumnDefinition Width="80"  />
-                                    <ColumnDefinition Width="80"  />
-                                    <ColumnDefinition Width="80"  />
-                                    <ColumnDefinition Width="80"  />
-                                    <ColumnDefinition Width="80"  />
-                                    <ColumnDefinition Width="150"  />
-                                </Grid.ColumnDefinitions>
-
-                                <Label Grid.Column="1" Content="Waste" HorizontalAlignment="Left" Padding="0" FontSize="11" FontWeight="Bold" Margin="20,0,0,0" />
-
-                                <telerik:RadNumericUpDown 
+                            <telerik:RadNumericUpDown 
                               x:Name="WasteSpinner"
                               Grid.Row="1" Grid.Column="1" Width="22" Height="24" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
 						      FontWeight="Bold" FontSize="11" IsInteger="True" LargeChange="1" Maximum="30" Minimum="0" NumberDecimalDigits="0" Value="{Binding Path=WastePct}" Margin="5,0,0,0" />
 
-                                <Label Grid.Column="1" Content="%" HorizontalAlignment="Center" Padding="0 0 5 0" Grid.Row="1" />
+                            <Label Grid.Column="1" Content="%" HorizontalAlignment="Center" Padding="0 0 5 0" Grid.Row="1" />
 
-                                <Label x:Name="PickMsg" Grid.Row="2" Content="Click to start ==>" 
+                            <Label x:Name="PickMsg" Grid.Row="2" Content="Click to start ==>" 
                                Foreground="White" Background="Red" FontWeight="Bold"
                                HorizontalAlignment="Left" FontSize="9" 
                                Visibility="Collapsed"
                                ToolTip="Pick an ItemType to populate the four dropdown lists for editing" Margin="2,0,0,0"  />
 
-                                <Label Grid.Column="2" HorizontalAlignment="Right" Content="Qty 1" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
+                            <Label Grid.Column="2" HorizontalAlignment="Right" Content="Qty 1" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
 
-                                <TextBox Grid.Row="1" Grid.Column="2" Width="66" Height="22"
+                            <TextBox Grid.Row="1" Grid.Column="2" Width="66" Height="22"
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty1_GotFocus"  VerticalAlignment="Center"
                                  IsEnabled="True"
                                  Text="{Binding Path=Qty1, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" 
                                  x:Name="txtQty1" />
 
-                                <Label Grid.Column="3" HorizontalAlignment="Right" Content="Qty 2" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
+                            <Label Grid.Column="3" HorizontalAlignment="Right" Content="Qty 2" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
 
-                                <TextBox Grid.Row="1" Grid.Column="3" Width="66" Height="22" 
+                            <TextBox Grid.Row="1" Grid.Column="3" Width="66" Height="22" 
                                  HorizontalAlignment="Left" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty2_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty2, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" 
                                  x:Name="txtQty2" 
                                  Margin="1,4,0,0" />
 
-                                <Label Grid.Column="4" HorizontalAlignment="Right" Content="Qty 3" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
+                            <Label Grid.Column="4" HorizontalAlignment="Right" Content="Qty 3" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
 
-                                <TextBox Grid.Row="1" Grid.Column="4" Width="66" Height="22" 
+                            <TextBox Grid.Row="1" Grid.Column="4" Width="66" Height="22" 
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
                                  GotFocus="txtQty3_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty3, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty3" 
                                  Margin="0,4,0,0" />
 
-                                <Label Grid.Column="5" HorizontalAlignment="Right" Content="Qty 4" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
+                            <Label Grid.Column="5" HorizontalAlignment="Right" Content="Qty 4" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 0 5 0" />
 
-                                <TextBox Grid.Row="1" Grid.Column="5" Width="66" Height="22" 
+                            <TextBox Grid.Row="1" Grid.Column="5" Width="66" Height="22" 
                                  HorizontalAlignment="Center" HorizontalContentAlignment="Right"
 								 GotFocus="txtQty4_GotFocus" VerticalAlignment="Top"
                                  Text="{Binding Path=Qty4, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" x:Name="txtQty4" 
                                  Margin="0,4,0,0" />
 
-                                <Label Grid.Row="0" Grid.Column="6" Content="Selected Qty" VerticalAlignment="Bottom" FontSize="10" FontWeight="Bold" />
+                            <Label Grid.Row="0" Grid.Column="6" Content="Selected Qty" VerticalAlignment="Bottom" FontSize="10" FontWeight="Bold" />
 
-                                <TextBlock Grid.Row="1" Grid.Column="6" Foreground="White" Background="Red" HorizontalAlignment="Center" 
+                            <TextBlock Grid.Row="1" Grid.Column="6" Foreground="White" Background="Red" HorizontalAlignment="Center" 
                                 FontWeight="Bold" FontSize="11" Width="60" Text="{Binding SelectedQty, StringFormat='0,0'}" Padding="2" Height="20"/>
 
-                                <Button  x:Name="Calc" Grid.Row="1" Grid.Column="7" Content="Calculate" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Calc_Click" Padding="8 2" Margin="15 0 0 0" FontSize="12" />
+                            <Button  x:Name="Calc" Grid.Row="1" Grid.Column="7" Content="Calculate" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Calc_Click" Padding="8 2" Margin="15 0 0 0" FontSize="12" />
 
-                            </Grid>
+                        </Grid>
 
-                            <Grid Grid.Row="1" Height="92" VerticalAlignment="Top" >
+                        <Grid Grid.Row="1" Height="92" VerticalAlignment="Top" >
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30" />
-                                    <RowDefinition Height="30" />
-                                    <RowDefinition Height="30" />
-                                </Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
 
-                                <Grid.ColumnDefinitions >
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                                <!--<Label Content="Paper Type" Grid.Column="1" HorizontalAlignment="Left" Margin="13,0,0,0" Visibility="Hidden" />
+                            <!--<Label Content="Paper Type" Grid.Column="1" HorizontalAlignment="Left" Margin="13,0,0,0" Visibility="Hidden" />
 
                             <Label x:Name="lblPaperType" Grid.Row="1" Grid.Column="0"  Visibility="Hidden" 
                                HorizontalAlignment="Left" Background="Red" Foreground="White" Margin="49,0,0,0" />
@@ -826,110 +820,113 @@
                                  Text="{Binding Path=PAPERTYPE, UpdateSourceTrigger=PropertyChanged}"
 						         VerticalAlignment="Center" Margin="25,0,0,0" />-->
 
-                                <TextBlock x:Name="CostMessage" Text="Verify COST USED" 
-                                   Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 10 0 0" Height="20" Padding="0" FontSize="12" Foreground="Red" Visibility="Hidden" FontWeight="Bold" />
+                            <TextBlock x:Name="CostMessage" Text="Verify COST USED" 
+                                       Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 10 0 0" 
+                                       Height="20" Padding="0" FontSize="12" Foreground="Red" Visibility="Hidden" FontWeight="Bold" />
 
-                                <Label     Content="ItemType"    Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" />
-                                <Label     x:Name="lblItemType"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Background="DarkOrange" Foreground="White" />
-                                <ComboBox  x:Name="txtItemType"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" FontSize="10" Width="65" Height="22" Padding="2 0"
-                                        DropDownOpened="txtItemType_DropDownOpened" SelectionChanged="txtItemType_SelectionChanged" SelectedValue="{Binding ItemType}" VerticalAlignment="Center" />
+                            <Label     Content="ItemType"    Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" />
+                            <Label     x:Name="lblItemType"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Background="DarkOrange"  Foreground="White" />
+                            <ComboBox  x:Name="txtItemType"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" FontSize="10" Width="65"   Height="22" Padding="2 0"
+                                       DropDownOpened="txtItemType_DropDownOpened" SelectionChanged="txtItemType_SelectionChanged" 
+                                       SelectedValue="{Binding ItemType}" VerticalAlignment="Center" />
 
-                                <Label     Content="Basis"       Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" />
-                                <Label     x:Name="lblBasis"     Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Background="Red"         Foreground="White" />
-                                <ComboBox  x:Name="txtBasis"     Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" FontSize="10" Width="50" Padding="2 0" Height="22" VerticalAlignment="Center" />
+                            <Label     Content="Basis"       Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" />
+                            <Label     x:Name="lblBasis"     Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Background="Red"         Foreground="White" />
+                            <ComboBox  x:Name="txtBasis"     Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" FontSize="10" Width="50"  Padding="2 0" Height="22" VerticalAlignment="Center" />
 
-                                <Label     Content="Color"       Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" />
-                                <Label     x:Name="lblColor"     Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Background="Red"         Foreground="White" />
-                                <ComboBox  x:Name="txtColor"     Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" FontSize="10" Height="22" Width="50" VerticalAlignment="Center" />
+                            <Label     Content="Color"       Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" />
+                            <Label     x:Name="lblColor"     Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Background="Red"         Foreground="White" />
+                            <ComboBox  x:Name="txtColor"     Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" FontSize="10" Height="22" Width="50" VerticalAlignment="Center" />
 
-                                <Label     Content="Roll Width"  Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" />
-                                <Label     x:Name="lblRollWidth" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Background="Red"         Foreground="White" />
-                                <ComboBox  x:Name="txtRollWidth" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" FontSize="10" Width="64"  Padding="2 0" Height="22" VerticalAlignment="Center" />
+                            <Label     Content="Roll Width"  Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" />
+                            <Label     x:Name="lblRollWidth" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Background="Red"         Foreground="White" />
+                            <ComboBox  x:Name="txtRollWidth" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" FontSize="10" Width="64"  Padding="2 0" Height="22" VerticalAlignment="Center" />
 
-                                <Button    x:Name="btnUpdate" Content="Update" Grid.Row="4" Grid.Column="5" Width="70" Height="24" Padding="0" HorizontalAlignment="Center" Click="btnUpdate_Click" FontSize="12" />
+                            <Button    x:Name="btnUpdate" Content="Update" Grid.Row="2" Grid.Column="5" Width="70" Height="24" Padding="0" HorizontalAlignment="Left" 
+                                       Click="btnUpdate_Click" FontSize="12" Margin="50,0,0,0" />
 
-                            </Grid>
+                        </Grid>
 
-                            <DataGrid Grid.Row="2" 
+                        <DataGrid Grid.Row="2" 
                                   x:Name="dgSheetsOfPaper" 
                                   VerticalAlignment="Top"
-						          Width="830"
+						          Width="786"
                                   FontWeight="Bold"
 						          Height="520"
                                   CanUserAddRows="False"
                                   IsSynchronizedWithCurrentItem="True"
                                   SelectionUnit="FullRow"
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
-                                  SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" Margin="12,0,0,0" >
+                                  SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" Margin="12,0,0,0" Grid.RowSpan="2" >
 
-                                <DataGrid.Columns>
+                            <DataGrid.Columns>
 
-                                    <DataGridTextColumn Width="205" Binding="{Binding Path=Description}" >
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                <DataGridTextColumn Width="205" Binding="{Binding Path=Description}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
 										       Content="Description"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn 
+                                <DataGridTextColumn 
                                     Width="93" 
                                     Binding="{Binding Path=Pounds}" ElementStyle="{StaticResource CellRightAlign}" >
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
 										       Content="Lbs Needed"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=LastPOCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=LastPOCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
 										       Content="Last P/O"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=AverageCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=AverageCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
 										       Content="Avg Cost"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=MastInvCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=MastInvCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
 										       Content="Mast Cost"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=SelectedCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}" >
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                <DataGridTextColumn IsReadOnly="True" Width="90" Binding="{Binding Path=SelectedCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
                                                Background="{Binding ProblemColor}"
 										       Content="Cost Used"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn Width="94" Binding="{Binding Path=PaperCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
-                                        <DataGridTextColumn.Header>
-                                            <Label HorizontalAlignment="Right"
+                                <DataGridTextColumn Width="94" Binding="{Binding Path=PaperCost, StringFormat=C2}" ElementStyle="{StaticResource CellRightAlign}">
+                                    <DataGridTextColumn.Header>
+                                        <Label HorizontalAlignment="Right"
 										       Content="Paper Cost"
 										       FontSize="12" FontWeight="Bold" />
-                                        </DataGridTextColumn.Header>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
 
-                                </DataGrid.Columns>
+                            </DataGrid.Columns>
 
-                            </DataGrid>
+                        </DataGrid>
 
-                            <Label Grid.Row="3" Background="Yellow" Foreground="Black" Content="{Binding NoChangeMsg}" HorizontalAlignment="Left" Margin="10,0,0,0" Height="15"  />
+                        <Label Grid.Row="3" Background="Yellow" Foreground="Black" Content="{Binding NoChangeMsg}" HorizontalAlignment="Left" Margin="10,0,0,0" Height="15"  />
 
-                            <TextBox Grid.Row="3" FontSize="11" 
+                        <TextBox Grid.Row="3" FontSize="11" 
                                  Foreground="White" Background="Blue"
                                  FontWeight="SemiBold" Height="25" 
                                  Width="90" Text="{Binding QuoteTotal, StringFormat=C2}" Padding="3"
@@ -937,56 +934,56 @@
                                  HorizontalContentAlignment="Right" 
                                  VerticalContentAlignment="Center" />
 
-                        </Grid>
+                    </Grid>
 
-                    </TabItem>
+                </TabItem>
 
-                    <TabItem x:Name="Page3" VerticalAlignment="Top"
+                <TabItem x:Name="Page3" VerticalAlignment="Top"
 				         FontSize="16"
 				         Header="  Page _3    "
                          GotFocus="Page3_GotFocus"
 				         IsEnabled="True">
 
-                        <!--<Viewbox VerticalAlignment="Top">-->
+                    <!--<Viewbox VerticalAlignment="Top">-->
 
-                        <Grid Height="670" Width="800" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 0 0 0"   >
+                    <Grid Height="670" Width="800" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 0 0 0"   >
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30" />
-                                <RowDefinition Height="34" />
-                                <RowDefinition Height="400" />
-                                <RowDefinition Height="300" />
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="34" />
+                            <RowDefinition Height="400" />
+                            <RowDefinition Height="300" />
+                        </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="203.192" />
-                                <ColumnDefinition Width="36.808"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="240" />
+                            <ColumnDefinition Width="203.192" />
+                            <ColumnDefinition Width="36.808"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="3" HorizontalAlignment="Left"
+                        <Label Grid.Column="3" HorizontalAlignment="Left"
                                    Content="(Double-click to move selection between columns)" 
                                    Height="32" Margin="2,0,0,0" Grid.ColumnSpan="2" />
 
-                            <Label Content="Category" 
+                        <Label Content="Category" 
                                    Background="LightSalmon"
 								   Grid.Row="1" Width="295"
                                    HorizontalAlignment="Left" Height="32" Grid.ColumnSpan="4" Margin="4,0,0,0" />
 
-                            <ListBox x:Name="lstAvailable" Grid.Row="2" Width="200" HorizontalAlignment="Center"
+                        <ListBox x:Name="lstAvailable" Grid.Row="2" Width="200" HorizontalAlignment="Center"
                                      FontFamily="Courier New" FontSize="12"
                                      Height="300" VerticalAlignment="Top"
                                      MouseDoubleClick="lstAvailable_MouseDoubleClick" Grid.ColumnSpan="2" />
 
-                            <Label Content="Selected                                        (Right-click to view/change)"
+                        <Label Content="Selected                                        (Right-click to view/change)"
                                    Background="LightSalmon"
                                    Grid.Row="1" Grid.Column="3" Width="576" Grid.ColumnSpan="3"
                                    HorizontalAlignment="Left" Height="32" Margin="4,0,0,0" />
 
-                            <ListBox x:Name="lstSelected" 
+                        <ListBox x:Name="lstSelected" 
                                      Grid.Row="2" Grid.Column="3"
                                      FontFamily="Courier New" FontSize="12" 
                                      Width="200" HorizontalAlignment="Left"
@@ -994,94 +991,94 @@
                                      PreviewMouseRightButtonUp="lstSelected_PreviewMouseRightButtonUp"
 	                                 MouseDoubleClick="lstSelected_MouseDoubleClick" />
 
-                            <Expander Grid.Row="3"
+                        <Expander Grid.Row="2"
                                       ToolTip="What is this grid? Do we need it?"
                                       VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="6"
-                                      ExpandDirection="Right" Height="200" Width="690" >
+                                      ExpandDirection="Right" Height="200" Width="690" Margin="0,308,0,0" Grid.RowSpan="2" >
 
-                                <DataGrid Height="180" VerticalAlignment="Top" Width="655" Margin="0 25 0 0" >
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Type"		Width="100" />
-                                        <DataGridTextColumn Header="Flat chg"	Width="100" />
-                                        <DataGridTextColumn Header="Run chg"	Width="100" />
-                                        <DataGridTextColumn Header="Plate"		Width="100" />
-                                        <DataGridTextColumn Header="FinishMatl" Width="100" />
-                                        <DataGridTextColumn Header="PressMatl"	Width="100" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                            <DataGrid Height="180" VerticalAlignment="Top" Width="655" Margin="0 25 0 0" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Type"		Width="100" />
+                                    <DataGridTextColumn Header="Flat chg"	Width="100" />
+                                    <DataGridTextColumn Header="Run chg"	Width="100" />
+                                    <DataGridTextColumn Header="Plate"		Width="100" />
+                                    <DataGridTextColumn Header="FinishMatl" Width="100" />
+                                    <DataGridTextColumn Header="PressMatl"	Width="100" />
+                                </DataGrid.Columns>
+                            </DataGrid>
 
-                            </Expander>
+                        </Expander>
 
-                        </Grid>
+                    </Grid>
 
-                        <!--</Viewbox>-->
+                    <!--</Viewbox>-->
 
-                    </TabItem>
+                </TabItem>
 
-                    <TabItem x:Name="Page4" VerticalAlignment="Top" 
+                <TabItem x:Name="Page4" VerticalAlignment="Top" 
 				         FontSize="16"
                          GotFocus="Page4_GotFocus"
 				         Header="  Page _4  " >
 
-                        <!--<Viewbox>-->
+                    <!--<Viewbox>-->
 
-                        <Grid Width="800" Height="650" VerticalAlignment="Top" Margin="0 10 0 0" >
+                    <Grid Width="800" Height="650" VerticalAlignment="Top" Margin="0 10 0 0" >
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="149*"/>
-                                <ColumnDefinition Width="106*"/>
-                                <ColumnDefinition Width="545*"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="149*"/>
+                            <ColumnDefinition Width="106*"/>
+                            <ColumnDefinition Width="545*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="90" />
-                                <RowDefinition Height="185" />
-                                <RowDefinition Height="180" />
-                                <RowDefinition Height="40" />
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150" />
+                            <RowDefinition Height="90" />
+                            <RowDefinition Height="185" />
+                            <RowDefinition Height="180" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
 
-                            <Border BorderBrush="Black" BorderThickness="1" Height="125" VerticalAlignment="Top" Grid.ColumnSpan="3">
+                        <Border BorderBrush="Black" BorderThickness="1" Height="125" VerticalAlignment="Top" Grid.ColumnSpan="3">
 
-                                <Grid Grid.Row="1" Height="120" Width="800" VerticalAlignment="Top">
+                            <Grid Grid.Row="1" Height="120" Width="800" VerticalAlignment="Top">
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="200" />
-                                        <ColumnDefinition Width="85" />
-                                        <ColumnDefinition Width="70" />
-                                        <ColumnDefinition Width="146" />
-                                        <ColumnDefinition Width="0" />
-                                        <ColumnDefinition Width="199" />
-                                        <ColumnDefinition Width="100" />
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="146" />
+                                    <ColumnDefinition Width="0" />
+                                    <ColumnDefinition Width="199" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
 
-                                    <Label Content="Quote based on:" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="156"  />
+                                <Label Content="Quote based on:" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="156"  />
 
-                                    <Label Grid.Row="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="140" Content="{Binding DisplayQuantity}" />
+                                <Label Grid.Row="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" Height="22" Width="140" Content="{Binding DisplayQuantity}" />
 
-                                    <Label
+                                <Label
 								       Grid.Column="1"
 								       Padding="0"
 								       HorizontalAlignment="Center"
 								       VerticalContentAlignment="Center"
 								       Content="Qty"
 								       FontSize="11" Height="14" Width="18" />
-                                    <Label
+                                <Label
 								       Grid.Column="2"
 								       Padding="0"
 								       HorizontalAlignment="Left"
 								       VerticalContentAlignment="Center"
 								       Content="Cost/M"
 								       FontSize="11" Height="14" Width="42" Margin="24,0,0,0" />
-                                    <Label
+                                <Label
 								       Grid.Column="3"
 								       Padding="0"
 								       HorizontalAlignment="Left"
@@ -1089,7 +1086,7 @@
 								       Content="Markup          (%)             ($)"
 								       FontSize="11" Height="14" Margin="3,0,0,0" Width="140" />
 
-                                    <Label
+                                <Label
 								       Grid.Column="5"
 								       Padding="0"
 								       HorizontalAlignment="Left"
@@ -1097,7 +1094,7 @@
 								       Content="Labor %"
 								       FontSize="11" Height="14" Width="40" Margin="15,0,0,0" />
 
-                                    <Label
+                                <Label
 								       Grid.Column="5"
 								       Padding="0"
 								       HorizontalAlignment="Left"
@@ -1105,7 +1102,7 @@
 								       Content="Material %"
 								       FontSize="11" Height="14" Width="52" Margin="75,0,0,0" />
 
-                                    <Label
+                                <Label
 								       Grid.Column="6"
 								       Padding="0"
 								       HorizontalAlignment="Center"
@@ -1113,15 +1110,15 @@
 								       Content="Selling Price"
 								       FontSize="11" Height="14" Width="58" />
 
-                                    <Button x:Name="Select1" Content="Select" Grid.Row="1" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select1_Click" />
+                                <Button x:Name="Select1" Content="Select" Grid.Row="1" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select1_Click" />
 
-                                    <Button x:Name="Select2" Content="Select" Grid.Row="2" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select2_Click" />
+                                <Button x:Name="Select2" Content="Select" Grid.Row="2" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select2_Click" />
 
-                                    <Button x:Name="Select3" Content="Select" Grid.Row="3" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select3_Click" />
+                                <Button x:Name="Select3" Content="Select" Grid.Row="3" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select3_Click" />
 
-                                    <Button x:Name="Select4" Content="Select" Grid.Row="4" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select4_Click" />
+                                <Button x:Name="Select4" Content="Select" Grid.Row="4" Padding="2" HorizontalAlignment="Left" Height="22" Margin="120,0,0,0" Width="60" Click="Select4_Click" />
 
-                                    <TextBox
+                                <TextBox
                                         x:Name="QBO1"
 									    Grid.Row="1"
 									    Grid.Column="1"
@@ -1134,7 +1131,7 @@
 									    FontSize="14"
 									    Text="{Binding Path=Qty1, StringFormat=N0}" />
 
-                                    <TextBox 
+                                <TextBox 
 									     Grid.Row="1"
 									     Grid.Column="2"
                                          Width="60"
@@ -1145,15 +1142,15 @@
 									     FontSize="14"
 									     Text="{Binding Path=CPM1a, StringFormat=C}" />
 
-                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
+                                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                        <ComboBox x:Name="MarkupBasis1" SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10" HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis1_SelectionChanged" >
-                                            <ComboBoxItem Content=" " />
-                                            <ComboBoxItem Content="$" />
-                                            <ComboBoxItem Content="%" />
-                                        </ComboBox>
+                                    <ComboBox x:Name="MarkupBasis1" SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10" HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis1_SelectionChanged" >
+                                        <ComboBoxItem Content=" " />
+                                        <ComboBoxItem Content="$" />
+                                        <ComboBoxItem Content="%" />
+                                    </ComboBox>
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext1"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Center"
@@ -1162,7 +1159,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpPct1, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext1c"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Left"
@@ -1171,7 +1168,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpAmt1, StringFormat=C}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="15 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1179,7 +1176,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=LabPct1, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="25 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1187,7 +1184,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MatPct1, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="55" Height="18" Margin="100 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1195,9 +1192,9 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice1, StringFormat=C}" />
 
-                                    </StackPanel>
+                                </StackPanel>
 
-                                    <TextBox
+                                <TextBox
                                         x:Name="QBO2"
                                         Grid.Row="2"
 									    Grid.Column="1"
@@ -1210,7 +1207,7 @@
 									    FontSize="14"
 									    Text="{Binding Path=Qty2, StringFormat=N0}" />
 
-                                    <TextBox 
+                                <TextBox 
                                          x:Name="CPM2"
 									     Grid.Row="2"
 									     Grid.Column="2"
@@ -1223,15 +1220,15 @@
 									     FontSize="14"
 									     Text="{Binding Path=CPM2a, StringFormat=N2}" />
 
-                                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="4">
+                                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                        <ComboBox x:Name="MarkupBasis2" SelectedValue="{Binding ComboSel2, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis2_SelectionChanged" >
-                                            <ComboBoxItem Content=" " />
-                                            <ComboBoxItem Content="$" />
-                                            <ComboBoxItem Content="%" />
-                                        </ComboBox>
+                                    <ComboBox x:Name="MarkupBasis2" SelectedValue="{Binding ComboSel2, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis2_SelectionChanged" >
+                                        <ComboBoxItem Content=" " />
+                                        <ComboBoxItem Content="$" />
+                                        <ComboBoxItem Content="%" />
+                                    </ComboBox>
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext2"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Center"
@@ -1240,7 +1237,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpPct2, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext2c"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Left"
@@ -1249,7 +1246,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpAmt2, StringFormat=C}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="15 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1257,7 +1254,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=LabPct2, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="25 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1265,7 +1262,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MatPct2, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="55" Height="18" Margin="100 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1273,9 +1270,9 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice2, StringFormat=C}" />
 
-                                    </StackPanel>
+                                </StackPanel>
 
-                                    <TextBox
+                                <TextBox
                                         x:Name="QBO3"
 									    Grid.Row="3"
 									    Grid.Column="1"
@@ -1288,7 +1285,7 @@
 									    FontSize="14"
 									    Text="{Binding Path=Qty3, StringFormat=N0}"/>
 
-                                    <TextBox 
+                                <TextBox 
                                          x:Name="CPM3"
 									     Grid.Row="3"
 									     Grid.Column="2"
@@ -1301,15 +1298,15 @@
 									     FontSize="14"
 									     Text="{Binding Path=CPM3a, StringFormat=N2}" />
 
-                                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="4">
+                                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                        <ComboBox x:Name="MarkupBasis3" SelectedValue="{Binding ComboSel3, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis3_SelectionChanged"  >
-                                            <ComboBoxItem Content=" " />
-                                            <ComboBoxItem Content="$" />
-                                            <ComboBoxItem Content="%" />
-                                        </ComboBox>
+                                    <ComboBox x:Name="MarkupBasis3" SelectedValue="{Binding ComboSel3, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis3_SelectionChanged"  >
+                                        <ComboBoxItem Content=" " />
+                                        <ComboBoxItem Content="$" />
+                                        <ComboBoxItem Content="%" />
+                                    </ComboBox>
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext3"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Center"
@@ -1318,7 +1315,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpPct3, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext3c"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Left"
@@ -1327,7 +1324,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpAmt3, StringFormat=C}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="15 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1335,7 +1332,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=LabPct3, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="25 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1343,7 +1340,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MatPct3, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="55" Height="18" Margin="100 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1351,9 +1348,9 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice3, StringFormat=C}" />
 
-                                    </StackPanel>
+                                </StackPanel>
 
-                                    <TextBox
+                                <TextBox
                                         x:Name="QBO4"
                                         Grid.Row="4"
 									    Grid.Column="1"
@@ -1366,7 +1363,7 @@
 									    FontSize="14"
 									    Text="{Binding Path=Qty4}" />
 
-                                    <TextBox 
+                                <TextBox 
                                         x:Name="CPM4"
 									     Grid.Row="4"
 									     Grid.Column="2"
@@ -1379,15 +1376,15 @@
 									     FontSize="14"
 									     Text="{Binding Path=CPM4a, StringFormat=N2}" />
 
-                                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="4" >
+                                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="4" >
 
-                                        <ComboBox x:Name="MarkupBasis4" SelectedValue="{Binding ComboSel4, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis4_SelectionChanged"  >
-                                            <ComboBoxItem Content=" " />
-                                            <ComboBoxItem Content="$" />
-                                            <ComboBoxItem Content="%" />
-                                        </ComboBox>
+                                    <ComboBox x:Name="MarkupBasis4" SelectedValue="{Binding ComboSel4, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10"  HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis4_SelectionChanged"  >
+                                        <ComboBoxItem Content=" " />
+                                        <ComboBoxItem Content="$" />
+                                        <ComboBoxItem Content="%" />
+                                    </ComboBox>
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext4"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Center"
@@ -1396,7 +1393,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpPct4, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
                                              x:Name="Ext4c"
 									         Width="45" Height="18" Margin="5 0 0 0"
 									         HorizontalAlignment="Left"
@@ -1405,7 +1402,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MkUpAmt4, StringFormat=C}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="15 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1413,7 +1410,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=LabPct4, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="45" Height="18" Margin="25 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1421,7 +1418,7 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=MatPct4, StringFormat=N0}" />
 
-                                        <TextBox 
+                                    <TextBox 
 									         Width="55" Height="18" Margin="100 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
@@ -1429,84 +1426,84 @@
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice4, StringFormat=C}" />
 
-                                    </StackPanel>
+                                </StackPanel>
 
-                                    <Grid Grid.Row="4">
+                                <Grid Grid.Row="4">
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
 
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Grid.Row="9"
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Grid.Row="9"
 								               Grid.Column="4"
 								               Grid.ColumnSpan="4"
 								               Width="auto"
 								               Margin="40,0,0,0"
 								               HorizontalAlignment="Left"
 								               Content="Lookup" />
-                                            <Label Grid.Row="8"
+                                        <Label Grid.Row="8"
 								               Grid.Column="3"
 								               Width="auto"
 								               HorizontalAlignment="Left"
 								               Content="Paper" />
-                                            <Label Grid.Row="8"
+                                        <Label Grid.Row="8"
 								               Grid.Column="4"
 								               Width="auto"
 								               HorizontalAlignment="Left"
 								               Content="Color" />
-                                            <Label Grid.Row="8"
+                                        <Label Grid.Row="8"
 								               Grid.Column="5"
 								               Width="auto"
 								               HorizontalAlignment="Left"
 								               Content="Type" />
-                                            <Label Grid.Row="8"
+                                        <Label Grid.Row="8"
 								               Grid.Column="6"
 								               Width="auto"
 								               HorizontalAlignment="Left"
 								               Content="Basis" />
-                                            <Label Grid.Row="8"
+                                        <Label Grid.Row="8"
 								               Grid.Column="7"
 								               Width="auto"
 								               HorizontalAlignment="Left"
 								               Content="Width"
 								               FontWeight="Bold"
 								               Foreground="Red" />
-                                        </StackPanel>
-
-                                    </Grid>
+                                    </StackPanel>
 
                                 </Grid>
 
-                            </Border>
+                            </Grid>
 
-                            <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
+                        </Border>
 
-                            <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="90" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                        <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
+                        <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="90" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
 
-                                <DataGrid.Columns>
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
-                                    <DataGridTextColumn Header="Description" Width="250" Binding="{Binding Description}" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Left" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                            <DataGrid.Columns>
 
-                                    <!-- If we need to display these two columns, add them to the PAPERS object around line 1105
+                                <DataGridTextColumn Header="Description" Width="250" Binding="{Binding Description}" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Left" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!-- If we need to display these two columns, add them to the PAPERS object around line 1105
                                     (Class Paper is defined around line 1712)
                                     
                                     <DataGridTextColumn 
@@ -1532,398 +1529,398 @@
                                         </DataGridTextColumn.Header>
                                     </DataGridTextColumn>-->
 
-                                    <DataGridTextColumn Header="Lbs per M"   Width="80"  Binding="{Binding LbsPerThousand, StringFormat=N2}" FontSize="11" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                                <DataGridTextColumn Header="Lbs per M"   Width="80"  Binding="{Binding LbsPerThousand, StringFormat=N2}" FontSize="11" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header=" Extended" Width="80" Binding="{Binding Extended, StringFormat=C}" FontSize="11" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                                <Setter Property="FontSize"              Value="11" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                                <DataGridTextColumn Header=" Extended" Width="80" Binding="{Binding Extended, StringFormat=C}" FontSize="11" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                            <Setter Property="FontSize"              Value="11" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                                </DataGrid.Columns>
+                            </DataGrid.Columns>
 
-                            </DataGrid>
+                        </DataGrid>
 
-                            <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
+                        <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                            <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="220" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontWeight="Bold" FontSize="11">
+                        <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="220" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontWeight="Bold" FontSize="11">
 
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
-                                <DataGrid.Columns>
+                            <DataGrid.Columns>
 
-                                    <DataGridTextColumn Header="Feature" Width="150"     Binding="{Binding Category}" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Left" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Left" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Cost"  Width="70"        Binding="{Binding Amount,       StringFormat=C}"  >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11"     />
-                                                <Setter Property="Foreground"            Value="Blue"  />
-                                                <Setter Property="FontWeight"            Value="Bold"   />
-                                                <Setter Property="HorizontalAlignment"   Value="Right"  />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Runs"  Width="70"        Binding="{Binding NumRuns,      StringFormat=N0}" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Flat Charge" Width="100" Binding="{Binding TotalFlatChg, StringFormat=C2}" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Run Charge"  Width="100" Binding="{Binding PerThousandChg, StringFormat=C2}" >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Press Slowdown" Width="130" Binding="{Binding Slowdown_Percent, StringFormat=N2}"   >
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                                <DataGridTextColumn Header="Feature" Width="150"     Binding="{Binding Category}" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Left" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Left" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Cost"  Width="70"        Binding="{Binding Amount,       StringFormat=C}"  >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11"     />
+                                            <Setter Property="Foreground"            Value="Blue"  />
+                                            <Setter Property="FontWeight"            Value="Bold"   />
+                                            <Setter Property="HorizontalAlignment"   Value="Right"  />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Runs"  Width="70"        Binding="{Binding NumRuns,      StringFormat=N0}" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Flat Charge" Width="100" Binding="{Binding TotalFlatChg, StringFormat=C2}" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Run Charge"  Width="100" Binding="{Binding PerThousandChg, StringFormat=C2}" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Press Slowdown" Width="130" Binding="{Binding Slowdown_Percent, StringFormat=N2}"   >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment"   Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="Coll. Slowdown"  Width="130" >
-                                        <!--Not sure we collect this value-->
-                                        <DataGridTextColumn.HeaderStyle>
-                                            <Style TargetType="DataGridColumnHeader">
-                                                <Setter Property="FontSize"              Value="11" />
-                                                <Setter Property="Foreground"            Value="Blue" />
-                                                <Setter Property="FontWeight"            Value="Bold" />
-                                                <Setter Property="HorizontalAlignment"   Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.HeaderStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                                <DataGridTextColumn Header="Coll. Slowdown"  Width="130" >
+                                    <!--Not sure we collect this value-->
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize"              Value="11" />
+                                            <Setter Property="Foreground"            Value="Blue" />
+                                            <Setter Property="FontWeight"            Value="Bold" />
+                                            <Setter Property="HorizontalAlignment"   Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                                </DataGrid.Columns>
+                            </DataGrid.Columns>
 
-                            </DataGrid>
+                        </DataGrid>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" >
-                                <Label  Content="Labor"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,2,0,0"    Padding="0" FontWeight="Bold" />
-                                <Button Content="Labor Calc" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0"   Padding="5 3" Height="24" Width="67" Visibility="Hidden" x:Name="btnLaborCalc" Click="btnLaborCalc_Click"  />
-                                <Label  Content="[SETUP]"    VerticalAlignment="Top" Margin="70,15,0,0" Padding="0" FontSize="12" />
-                                <Label  Content="[RUN]"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="155,15,0,0" Padding="0" FontSize="11" />
-                                <Label  Content="Material"   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="135,2,0,0"    Padding="0" FontWeight="Bold" />
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" >
+                            <Label  Content="Labor"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,2,0,0"    Padding="0" FontWeight="Bold" />
+                            <Button Content="Labor Calc" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0"   Padding="5 3" Height="24" Width="67" Visibility="Hidden" x:Name="btnLaborCalc" Click="btnLaborCalc_Click"  />
+                            <Label  Content="[SETUP]"    VerticalAlignment="Top" Margin="70,15,0,0" Padding="0" FontSize="12" />
+                            <Label  Content="[RUN]"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="155,15,0,0" Padding="0" FontSize="11" />
+                            <Label  Content="Material"   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="135,2,0,0"    Padding="0" FontWeight="Bold" />
+                        </StackPanel>
 
-                            <Grid Grid.Row="3" Height="150" Margin="10 30 0 0" Grid.ColumnSpan="3" >
+                        <Grid Grid.Row="3" Height="150" Margin="10 30 0 0" Grid.ColumnSpan="3" >
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="200"/>
-                                </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="Department" Padding="10 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="0" Foreground="Blue" />
-                                <TextBlock Text="Setup Time" Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="1" Foreground="Blue" />
-                                <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="2" Foreground="Blue"  />
-                                <TextBlock Text="Time"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="3" Foreground="Blue"  />
-                                <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="4" Foreground="Blue"  />
-                                <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="5" Foreground="Blue"  />
+                            <TextBlock Text="Department" Padding="10 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="0" Foreground="Blue" />
+                            <TextBlock Text="Setup Time" Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="1" Foreground="Blue" />
+                            <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="2" Foreground="Blue"  />
+                            <TextBlock Text="Time"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="3" Foreground="Blue"  />
+                            <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="4" Foreground="Blue"  />
+                            <TextBlock Text="Cost"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="5" Foreground="Blue"  />
 
-                                <TextBlock Text="  Press"    Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="1" Width="60" Foreground="Blue" />
-                                <TextBlock Text="  Collator" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="2" Width="60" Foreground="Blue" />
-                                <TextBlock Text="  Bindery"  Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="3" Width="60" Foreground="Blue" />
-                                <TextBlock Text="  PrePress" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="4" Width="65" Foreground="Blue" />
-                                <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="5" Width="60" Foreground="Blue" />
-                                <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6" Width="65" Foreground="Blue" />
+                            <TextBlock Text="  Press"    Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="1" Width="60" Foreground="Blue" />
+                            <TextBlock Text="  Collator" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="2" Width="60" Foreground="Blue" />
+                            <TextBlock Text="  Bindery"  Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="3" Width="60" Foreground="Blue" />
+                            <TextBlock Text="  PrePress" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="4" Width="65" Foreground="Blue" />
+                            <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="5" Width="60" Foreground="Blue" />
+                            <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6" Width="65" Foreground="Blue" />
 
-                                <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="1" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="1" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="2" Width="60" 
                                          FontSize="12" Height="17" VerticalAlignment="Top" />
-                                <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="1" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="2" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                                <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="5" Width="90" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="5" Width="90" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="5" Width="90" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="5" Width="90" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding OEMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding OEMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="5" Width="90" 
                                          FontSize="12" />
 
-                                <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="5" Width="90" 
                                          FontSize="12" />
 
-                            </Grid>
-
-                            <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
-                                <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
-                                <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
-                            </StackPanel>
-
                         </Grid>
 
-                        <!--</Viewbox>-->
+                        <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
+                            <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
+                            <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
+                        </StackPanel>
 
-                    </TabItem>
+                    </Grid>
 
-                    <TabItem x:Name="Page5" VerticalAlignment="Top"
+                    <!--</Viewbox>-->
+
+                </TabItem>
+
+                <TabItem x:Name="Page5" VerticalAlignment="Top"
                          Header="  Page _5  " Height="24" IsEnabled="False" FontSize="16" >
 
-                        <!--<Viewbox Height="660" Width="800" VerticalAlignment="Top">-->
+                    <!--<Viewbox Height="660" Width="800" VerticalAlignment="Top">-->
 
-                        <Grid Height="650" Width="800" VerticalAlignment="Top" Margin="0 10 0 0">
+                    <Grid Height="650" Width="800" VerticalAlignment="Top" Margin="0 10 0 0">
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="155" />
-                                <!--Quote Summary-->
-                                <RowDefinition Height="40"  />
-                                <!--Spacer-->
-                                <RowDefinition Height="120"  />
-                                <!--Pricing Summary-->
-                                <RowDefinition Height="30"  />
-                                <!--Spacer-->
-                                <RowDefinition Height="100" />
-                                <!--Other information-->
-                                <RowDefinition   />
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="155" />
+                            <!--Quote Summary-->
+                            <RowDefinition Height="40"  />
+                            <!--Spacer-->
+                            <RowDefinition Height="120"  />
+                            <!--Pricing Summary-->
+                            <RowDefinition Height="30"  />
+                            <!--Spacer-->
+                            <RowDefinition Height="100" />
+                            <!--Other information-->
+                            <RowDefinition   />
+                        </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" >
-                                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                    <Label Content="ESTIMATED PRODUCTION ORDER FOR: " />
-                                    <TextBlock Text="{Binding Customer}" Width="248" VerticalAlignment="Center" />
-                                    <Label Content="ESTIMATE #:" Width="125" />
-                                    <TextBlock Text="{Binding QUOTE_NUM}" VerticalAlignment="Center" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                    <Label Content="ACCOUNT #: " />
-                                    <TextBlock Text="{Binding CUST_NUMB}" Width="435" VerticalAlignment="Center" />
-                                    <Label Content="ESTIMATE DATE:" Width="125" />
-                                    <TextBlock Text="{Binding Date}" VerticalAlignment="Center" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                    <Label Content="PHONE #: " />
-                                    <TextBlock Text="{Binding Phone}" Width="166" VerticalAlignment="Center"  />
-                                    <Label Content="CONTACT: " />
-                                    <TextBlock Text="{Binding ContactName}" Width="200" VerticalAlignment="Center"  />
-                                    <Label Content="PRINT DATE: " Width="125"/>
-                                    <TextBlock Text="{Binding PrintDate}" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                    <Label Content="SALES REP: " />
-                                    <TextBlock Text="{Binding SalesRep}" Width="448" />
-                                    <Label Content="STD:" Width="125" />
-                                    <TextBlock Text="{Binding Standard}" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                    <Label Content="DESCRIPTION: " />
-                                    <TextBlock Text="{Binding Desc}" Width="425" />
-                                    <Label Content="ESTIMATOR:" Width="125" />
-                                    <TextBlock Text="{Binding Estimator}" />
-                                </StackPanel>
-
+                        <StackPanel Grid.Row="0" >
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                                <Label Content="ESTIMATED PRODUCTION ORDER FOR: " />
+                                <TextBlock Text="{Binding Customer}" Width="248" VerticalAlignment="Center" />
+                                <Label Content="ESTIMATE #:" Width="125" />
+                                <TextBlock Text="{Binding QUOTE_NUM}" VerticalAlignment="Center" />
                             </StackPanel>
 
-                            <StackPanel Grid.Row="2" x:Name="CalcPanel" Visibility="Hidden" >
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Slowdown %: " Width="120" />
-                                    <TextBlock Text="{Binding SlowDownPct}" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Hours: " Width="120" />
-                                    <TextBlock Text="{Binding Hrs, StringFormat=N1}" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Parts: " Width="120" />
-                                    <TextBlock Text="{Binding PARTS}" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Dollars per Hr: " Width="120" />
-                                    <TextBlock Text="{Binding DollarsPerHr, StringFormat=C}" />
-                                </StackPanel>
-
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                                <Label Content="ACCOUNT #: " />
+                                <TextBlock Text="{Binding CUST_NUMB}" Width="435" VerticalAlignment="Center" />
+                                <Label Content="ESTIMATE DATE:" Width="125" />
+                                <TextBlock Text="{Binding Date}" VerticalAlignment="Center" />
                             </StackPanel>
 
-                        </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                                <Label Content="PHONE #: " />
+                                <TextBlock Text="{Binding Phone}" Width="166" VerticalAlignment="Center"  />
+                                <Label Content="CONTACT: " />
+                                <TextBlock Text="{Binding ContactName}" Width="200" VerticalAlignment="Center"  />
+                                <Label Content="PRINT DATE: " Width="125"/>
+                                <TextBlock Text="{Binding PrintDate}" />
+                            </StackPanel>
 
-                        <!--</Viewbox>-->
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                                <Label Content="SALES REP: " />
+                                <TextBlock Text="{Binding SalesRep}" Width="448" />
+                                <Label Content="STD:" Width="125" />
+                                <TextBlock Text="{Binding Standard}" />
+                            </StackPanel>
 
-                    </TabItem>
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                                <Label Content="DESCRIPTION: " />
+                                <TextBlock Text="{Binding Desc}" Width="425" />
+                                <Label Content="ESTIMATOR:" Width="125" />
+                                <TextBlock Text="{Binding Estimator}" />
+                            </StackPanel>
 
-                </TabControl>
+                        </StackPanel>
 
-            </Grid>
+                        <StackPanel Grid.Row="2" x:Name="CalcPanel" Visibility="Hidden" >
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Slowdown %: " Width="120" />
+                                <TextBlock Text="{Binding SlowDownPct}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Hours: " Width="120" />
+                                <TextBlock Text="{Binding Hrs, StringFormat=N1}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Parts: " Width="120" />
+                                <TextBlock Text="{Binding PARTS}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Dollars per Hr: " Width="120" />
+                                <TextBlock Text="{Binding DollarsPerHr, StringFormat=C}" />
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                    <!--</Viewbox>-->
+
+                </TabItem>
+
+            </TabControl>
+
+        </Grid>
 
     </Viewbox>
 

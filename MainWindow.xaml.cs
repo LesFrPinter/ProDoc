@@ -1,7 +1,5 @@
 ﻿using ProDocEstimate.Views;
 using System;
-using System.Reflection;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -29,15 +27,20 @@ namespace ProDocEstimate
             double ScreenWidth = SystemParameters.VirtualScreenWidth;
             double ScreenHeight = SystemParameters.VirtualScreenHeight;
 
-            if (ScreenWidth < 1200) FeatureZoom = 0.1F;
-            else if (ScreenWidth >= 1200 && ScreenWidth < 1441) { FeatureZoom = 0.2F; }
-            else FeatureZoom = 0.2F;    // was 0.3F
+            FeatureZoom = 0.0F;
+            if (ScreenWidth < 1200) { FeatureZoom = 0.1F; }
+            else
+            if (ScreenWidth >= 1200 && ScreenWidth < 1441) { FeatureZoom = 0.2F; }
+            else
+            { FeatureZoom = 0.3F; }
+
+            FeatureZoom = 0.0F; // don't zoom until you have this figured out
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);
             this.Top = 10;
 
-            Title =   " Screen (" + ScreenWidth.ToString() + ", "                     + ScreenHeight.ToString()
+            Title =   " Screen (" + ScreenWidth.ToString() + ", "                      + ScreenHeight.ToString()
                   + ")  Window ( " + this.Width.ToString("N0").Replace(",", "") + ", " + this.Height.ToString("N0").Replace(",", "") + ") "
                   + "   Zoom = " + FeatureZoom.ToString("N1");
 
@@ -90,10 +93,6 @@ namespace ProDocEstimate
 		private void mnuTest_Click(object sender, RoutedEventArgs e)
 		{
     }
-
-		//private void mnuPressStandards_Click(object sender, RoutedEventArgs e) {
-		//	Press_Standards ps = new Press_Standards(); ps.ShowDialog();
-  //  }
 
         private void mnuConverter_Click(object sender, RoutedEventArgs e)
         {
@@ -166,5 +165,9 @@ namespace ProDocEstimate
             Editors.Cases cases = new Editors.Cases(); cases.ShowDialog();
         }
 
+        private void mnuShipping_Click(object sender, RoutedEventArgs e)
+        {
+            Editors.ShippingTableEditor shipping = new Editors.ShippingTableEditor(); shipping.ShowDialog();
+        }
     }
 }

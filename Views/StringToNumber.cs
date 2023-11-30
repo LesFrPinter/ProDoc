@@ -3,8 +3,9 @@
 namespace ProDocEstimate.Views
 {
     class StringToNumber {
+        //TODO: Deal with RollWidth strings that have additional text after the fraction
         public float Convert(string s)
-        {   if(s.Length== 0) return 0;      // See if this fixes the problem
+        {   if(s.Length== 0) return 0;
             float result = 0.0F; float IntPart = 0.0F; float FracPart = 0.0F;
 
             int blankloc = s.IndexOf(' ');

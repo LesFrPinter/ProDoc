@@ -7,6 +7,7 @@
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        WindowStyle="None"
         Loaded="OnLoad"
         Title="Ink Colors" Height="485" Width="840">
 

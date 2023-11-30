@@ -3,12 +3,10 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Telerik.Windows.Controls;
 
 namespace ProDocEstimate.Views
 {
@@ -344,45 +342,15 @@ namespace ProDocEstimate.Views
 
             if (e.OldValue == null && e.NewValue == 0) return; // Don't run the following code if the parameter value didn't change
 
-            // Program blew up because Backer was null. Will this fix it?
-            if(Backer==null) return;
-
-            BackerCount = (Backer.ToString().Length > 0) ? 1 : 0;
-            BackerCount = 0;        // Already added to the appropriate counter...
-
-            //switch (Backer)
-            //{
-            //    case "Standard": Std += 1;break;
-            //    case "Standard Watermark": Std += 1; break;
-            //    case "Standard PMS": Std += 1; break;
-            //    case "Standard ": Std += 1; break;
-            //}
+            BackerCount = 0;
+            if (Backer is not null) { BackerCount = (Backer.ToString().Length > 0) ? 1 : 0; BackerCount = 0; } // Already added to the appropriate counter...
 
             TotalCount  = Std + BlackStd + PMS + Desens + Split + Thermo + FourColor + WaterMark + FluorSel;
-            if (TotalCount > MaxColors) 
-            { 
-                System.Windows.MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString());
-                string s = sender.ToString(); // No longer used...
-                string n = (sender as RadNumericUpDown).Name;
 
-                switch (n)
-                {
-                    case "Std1": Std = Std - 1; break;
-                    case "Blk1": BlackStd = BlackStd - 1; break;
-                    case "Pms1": PMS = PMS - 1; break;
-                    case "Des1": Desens = Desens - 1; break;
-                    case "Spl1": Split = Split - 1; break;
-                    case "The1": Thermo = Thermo - 1; break;
-                    case "Fou1": FourColor = FourColor - 1; break;
-                    case "Flo1": FluorSel = FluorSel - 1; break;
-                }
-                return; 
-            }
+            if (TotalCount > MaxColors) { System.Windows.MessageBox.Show("Total number of colors plus backer can't exceed " + MaxColors.ToString()); return; }
 
             GetCharges();
             CalcTotal();
-
-            // Calculate the Cost per pound using the new Ink_Cost table and store it in Press_Materials for later use in the Quotation calculation
 
             string cmd = ""; string root = "";
             if (PressSize.ToString().Contains("SP"))
@@ -515,6 +483,7 @@ namespace ProDocEstimate.Views
 
             // Adjust the Base Plate Charge to reflect the use of a backer:
             // Load backer ink cost if there's a Backer record
+
             cmd = $"SELECT BACKER_INK_COST FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND F_TYPE = '{Backer}'";
             da = new SqlDataAdapter(cmd, conn);  dt = new DataTable();  da.Fill(dt);
             float Backer_Ink_Cost = 0.0F;

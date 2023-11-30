@@ -57,6 +57,9 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da2 = new SqlDataAdapter(cmd, conn); DataTable dt2 = new DataTable(); da2.Fill(dt2); DataView dv2 = dt2.DefaultView;
             StandardCharge  = float.Parse(dv2[0]["StandardCharge"].ToString());
             OneShipment     = float.Parse(dv2[0]["IncrementalCharge"].ToString());
+            string tooltip = OneShipment.ToString("C") + " per shipment";
+            updownShipments.ToolTip = $"{tooltip}";
+            txtAddlCharge.ToolTip = $"{tooltip}";
 
             cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Shipping'";
             conn = new SqlConnection(ConnectionString); conn.Open();

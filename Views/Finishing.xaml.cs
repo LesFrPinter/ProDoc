@@ -1,9 +1,7 @@
-﻿using SharpDX;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -128,7 +126,7 @@ namespace ProDocEstimate.Views
 
             LoadDropDowns();
             LoadData();
-            LoadBaseValues();   // This should initially use any saved dropdown combobox values for the five parameters
+            LoadBaseValues();
             CalculateBaseFinishCharge();
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
@@ -139,8 +137,12 @@ namespace ProDocEstimate.Views
             LinearInchCostCello = 0; LinearInchCostBook = 0;
             conn = conn ?? new(ConnectionString);
 
+            StringToNumber sTOn = new StringToNumber();
+            float rw = sTOn.Convert(RollWidth);
+            string srw = rw.ToString();
+
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Bindery_Materials] WHERE Category = 'Finishing' AND F_TYPE = 'Cello' "
-                       + $" AND {RollWidth} BETWEEN MinRollWidth AND MaxRollWidth";
+                       + $" AND {srw} BETWEEN MinRollWidth AND MaxRollWidth";
             SqlDataAdapter da = new(cmd, conn); DataTable dt = new(); dt.Rows.Clear(); da.Fill(dt); DataView dv2 = dt.DefaultView;
             if (Cello.ToString().TrimEnd().Length > 0) { LinearInchCostCello = float.Parse(dv2[0]["LinearInchCost"].ToString()); }
 
@@ -165,7 +167,6 @@ namespace ProDocEstimate.Views
 
         private void LoadDropDowns()
         {
-            M1.Items.Add(""); M2.Items.Add(""); M3.Items.Add(""); M4.Items.Add(""); M5.Items.Add("");   // allow them to leave any selection blank
 
             // Make the '4-5' entry the last one in the list. Sorting in alphabetical order doesn't work here.
             string str = $"SELECT F_TYPE, CONVERT(VARCHAR(10),CONVERT(INT,NUMBER)) AS NUMBER FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'FINISHING' AND PRESS_SIZE = '{PressSize}' AND NUMBER NOT LIKE '%-%'"
@@ -176,7 +177,10 @@ namespace ProDocEstimate.Views
             SqlDataAdapter da = new(str, conn); dt = new(); da.Fill(dt);
             dv = dt.DefaultView;
 
+            M1.Items.Clear(); M2.Items.Clear(); M3.Items.Clear(); M4.Items.Clear(); M5.Items.Clear();
             //NOTE: In order to let the user blank a value that was previously entered, " " is the first item in each ItemsList in each of the five ComboBoxes.
+            M1.Items.Add(""); M2.Items.Add(""); M3.Items.Add(""); M4.Items.Add(""); M5.Items.Add("");   // allows them to leave any selection blank
+
             dv.RowFilter = "F_TYPE='BOOK'";         for (int i = 0; i < dv.Count; i++) { M1.Items.Add(dv[i]["number"].ToString()); }
             dv.RowFilter = "F_TYPE='CELLO'";        for (int i = 0; i < dv.Count; i++) { M2.Items.Add(dv[i]["number"].ToString()); }
             dv.RowFilter = "F_TYPE='DRILL HOLES'";  for (int i = 0; i < dv.Count; i++) { M3.Items.Add(dv[i]["number"].ToString()); }

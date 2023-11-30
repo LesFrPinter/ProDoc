@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace ProDocEstimate.Editors
 {
-    public partial class MasterInventory : Window, INotifyPropertyChanged
+    public partial class ShippingTableEditor : Window, INotifyPropertyChanged
     {
         #region Properties
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
@@ -21,9 +21,8 @@ namespace ProDocEstimate.Editors
         public DataTable dt;
         public DataView dv;
 
-        private string matchThis; public string MatchThis { get { return matchThis; } set { matchThis = value; OnPropertyChanged(); } }
-        private string matchIT;   public string MatchIT   { get { return matchIT;   } set { matchIT   = value; OnPropertyChanged(); } }
-        private string rowCount;  public string RowCount  { get { return rowCount;  } set { rowCount  = value; OnPropertyChanged(); } }
+        private string preEditCellValue; public string PreEditCellValue { get { return preEditCellValue; } set { preEditCellValue = value; OnPropertyChanged(); } }
+        private DataGridCellInfo activeCellAtEdit { get; set; }
 
         #endregion
 
@@ -31,37 +30,53 @@ namespace ProDocEstimate.Editors
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
-        public MasterInventory()
+        public ShippingTableEditor()
         {
             InitializeComponent();
-            string cmd = "SELECT * FROM [ProVisionDev].[dbo].[MasterInventory] ORDER BY Description";
+            string cmd = "SELECT * FROM [ESTIMATING].[dbo].[Shipping] ORDER BY ID";
 
             SqlConnection conn = new SqlConnection(ConnectionString);
             SqlDataAdapter da = new SqlDataAdapter(cmd, conn);
-            dt = new DataTable("Details");
+            dt = new DataTable("Shipping");
             da.Fill(dt);
             dv = dt.DefaultView;
             grdData.ItemsSource = dv;
             DataContext = this;
 
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+
+        }
+
+        public void OnLoad(object sender, RoutedEventArgs e)
+        {
+            grdData.Columns[0].Visibility = Visibility.Collapsed;
+        }
+
+        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void grdData_CellEditEnding(object sender, System.Windows.Controls.DataGridCellEditEndingEventArgs e)
         {
+
             SqlConnection conn = new SqlConnection(ConnectionString);
             var selectedRow = grdData.SelectedItem as DataRowView;
             string ID = selectedRow[0].ToString();
             TextBox t = e.EditingElement as TextBox;
             string editedCellValue = t.Text.ToString();
+
+            string s = activeCellAtEdit.ToString();
+            //            if ( == editedCellValue)
+
             string colName = e.Column.SortMemberPath.ToString();
 
             // Put the new value in quotes if it contains non-numeric characters:
             string cmd = ""; string regExPattern = @"^[0-9]+$"; Regex pattern = new Regex(regExPattern);
             if (pattern.IsMatch(editedCellValue))
-            { cmd = $"UPDATE [ESTIMATING].[dbo].[MasterInventory] set {colName} =  {editedCellValue}  WHERE Description = '{ID}'"; }
+            { cmd = $"UPDATE [ESTIMATING].[dbo].[Shipping] set {colName} =  {editedCellValue}  WHERE ID = '{ID}'"; }
             else
-            { cmd = $"UPDATE [ESTIMATING].[dbo].[MasterInventory] set {colName} = '{editedCellValue}' WHERE Description = '{ID}'"; };
+            { cmd = $"UPDATE [ESTIMATING].[dbo].[Shipping] set {colName} = '{editedCellValue}' WHERE ID = '{ID}'"; };
 
             if (conn.State != ConnectionState.Open) { conn.Open(); }
             SqlCommand cmd2 = new SqlCommand(cmd, conn);
@@ -79,23 +94,9 @@ namespace ProDocEstimate.Editors
             Close();
         }
 
-        private void MatchDesc_LostFocus(object sender, RoutedEventArgs e)
+        private void grdData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
-            dv.RowFilter = $"Description LIKE '*{MatchThis}*'";
-            RowCount = dv.Count.ToString() + " matches";
+            activeCellAtEdit = grdData.CurrentCell;
         }
-
-        private void btnClear_Click(object sender, RoutedEventArgs e)
-        {
-            dv.RowFilter = "";
-            MatchThis = "";
-            RowCount = dv.Count.ToString() + " matches";
-        }
-
-        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
     }
 }

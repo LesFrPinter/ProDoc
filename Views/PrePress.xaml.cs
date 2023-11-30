@@ -1,15 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Xceed.Wpf.Toolkit.Panels;
 
 namespace ProDocEstimate.Views
 {

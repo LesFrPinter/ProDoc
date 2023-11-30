@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
-        Title="Shipping" Height="450" Width="800">
+        Title="Shipping" Height="475" Width="800">
 
     <Window.Resources>
         <Style TargetType="Label">
@@ -65,18 +65,21 @@
             </Grid.ColumnDefinitions>
 
             <Label   Grid.Row="0"  Content="Base charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StandardCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StandardCharge, StringFormat=C}" Margin="10 0" Width="60" IsEnabled="False"
+                     VerticalAlignment="Center" HorizontalContentAlignment="Right" />
 
             <Label   Grid.Row="1" Content="Additional shipments" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
             <telerik:RadNumericUpDown 
-                     Grid.Row="1" Grid.Column="1" Value="{Binding NumDrops, StringFormat=N}" 
+                     x:Name="updownShipments"
+                     Grid.Row="1" Grid.Column="1" 
+                     Value="{Binding NumDrops, StringFormat=N}" 
                      NumberDecimalDigits="0" Height="24"
                      ValueChanged="RadNumericUpDown_ValueChanged"
-                     Width="60" 
+                     Width="60" Minimum="0"
                      HorizontalContentAlignment="Right" />
 
             <Label   Grid.Row="2" Content="Total additional charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
-            <TextBox Grid.Row="2" Grid.Column ="1" Text="{Binding AddlCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
+            <TextBox x:Name="txtAddlCharge" Grid.Row="2" Grid.Column ="1" Text="{Binding AddlCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
 
         </Grid>
 

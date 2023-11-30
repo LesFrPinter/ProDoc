@@ -1,12 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {

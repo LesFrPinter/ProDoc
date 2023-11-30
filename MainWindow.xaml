@@ -63,6 +63,7 @@
                     <MenuItem x:Name="mnuPressColors"  Header="Press Size Colors"       Click="mnuPressColors_Click"  />
                     <MenuItem x:Name="mnuInventory"    Header="Master Inventory"        Click="mnuInventory_Click"    />
                     <MenuItem x:Name="mnuCases"        Header="Cases"                   Click="mnuCases_Click"        />
+                    <MenuItem x:Name="mnuShipping"     Header="Shipping"                Click="mnuShipping_Click"     />
                     <MenuItem x:Name="mnuAddTest"      Header="Add a Row Test"          Click="mnuAddTest_Click"      />
                 </MenuItem>
             </Menu>
