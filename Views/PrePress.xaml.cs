@@ -181,8 +181,7 @@ namespace ProDocEstimate.Views
             PlateChg = I2;      // Plate Changes
 
             //TODO add 1 for the backer...
-            PlateChg += 1;
-
+            // PlateChg += 1;    // NO! Why was this here?
             // Load percentages and recalculate all displayed property values
 
             float F1 = 0.0F;
@@ -333,6 +332,21 @@ namespace ProDocEstimate.Views
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
                 + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
 
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            cmd =  "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
+                + $" SET PressSlowdown      = {PressSlowdown},    "
+                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
+                + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     Press              = {PressSetup},       "
+                + $"     Converting         = {CollatorSetup},    "
+                + $"     Finishing          = {BinderySetup}      "
+                + $" WHERE Quote_Num = '{QuoteNum}' "
+                +  "   AND CATEGORY  = 'PrePress'" ;
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

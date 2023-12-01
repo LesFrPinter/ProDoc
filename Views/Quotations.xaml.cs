@@ -30,6 +30,17 @@ namespace ProDocEstimate
 
         private DataView dvFeatr; public DataView DVFeat { get { return dvFeatr; } set { dvFeatr = value; OnPropertyChanged(); } }
 
+        // new properties for the table on page 4
+        //private float featureCost;        public float FeatureCost          { get { return featureCost;         } set { featureCost        = value; OnPropertyChanged(); } }
+        //private float prePressCost;       public float PrePressCost         { get { return prePressCost;        } set { prePressCost       = value; OnPropertyChanged(); } }
+        //private float pressCost;          public float PressCost            { get { return pressCost;           } set { pressCost          = value; OnPropertyChanged(); } }
+        //private float convertingCost;     public float ConvertingCost       { get { return convertingCost;      } set { convertingCost     = value; OnPropertyChanged(); } }
+        //private float finishingCost;      public float FinishingCost        { get { return finishingCost;       } set { finishingCost      = value; OnPropertyChanged(); } }
+
+        private float pressSlowdown;    public float PressSlowdown    { get { return pressSlowdown;    } set { pressSlowdown    = value; OnPropertyChanged(); } }
+        private float collatorSlowdown; public float CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
+        private float binderySlowdown;  public float BinderySlowdown  { get { return binderySlowdown;  } set { binderySlowdown  = value; OnPropertyChanged(); } }
+
         private string noChgMsg; public string NoChgMsg { get { return noChgMsg; } set { noChgMsg = value; OnPropertyChanged(); } }
 
         private string numWidePress = "1"; public string NumWidePress { get { return numWidePress; } set { numWidePress = value; OnPropertyChanged(); } }
@@ -38,12 +49,12 @@ namespace ProDocEstimate
         private float finishMaterial; public float FinishMaterial { get { return finishMaterial; } set { finishMaterial = value; OnPropertyChanged(); } }
         private float prePressPerMilChg; public float PrePressPerMilChg { get { return prePressPerMilChg; } set { prePressPerMilChg = value; OnPropertyChanged(); } }
 
-        private float pressMaterialCost; public float PressMaterialCost { get { return pressMaterialCost; } set { pressMaterialCost = value; OnPropertyChanged(); } }
-        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
-        private float binderyMaterialCost; public float BinderyMaterialCost { get { return binderyMaterialCost; } set { binderyMaterialCost = value; OnPropertyChanged(); } }
-        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost; } set { prePressMaterialCost = value; OnPropertyChanged(); } }
-        private float oeMaterialCost; public float OEMaterialCost { get { return oeMaterialCost; } set { oeMaterialCost = value; OnPropertyChanged(); } }
-        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost; } set { shippingMaterialCost = value; OnPropertyChanged(); } }
+        private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;     } set { pressMaterialCost    = value; OnPropertyChanged(); } }
+        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost;  } set { collatorMaterialCost = value; OnPropertyChanged(); } }
+        private float binderyMaterialCost;  public float BinderyMaterialCost  { get { return binderyMaterialCost;   } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
+        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost;  } set { prePressMaterialCost = value; OnPropertyChanged(); } }
+        private float oeMaterialCost;       public float OEMaterialCost       { get { return oeMaterialCost;        } set { oeMaterialCost       = value; OnPropertyChanged(); } }
+        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost;  } set { shippingMaterialCost = value; OnPropertyChanged(); } }
 
         private bool already; public bool Already { get { return already; } set { already = value; OnPropertyChanged(); } } // to exit infinite loop
         private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
@@ -311,7 +322,7 @@ namespace ProDocEstimate
 
         private void btnCopy_Click(object sender, RoutedEventArgs e)
         {
-            QuoteLookup ql = new();
+            QuoteLookup ql = new("");
             ql.ShowDialog();
             QUOTE_NUM = ql.SelQuote; ql.Close();
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
@@ -376,8 +387,9 @@ namespace ProDocEstimate
 
         private void GetQuote()
         {
-            SqlConnection cn = new(ConnectionString);
             if (QUOTE_NUM == null || QUOTE_NUM == "") QUOTE_NUM = txtQuoteNum.Text.ToString();
+
+            SqlConnection cn = new(ConnectionString);
             string str = "SELECT * FROM [ESTIMATING].[dbo].[QUOTES] WHERE QUOTE_NUM = " + QUOTE_NUM;
             SqlDataAdapter da = new(str, cn);
             DataSet ds = new();
@@ -1254,7 +1266,7 @@ namespace ProDocEstimate
 
                 case "PrePress":
                     {
-                        PrePress prepress = new PrePress(PRESSSIZE, QUOTE_NUM); prepress.ShowDialog();
+                        Views.PrePress prepress = new Views.PrePress(PRESSSIZE, QUOTE_NUM); prepress.ShowDialog();
                         break;
                     }
 
@@ -1286,7 +1298,7 @@ namespace ProDocEstimate
 
                 case "Cases":
                     {
-                        Cases cases = new Cases(QUOTE_NUM); cases.ShowDialog();
+                        Views.Cases cases = new Views.Cases(QUOTE_NUM); cases.ShowDialog();
                         break;
                     }
 
@@ -1461,14 +1473,14 @@ namespace ProDocEstimate
 
         private void btnAssignNewQuoteNum_Click(object sender, RoutedEventArgs e)
         {
-            QuoteLookup ql = new();
+            QuoteLookup ql = new("MakeCopy");
             ql.ShowDialog();
             QUOTE_NUM = ql.SelQuote; ql.Close();
 
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
 
             GetQuote();
-            NewQuote();
+//            NewQuote();
 
             txtQuoteNum.Focus();
             txtQuoteNum.Background = Brushes.Red;
@@ -1532,8 +1544,18 @@ namespace ProDocEstimate
             string cmd = "";
             //if(DVFeat==null || dgFeatures.ItemsSource==null)
             {
-                cmd = "SELECT Category, Amount, 0 as NumRuns, convert(float,round(TotalFlatChg,2)) AS TotalFlatChg, convert(float,PerThousandChg) AS PerThousandChg, Setup_Minutes, SlowDown_Percent "
-                    + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+                cmd =  "SELECT Category, "
+                    +  "Category, "
+                    +  "Cost, "
+                    +  "PrePress, "
+                    +  "Press, "
+                    +  "Converting, "
+                    +  "Finishing, "
+                    +  "PressSlowdown, "
+                    +  "ConvertingSlowdown, "
+                    +  "FinishingSlowdown "
+                    + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+
                 SqlConnection conn = new SqlConnection(ConnectionString);
                 da = new SqlDataAdapter(cmd, conn);
                 dt = new DataTable("Features");
@@ -1543,6 +1565,18 @@ namespace ProDocEstimate
                 dgFeatures.ItemsSource = null;
                 dgFeatures.Items.Clear();
                 dgFeatures.ItemsSource = DVFeat;
+            }
+
+            // Sum the columns' values into the cells at the bottom of page 4
+
+            PressSlowdown    = 0;
+            CollatorSlowdown = 0;
+            BinderySlowdown  = 0;
+            for(int i=0;i<DVFeat.Count;i++)
+            { 
+                PressSlowdown    += float.Parse(DVFeat[i]["PressSlowdown"].ToString());
+                CollatorSlowdown += float.Parse(DVFeat[i]["ConvertingSlowdown"].ToString());
+                BinderySlowdown  += float.Parse(DVFeat[i]["FinishingSlowdown"].ToString());
             }
 
             //-----------------------------------------------------
@@ -1601,19 +1635,28 @@ namespace ProDocEstimate
             //ALTER TABLE QUOTE_DETAILS ADD CONV_GLUE FLOAT NOT NULL DEFAULT 0
             //ALTER TABLE QUOTE_DETAILS ADD CONV_TAPE FLOAT NOT NULL DEFAULT 0
 
-            cmd = $"SELECT CONV_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'CONVERTING' AND F_TYPE = 'TRANSFER TAPE'"; // PRESS_SIZE doesn't matter
-            SqlDataAdapter da12 = new SqlDataAdapter(cmd, conn);
-            DataTable dt12 = new DataTable("conv"); da12.Fill(dt12);
-            DataView dvy = dt12.DefaultView;
-            float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());
+            CollatorMaterialCost = 0;
+            // TODO: Use the parameters passed from the QUOTE_DETAIL record to calulate CollatorMaterialCost
 
-            // THIS IS FOR TRANSFER TAPE:
-            StringToNumber sTOn = new StringToNumber();
-            float collCuts = sTOn.Convert(COLLATORCUT);
-            float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
-            CollatorMaterialCost = convmatl * LinearInches;
+            cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'CONVERTING'";
+            SqlDataAdapter da21 = new SqlDataAdapter(cmd, conn);
+            DataTable dt21 = new DataTable("conv"); da21.Fill(dt21);
+            if(dt21.Rows.Count>0)
+            {
+                cmd = $"SELECT CONV_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'CONVERTING' AND F_TYPE = 'TRANSFER TAPE'";
+                SqlDataAdapter da12 = new SqlDataAdapter(cmd, conn);
+                DataTable dt12 = new DataTable("conv"); da12.Fill(dt12);
+                DataView dvy = dt12.DefaultView;
+                float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());
 
-            InkCalc();
+                // THIS IS FOR TRANSFER TAPE:
+                StringToNumber sTOn = new StringToNumber();
+                float collCuts = sTOn.Convert(COLLATORCUT);
+                float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
+                CollatorMaterialCost = convmatl * LinearInches;
+
+                InkCalc();
+            }
 
         }
 
@@ -2360,4 +2403,4 @@ namespace ProDocEstimate
         }
 
     }
-}
+} 

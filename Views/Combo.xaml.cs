@@ -236,13 +236,14 @@ namespace ProDocEstimate.Views
 
             // Base Labor Charges
             // The next three calculations assume that the values from the FEATURES table are minutes
-            BasePressSetup       = int.Parse(dv[0]["PRESS_SETUP"].ToString());          // Minutes to add to the base setup times.
-            BaseCollatorSetup    = int.Parse(dv[0]["COLLATOR_SETUP"].ToString());       //              "
-            BaseBinderySetup     = int.Parse(dv[0]["BINDERY_SETUP"].ToString());        //              "
+            int i = 0;
+            i = 0; int.TryParse(dv[0]["PRESS_SETUP"].ToString(), out i); BasePressSetup = i;
+            i = 0; int.TryParse(dv[0]["COLLATOR_SETUP"].ToString(), out i); BaseCollatorSetup = i;
+            i = 0; int.TryParse(dv[0]["BINDERY_SETUP"].ToString(), out i); BaseBinderySetup = i;
 
-            BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"].ToString());       // Minutes to add to the base slowdown amounts.
-            BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"].ToString());    //              "
-            BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"].ToString());     //              "
+            i = 0; int.TryParse(dv[0]["PRESS_SLOWDOWN"].ToString(), out i); BasePressSlowdown = i;
+            i = 0; int.TryParse(dv[0]["COLLATOR_SLOWDOWN"].ToString(), out i); BaseCollatorSlowdown = i;
+            i = 0; int.TryParse(dv[0]["BINDERY_SLOWDOWN"].ToString(), out i); BaseBinderySlowdown = i;
         }
 
         private void LoadData()

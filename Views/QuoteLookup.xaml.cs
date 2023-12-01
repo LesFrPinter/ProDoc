@@ -15,9 +15,13 @@ namespace ProDocEstimate.Views
 
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? cn = new SqlConnection();
+        public SqlConnection? conn;
         public SqlDataAdapter? da;
+        public DataTable? dt;
+        public SqlCommand? scmd;
 
-        private string? quote_Num  = "";    public string?  Quote_Num   { get { return quote_Num = ""; } set { quote_Num  = value; OnPropertyChanged(); } }
+
+        private string? quote_Num  = "";    public string?  Quote_Num   { get { return quote_Num ;     } set { quote_Num  = value; OnPropertyChanged(); } }
         private string? selQuote   = "";    public string?  SelQuote    { get { return selQuote;       } set { selQuote   = value; OnPropertyChanged(); } }
         private string? cust_Name  = "";    public string?  Cust_Name   { get { return cust_Name;      } set { cust_Name  = value; OnPropertyChanged(); } }
         private string? cust_Num;           public string?  Cust_Num    { get { return cust_Num;       } set { cust_Num   = value; OnPropertyChanged(); } }
@@ -27,14 +31,31 @@ namespace ProDocEstimate.Views
         private bool    descending = false; public bool     Descending  { get { return descending;     } set { descending = value; OnPropertyChanged(); } }
         private bool    partial    = false; public bool     Partial     { get { return partial;        } set { partial    = value; OnPropertyChanged(); } }
 
-        public QuoteLookup() { InitializeComponent(); this.DataContext = this; }
+        public QuoteLookup(string? copy) 
+        {   InitializeComponent(); 
+            this.DataContext = this; 
+            if(copy.Length>0) IncrementQuoteNumber();
+        }
+
+        public void IncrementQuoteNumber()
+        {
+            conn = new SqlConnection(ConnectionString); conn.Open();
+            SqlCommand scmd = new SqlCommand();
+            scmd.Connection = conn;
+            scmd.CommandType = CommandType.Text;
+            scmd.CommandText = "SELECT MAX(QUOTE_NUM) FROM [ESTIMATING].[dbo].[QUOTES]";
+            string NextQuoteNum = (string)scmd.ExecuteScalar();
+            int nextNum = int.Parse(NextQuoteNum.ToString().TrimEnd());
+            nextNum += 1;
+            Quote_Num = nextNum.ToString();
+        }
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
             string cmd = "SELECT * FROM [ESTIMATING].[dbo].[QUOTES] "
                        + "    LEFT JOIN [ESTIMATING].[dbo].[CUSTOMER]"
                        + " ON QUOTES.CUST_NUM = CUSTOMER.CUST_NUMB"
-                       + " LEFT JOIN[ESTIMATING].[dbo].[CUSTOMER_CONTACT]"
+                       + "    LEFT JOIN [ESTIMATING].[dbo].[CUSTOMER_CONTACT]"
                        + " ON [ESTIMATING].[dbo].[CUSTOMER].CUST_NUMB " 
                        + "  = [ESTIMATING].[dbo].[CUSTOMER_CONTACT].CUST_NUMB";
 
@@ -42,14 +63,14 @@ namespace ProDocEstimate.Views
             {   if (Partial == true)
                 { cmd += " AND CUST_NAME LIKE '%" + txtCustName.Text.Trim() + "%'"; }
                 else
-                { cmd += " AND CUST_NAME LIKE '" + txtCustName.Text.Trim() + "%'"; }
-            };
+                { cmd += " AND CUST_NAME LIKE '"  + txtCustName.Text.Trim() + "%'"; }
+            }
             
-            if (txtQuoteNum.Text.Trim().Length > 0)
-            { cmd += " AND QUOTES.QUOTE_NUM = " + txtQuoteNum.Text.Trim(); }
-            else
-            if (txtCustNo.Text.Trim().Length > 0)
-            { cmd += " AND QUOTES.CUST_NUMB = " + txtCustNo.Text.Trim(); };
+            //if (txtQuoteNum.Text.Trim().Length > 0)
+            //{ cmd += " AND QUOTES.QUOTE_NUM = " + txtQuoteNum.Text.Trim(); }
+            //else
+            //if (txtCustNo.Text.Trim().Length > 0)
+            //{ cmd += " AND QUOTES.CUST_NUMB = " + txtCustNo.Text.Trim(); };
 
             cmd += " ORDER BY QUOTE_NUM";
 

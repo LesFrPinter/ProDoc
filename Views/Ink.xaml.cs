@@ -490,8 +490,7 @@ namespace ProDocEstimate.Views
             if(dt.Rows.Count>0) {  DataView dv2 = dt.DefaultView; Backer_Ink_Cost = float.Parse(dv2[0]["BACKER_INK_COST"].ToString()); }
             BasePressCharge = BasePressCharge + Backer_Ink_Cost;
 
-            //TODO: -------------------------------------------------------
-            //Calculate
+            //TODO: Calculate ink cost
             //    STD          value times Std Ink_Cost.MakeReadyCost
             //  + BLK - REFLEX value times BLK & STD Ink_Cost.MakeReadyCost
             //  + PMS          value times PMS Ink_Cost.MakeReadyCost
@@ -562,17 +561,32 @@ namespace ProDocEstimate.Views
                 + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,  "
                 + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
                 + " VALUES ( "
-                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',   'FourColor',  'Backer',  "
-                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',        '{WaterMark}', '{FluorSel}', '{FourColor}','{Backer}', "
-                + $"  {CalculatedPressCharge},         '{FlatCharge}',    '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '{FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', "
-                + $"  {LabPS},         {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
-                + $"  {PressSetup},    {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
+                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',       'FourColor',  'Backer',  "
+                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',      '{WaterMark}',      '{FluorSel}',     '{FourColor}','{Backer}', "
+                + $"  {CalculatedPressCharge},            '{FlatCharge}',     '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '   {FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}',   '{CalculatedRunCharge}', "
+                + $"  {LabPS},            {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
+                + $"  {PressSetup},       {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
 
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
             catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
-            finally { conn.Close(); scmd = null; conn = null; }
+            finally { conn.Close(); }
+
+            cmd = "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
+                + $" SET PressSlowdown      = {PressSlowdown},    "
+                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
+                + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     Press              = {PressSetup},       "
+                + $"     Converting         = {CollatorSetup},    "
+                + $"     Finishing          = {BinderySetup}      "
+                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + "   AND CATEGORY  = 'Ink Color'";
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
 
             this.Close();
         }

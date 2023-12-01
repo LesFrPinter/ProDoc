@@ -27,9 +27,10 @@
 				</Label>
 				<TextBox
 					x:Name="txtQuoteNum"
-					Width="100"
+					Width="80"
 					Margin="0,4"
 					VerticalContentAlignment="Center"
+                    Foreground="White" Background="Red " FontWeight="Bold"
 					Text="{Binding Quote_Num}" />
 				<Label HorizontalAlignment="Left" Target="{Binding ElementName=txtCustName}">
 					<AccessText>_Name</AccessText>
