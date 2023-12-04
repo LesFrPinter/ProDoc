@@ -119,11 +119,6 @@ namespace ProDocEstimate.Views
 
         public PrePress(string PRESSSIZE, string QUOTENUM)
         {
-            // Data that I loaded for testing:
-            //UPDATE FEATURES SET FINISH_MATL =20, PRESS_MATL = 30, CONV_MATL = 40 WHERE CATEGORY = 'PREPRESS-OE' AND PRESS_SIZE = '11'
-            //UPDATE FEATURES SET PLATE_MATL = 2     WHERE CATEGORY = 'PREPRESS-OE' AND PRESS_SIZE = '11' AND PLATE_MATL<> ''
-            //UPDATE FEATURES SET RUN_CHARGE = '1.98' WHERE CATEGORY = 'PREPRESS-OE' AND PRESS_SIZE = '11'
-
             InitializeComponent();
             this.DataContext = this;
             

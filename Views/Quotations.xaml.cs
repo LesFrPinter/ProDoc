@@ -41,20 +41,26 @@ namespace ProDocEstimate
         private float collatorSlowdown; public float CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
         private float binderySlowdown;  public float BinderySlowdown  { get { return binderySlowdown;  } set { binderySlowdown  = value; OnPropertyChanged(); } }
 
-        private string noChgMsg; public string NoChgMsg { get { return noChgMsg; } set { noChgMsg = value; OnPropertyChanged(); } }
+        private float adjPressRunTime;  public float AdjPressRunTime  { get { return adjPressRunTime;  } set { adjPressRunTime = value; OnPropertyChanged(); } }
+        private float adjPressRunCost;  public float AdjPressRunCost  { get { return adjPressRunCost;  } set { adjPressRunCost = value; OnPropertyChanged(); } }
+        private float adjCollRunTime;   public float AdjCollRunTime   { get { return adjCollRunTime;   } set { adjCollRunTime  = value; OnPropertyChanged(); } }
+        private float adjCollRunCost;   public float AdjCollRunCost   { get { return adjCollRunCost;   } set { adjCollRunCost  = value; OnPropertyChanged(); } }
+        private float adjBindRunTime;   public float AdjBindRunTime   { get { return adjBindRunTime;   } set { adjBindRunTime  = value; OnPropertyChanged(); } }
+        private float adjBindRunCost;   public float AdjBindRunCost   { get { return adjBindRunCost;   } set { adjBindRunCost  = value; OnPropertyChanged(); } }
+         
+        private string noChgMsg;        public string NoChgMsg        { get { return noChgMsg;         } set { noChgMsg        = value; OnPropertyChanged(); } }
 
-        private string numWidePress = "1"; public string NumWidePress { get { return numWidePress; } set { numWidePress = value; OnPropertyChanged(); } }
-        private string numWideConverter = "1"; public string NumWideConverter { get { return numWideConverter; } set { numWideConverter = value; OnPropertyChanged(); } }
+        private string numWidePress = "1";      public string NumWidePress      { get { return numWidePress;          } set { numWidePress         = value; OnPropertyChanged(); } }
+        private string numWideConverter = "1";  public string NumWideConverter  { get { return numWideConverter;      } set { numWideConverter     = value; OnPropertyChanged(); } }
 
-        private float finishMaterial; public float FinishMaterial { get { return finishMaterial; } set { finishMaterial = value; OnPropertyChanged(); } }
-        private float prePressPerMilChg; public float PrePressPerMilChg { get { return prePressPerMilChg; } set { prePressPerMilChg = value; OnPropertyChanged(); } }
-
-        private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;     } set { pressMaterialCost    = value; OnPropertyChanged(); } }
-        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost;  } set { collatorMaterialCost = value; OnPropertyChanged(); } }
-        private float binderyMaterialCost;  public float BinderyMaterialCost  { get { return binderyMaterialCost;   } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
-        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost;  } set { prePressMaterialCost = value; OnPropertyChanged(); } }
-        private float oeMaterialCost;       public float OEMaterialCost       { get { return oeMaterialCost;        } set { oeMaterialCost       = value; OnPropertyChanged(); } }
-        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost;  } set { shippingMaterialCost = value; OnPropertyChanged(); } }
+        private float finishMaterial;       public float FinishMaterial         { get { return finishMaterial;        } set { finishMaterial       = value; OnPropertyChanged(); } }
+        private float prePressPerMilChg;    public float PrePressPerMilChg      { get { return prePressPerMilChg;     } set { prePressPerMilChg    = value; OnPropertyChanged(); } }
+        private float pressMaterialCost;    public float PressMaterialCost      { get { return pressMaterialCost;     } set { pressMaterialCost    = value; OnPropertyChanged(); } }
+        private float collatorMaterialCost; public float CollatorMaterialCost   { get { return collatorMaterialCost;  } set { collatorMaterialCost = value; OnPropertyChanged(); } }
+        private float binderyMaterialCost;  public float BinderyMaterialCost    { get { return binderyMaterialCost;   } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
+        private float prePressMaterialCost; public float PrePressMaterialCost   { get { return prePressMaterialCost;  } set { prePressMaterialCost = value; OnPropertyChanged(); } }
+        private float oeMaterialCost;       public float OEMaterialCost         { get { return oeMaterialCost;        } set { oeMaterialCost       = value; OnPropertyChanged(); } }
+        private float shippingMaterialCost; public float ShippingMaterialCost   { get { return shippingMaterialCost;  } set { shippingMaterialCost = value; OnPropertyChanged(); } }
 
         private bool already; public bool Already { get { return already; } set { already = value; OnPropertyChanged(); } } // to exit infinite loop
         private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
@@ -183,12 +189,15 @@ namespace ProDocEstimate
         private float? pSize; public float? PSize { get { return pSize; } set { pSize = value; OnPropertyChanged(); } }
         private float? cSize; public float? CSize { get { return cSize; } set { cSize = value; OnPropertyChanged(); } }
 
+        // TODO: Is this a valid default value?
         private int qty1 = 1000; public int Qty1 { get { return qty1; } set { qty1 = value; OnPropertyChanged(); } }
         private int qty2 = 0; public int Qty2 { get { return qty2; } set { qty2 = value; OnPropertyChanged(); } }
         private int qty3 = 0; public int Qty3 { get { return qty3; } set { qty3 = value; OnPropertyChanged(); } }
         private int qty4 = 0; public int Qty4 { get { return qty4; } set { qty4 = value; OnPropertyChanged(); } }
 
+        // Used in PressCalc (around line 1107)
         private int? wastePct = 5; public int? WastePct { get { return wastePct; } set { wastePct = value; OnPropertyChanged(); } }
+        
         private string? itemType; public string? ItemType { get { return itemType; } set { itemType = value; OnPropertyChanged(); } }     // LoadPage2Combos();
         private int? numUpp; public int? NumUpp { get { return numUpp; } set { numUpp = value; OnPropertyChanged(); } }
         private int selectedQty; public int SelectedQty { get { return selectedQty; } set { selectedQty = value; OnPropertyChanged(); } }
@@ -1567,17 +1576,27 @@ namespace ProDocEstimate
                 dgFeatures.ItemsSource = DVFeat;
             }
 
-            // Sum the columns' values into the cells at the bottom of page 4
-
+            // TODO: Sum the columns' values into the cells at the bottom of page 4
             PressSlowdown    = 0;
             CollatorSlowdown = 0;
             BinderySlowdown  = 0;
-            for(int i=0;i<DVFeat.Count;i++)
+
+            for (int i = 0; i < DVFeat.Count; i++ )
             { 
                 PressSlowdown    += float.Parse(DVFeat[i]["PressSlowdown"].ToString());
                 CollatorSlowdown += float.Parse(DVFeat[i]["ConvertingSlowdown"].ToString());
                 BinderySlowdown  += float.Parse(DVFeat[i]["FinishingSlowdown"].ToString());
             }
+
+            // TODO: Apply sums of adjustments to calculated totals
+            AdjPressRunTime = PressRunTime * (1.0F + (PressSlowdown    / 100.0F));
+            AdjPressRunCost = PressRunCost * (1.0F + (PressSlowdown    / 100.0F));
+
+            AdjCollRunTime = CollRunTime   * (1.0F + (CollatorSlowdown / 100.0F));
+            AdjCollRunCost = CollRunCost   * (1.0F + (CollatorSlowdown / 100.0F));
+
+            AdjBindRunTime = BindRunTime   * (1.0F + (BinderySlowdown  / 100.0F));
+            AdjBindRunCost = BindRunCost   * (1.0F + (BinderySlowdown  / 100.0F));
 
             //-----------------------------------------------------
             // Finishing

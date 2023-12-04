@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -364,6 +365,21 @@ namespace ProDocEstimate.Views
             conn.Open(); 
             try { scmd.ExecuteNonQuery(); } 
             catch (System.Exception ex) { MessageBox.Show(ex.Message); } 
+            finally { conn.Close(); }
+
+            cmd =  "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
+                + $" SET PressSlowdown      = {PressSlowdown},    "
+                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
+                + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     Press              = {PressSetup},       "
+                + $"     Converting         = {CollatorSetup},    "
+                + $"     Finishing          = {BinderySetup}      "
+                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + "   AND CATEGORY   = 'Finishing'";
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
             this.Close();

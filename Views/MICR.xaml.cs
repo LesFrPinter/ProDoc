@@ -404,7 +404,22 @@ namespace ProDocEstimate.Views
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); scmd = null; conn = null; }
+            finally { conn.Close(); }
+
+            cmd =  "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
+                + $" SET PressSlowdown      = {PressSlowdown},    "
+                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
+                + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     Press              = {PressSetup},       "
+                + $"     Converting         = {CollatorSetup},    "
+                + $"     Finishing          = {BinderySetup}      "
+                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + "   AND CATEGORY   = 'MICR'";
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
 
             this.Close();
         }

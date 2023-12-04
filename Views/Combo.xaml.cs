@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProDocEstimate.Editors;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -218,6 +220,18 @@ namespace ProDocEstimate.Views
             BaseBinderySlowdown = 0;
 
             string str = $"SELECT {FieldList} FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'COMBO' AND Press_Size = '{PressSize}' AND NUMBER = '{Combo1}'";
+
+//Standard test is this:
+//SELECT F_TYPE, PRESS_SIZE, NUMBER,
+//       FLAT_CHARGE, RUN_CHARGE, PLATE_MATL, ADDTL_BIND_TIME,
+//       FINISH_MATL, CONV_MATL, PRESS_MATL,
+//       PRESS_SETUP_TIME  AS PRESS_SETUP, COLLATOR_SETUP, BINDERY_SETUP,
+//       PRESS_SLOWDOWN, COLLATOR_SLOWDOWN, BINDERY_SLOWDOWN --SLOWDOWN_PER_PART AS BINDERY_SLOWDOWN  -- why is this duplicated?
+//  FROM[ESTIMATING].[dbo].[FEATURES]
+// WHERE Category   = 'COMBO'
+//   AND Press_Size = '11'
+//   AND NUMBER     = '1'
+
             SqlConnection conn = new(ConnectionString);
             SqlDataAdapter da = new(str, conn); DataTable dt = new(); dt.Rows.Clear();
             try { da.Fill(dt); }
@@ -357,6 +371,21 @@ namespace ProDocEstimate.Views
             scmd.Connection = conn;
             scmd.ExecuteNonQuery();
             conn.Close();
+
+            cmd =  "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
+                + $" SET PressSlowdown      = {PressSlowdown},    "
+                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
+                + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     Press              = {PressSetup},       "
+                + $"     Converting         = {CollatorSetup},    "
+                + $"     Finishing          = {BinderySetup}      "
+                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + "   AND CATEGORY  = 'Combo'";
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
 
             this.Hide();
         }

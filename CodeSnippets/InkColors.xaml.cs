@@ -282,7 +282,7 @@ namespace ProDocEstimate.Views
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); scmd = null; conn = null; }
+            finally { conn.Close(); }
 
             this.Close();
         }
