@@ -12,8 +12,11 @@ namespace ProDocEstimate.Views
     public partial class BaseCharge : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
-    
+        protected void OnPropertyChanged([CallerMemberName] string? name = null) 
+        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+
+        #region Properties
+
         private float  flatChg;   public float  FlatChg   {  get { return flatChg;   } set { flatChg   = value; OnPropertyChanged(); } }
         private float  runChg;    public float  RunChg    { get  { return runChg;    } set { runChg    = value; OnPropertyChanged(); } }
         private string quote_Num; public string Quote_Num { get  { return quote_Num; } set { quote_Num = value; OnPropertyChanged(); } }
@@ -23,6 +26,8 @@ namespace ProDocEstimate.Views
         public SqlDataAdapter? da;
         public SqlCommand scmd;
         public DataTable dt;
+
+        #endregion
 
         public BaseCharge(string QUOTE_NUM)
         {

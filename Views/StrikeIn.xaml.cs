@@ -17,13 +17,6 @@ namespace ProDocEstimate.Views
 
         #region Properties
 
-        //TEST DATA ADDED:
-        //UPDATE FEATURES
-        //   SET PRESS_SETUP_TIME =  3,
-        //       ADDTL_BIND_TIME  = 20
-        // WHERE PRESS_SIZE = '11'
-        //   AND CATEGORY = 'STRIKE IN'
-
         //NOTE: PRESS_SETUP_TIME and ADDTL_BIND_TIME should contain minutes, not fractions of an hour
 
         private bool starting;  public bool Starting { get { return starting; } set { starting = value; } }
@@ -101,17 +94,13 @@ namespace ProDocEstimate.Views
 
         public StrikeIn(string PRESSSIZE, string QUOTENUM)
         {
-            //TestData:
-            //UPDATE[ESTIMATING].[dbo].[FEATURES]
-            // SET  (What was changed here?)
-
             InitializeComponent();
             Removed = true; // Will be "automatically" removed from the "lstSelected" collection when the screen is closed unless there are some saved parameters
 
             PressSize = PRESSSIZE; 
             QuoteNum = QUOTENUM;
 
-            // List of fields to be retrieved from the FEATURES table:
+            // Columns to be retrieved from the FEATURES table:
             FieldList =
                " F_TYPE,"
              + " FLAT_CHARGE,"
@@ -176,23 +165,24 @@ namespace ProDocEstimate.Views
             BaseCollatorSlowdown = 0;
             BaseBinderySlowdown = 0;
 
+            int i = 0; float fi = 0.0F;
             if (dv.Count > 0)
             {
                 // Base material charges
-                BaseFlatCharge       = float.Parse(dv[0]["FLAT_CHARGE"]     .ToString());
-                BaseSetupTime        = int  .Parse(dv[0]["PRESS_SETUP"]     .ToString());  // Is this right?
-                BaseBindTime         = int  .Parse(dv[0]["ADDTL_BIND_TIME"] .ToString());
-                BaseFinishMatl       = float.Parse(dv[0]["FINISH_MATL"]     .ToString());
+                int.TryParse(dv[0]["FLAT_CHARGE"]       .ToString(), out i); BaseFlatCharge = i;
+                int.TryParse(dv[0]["PRESS_SETUP"]       .ToString(), out i); BaseSetupTime = i;
+                int.TryParse(dv[0]["ADDTL_BIND_TIME"]   .ToString(), out i); BaseBindTime = i;
+                int.TryParse(dv[0]["FINISH_MATL"]       .ToString(), out i); BaseFinishMatl = i;
 
                 // Base Labor Charges
                 // The next six calculations assume that the values from the FEATURES table are minutes
-                BasePressSetup       = int.Parse(dv[0]["PRESS_SETUP"]       .ToString()); 
-                BaseCollatorSetup    = int.Parse(dv[0]["COLLATOR_SETUP"]    .ToString());
-                BaseBinderySetup     = int.Parse(dv[0]["BINDERY_SETUP"]     .ToString());
+                int.TryParse(dv[0]["PRESS_SETUP"]       .ToString(), out i); BasePressSetup = i;
+                int.TryParse(dv[0]["COLLATOR_SETUP"]    .ToString(), out i); BaseCollatorSetup = i;
+                int.TryParse(dv[0]["BINDERY_SETUP"]     .ToString(), out i); BaseBinderySetup = i;
 
-                BasePressSlowdown    = int.Parse(dv[0]["PRESS_SLOWDOWN"]    .ToString());       // Minutes of slowdown to add to the base amount...
-                BaseCollatorSlowdown = int.Parse(dv[0]["COLLATOR_SLOWDOWN"] .ToString());    //              "
-                BaseBinderySlowdown  = int.Parse(dv[0]["BINDERY_SLOWDOWN"]  .ToString());     //
+                int.TryParse(dv[0]["PRESS_SLOWDOWN"]    .ToString(), out i); BasePressSlowdown = i;
+                int.TryParse(dv[0]["COLLATOR_SLOWDOWN"] .ToString(), out i); BaseCollatorSlowdown = i;
+                int.TryParse(dv[0]["BINDERY_SLOWDOWN"]  .ToString(), out i); BaseBinderySlowdown = i;
             }
         }
 
@@ -323,8 +313,8 @@ namespace ProDocEstimate.Views
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY   = 'Strike In'";
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
+                + "    AND CATEGORY  = 'Strike In'";
             scmd.CommandText = str;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

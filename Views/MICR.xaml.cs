@@ -1,15 +1,11 @@
-﻿using MediaFoundation;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Printing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Telerik.Pivot.Core.Totals;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -252,7 +248,6 @@ namespace ProDocEstimate.Views
             LabBS  = int.Parse(dv3[0]["BIND_ADDL_MIN"].ToString());
             LabBSL = int.Parse(dv3[0]["BIND_SLOW_PCT"].ToString());
 
-//            GetCharges();
             LoadBaseValues();
         }
 
@@ -263,21 +258,8 @@ namespace ProDocEstimate.Views
 
         private void GetCharges()
         {   
-            //if (dv == null || dv.Count == 0) return;
-// "dv" is loaded in LoadData() and remains loaded for the life of this object.
-            //dv.RowFilter = "F_TYPE='DIGITAL'";   float T1 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
-            //dv.RowFilter = "F_TYPE='PACK2PACK'"; float T2 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
-            //dv.RowFilter = "F_TYPE='PRESS'";     float T3 = float.Parse(dv[0]["FLAT_CHARGE"].ToString());
-            //BaseFlatCharge       = (Digital * T1) + (Pack2Pack * T2) + (Press * T3);
             CalculatedFlatCharge = (float)BaseFlatCharge * (1.00F + (float)FlatChargePct / 100.00F);
-
-            //dv.RowFilter = "F_TYPE='DIGITAL'";   float R1 = float.Parse(dv[0]["RUN_CHARGE"].ToString());
-            //dv.RowFilter = "F_TYPE='PACK2PACK'"; float R2 = float.Parse(dv[0]["RUN_CHARGE"].ToString());
-            //dv.RowFilter = "F_TYPE='PRESS'";     float R3 = float.Parse(dv[0]["RUN_CHARGE"].ToString());
-            //BaseRunCharge = (Digital * R1) + (Pack2Pack * R2) + (Press * R3);
             CalculatedRunCharge = (float)BaseRunCharge * (1.00F + (float)RunChargePct / 100.00F);
-
-            // The rest of the charges might be null, so tryparse has to be used...
 
             // ------------------------------- Plate Charges -------------------------------
             float P1; dv.RowFilter = "F_TYPE='DIGITAL'";
@@ -334,7 +316,6 @@ namespace ProDocEstimate.Views
             BasePressCharge = (Digital * S1) + (Pack2Pack * S2) + (Press * S3);
             CalculatedPressCharge = (float)BasePressCharge * (1.00F + (float)PressChargePct / 100.00F);
             // ----------------------------- End Press Charges -------------------------------
-
         }
 
         private void Pct_Changed(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -366,7 +347,6 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-//            if (Starting) return;
             PressSetup       = BasePressSetup       + LabPS;
             CollatorSetup    = BaseCollatorSetup    + LabCS;
             BinderySetup     = BaseBinderySetup     + LabBS;
@@ -386,7 +366,6 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            // Add flat charges for up to three F_TYPE values;
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "   Quote_Num,           Category,          Sequence,"
                 + "   Param1,              Param2,            Param3,             Value1,              Value2,             Value3, "
@@ -410,11 +389,11 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {PressSetup},       "
-                + $"     Converting         = {CollatorSetup},    "
-                + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY   = 'MICR'";
+                + $"     Press              = {CalculatedPressCharge}, "
+                + $"     Converting         = {CalculatedConvCharge},  "
+                + $"     Finishing          = {CalculatedFinishCharge} "
+                + $" WHERE Quote_Num = '{QuoteNum}'"
+                + "    AND CATEGORY  = 'MICR'";
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

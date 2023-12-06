@@ -371,9 +371,9 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {PressSetup},       "
-                + $"     Converting         = {CollatorSetup},    "
-                + $"     Finishing          = {BinderySetup}      "
+                + $"     Press              = {CalculatedPressCharge}, "
+                + $"     Converting         = {CalculatedConvCharge},  "
+                + $"     Finishing          = {CalculatedFinishCharge} "
                 + $" WHERE Quote_Num = '{QuoteNum}' "
                 + "   AND CATEGORY   = 'Finishing'";
             scmd.CommandText = cmd;

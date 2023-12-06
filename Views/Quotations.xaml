@@ -73,7 +73,7 @@
 				       Foreground="White" />
             </Border>
 
-            <Label FontSize="20" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
+            <Label FontSize="18" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
 
             <Border Grid.RowSpan="2"
 			        Grid.Column="0"
@@ -88,19 +88,20 @@
                 <Label x:Name="lblPageName"
 				       Grid.RowSpan="2"
 				       Width="auto"
-				       Height="42"
+				       Height="36"
 				       Margin="10,0,0,0"
 				       Padding="2"
 				       HorizontalAlignment="Center"
 				       Background="Purple"
 				       Content="{Binding Path=ActivePage, Mode=OneWayToSource}"
-				       FontSize="24"
+				       FontSize="18"
 				       Foreground="White" />
             </Border>
 
             <TabControl x:Name="Tabs" Grid.Row="1" Background="LightGray" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged" >
 
-                <TabItem x:Name="Page1" VerticalAlignment="Top" FontSize="16" Header="    Page _1    " >
+                <TabItem x:Name="Page1" VerticalAlignment="Top"
+                         FontSize="16" Header="    Page _1    " >
 
                     <Grid Height="762" VerticalAlignment="Top" HorizontalAlignment="Center" Width="900">
 
@@ -116,7 +117,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="60" />
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
@@ -188,14 +189,14 @@
 						          Text="{Binding ProjectType}" Grid.ColumnSpan="2" />
 
                         <StackPanel Grid.Row="2" Visibility="Collapsed" >
-                        
-                        <Label Grid.Row="2"
+
+                            <Label Grid.Row="2"
 						       Grid.Column="1"
 						       Padding="0"
 						       HorizontalAlignment="Center"
 						       Content="Final Size:" />
 
-                        <ComboBox x:Name="cmbFinalSizeInches1"
+                            <ComboBox x:Name="cmbFinalSizeInches1"
 						          Grid.Row="3"
 						          Grid.Column="2"
 						          Width="50"
@@ -205,26 +206,26 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSINT1}" Grid.RowSpan="2">
-                            <ComboBoxItem Content="1" />
-                            <ComboBoxItem Content="2" />
-                            <ComboBoxItem Content="3" />
-                            <ComboBoxItem Content="4" />
-                            <ComboBoxItem Content="5" />
-                            <ComboBoxItem Content="6" />
-                            <ComboBoxItem Content="7" />
-                            <ComboBoxItem Content="8" />
-                            <ComboBoxItem Content="9" />
-                            <ComboBoxItem Content="10" />
-                            <ComboBoxItem Content="11" />
-                            <ComboBoxItem Content="12" />
-                            <ComboBoxItem Content="13" />
-                            <ComboBoxItem Content="14" />
-                            <ComboBoxItem Content="15" />
-                            <ComboBoxItem Content="16" />
-                            <ComboBoxItem Content="17" />
-                        </ComboBox>
+                                <ComboBoxItem Content="1" />
+                                <ComboBoxItem Content="2" />
+                                <ComboBoxItem Content="3" />
+                                <ComboBoxItem Content="4" />
+                                <ComboBoxItem Content="5" />
+                                <ComboBoxItem Content="6" />
+                                <ComboBoxItem Content="7" />
+                                <ComboBoxItem Content="8" />
+                                <ComboBoxItem Content="9" />
+                                <ComboBoxItem Content="10" />
+                                <ComboBoxItem Content="11" />
+                                <ComboBoxItem Content="12" />
+                                <ComboBoxItem Content="13" />
+                                <ComboBoxItem Content="14" />
+                                <ComboBoxItem Content="15" />
+                                <ComboBoxItem Content="16" />
+                                <ComboBoxItem Content="17" />
+                            </ComboBox>
 
-                        <ComboBox x:Name="cmbFinalSizeFrac1"
+                            <ComboBox x:Name="cmbFinalSizeFrac1"
 						          Grid.Row="2"
 						          Grid.Column="2"
 						          Width="90"
@@ -235,47 +236,47 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSFRAC1}" Grid.ColumnSpan="2" Grid.RowSpan="3">
-                            <ComboBoxItem Content="" />
-                            <ComboBoxItem Content="1/32" />
-                            <ComboBoxItem Content="1/16" />
-                            <ComboBoxItem Content="3/32" />
-                            <ComboBoxItem Content="1/8" />
-                            <ComboBoxItem Content="5/32" />
-                            <ComboBoxItem Content="3/16" />
-                            <ComboBoxItem Content="7/32" />
-                            <ComboBoxItem Content="1/4" />
-                            <ComboBoxItem Content="9/32" />
-                            <ComboBoxItem Content="5/16" />
-                            <ComboBoxItem Content="11/32" />
-                            <ComboBoxItem Content="3/8" />
-                            <ComboBoxItem Content="13/32" />
-                            <ComboBoxItem Content="7/16" />
-                            <ComboBoxItem Content="15/32" />
-                            <ComboBoxItem Content="1/2" />
-                            <ComboBoxItem Content="17/32" />
-                            <ComboBoxItem Content="9/16" />
-                            <ComboBoxItem Content="19/32" />
-                            <ComboBoxItem Content="5/8" />
-                            <ComboBoxItem Content="21/32" />
-                            <ComboBoxItem Content="11/16" />
-                            <ComboBoxItem Content="23/32" />
-                            <ComboBoxItem Content="3/4" />
-                            <ComboBoxItem Content="25/32" />
-                            <ComboBoxItem Content="13/16" />
-                            <ComboBoxItem Content="27/32" />
-                            <ComboBoxItem Content="7/8" />
-                            <ComboBoxItem Content="29/32" />
-                            <ComboBoxItem Content="15/16" />
-                            <ComboBoxItem Content="31/32" />
-                        </ComboBox>
+                                <ComboBoxItem Content="" />
+                                <ComboBoxItem Content="1/32" />
+                                <ComboBoxItem Content="1/16" />
+                                <ComboBoxItem Content="3/32" />
+                                <ComboBoxItem Content="1/8" />
+                                <ComboBoxItem Content="5/32" />
+                                <ComboBoxItem Content="3/16" />
+                                <ComboBoxItem Content="7/32" />
+                                <ComboBoxItem Content="1/4" />
+                                <ComboBoxItem Content="9/32" />
+                                <ComboBoxItem Content="5/16" />
+                                <ComboBoxItem Content="11/32" />
+                                <ComboBoxItem Content="3/8" />
+                                <ComboBoxItem Content="13/32" />
+                                <ComboBoxItem Content="7/16" />
+                                <ComboBoxItem Content="15/32" />
+                                <ComboBoxItem Content="1/2" />
+                                <ComboBoxItem Content="17/32" />
+                                <ComboBoxItem Content="9/16" />
+                                <ComboBoxItem Content="19/32" />
+                                <ComboBoxItem Content="5/8" />
+                                <ComboBoxItem Content="21/32" />
+                                <ComboBoxItem Content="11/16" />
+                                <ComboBoxItem Content="23/32" />
+                                <ComboBoxItem Content="3/4" />
+                                <ComboBoxItem Content="25/32" />
+                                <ComboBoxItem Content="13/16" />
+                                <ComboBoxItem Content="27/32" />
+                                <ComboBoxItem Content="7/8" />
+                                <ComboBoxItem Content="29/32" />
+                                <ComboBoxItem Content="15/16" />
+                                <ComboBoxItem Content="31/32" />
+                            </ComboBox>
 
-                        <Label Grid.Row="2"
+                            <Label Grid.Row="2"
 						       Grid.Column="3"
 						       Margin="30,0,0,0"
 						       HorizontalAlignment="Left"
 						       Content="X" />
 
-                        <ComboBox x:Name="cmbFinalSizeInches2"
+                            <ComboBox x:Name="cmbFinalSizeInches2"
 						          Grid.Row="3"
 						          Grid.Column="5"
 						          Width="50"
@@ -285,26 +286,26 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSINT2}" Grid.RowSpan="2">
-                            <ComboBoxItem Content="1" />
-                            <ComboBoxItem Content="2" />
-                            <ComboBoxItem Content="3" />
-                            <ComboBoxItem Content="4" />
-                            <ComboBoxItem Content="5" />
-                            <ComboBoxItem Content="6" />
-                            <ComboBoxItem Content="7" />
-                            <ComboBoxItem Content="8" />
-                            <ComboBoxItem Content="9" />
-                            <ComboBoxItem Content="10" />
-                            <ComboBoxItem Content="11" />
-                            <ComboBoxItem Content="12" />
-                            <ComboBoxItem Content="13" />
-                            <ComboBoxItem Content="14" />
-                            <ComboBoxItem Content="15" />
-                            <ComboBoxItem Content="16" />
-                            <ComboBoxItem Content="17" />
-                        </ComboBox>
+                                <ComboBoxItem Content="1" />
+                                <ComboBoxItem Content="2" />
+                                <ComboBoxItem Content="3" />
+                                <ComboBoxItem Content="4" />
+                                <ComboBoxItem Content="5" />
+                                <ComboBoxItem Content="6" />
+                                <ComboBoxItem Content="7" />
+                                <ComboBoxItem Content="8" />
+                                <ComboBoxItem Content="9" />
+                                <ComboBoxItem Content="10" />
+                                <ComboBoxItem Content="11" />
+                                <ComboBoxItem Content="12" />
+                                <ComboBoxItem Content="13" />
+                                <ComboBoxItem Content="14" />
+                                <ComboBoxItem Content="15" />
+                                <ComboBoxItem Content="16" />
+                                <ComboBoxItem Content="17" />
+                            </ComboBox>
 
-                        <ComboBox x:Name="cmbFinalSizeFrac2"
+                            <ComboBox x:Name="cmbFinalSizeFrac2"
 						          Grid.Row="2"
 						          Grid.Column="5"
 						          Width="90"
@@ -315,41 +316,41 @@
 						          FontSize="11"
 						          SelectionChanged="cmbFinalSizeFrac1_SelectionChanged"
 						          Text="{Binding FSFRAC2}" Grid.RowSpan="3">
-                            <ComboBoxItem Content="" />
-                            <ComboBoxItem Content="1/32" />
-                            <ComboBoxItem Content="1/16" />
-                            <ComboBoxItem Content="3/32" />
-                            <ComboBoxItem Content="1/8" />
-                            <ComboBoxItem Content="5/32" />
-                            <ComboBoxItem Content="3/16" />
-                            <ComboBoxItem Content="7/32" />
-                            <ComboBoxItem Content="1/4" />
-                            <ComboBoxItem Content="9/32" />
-                            <ComboBoxItem Content="5/16" />
-                            <ComboBoxItem Content="11/32" />
-                            <ComboBoxItem Content="3/8" />
-                            <ComboBoxItem Content="13/32" />
-                            <ComboBoxItem Content="7/16" />
-                            <ComboBoxItem Content="15/32" />
-                            <ComboBoxItem Content="1/2" />
-                            <ComboBoxItem Content="17/32" />
-                            <ComboBoxItem Content="9/16" />
-                            <ComboBoxItem Content="19/32" />
-                            <ComboBoxItem Content="5/8" />
-                            <ComboBoxItem Content="21/32" />
-                            <ComboBoxItem Content="11/16" />
-                            <ComboBoxItem Content="23/32" />
-                            <ComboBoxItem Content="3/4" />
-                            <ComboBoxItem Content="25/32" />
-                            <ComboBoxItem Content="13/16" />
-                            <ComboBoxItem Content="27/32" />
-                            <ComboBoxItem Content="7/8" />
-                            <ComboBoxItem Content="29/32" />
-                            <ComboBoxItem Content="15/16" />
-                            <ComboBoxItem Content="31/32" />
-                        </ComboBox>
+                                <ComboBoxItem Content="" />
+                                <ComboBoxItem Content="1/32" />
+                                <ComboBoxItem Content="1/16" />
+                                <ComboBoxItem Content="3/32" />
+                                <ComboBoxItem Content="1/8" />
+                                <ComboBoxItem Content="5/32" />
+                                <ComboBoxItem Content="3/16" />
+                                <ComboBoxItem Content="7/32" />
+                                <ComboBoxItem Content="1/4" />
+                                <ComboBoxItem Content="9/32" />
+                                <ComboBoxItem Content="5/16" />
+                                <ComboBoxItem Content="11/32" />
+                                <ComboBoxItem Content="3/8" />
+                                <ComboBoxItem Content="13/32" />
+                                <ComboBoxItem Content="7/16" />
+                                <ComboBoxItem Content="15/32" />
+                                <ComboBoxItem Content="1/2" />
+                                <ComboBoxItem Content="17/32" />
+                                <ComboBoxItem Content="9/16" />
+                                <ComboBoxItem Content="19/32" />
+                                <ComboBoxItem Content="5/8" />
+                                <ComboBoxItem Content="21/32" />
+                                <ComboBoxItem Content="11/16" />
+                                <ComboBoxItem Content="23/32" />
+                                <ComboBoxItem Content="3/4" />
+                                <ComboBoxItem Content="25/32" />
+                                <ComboBoxItem Content="13/16" />
+                                <ComboBoxItem Content="27/32" />
+                                <ComboBoxItem Content="7/8" />
+                                <ComboBoxItem Content="29/32" />
+                                <ComboBoxItem Content="15/16" />
+                                <ComboBoxItem Content="31/32" />
+                            </ComboBox>
 
-                        <Label Grid.Row="3"
+                            <Label Grid.Row="3"
 						       Grid.Column="6"
 						       Width="auto"
 						       Height="22"
@@ -360,7 +361,7 @@
 						       VerticalContentAlignment="center"
 						       Content="(" Grid.RowSpan="2" />
 
-                        <Label x:Name="Decimal1"
+                            <Label x:Name="Decimal1"
 						       Grid.Row="2"
 						       Grid.Column="6"
 						       Width="70"
@@ -371,7 +372,7 @@
 						       VerticalContentAlignment="center"
 						       Background="ivory" Grid.RowSpan="3" />
 
-                        <Label Grid.Row="2"
+                            <Label Grid.Row="2"
 						       Grid.Column="7"
 						       Width="auto"
 						       Height="22"
@@ -381,7 +382,7 @@
 						       VerticalContentAlignment="center"
 						       Content="X" Grid.RowSpan="3" />
 
-                        <Label x:Name="Decimal2"
+                            <Label x:Name="Decimal2"
 						       Grid.Row="2"
 						       Grid.Column="7"
 						       Width="70"
@@ -479,8 +480,8 @@
                         <Label Grid.Row="10"
 						       Padding="0"
                                Grid.Column="0"
-                               Margin="86,0,0,0" Grid.ColumnSpan="2"
-						       HorizontalAlignment="Left"
+                               Margin="0,0,5,0" Grid.ColumnSpan="2"
+						       HorizontalAlignment="Right"
 						       Content="Collator cut size:" />
 
                         <ComboBox x:Name="cmbCollatorCut"
@@ -547,8 +548,8 @@
                         <Label Grid.Row="12"
 						       Padding="0"
                                Grid.Column="0"
-                               Margin="85,0,0,0" Grid.ColumnSpan="2"
-						       HorizontalAlignment="Left"
+                               Margin="65,0,5,0" Grid.ColumnSpan="2"
+						       HorizontalAlignment="Right"
 						       Content="Customer Name:" />
                         <TextBox x:Name="txtCustomerName"
 						         Grid.Row="12"
@@ -710,11 +711,11 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="70" />
                             <RowDefinition Height="100" />
-                            <RowDefinition Height="500" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="475" />
+                            <RowDefinition Height="55" />
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left"  >
+                        <Grid Grid.Row="0" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left" Width="750"  >
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />
@@ -854,12 +855,12 @@
                                   VerticalAlignment="Top"
 						          Width="786"
                                   FontWeight="Bold"
-						          Height="520"
+						          Height="470"
                                   CanUserAddRows="False"
                                   IsSynchronizedWithCurrentItem="True"
                                   SelectionUnit="FullRow"
                                   CurrentCellChanged="dgSheetsOfPaper_CurrentCellChanged"
-                                  SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" Margin="12,0,0,0" Grid.RowSpan="2" >
+                                  SelectedCellsChanged="dgSheetsOfPaper_SelectedCellsChanged" Margin="12,0,0,0" >
 
                             <DataGrid.Columns>
 
@@ -926,15 +927,15 @@
 
                         </DataGrid>
 
-                        <Label Grid.Row="3" Background="Yellow" Foreground="Black" Content="{Binding NoChangeMsg}" HorizontalAlignment="Left" Margin="10,0,0,0" Height="15"  />
+                        <Label Grid.Row="3" Background="Yellow" Foreground="Black" Content="{Binding NoChangeMsg}" HorizontalAlignment="Left" Margin="10,0,0,0" Height="14" Width="10"  />
 
-                        <TextBox Grid.Row="3" FontSize="11" 
+                        <TextBox Grid.Row="3" FontSize="11" Margin="0 5 35 0"
                                  Foreground="White" Background="Blue"
                                  FontWeight="SemiBold" Height="25" 
                                  Width="90" Text="{Binding QuoteTotal, StringFormat=C2}" Padding="3"
-                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                 HorizontalAlignment="Right" VerticalAlignment="Top"
                                  HorizontalContentAlignment="Right" 
-                                 VerticalContentAlignment="Center" />
+                                 VerticalContentAlignment="Top" />
 
                     </Grid>
 
@@ -945,8 +946,6 @@
 				         Header="  Page _3    "
                          GotFocus="Page3_GotFocus"
 				         IsEnabled="True">
-
-                    <!--<Viewbox VerticalAlignment="Top">-->
 
                     <Grid Height="670" Width="800" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 0 0 0"   >
 
@@ -996,7 +995,7 @@
                         <Expander Grid.Row="2"
                                       ToolTip="What is this grid? Do we need it?"
                                       VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="6"
-                                      ExpandDirection="Right" Height="200" Width="690" Margin="0,308,0,0" Grid.RowSpan="2" >
+                                      ExpandDirection="Right" Height="200" Width="772" Margin="0,308,0,0" Grid.RowSpan="2" >
 
                             <DataGrid Height="180" VerticalAlignment="Top" Width="655" Margin="0 25 0 0" >
                                 <DataGrid.Columns>
@@ -1012,8 +1011,6 @@
                         </Expander>
 
                     </Grid>
-
-                    <!--</Viewbox>-->
 
                 </TabItem>
 
@@ -1743,157 +1740,157 @@
                         </DataGrid>
 
                         <StackPanel Grid.Row="3" Grid.ColumnSpan="3" Visibility="Collapsed">
-                            
-                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" >
-                            <Label  Content="Labor"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,2,0,0"    Padding="0" FontWeight="Bold" />
-                            <Button Content="Labor Calc" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0"   Padding="5 3" Height="24" Width="67" Visibility="Hidden" x:Name="btnLaborCalc" Click="btnLaborCalc_Click"  />
-                            <Label  Content="[SETUP]"    VerticalAlignment="Top" Margin="55,15,0,0"                             Padding="0" FontSize="12" />
-                            <Label  Content="[RUN]"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="170,15,0,0" Padding="0" FontSize="11" />
-                            <Label  Content="Material"   VerticalAlignment="Top" Margin="100,2,0,0"  Padding="0" FontWeight="Bold" />
-                            <Label  Content="Slowdown"   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35,2,0,0"   Padding="0" FontWeight="Bold" />
-                        </StackPanel>
 
-                        <Grid Grid.Row="3" Height="150" Margin="10 30 0 0" Grid.ColumnSpan="3" >
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" >
+                                <Label  Content="Labor"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,2,0,0"    Padding="0" FontWeight="Bold" />
+                                <Button Content="Labor Calc" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0"   Padding="5 3" Height="24" Width="67" Visibility="Hidden" x:Name="btnLaborCalc" Click="btnLaborCalc_Click"  />
+                                <Label  Content="[SETUP]"    VerticalAlignment="Top" Margin="55,15,0,0"                             Padding="0" FontSize="12" />
+                                <Label  Content="[RUN]"      VerticalAlignment="Top" HorizontalAlignment="Left" Margin="170,15,0,0" Padding="0" FontSize="11" />
+                                <Label  Content="Material"   VerticalAlignment="Top" Margin="100,2,0,0"  Padding="0" FontWeight="Bold" />
+                                <Label  Content="Slowdown"   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35,2,0,0"   Padding="0" FontWeight="Bold" />
+                            </StackPanel>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="200"/>
-                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="3" Height="150" Margin="10 30 0 0" Grid.ColumnSpan="3" >
 
-                            <TextBlock Text="Department" Padding="10 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="0" Foreground="Blue" />
-                            <TextBlock Text="Time"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="1" Foreground="Blue" />
-                            <TextBlock Text="Cost"       Padding="30 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="2" Foreground="Blue"  />
-                            <TextBlock Text="Time"       Padding="30 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="3" Foreground="Blue"  />
-                            <TextBlock Text="Cost"       Padding="30 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="4" Foreground="Blue"  />
-                            <TextBlock Text="Cost"       Padding="55 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="5" Foreground="Blue"  />
-                            <TextBlock Text="Pct"        Padding="165 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="5" Foreground="Blue"  />
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="200"/>
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="  Press"    Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="1" Width="60" Foreground="Blue" />
-                            <TextBlock Text="  Collator" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="2" Width="60" Foreground="Blue" />
-                            <TextBlock Text="  Bindery"  Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="3" Width="60" Foreground="Blue" />
-                            <TextBlock Text="  PrePress" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="4" Width="65" Foreground="Blue" />
-                            <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="5" Width="60" Foreground="Blue" />
-                            <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6" Width="65" Foreground="Blue" />
+                                <TextBlock Text="Department" Padding="10 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="0" Foreground="Blue" />
+                                <TextBlock Text="Time"       Padding="10 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="1" Foreground="Blue" />
+                                <TextBlock Text="Cost"       Padding="30 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="2" Foreground="Blue"  />
+                                <TextBlock Text="Time"       Padding="30 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="3" Foreground="Blue"  />
+                                <TextBlock Text="Cost"       Padding="30 0 0 0" HorizontalAlignment="Center" FontSize="12" TextDecorations="Underline" Grid.Column="4" Foreground="Blue"  />
+                                <TextBlock Text="Cost"       Padding="55 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="5" Foreground="Blue"  />
+                                <TextBlock Text="Pct"        Padding="165 0 0 0" HorizontalAlignment="Left"   FontSize="12" TextDecorations="Underline" Grid.Column="5" Foreground="Blue"  />
 
-                            <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBlock Text="  Press"    Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="1" Width="60" Foreground="Blue" />
+                                <TextBlock Text="  Collator" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="2" Width="60" Foreground="Blue" />
+                                <TextBlock Text="  Bindery"  Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="3" Width="60" Foreground="Blue" />
+                                <TextBlock Text="  PrePress" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="4" Width="65" Foreground="Blue" />
+                                <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="5" Width="60" Foreground="Blue" />
+                                <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6" Width="65" Foreground="Blue" />
+
+                                <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="1" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="1" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="2" Width="60" 
                                          FontSize="12" Height="17" VerticalAlignment="Top" />
-                            <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="1" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="2" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="3" Width="60" 
                                          FontSize="12" />
-                            <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="4" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="5" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="5" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"   Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"   Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="5" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="5" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding OEMaterialCost,       StringFormat=C}"        Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding OEMaterialCost,       StringFormat=C}"        Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="5" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="5" Width="60" 
                                          FontSize="12" />
 
-                            <TextBox Text="{Binding PressSlowdown,        StringFormat={}{0:#0.00'%'}}"  
+                                <TextBox Text="{Binding PressSlowdown,        StringFormat={}{0:#0.00'%'}}"  
                                      Margin="125 2 0 2" IsEnabled="False" FontWeight="Bold"
                                      HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="5" Width="60" 
                                      FontSize="12" />
 
-                            <TextBox Text="{Binding CollatorSlowdown,     StringFormat={}{0:#0.00'%'}}"  
+                                <TextBox Text="{Binding CollatorSlowdown,     StringFormat={}{0:#0.00'%'}}"  
                                      Margin="125 2 0 2" IsEnabled="False" FontWeight="Bold"
                                      HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="5" Width="60" 
                                      FontSize="12" />
 
-                            <TextBox Text="{Binding BinderySlowdown,      StringFormat={}{0:#0.00'%'}}"  
+                                <TextBox Text="{Binding BinderySlowdown,      StringFormat={}{0:#0.00'%'}}"  
                                      Margin="125 2 0 2" IsEnabled="False" FontWeight="Bold"
                                      HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="5" Width="60" 
                                      FontSize="12" />
-                        </Grid>
+                            </Grid>
 
-                        <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
-                            <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
-                            <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
-                        </StackPanel>
+                            <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
+                                <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
+                                <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
+                            </StackPanel>
                         </StackPanel>
 
                         <Grid Grid.Row="3" Grid.ColumnSpan="3">
@@ -2087,9 +2084,19 @@
                 <TabItem x:Name="Page5" VerticalAlignment="Top"
                          Header="  Page _5  " Height="24" IsEnabled="False" FontSize="16" >
 
-                    <!--<Viewbox Height="660" Width="800" VerticalAlignment="Top">-->
-
                     <Grid Height="650" Width="800" VerticalAlignment="Top" Margin="0 10 0 0">
+
+                        <Grid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="11" />
+                                <Setter Property="Foreground" Value="Blue" />
+                            </Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="11" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </Grid.Resources>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="155" />
@@ -2106,40 +2113,51 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" >
+
                             <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                <Label Content="ESTIMATED PRODUCTION ORDER FOR: " />
-                                <TextBlock Text="{Binding Customer}" Width="248" VerticalAlignment="Center" />
-                                <Label Content="ESTIMATE #:" Width="125" />
+                                <StackPanel Orientation="Horizontal" Width="500">
+                                    <Label Content="ESTIMATED PRODUCTION ORDER FOR: " />
+                                    <TextBlock Text="{Binding Customer}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Label Content="ESTIMATE #:" Width="100" />
                                 <TextBlock Text="{Binding QUOTE_NUM}" VerticalAlignment="Center" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                <Label Content="ACCOUNT #: " />
-                                <TextBlock Text="{Binding CUST_NUMB}" Width="435" VerticalAlignment="Center" />
-                                <Label Content="ESTIMATE DATE:" Width="125" />
+                                <StackPanel Orientation="Horizontal" Width="500">
+                                    <Label Content="ACCOUNT #: " />
+                                    <TextBlock Text="{Binding CUST_NUMB}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Label Content="ESTIMATE DATE:" Width="100" />
                                 <TextBlock Text="{Binding Date}" VerticalAlignment="Center" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                <Label Content="PHONE #: " />
-                                <TextBlock Text="{Binding Phone}" Width="166" VerticalAlignment="Center"  />
-                                <Label Content="CONTACT: " />
-                                <TextBlock Text="{Binding ContactName}" Width="200" VerticalAlignment="Center"  />
-                                <Label Content="PRINT DATE: " Width="125"/>
+                                <StackPanel Orientation="Horizontal" Width="500">
+                                    <Label Content="PHONE #: " />
+                                    <TextBlock Text="{Binding Phone}" Width="166" VerticalAlignment="Center"  />
+                                    <Label Content="CONTACT: " />
+                                    <TextBlock Text="{Binding ContactName}" VerticalAlignment="Center"  />
+                                </StackPanel>
+                                <Label Content="PRINT DATE: " Width="100"/>
                                 <TextBlock Text="{Binding PrintDate}" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                <Label Content="SALES REP: " />
-                                <TextBlock Text="{Binding SalesRep}" Width="448" />
-                                <Label Content="STD:" Width="125" />
+                                <StackPanel Orientation="Horizontal" Width="500">
+                                    <Label Content="SALES REP: " />
+                                    <TextBlock Text="{Binding SalesRep}" />
+                                </StackPanel>
+                                <Label Content="STD:" Width="100" />
                                 <TextBlock Text="{Binding Standard}" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                <Label Content="DESCRIPTION: " />
-                                <TextBlock Text="{Binding Desc}" Width="425" />
-                                <Label Content="ESTIMATOR:" Width="125" />
+                                <StackPanel Orientation="Horizontal" Width="500">
+                                    <Label Content="DESCRIPTION: " />
+                                    <TextBlock Text="{Binding Desc}" />
+                                </StackPanel>
+                                <Label Content="ESTIMATOR:" Width="100" />
                                 <TextBlock Text="{Binding Estimator}" />
                             </StackPanel>
 
@@ -2170,8 +2188,6 @@
                         </StackPanel>
 
                     </Grid>
-
-                    <!--</Viewbox>-->
 
                 </TabItem>
 

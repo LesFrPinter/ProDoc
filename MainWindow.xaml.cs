@@ -19,7 +19,12 @@ namespace ProDocEstimate
         public MainWindow() { 
 			InitializeComponent();
 
-            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
+            PreviewKeyDown += (s, e) => 
+            { if (e.Key == Key.Escape)
+                Application.Current.Shutdown();
+                return;
+            //  Close();
+            };
         }
 
 		public void OnLoad(object sender, RoutedEventArgs e)
@@ -30,11 +35,9 @@ namespace ProDocEstimate
             FeatureZoom = 0.0F;
             if (ScreenWidth < 1200) { FeatureZoom = 0.1F; }
             else
-            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.4F; }
+            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.8F; }
             else
             { FeatureZoom = 0.3F; }
-
-//            FeatureZoom = 0.0F; // don't zoom until you have this figured out
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);

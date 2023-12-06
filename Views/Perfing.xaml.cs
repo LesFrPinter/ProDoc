@@ -223,12 +223,12 @@ namespace ProDocEstimate.Views
 
             for (int i = 0; i < dv.Count; i++)
             {
-                t1 = 0.00F; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge += t1;
-                t2 = 0.00F; float.TryParse(dv[i]["RUN_CHARGE"].ToString(), out t2); BaseRunCharge += t2;
-                t3 = 0.00F; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3;
-                t4 = 0.00F; float.TryParse(dv[i]["CONV_MATL"].ToString(), out t4); BaseConvCharge += t4;
-                t5 = 0.00F; float.TryParse(dv[i]["PLATE_MATL"].ToString(), out t5); BasePlateCharge += t5;
-                t6 = 0.00F; float.TryParse(dv[i]["PRESS_MATL"].ToString(), out t6); BasePressCharge += t6;
+                t1 = 0.00F; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge       += t1;
+                t2 = 0.00F; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),  out t2); BaseRunCharge        += t2;
+                t3 = 0.00F; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge     += t3;
+                t4 = 0.00F; float.TryParse(dv[i]["CONV_MATL"].ToString(),   out t4); BaseConvCharge       += t4;
+                t5 = 0.00F; float.TryParse(dv[i]["PLATE_MATL"].ToString(),  out t5); BasePlateCharge      += t5;
+                t6 = 0.00F; float.TryParse(dv[i]["PRESS_MATL"].ToString(),  out t6); BasePressCharge      += t6;
 
                 l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup       += l1;
                 l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"]   .ToString(), out l2); BaseCollatorSetup    += l2;
@@ -273,16 +273,15 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-            //            if (Starting) return;
-            PressSetup = BasePressSetup + LabPS;
-            CollatorSetup = BaseCollatorSetup + LabCS;
-            BinderySetup = BaseBinderySetup + LabBS;
-            SetupTotal = (int)PressSetup + CollatorSetup + BinderySetup;
+            PressSetup       = BasePressSetup       + LabPS;
+            CollatorSetup    = BaseCollatorSetup    + LabCS;
+            BinderySetup     = BaseBinderySetup     + LabBS;
+            SetupTotal       = (int)PressSetup      + CollatorSetup    + BinderySetup;
 
-            PressSlowdown = BasePressSlowdown + LabPSL;
+            PressSlowdown    = BasePressSlowdown    + LabPSL;
             CollatorSlowdown = BaseCollatorSlowdown + LabCSL;
-            BinderySlowdown = BaseBinderySlowdown + LabBSL;
-            SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
+            BinderySlowdown  = BaseBinderySlowdown  + LabBSL;
+            SlowdownTotal    = PressSlowdown        + CollatorSlowdown + BinderySlowdown;
         }
 
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -311,7 +310,7 @@ namespace ProDocEstimate.Views
                 + $" 'Part Cross',   'Cross',           'Part Run',      'Running',         '{PartCross}',       '{Cross}',          '{PartRun}',       '{Running}', "
                 + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}',"
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
-                + $"  {PressSetup},  {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
+                + $" {PressSetup},  {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
 
             scmd.CommandText = cmd;
             conn.Open();
@@ -326,7 +325,7 @@ namespace ProDocEstimate.Views
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
                 + "   AND CATEGORY   = 'Perfing'";
             scmd.CommandText = cmd;
             conn.Open();

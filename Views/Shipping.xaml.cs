@@ -29,8 +29,6 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        // TODO: Load the default charges from the SHIPPING table
-
         public Shipping(string QUOTENUM)
         {
             InitializeComponent();
@@ -40,7 +38,7 @@ namespace ProDocEstimate.Views
 
             LoadData();
 
-            PreviewKeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Escape) Close(); };  // ESC key activated
+            PreviewKeyDown += (s, e) => { if (e.Key == System.Windows.Input.Key.Escape) Close(); };
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)

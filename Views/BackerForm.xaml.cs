@@ -110,41 +110,6 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        #region Notes
-        // Data that I changed for testing:
-        //    UPDATE FEATURES
-        //       SET FINISH_MATL = '20',
-        //           PRESS_MATL  = '30',
-        //           CONV_MATL   = '40'
-        //     WHERE CATEGORY    = 'BACKER'
-        //       AND PRESS_SIZE  = '11'
-
-        // SQL command to create testdata for the LABOR calculations:
-        //    UPDATE FEATURES
-        //    SET
-        //    PRESS_SETUP_TIME  = .25,
-        //    COLLATOR_SETUP    = .30,
-        //    BINDERY_SETUP     = .40,
-        //    PRESS_SLOWDOWN    =  25, -- NEXT 3 ARE PERCENTAGES
-        //    COLLATOR_SLOWDOWN =  33,
-        //	  SLOWDOWN_PER_PART =  50    -- BINDERY_SLOWDOWN
-        //    WHERE CATEGORY    = 'BACKER'
-        //	  AND PRESS_SIZE    = '11'
-
-        // Columns added to QUOTE_DETAILS to support added labor calculations:
-
-        //ALTER TABLE QUOTE_DETAILS ADD PRESS_MIN_PCT    INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD COLL_MIN_PCT     INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD BIND_MIN_PCT     INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD PRESS_SLOW_PCT   INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD COLL_SLOW_PCT    INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD BIND_SLOW_PCT    INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD SETUP_MINUTES    INTEGER NOT NULL DEFAULT 0;
-        //ALTER TABLE QUOTE_DETAILS ADD SLOWDOWN_PERCENT INTEGER NOT NULL DEFAULT 0;
-        #endregion
-
-        //TODO: Even if there are no changes, add 1 backer to calculate PLATE MATERIAL
-
         public BackerForm(string PSize, string QUOTENUM)
         {
             InitializeComponent();
@@ -378,9 +343,9 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {PressSetup},       "
-                + $"     Converting         = {CollatorSetup},    "
-                + $"     Finishing          = {BinderySetup}      "
+                + $"     Press              = {CalculatedPressCharge}, "
+                + $"     Converting         = {CalculatedConvCharge},  "
+                + $"     Finishing          = {CalculatedFinishCharge} "
                 + $" WHERE Quote_Num = '{QuoteNo}' "
                 + "   AND CATEGORY   = 'Finishing'";
             scmd.CommandText = cmd;

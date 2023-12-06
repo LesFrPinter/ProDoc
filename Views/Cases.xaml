@@ -63,6 +63,7 @@
                      IsChecked="{Binding Standard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <RadioButton x:Name="chkCustom"   Content="Custom"   GroupName="x" Grid.Row="2" Grid.Column="1" FontSize="16" 
                      IsChecked="{Binding Custom,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
         <TextBox  
             x:Name="txtCustomCost"
             Grid.Row="2" 

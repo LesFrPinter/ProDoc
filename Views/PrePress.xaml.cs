@@ -18,21 +18,6 @@ namespace ProDocEstimate.Views
 
         #region Properties
 
-        // TEST DATA ADDED TO THE FEATURES table
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 3 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 1 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 6 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 2 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 9 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 3 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 12 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 4 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 15 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 5 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 18 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 6 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 21 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 7 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 24 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 8 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 27 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 9 AND F_TYPE = 'PLATE CHG'
-        //UPDATE FEATURES SET PRESS_SETUP_TIME = 30 WHERE CATEGORY = 'PREPRESS-OE' and PRESS_SIZE = '11' AND NUMBER = 10 AND F_TYPE = 'PLATE CHG'
-
-        //UPDATE FEATURES SET COLLATOR_SETUP = 10, BINDERY_SETUP = 20, PRESS_SLOWDOWN = 30, COLLATOR_SLOWDOWN = 40, BINDERY_SLOWDOWN = 50
-        //  WHERE CATEGORY = 'PREPRESS-OE' AND PRESS_SIZE = '11'
-
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
         public SqlDataAdapter? da;
@@ -239,33 +224,34 @@ namespace ProDocEstimate.Views
 
             for (int i = 0; i < dv.Count; i++)
             {
-                float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"].ToString(), out t1); BaseFlatCharge   += t1;
-                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"].ToString(),  out t2); BaseRunCharge    += t2;
-                float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"].ToString(), out t3); BaseFinishCharge += t3;
-                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"].ToString(),   out t4); BaseConvCharge   += t4;
-                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"].ToString(),  out t5); BasePlateCharge  += t5;
-                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"].ToString(),  out t6); BasePressCharge  += t6;
+                float t1 = 0; float.TryParse(dv[i]["FLAT_CHARGE"]  .ToString(), out t1); BaseFlatCharge      += t1;
+                float t2 = 0; float.TryParse(dv[i]["RUN_CHARGE"]   .ToString(), out t2); BaseRunCharge       += t2;
+                float t3 = 0; float.TryParse(dv[i]["FINISH_MATL"]  .ToString(), out t3); BaseFinishCharge    += t3;
+                float t4 = 0; float.TryParse(dv[i]["CONV_MATL"]    .ToString(), out t4); BaseConvCharge      += t4;
+                float t5 = 0; float.TryParse(dv[i]["PLATE_MATL"]   .ToString(), out t5); BasePlateCharge     += t5;
+                float t6 = 0; float.TryParse(dv[i]["PRESS_MATL"]   .ToString(), out t6); BasePressCharge     += t6;
 
-                int l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"].ToString(), out l1); BasePressSetup = l1;
-                int l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"].ToString(), out l2); BaseCollatorSetup = l2;
-                int l3 = 0; int.TryParse(dv[i]["BINDERY_SETUP"].ToString(), out l3); BaseBinderySetup = l3;
-                int l4 = 0; int.TryParse(dv[i]["PRESS_SLOWDOWN"].ToString(), out l4); BasePressSlowdown = l4;
+                int l1 = 0; int.TryParse(dv[i]["PRESS_SETUP_TIME"] .ToString(), out l1); BasePressSetup       = l1;
+                int l2 = 0; int.TryParse(dv[i]["COLLATOR_SETUP"]   .ToString(), out l2); BaseCollatorSetup    = l2;
+                int l3 = 0; int.TryParse(dv[i]["BINDERY_SETUP"]    .ToString(), out l3); BaseBinderySetup     = l3;
+                int l4 = 0; int.TryParse(dv[i]["PRESS_SLOWDOWN"]   .ToString(), out l4); BasePressSlowdown    = l4;
                 int l5 = 0; int.TryParse(dv[i]["COLLATOR_SLOWDOWN"].ToString(), out l5); BaseCollatorSlowdown = l5;
-                int l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"].ToString(), out l6); BaseBinderySlowdown = l6;
+                int l6 = 0; int.TryParse(dv[i]["BINDERY_SLOWDOWN"] .ToString(), out l6); BaseBinderySlowdown  = l6;
 
+//                MessageBox.Show( BasePressSetup.ToString(), "BasePressSetup" );
             }
 
             CalcTotal();
         }
 
         private void CalcTotal()
-        {
-            CalculatedFlatCharge = BaseFlatCharge * (1 + FlatChargePct / 100);
-            CalculatedRunCharge = BaseRunCharge * (1 + RunChargePct / 100);
-            CalculatedPlateCharge = BasePlateCharge * (1 + PlateChargePct / 100);
+        { 
+            CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100);
+            CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct    / 100);
+            CalculatedPlateCharge  = BasePlateCharge  * (1 + PlateChargePct  / 100);
             CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100);
-            CalculatedPressCharge = BasePressCharge * (1 + PressChargePct / 100);
-            CalculatedConvCharge = BaseConvCharge * (1 + ConvChargePct / 100);
+            CalculatedPressCharge  = BasePressSetup   * (1 + PressChargePct  / 100);        // Should this be BasePressSetup?
+            CalculatedConvCharge   = BaseConvCharge   * (1 + ConvChargePct   / 100);
 
             FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
@@ -305,6 +291,12 @@ namespace ProDocEstimate.Views
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         { CalcTotal(); }
 
+        private void OE_Checked(object sender, RoutedEventArgs e)
+        { RadioButton li = (sender as RadioButton); OE = li.Content.ToString(); }
+
+        private void PP1_Checked(object sender, RoutedEventArgs e)
+        { RadioButton li = (sender as RadioButton); PP = li.Content.ToString(); }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string cmd = $"DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '{QuoteNum}' AND Category = 'PrePress'";
@@ -316,16 +308,16 @@ namespace ProDocEstimate.Views
 
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 +  "  Quote_Num,      Category,          Sequence,"
-                +  "  Param1,         Param2,            Param3,          Value1,             Value2,              Value3,"
+                +  "  Param1,         Param2,            Param3,          Value1,             Value2,              Value3, "
                 +  "  FlatCharge,     FlatChargePct,     RunChargePct,    PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct, TotalFlatChg,   PerThousandChg,         SlowDown_Percent,"
                 + "  PRESS_ADDL_MIN,  COLL_ADDL_MIN,     BIND_ADDL_MIN,   PRESS_SLOW_PCT,     COLL_SLOW_PCT,       BIND_SLOW_PCT,  "
-                + "   PressSetupMin,  PressSlowPct,      CollSetupMin,    CollSlowPct,        BindSetupMin,        BindSlowPct   ) "
+                + "   PressSetupMin,  PressSlowPct,      CollSetupMin,    CollSlowPct,        BindSetupMin,        BindSlowPct,        PrePress ) "
                 + " VALUES ( "
                 + $"'{QuoteNum}',    'PrePress',         7,"
-                + $" 'OE',           'Plate Chg',       'PrePress',     '{OE}',             '{PlateChg}',        '{PP}',"
+                + $" 'OE',           'Plate Chg',       'PrePress',     '{OE}',             '{PlateChg}',        '{PP}', "
                 + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}', {SlowdownTotal}, "
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
-                + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
+                + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown},  {FlatTotal} )";
 
             scmd.CommandText = cmd;
             conn.Open();
@@ -340,8 +332,14 @@ namespace ProDocEstimate.Views
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
                 +  "   AND CATEGORY  = 'PrePress'" ;
+
+// These were already correct!
+//+ $"     Press              = {PressSetup},       "
+//+ $"     Converting         = {CollatorSetup},    "
+//+ $"     Finishing          = {BinderySetup}      "
+
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
@@ -353,12 +351,6 @@ namespace ProDocEstimate.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { Close(); }
-
-        private void OE_Checked(object sender, RoutedEventArgs e)
-          { RadioButton li = (sender as RadioButton); OE = li.Content.ToString(); }
-
-        private void PP1_Checked(object sender, RoutedEventArgs e)
-          { RadioButton li = (sender as RadioButton); PP = li.Content.ToString(); }
 
     }
 }

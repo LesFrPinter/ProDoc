@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -189,7 +190,6 @@ namespace ProDocEstimate
         private float? pSize; public float? PSize { get { return pSize; } set { pSize = value; OnPropertyChanged(); } }
         private float? cSize; public float? CSize { get { return cSize; } set { cSize = value; OnPropertyChanged(); } }
 
-        // TODO: Is this a valid default value?
         private int qty1 = 1000; public int Qty1 { get { return qty1; } set { qty1 = value; OnPropertyChanged(); } }
         private int qty2 = 0; public int Qty2 { get { return qty2; } set { qty2 = value; OnPropertyChanged(); } }
         private int qty3 = 0; public int Qty3 { get { return qty3; } set { qty3 = value; OnPropertyChanged(); } }
@@ -270,8 +270,13 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
-            this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
+            //this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            //this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
+
+            // See if this looks good on Sylvia's screen:
+
+            this.Height = this.Height *= 1.2F;
+            this.Width = this.Width *= 1.2F;
             Top = 15;
         }
 
@@ -356,8 +361,6 @@ namespace ProDocEstimate
 
         private void AddDefaultDetailLines()
         {
-            //TODO Add other features installed by default 
-
             // Don't add them twice
             string cmd = $"SELECT COUNT(*) AS HowMany FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = {QUOTE_NUM}";
             conn = new SqlConnection(ConnectionString); conn.Open();
@@ -371,14 +374,13 @@ namespace ProDocEstimate
                 + $" VALUES ( '{QUOTE_NUM}', '8',      'PrePress', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New',   '0.0'    )";
             // See if some other default value for 'PerThousandChg' should be used
 
-            // TODO: Insert the default charges from the SHIPPING table
             conn.Open();
             scmd = new SqlCommand(cmd, conn);
             scmd.ExecuteNonQuery();
             conn.Close();
 
             cmd = $"INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
-                + "        (   QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+                +  "        (   QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
                 + $" VALUES ( '{QUOTE_NUM}', '8',      'Shipping', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )";
 
             conn.Open();
@@ -434,10 +436,11 @@ namespace ProDocEstimate
         {
             switch (Tabs.SelectedIndex)
             {
-                case 0: ActivePage = "Base"; lblPageName.Content = "Base"; OnPropertyChanged("ActivePage"); break;
-                case 1: ActivePage = "Details"; lblPageName.Content = "Details"; OnPropertyChanged("ActivePage"); break;
-                case 2: ActivePage = "Features"; lblPageName.Content = "Features"; OnPropertyChanged("ActivePage"); break;
-                case 3: ActivePage = "Pricing"; lblPageName.Content = "Pricing"; OnPropertyChanged("ActivePage"); break;
+                case 0: ActivePage = "Base";     lblPageName.Content = "Base";      OnPropertyChanged("ActivePage"); break;
+                case 1: ActivePage = "Details";  lblPageName.Content = "Details";   OnPropertyChanged("ActivePage"); break;
+                case 2: ActivePage = "Features"; lblPageName.Content = "Features";  OnPropertyChanged("ActivePage"); break;
+                case 3: ActivePage = "Pricing";  lblPageName.Content = "Pricing";   OnPropertyChanged("ActivePage"); break;
+                case 4: ActivePage = "Details";  lblPageName.Content = "Summary";   OnPropertyChanged("ActivePage"); break;
             }
         }
 
@@ -488,7 +491,7 @@ namespace ProDocEstimate
         private void LoadSubWT()
         {
             if (PAPERTYPE is null) return;
-            if (ItemType is null) return; // { MessageBox.Show("ItemType is null", "Why?"); Debugger.Break(); }
+            if (ItemType is null)  return;
             string str =
                   "SELECT DISTINCT CONVERT(float, SubWT) AS SubWT FROM[ProVisionDev].[dbo].MasterInventory"
                 + $" WHERE ReportType = '{PAPERTYPE}'"
@@ -607,6 +610,7 @@ namespace ProDocEstimate
                 DataRow dr = dt.Rows[0];
                 DataRowView drv = dt.DefaultView[dt.Rows.IndexOf(dr)];
                 CustomerName = drv["CUST_NAME"].ToString().TrimEnd();
+                Customer = CustomerName;
                 ContactName = drv["CONTACT_NAME"].ToString();
                 Address = drv["ADDRESS1"].ToString();
                 Phone = drv["PHONE"].ToString();
@@ -893,7 +897,7 @@ namespace ProDocEstimate
             int in2 = Desc.IndexOf(' ', in1 + 1); // get the index of second blank space
             int in3 = Desc.IndexOf(' ', in2 + 1); // get the index of third blank space
             string s2 = Desc.Substring(in3 + 1);
-            ROLLWIDTH = s2;
+            ROLLWIDTH = s2.TrimEnd();               // 12/06/2023 8:30 Before I added ".TrimEnd()", assigned value didn't match the trimmed value in the Items list...
             lblRollWidth.Content = ROLLWIDTH.ToString().TrimEnd();
 
             // Insert the value in the selected column into the "SelectedCost" column (12)
@@ -909,7 +913,7 @@ namespace ProDocEstimate
                 if (idx < 12 || idx > 14) return;    // Only three of the columns should be clickable
                 txtItemType.IsDropDownOpen = false;  // collapse the ItemType dropdown
                 dataRow[15] = dataRow[idx];          // Use the value they clicked as the "cost to use"
-                                                     // This assumes that only one cost was not assigned; TODO:
+                                                     // This assumes that only one cost was not assigned;
                 CostMessage.Visibility = Visibility.Hidden;
 
             }
@@ -980,7 +984,7 @@ namespace ProDocEstimate
 
             CalculateCosts(TestDesc);
 
-            if (txtColor.Text.Length == 0) { txtColor.Text = lblColor.Content.ToString().TrimEnd(); } // TODO: If they left fields unchanged
+            if (txtColor.Text.Length == 0) { txtColor.Text = lblColor.Content.ToString().TrimEnd(); }
             if (txtBasis.Text.Length == 0) { txtBasis.Text = lblBasis.Content.ToString().TrimEnd(); }
             if (txtRollWidth.Text.Length == 0) { txtRollWidth.Text = lblRollWidth.Content.ToString().TrimEnd(); }
 
@@ -1402,7 +1406,7 @@ namespace ProDocEstimate
                 //                string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
                 string suffix = (RowTotal > 0) ? " " + "🗹" : string.Empty;
 
-                if (i < lstSelected.Items.Count)
+                if (i <= lstSelected.Items.Count)
                 {
                     lstSelected.Items[i] = lstSelected.Items[i].ToString() + (" ").PadRight(20);
                     lstSelected.Items[i] = lstSelected.Items[i].ToString().Substring(0, 17) + suffix;
@@ -1548,61 +1552,86 @@ namespace ProDocEstimate
             }
         }
 
-        private void Page4_GotFocus(object sender, RoutedEventArgs e)
+        private void Page4_GotFocus(object sender, RoutedEventArgs e) { DoPage4(); }
+
+        private void DoPage4()
         {
             string cmd = "";
-            //if(DVFeat==null || dgFeatures.ItemsSource==null)
-            {
-                cmd =  "SELECT Category, "
-                    +  "Category, "
-                    +  "Cost, "
-                    +  "PrePress, "
-                    +  "Press, "
-                    +  "Converting, "
-                    +  "Finishing, "
-                    +  "PressSlowdown, "
-                    +  "ConvertingSlowdown, "
-                    +  "FinishingSlowdown "
-                    + $" FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
 
-                SqlConnection conn = new SqlConnection(ConnectionString);
-                da = new SqlDataAdapter(cmd, conn);
-                dt = new DataTable("Features");
-                da.Fill(dt);
+            float Amount = 0.0F;
+            float Make_Ready_Ink = 0.0F;
 
-                DVFeat = dt.DefaultView;
-                dgFeatures.ItemsSource = null;
-                dgFeatures.Items.Clear();
-                dgFeatures.ItemsSource = DVFeat;
-            }
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            cmd = $"SELECT Amount, Make_Ready_Ink FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Ink Color'";
+            SqlDataAdapter da51 = new SqlDataAdapter(cmd, conn);
+            DataTable dt51 = new DataTable("Features");
+            da51.Fill(dt51);
+            if (dt51.Rows.Count > 0) { Amount = float.Parse(dt51.Rows[0]["Amount"].ToString()); Make_Ready_Ink = float.Parse(dt51.Rows[0]["Make_Ready_Ink"].ToString()); }
 
-            // TODO: Sum the columns' values into the cells at the bottom of page 4
-            PressSlowdown    = 0;
+            float PressSetupLaborPerfing = 0.0F; float PressSetupMin = 0.0F;
+
+            cmd = $"SELECT TotalFlatChg, PressSetupMin FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Perfing'";
+            SqlDataAdapter da52 = new SqlDataAdapter(cmd, conn);
+            DataTable dt52 = new DataTable("Perf");
+            da52.Fill(dt52);
+            if (dt52.Rows.Count > 0) 
+               { PressSetupLaborPerfing = float.Parse(dt52.Rows[0]["TotalFlatChg"] .ToString());
+                 PressSetupMin          = float.Parse(dt52.Rows[0]["PressSetupMin"].ToString());    // convert to fraction of an hour before adding
+               }
+
+            cmd = "SELECT Category, "
+                + "Category, "
+                + "Cost, "
+                + "PrePress, "
+                + "Press, "
+                + "Converting, "
+                + "Finishing, "
+                + "PressSlowdown, "
+                + "ConvertingSlowdown, "
+                + "FinishingSlowdown "
+                + $" FROM[ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+
+            da = new SqlDataAdapter(cmd, conn);
+            dt = new DataTable("Features");
+            da.Fill(dt);
+
+            DVFeat = dt.DefaultView;
+            dgFeatures.ItemsSource = null;
+            dgFeatures.Items.Clear();
+            dgFeatures.ItemsSource = DVFeat;
+
+            // Sum the columns' values into the cells at the bottom of page 4
+            PressSlowdown = 0;
             CollatorSlowdown = 0;
-            BinderySlowdown  = 0;
+            BinderySlowdown = 0;
 
-            for (int i = 0; i < DVFeat.Count; i++ )
-            { 
+            for (int i = 0; i < DVFeat.Count; i++)
+            {
                 PressSlowdown    += float.Parse(DVFeat[i]["PressSlowdown"].ToString());
                 CollatorSlowdown += float.Parse(DVFeat[i]["ConvertingSlowdown"].ToString());
                 BinderySlowdown  += float.Parse(DVFeat[i]["FinishingSlowdown"].ToString());
+
+                // Probably better to prevent inserting a value into the "Converting" column in the "Converting" screen
+                if (DVFeat[i]["Category"].ToString() == "Converting") { DVFeat[i]["Converting"] = 0.0F; }
+                if (DVFeat[i]["Category"].ToString() == "Ink Color")  { DVFeat[i]["Press"] = (SelectedQty * Amount) + Make_Ready_Ink; }
+                if (DVFeat[i]["Category"].ToString() == "Perfing")    { DVFeat[i]["Press"] = PressSetupLaborPerfing; }
             }
 
             // TODO: Apply sums of adjustments to calculated totals
             AdjPressRunTime = PressRunTime * (1.0F + (PressSlowdown    / 100.0F));
             AdjPressRunCost = PressRunCost * (1.0F + (PressSlowdown    / 100.0F));
 
-            AdjCollRunTime = CollRunTime   * (1.0F + (CollatorSlowdown / 100.0F));
-            AdjCollRunCost = CollRunCost   * (1.0F + (CollatorSlowdown / 100.0F));
+            AdjCollRunTime  = CollRunTime  * (1.0F + (CollatorSlowdown / 100.0F));
+            AdjCollRunCost  = CollRunCost  * (1.0F + (CollatorSlowdown / 100.0F));
 
-            AdjBindRunTime = BindRunTime   * (1.0F + (BinderySlowdown  / 100.0F));
-            AdjBindRunCost = BindRunCost   * (1.0F + (BinderySlowdown  / 100.0F));
+            AdjBindRunTime  = BindRunTime  * (1.0F + (BinderySlowdown  / 100.0F));
+            AdjBindRunCost  = BindRunCost  * (1.0F + (BinderySlowdown  / 100.0F));
 
             //-----------------------------------------------------
             // Finishing
             //-----------------------------------------------------
 
-            cmd = "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 AS LinearInchCostCello, Value7 AS LinearInchCostBooks "
+            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 AS LinearInchCostCello, Value7 AS LinearInchCostBooks "
                 + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
             SqlDataAdapter da8 = new SqlDataAdapter(cmd, conn);
@@ -1642,6 +1671,12 @@ namespace ProDocEstimate
                 }
 
                 BinderyMaterialCost = TotalBookCost + TotalCelloCost;           // Which I'm told will "almost never" happen...
+
+                //TODO: Copy this to the Finishing column of the Finishing row of DVFeat, then set it to zero
+                DVFeat.RowFilter = "Category = 'Finishing'";
+                DVFeat[0]["Finishing"] = BinderyMaterialCost;
+                BinderyMaterialCost = 0.00F;
+                DVFeat.RowFilter = "";  // Turn the filter off
             }
 
             // ******************
@@ -1660,13 +1695,13 @@ namespace ProDocEstimate
             cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'CONVERTING'";
             SqlDataAdapter da21 = new SqlDataAdapter(cmd, conn);
             DataTable dt21 = new DataTable("conv"); da21.Fill(dt21);
-            if(dt21.Rows.Count>0)
+            if (dt21.Rows.Count > 0)
             {
                 cmd = $"SELECT CONV_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'CONVERTING' AND F_TYPE = 'TRANSFER TAPE'";
                 SqlDataAdapter da12 = new SqlDataAdapter(cmd, conn);
                 DataTable dt12 = new DataTable("conv"); da12.Fill(dt12);
                 DataView dvy = dt12.DefaultView;
-                float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());
+                float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());  // 0.0240 where F_TYPE = 'TRANSFER TAPE'
 
                 // THIS IS FOR TRANSFER TAPE:
                 StringToNumber sTOn = new StringToNumber();
@@ -1881,6 +1916,7 @@ namespace ProDocEstimate
                 SellPrice1 = ((float)Qty1 / 1000.0F) * float.Parse(CPM1a.ToString());
                 if (MkUpPct1 > 0.0F) { SellPrice1 *= (100.0F + MkUpPct1) / 100.0F; }
                 if (MkUpAmt1 > 0.0F) { SellPrice1 += MkUpAmt1; }
+                DoPage4();
             }
         }
 
@@ -1895,6 +1931,7 @@ namespace ProDocEstimate
                 SellPrice2 = ((float)Qty2 / 1000.0F) * float.Parse(CPM2a.ToString());
                 if (MkUpPct2 > 0.0F) { SellPrice2 *= (100.0F + MkUpPct2) / 100.0F; }
                 if (MkUpAmt2 > 0.0F) { SellPrice2 += MkUpAmt2; }
+                DoPage4();
             }
         }
 
@@ -1909,6 +1946,7 @@ namespace ProDocEstimate
                 SellPrice3 = ((float)Qty3 / 1000.0F) * float.Parse(CPM3a.ToString());
                 if (MkUpPct3 > 0.0F) { SellPrice3 *= (100.0F + MkUpPct3) / 100.0F; }
                 if (MkUpAmt3 > 0.0F) { SellPrice3 += MkUpAmt3; }
+                DoPage4();
             }
         }
 
@@ -1923,6 +1961,7 @@ namespace ProDocEstimate
                 SellPrice4 = ((float)Qty4 / 1000.0F) * float.Parse(CPM4a.ToString());
                 if (MkUpPct4 > 0.0F) { SellPrice4 *= (100.0F + MkUpPct4) / 100.0F; }
                 if (MkUpAmt4 > 0.0F) { SellPrice4 += MkUpAmt4; }
+                DoPage4();
             }
         }
 
@@ -1941,7 +1980,6 @@ namespace ProDocEstimate
 
         private void Labor_Calc()
         {
-
             string rw = ROLLWIDTH;
 
             float FeetPerPart = (float.Parse(SelectedQty.ToString()) * DecimalCollatorCut) / 12.0F;
@@ -1967,7 +2005,7 @@ namespace ProDocEstimate
             if (dv2.Count > 0)
             {
                 if ((dv2[0]["SETUPMINUTES"].ToString() != null)
-                  && (dv2[0]["SETUPMINUTES"].ToString().Length > 0))
+                 && (dv2[0]["SETUPMINUTES"].ToString().Length > 0))
                 {
                     SumSetupMin = int.Parse(dv2[0]["SETUPMINUTES"].ToString());
                     SumSlowDown = int.Parse(dv2[0]["SLOWDOWN_PERCENT"].ToString());
@@ -1984,17 +2022,28 @@ namespace ProDocEstimate
             hrs += .01F;    // In case hrs = .50 (.5 rounds down, .51 rounds up), force it to round up 
             Hrs = (float)Math.Round(hrs, 1);
 
-            //TODO: Adjust for Press 2 up, Converter 3 up
             int NumWide = int.Parse(NumWidePress.ToString());
 
             Hrs = Hrs / NumWide;
 
-            DollarsPerHr = Hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());    // TODO: Why was this "hrs" instead of "Hrs" ?
+            DollarsPerHr = Hrs * float.Parse(dv1[0]["DollarsPerHr"].ToString());
             PressRunTime = Hrs;
             PressRunCost = DollarsPerHr;
 
             float SetupHrs = ((float)SumSetupMin + (float)SetupMins) / 60.0F;
             PressSetupTime = SetupHrs; // make sure this is a FLOAT
+
+            float PressSetupMin = 0.0F;
+
+            //TODO: Perfing adjustment
+            cmd = $"SELECT PressSetupMin FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Perfing'";
+            SqlDataAdapter da53 = new SqlDataAdapter(cmd, conn);
+            DataTable dt53 = new DataTable("Perf");
+            da53.Fill(dt53);
+            if (dt53.Rows.Count > 0) { PressSetupMin = float.Parse(dt53.Rows[0]["PressSetupMin"].ToString()); }
+
+            PressSetupTime += (PressSetupMin / 60.0F);    // convert to fraction of an hour first...
+
             float SetupDollars = float.Parse(dv1[0][7].ToString()) * SetupHrs;
             PressSetupCost = SetupDollars;
 
@@ -2019,7 +2068,8 @@ namespace ProDocEstimate
             //  int NumberOfRollChanges = float.Parse(dv3[0]["MaxRollChgQty"].ToString()) / (float)SelectedQty;
 
             cmd = $"SELECT SUM(CollSetupMin) AS SETUPMINUTES FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
-            DataAdapter da4 = new SqlDataAdapter(cmd, conn);
+
+            DataAdapter da4 = new SqlDataAdapter(cmd, ConnectionString);
             DataSet ds = new DataSet();
             DataTable dt4 = new DataTable();
             da4.Fill(ds);
@@ -2357,36 +2407,6 @@ namespace ProDocEstimate
             LoadItemTypes();
             if (PAPERTYPE.Length > 0) { LoadRollWidth(); }
         }
-
-        //public void SaveCheck(object sender, CancelEventArgs e)
-        //{
-        //    // Change this to populate two tables in a dataset...
-        //    string cmd = $"SELECT COUNT(*) FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
-        //    conn = new SqlConnection(ConnectionString); conn.Open();
-        //    DataTable dt21 = new DataTable(); SqlDataAdapter da21 = new SqlDataAdapter(cmd, conn); da21.Fill(dt21);
-        //    int numDetails = int.Parse(dt21.Rows[0][0].ToString());
-
-        //    cmd = $"SELECT COUNT(*) FROM [ESTIMATING].[dbo].[QUOTES] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
-        //    conn = new SqlConnection(ConnectionString); conn.Open();
-        //    DataTable dt22 = new DataTable(); SqlDataAdapter da22 = new SqlDataAdapter(cmd, conn); da22.Fill(dt22);
-        //    int numQuotes = int.Parse(dt22.Rows[0][0].ToString());
-
-        //    if ((numDetails > 0) && (numQuotes == 0))
-        //      { MessageBoxResult mbr = new MessageBoxResult();
-        //        mbr = MessageBox.Show("Quote not saved - save now?", "Save?",
-        //              MessageBoxButton.YesNoCancel,
-        //              MessageBoxImage.Question);
-
-        //        if (mbr == MessageBoxResult.Cancel) { return; }
-
-        //        if (mbr == MessageBoxResult.Yes) { SaveQuote(); }
-
-        //        if (mbr == MessageBoxResult.No)
-        //              { cmd = $"DELETE [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
-        //                if (conn.State == ConnectionState.Closed) { conn.Open(); };
-        //                scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close(); }
-        //      }
-        //}
 
         private void SaveCheck(object sender, RoutedEventArgs e)
         {

@@ -109,30 +109,12 @@ namespace ProDocEstimate.Views
 
         public Punching(string PRESSSIZE, string QUOTENUM)
         {
-            // Test data added by me:
-            // UPDATE FEATURES SET RUN_CHARGE = '2.00', PLATE_MATL = '10.00', FINISH_MATL = '10.00', PRESS_MATL = '20.00', CONV_MATL = '30.00'
-            //  WHERE CATEGORY = 'PUNCHING' AND PRESS_SIZE = '11'
-
-            // UPDATE FEATURES
-            //   SET
-            //     PRESS_SETUP_TIME  = 12,
-            //     PRESS_SLOWDOWN    = 10,
-            //     COLLATOR_SETUP    = 20,
-            //     COLLATOR_SLOWDOWN = 30,
-            //        BINDERY_SETUP  = 40,
-            //     BINDERY_SLOWDOWN  = 50
-            //  WHERE CATEGORY       = 'PUNCHING'
-            //    AND PRESS_SIZE     = '11'
-
-
             InitializeComponent();
             this.DataContext = this;
 
-            Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
 
-            //LoadMaxima();     // No longer needed; NumericUpDowns were changed to RadioButtons
             LoadData();
             GetCharges();   // needs parameter values loaded previously
 
@@ -264,7 +246,6 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-//            if (Starting) return;
             PressSetup = BasePressSetup + LabPS;
             CollatorSetup = BaseCollatorSetup + LabCS;
             BinderySetup = BaseBinderySetup + LabBS;
@@ -274,7 +255,6 @@ namespace ProDocEstimate.Views
             CollatorSlowdown = BaseCollatorSlowdown + LabCSL;
             BinderySlowdown = BaseBinderySlowdown + LabBSL;
             SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
-
         }
 
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -306,15 +286,15 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            cmd = "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
+            cmd =  "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY  = 'Punching'";
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
+                + "    AND CATEGORY  = 'Punching'";
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

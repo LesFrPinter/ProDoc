@@ -120,15 +120,10 @@ namespace ProDocEstimate.Views
 
         #endregion
 
-        // Test data that I added:
-        // UPDATE FEATURES SET PLATE_MATL = 10, FINISH_MATL = 20, PRESS_MATL = 30, CONV_MATL = 40 WHERE CATEGORY = 'PRESS NUMBERING' AND PRESS_SIZE = '11' 
-
         public PressNum(string PRESSSIZE, string QUOTENUM)
         {
             InitializeComponent();
             this.DataContext = this;
-
-            Title = "Quote #: " + QUOTENUM;
 
             QuoteNum  = QUOTENUM;
             PressSize = PRESSSIZE;
@@ -304,13 +299,13 @@ namespace ProDocEstimate.Views
 
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 +  "  Quote_Num,       Category,          Sequence," 
-                +  "  Param1,          Param2,            Param3,                 Param4,             Value1,         Value2,           Value3,            Value4,"
+                +  "  Param1,          Param2,            Param3,                 Param4,             Value1,         Value2,           Value3,            Value4, PrePress, "
                 +  "  TotalFlatChg,    FlatCharge,        PerThousandChg,         FlatChargePct,      RunChargePct,   PlateChargePct,   FinishChargePct,   ConvertChargePct, PressChargePct, SlowDown_Percent,"
                 + "   PRESS_ADDL_MIN,  PRESS_SLOW_PCT,    COLL_ADDL_MIN,          COLL_SLOW_PCT,      BIND_ADDL_MIN,  BIND_SLOW_PCT,  "
-                + "   PressSetupMin,   PressSlowPct,      CollSetupMin,       CollSlowPct,            BindSetupMin,   BindSlowPct   ) "
+                + "   PressSetupMin,   PressSlowPct,      CollSetupMin,           CollSlowPct,        BindSetupMin,   BindSlowPct   ) "
                 + " VALUES ( "
                 + $"'{QuoteNum}',     'PressNum',         6,"
-                + $" 'RED',           'BLK',              'INVISIBLE',           'RED TO FLUOR',     {Red},          {Blk},            {Inv},             {Flo},"
+                + $" 'RED',           'BLK',              'INVISIBLE',           'RED TO FLUOR',     {Red},          {Blk},            {Inv},             {Flo},   {FlatTotal},"
                 + $" {FlatTotal},     {FlatTotal},        {CalculatedRunCharge}, {FlatChargePct},    {RunChargePct}, {PlateChargePct}, {FinishChargePct}, {PressChargePct}, {ConvChargePct}, {SlowdownTotal}, "
                 + $" {LabPS},         {LabPSL},           {LabCS},               {LabCSL} ,          {LabBS},        {LabBSL}, "
                 + $" {PressSetup},    {PressSlowdown},    {CollatorSetup},       {CollatorSlowdown}, {BinderySetup}, {BinderySlowdown} )";
@@ -328,8 +323,8 @@ namespace ProDocEstimate.Views
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY   = 'PressNum'";
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
+                + "    AND CATEGORY  = 'PressNum'";
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }

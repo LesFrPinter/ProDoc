@@ -143,20 +143,15 @@ namespace ProDocEstimate.Views
         {
             InitializeComponent();
             this.DataContext = this;
-//            MessageBox.Show("1");
             Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
 
             Starting = true;
-//            MessageBox.Show("2");
 
             LoadMaxima();
-//            MessageBox.Show("3");
             LoadQuote();
-//            MessageBox.Show("4");
             LoadBaseValues();
-//            MessageBox.Show("5");
 
             Starting = false;
 
@@ -165,11 +160,9 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-//            MessageBox.Show("6");
             this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
             this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
             Top = 50;
-//            MessageBox.Show("7");
         }
 
         private void LoadMaxima()
@@ -373,9 +366,6 @@ namespace ProDocEstimate.Views
                 + $"  {PressSetup},     {PressSlowdown},         {CollatorSetup},    {CollatorSlowdown},{BinderySetup},       {BinderySlowdown},"
                 + $"  {ConvInk},        {ConvGlue},              {ConvTape} )";
 
-            //Clipboard.SetText(cmd);
-            //Debugger.Break();
-
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
@@ -386,17 +376,17 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {PressSetup},       "
-                + $"     Converting         = {CollatorSetup},    "
-                + $"     Finishing          = {BinderySetup}      "
+                + $"     Press              = {CalculatedPressCharge}, "
+                + $"     Converting         = {CalculatedConvCharge},  "
+                + $"     Finishing          = {CalculatedFinishCharge} "
                 + $" WHERE Quote_Num = '{QuoteNum}' "
                 + "   AND CATEGORY   = 'Converting'";
+
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
-
 
             this.Close();
         }

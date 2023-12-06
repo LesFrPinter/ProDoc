@@ -347,6 +347,12 @@ namespace ProDocEstimate.Views
             CalcTotal(); 
         }
 
+        private void M1_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
+        {
+            LoadFeature();  // use the selected value of 'Combo1' to retrieve base values
+            CalcTotal();
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             DeleteQuoteRow("Combo");
@@ -379,8 +385,8 @@ namespace ProDocEstimate.Views
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY  = 'Combo'";
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
+                + "   AND CATEGORY   = 'Combo'";
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
@@ -392,12 +398,6 @@ namespace ProDocEstimate.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         { this.Hide(); }
-
-        private void M1_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
-        {
-            LoadFeature();  // use the selected value of 'Combo1' to retrieve base values
-            CalcTotal();
-        }
 
     }
 }

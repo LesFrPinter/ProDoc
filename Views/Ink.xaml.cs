@@ -281,27 +281,10 @@ namespace ProDocEstimate.Views
 
         private void LoadMaxColors()
         {
-//            PressSize = PRESSSIZE;
-
             SqlConnection cn = new(ConnectionString);
             string str = $"SELECT Number FROM [ESTIMATING].[dbo].[PressSizeColors] WHERE Size = '{PressSize}'";
             SqlDataAdapter da = new(str, cn); DataTable dt = new DataTable(); da.Fill(dt);
             MaxColors = Int32.Parse(dt.Rows[0]["Number"].ToString());
-
-            //Backer = "";
-            //// Retrieve value for Backer if one was previously entered 
-            //str = $"SELECT PARAM1, TotalFlatChg, PerThousandChg FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
-            //da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
-
-            //if (dt.Rows.Count > 0)
-            //{
-            //    Backer = dt.Rows[0]["Param1"].ToString();
-            //    float t1 = 0; float.TryParse(dt.Rows[0]["TotalFlatChg"].ToString(), out t1); BackerFlatCharge = t1;
-            //    float t2 = 0; float.TryParse(dt.Rows[0]["PerThousandChg"].ToString(), out t2); BackerRunCharge = t2;
-            //    BackerDetails = t1.ToString("c");
-
-            //    PrevBacker = Backer;
-            //}
 
             str = $"SELECT F_TYPE, MAX(Number) AS MaxColors"
                 + $" FROM [ESTIMATING].[dbo].[FEATURES] WHERE Category = 'INK' AND Press_Size = '{PressSize}' GROUP BY F_TYPE";
@@ -322,19 +305,7 @@ namespace ProDocEstimate.Views
 
         }
 
-        private void LoadBacker()
-        {
-            //Backer = "";    // Retrieve value for Backer if one was previously entered 
-            //string str = $"SELECT PARAM1 FROM [ESTIMATING].[dbo].[Quote_Details] WHERE QUOTE_NUM = '{QuoteNum}' AND CATEGORY = 'Backer'";
-            //da.SelectCommand.CommandText = str; dt.Rows.Clear(); da.Fill(dt);
-            //if(dt.Rows.Count==0) { return; }
-
-            //Backer = dt.Rows[0]["Param1"].ToString();
-
-            //if ( Backer == "BACKER STD")                        { Std       += 1; }
-            //if ((Backer == "BACKER PMS")       && PMS==0)       { PMS       += 1; }
-            //if ((Backer == "BACKER WATERMARK") && waterMark==0) { WaterMark += 1; }
-        }
+        private void LoadBacker(){}  // Previous code was removed
 
         private void RadNumericUpDown_ValueChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
@@ -438,9 +409,6 @@ namespace ProDocEstimate.Views
                        + $"    OR  (F_TYPE = 'THERMO'        AND Number = {Thermo}) )"
                        + "    ORDER BY F_TYPE, NUMBER";
 
-            //Clipboard.SetText(cmd);
-            //Debugger.Break();
-
             conn = new SqlConnection(ConnectionString);
             da = new SqlDataAdapter(cmd, conn); dt = new DataTable(); da.Fill(dt);
             DataView dv = dt.DefaultView;
@@ -481,29 +449,11 @@ namespace ProDocEstimate.Views
                 int l6 = 0;   int.TryParse(dv[i]["BINDERY_SLOWDOWN"] .ToString(), out l6); BaseBinderySlowdown += l6;
             }
 
-            // Adjust the Base Plate Charge to reflect the use of a backer:
-            // Load backer ink cost if there's a Backer record
-
             cmd = $"SELECT BACKER_INK_COST FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'BACKER' AND F_TYPE = '{Backer}'";
             da = new SqlDataAdapter(cmd, conn);  dt = new DataTable();  da.Fill(dt);
             float Backer_Ink_Cost = 0.0F;
             if(dt.Rows.Count>0) {  DataView dv2 = dt.DefaultView; Backer_Ink_Cost = float.Parse(dv2[0]["BACKER_INK_COST"].ToString()); }
             BasePressCharge = BasePressCharge + Backer_Ink_Cost;
-
-            //TODO: Calculate ink cost
-            //    STD          value times Std Ink_Cost.MakeReadyCost
-            //  + BLK - REFLEX value times BLK & STD Ink_Cost.MakeReadyCost
-            //  + PMS          value times PMS Ink_Cost.MakeReadyCost
-            //  + THERMO ?
-            //
-            //Multiply the number of inks times one of these:
-            //  FEATURES.BACKER_INK_MAKEREADY_COST?
-            //  QUOTE_DETAILS.MAKE_READY_INK?
-            //
-            //Put the result where? QUOTE_DETAILS.Amount ?
-            //-------------------------------------------------------------
-            //
-            // Save this in the AMOUNT column
         }
 
         private void CalcTotal()
@@ -527,7 +477,6 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-//            if (Starting) return;
             PressSetup = BasePressSetup + LabPS;
             CollatorSetup = BaseCollatorSetup + LabCS;
             BinderySetup = BaseBinderySetup + LabBS;
@@ -542,58 +491,6 @@ namespace ProDocEstimate.Views
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         { CalcTotal(); }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-
-            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
-            conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
-
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
-
-            //if ((FourColor == 1) || (FluorSel == 1)) Debugger.Break();
-
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,            Param7,        Param8,       Param9,  Param10, "
-                + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,            Value7,        Value8,       Value9,  Value10, "
-                + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,      PerThousandChg, "
-                + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,  "
-                + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
-                + " VALUES ( "
-                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',       'FourColor',  'Backer',  "
-                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',      '{WaterMark}',      '{FluorSel}',     '{FourColor}','{Backer}', "
-                + $"  {CalculatedPressCharge},            '{FlatCharge}',     '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '   {FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}',   '{CalculatedRunCharge}', "
-                + $"  {LabPS},            {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
-                + $"  {PressSetup},       {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
-
-            scmd.CommandText = cmd;
-            conn.Open();
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
-
-            cmd = "UPDATE [ESTIMATING].[dbo].[Quote_Details]     "
-                + $" SET PressSlowdown      = {PressSlowdown},    "
-                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
-                + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {PressSetup},       "
-                + $"     Converting         = {CollatorSetup},    "
-                + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY  = 'Ink Color'";
-            scmd.CommandText = cmd;
-            conn.Open();
-            try { scmd.ExecuteNonQuery(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }
-
-            this.Close();
-        }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        { this.Close(); }
-
         private void Checked(object sender, RoutedEventArgs e)
         {
             Backer = (sender as RadioButton).Content.ToString();
@@ -605,17 +502,74 @@ namespace ProDocEstimate.Views
             }
 
             if (PrevBacker != null)
-              { if (PrevBacker.Contains("PMS")) { PMS = PMS - 1; }
+            {
+                if (PrevBacker.Contains("PMS")) { PMS = PMS - 1; }
                 if (PrevBacker.Contains("WATERMARK")) { WaterMark = WaterMark - 1; }
                 if (PrevBacker.Contains("STD")) { Std = Std - 1; }
-              }
-        
+            }
+
             if (Backer.Contains("PMS")) { PMS = PMS + 1; }
             if (Backer.Contains("WATERMARK")) { WaterMark = WaterMark + 1; }
             if (Backer.Contains("STD")) { Std = Std + 1; }
 
             PrevBacker = Backer;
         }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            string cmd = "DELETE [ESTIMATING].[dbo].[Quote_Details] WHERE Quote_Num = '" + QuoteNum + "' AND Category = 'Ink Color'";
+            conn = new SqlConnection(ConnectionString); SqlCommand scmd = new SqlCommand(cmd, conn); conn.Open();
+
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
+                + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,            Param7,        Param8,       Param9,  Param10, "
+                + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,            Value7,        Value8,       Value9,  Value10, "
+                + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,      PrePress,      PerThousandChg, "
+                + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,       "
+                + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
+                + " VALUES ( "
+                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',       'FourColor',  'Backer',  "
+                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',      '{WaterMark}',      '{FluorSel}',     '{FourColor}','{Backer}', "
+                + $"  {CalculatedPressCharge},            '{FlatCharge}',     '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '   {FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}', {FlatTotal},  '{CalculatedRunCharge}', "
+                + $"  {LabPS},            {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
+                + $"  {PressSetup},       {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
+
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            cmd = "UPDATE [ESTIMATING].[dbo].[Quote_Details]      "
+                + $" SET PressSlowdown      = {PressSlowdown},    "
+                + $"     ConvertingSlowdown = {CollatorSlowdown}, "
+                + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     Press              = {CalculatedPressCharge}, "
+                + $"     Converting         = {CalculatedConvCharge},  "
+                + $"     Finishing          = {CalculatedFinishCharge} "
+                + $" WHERE Quote_Num = '{QuoteNum}' "
+                + "   AND CATEGORY  = 'Ink Color'";
+
+            //NOTE: Why were the Press, Converting and Finishing updates not added previously?
+            // Removed:
+            //+ $"     Press              = {PressSetup},       "
+            //+ $"     Converting         = {CollatorSetup},    "
+            //+ $"     Finishing          = {BinderySetup}      "
+
+            scmd.CommandText = cmd;
+            conn.Open();
+            try { scmd.ExecuteNonQuery(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }
+
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        { this.Close(); }
 
     }
 }

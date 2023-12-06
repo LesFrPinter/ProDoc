@@ -229,8 +229,6 @@ namespace ProDocEstimate.Views
 
         private void GetCharges()
         {
-            //if(Startup) return;
-
             //NOTE: This could be simplified by generating the SELECT statement to only refer to checked F_TYPEs...
             string[] c = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
             for (int i = 0; i <= 20; i++) { c[i] = Chk[i] ? "1=1" : "1=0"; }
@@ -297,7 +295,6 @@ namespace ProDocEstimate.Views
             }
 
             CalcTotal();
-            
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -307,7 +304,6 @@ namespace ProDocEstimate.Views
 
         private void CalculateLabor()
         {
-            //            if (Starting) return;
             PressSetup = BasePressSetup + LabPS;
             CollatorSetup = BaseCollatorSetup + LabCS;
             BinderySetup = BaseBinderySetup + LabBS;
@@ -321,8 +317,6 @@ namespace ProDocEstimate.Views
 
         private void CalcTotal()
         {
-            //if (Startup) return;
-
             CalculatedFlatCharge = BaseFlatCharge * (1 + FlatChargePct / 100);
 
             CalculatedRunCharge = BaseRunCharge * (1 + RunChargePct / 100);
@@ -339,19 +333,16 @@ namespace ProDocEstimate.Views
 
         private void ChkBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            //if (Startup) return; 
             GetCharges(); 
         }
 
         private void ChkBox_Checked(object sender, RoutedEventArgs e)
         {
-            //if (Startup) return;
             GetCharges(); 
         }
 
         private void PctChanged(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
-            //if (Startup) return;
             CalcTotal(); 
         }
 
@@ -363,8 +354,6 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery();
 
             Checker = ""; for(int i = 0;i <= Num_F_Types-1; i++) { Checker += (Chk[i] ? "1" : "0"); }
-
-            // Note that Value10 is VARCHAR(30) so that the 21-digit string will fit.
 
             scmd.CommandText
                 = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details]" 
@@ -378,8 +367,6 @@ namespace ProDocEstimate.Views
                 + $"  {LabPS},        {LabCS},         {LabBS},                 {LabPSL},           {LabCSL},         {LabBSL}, "
                 + $"  {PressSetup},   {PressSlowdown}, {CollatorSetup},         {CollatorSlowdown}, {BinderySetup},   {BinderySlowdown} )";
 
-//            Clipboard.SetText(scmd.CommandText);
-
             if (conn.State != ConnectionState.Open) conn.Open();
             scmd.ExecuteNonQuery();
             conn.Close();
@@ -391,8 +378,9 @@ namespace ProDocEstimate.Views
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
-                + $" WHERE Quote_Num = '{QuoteNum}' "
-                + "   AND CATEGORY   = 'Security'";
+                + $" WHERE Quote_Num = '{QuoteNum}'               "
+                + "    AND CATEGORY  = 'Security'";
+
             scmd.CommandText = cmd;
             conn.Open();
             try { scmd.ExecuteNonQuery(); }
