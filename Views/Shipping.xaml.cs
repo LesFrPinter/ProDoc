@@ -66,7 +66,7 @@ namespace ProDocEstimate.Views
 
             NumDrops = 0; AddlCharge = 0.0F;
             if (dv.Count > 0) { 
-                NumDrops   = int  .Parse(dv[0]["Value3"].ToString());
+                NumDrops   = int  .Parse(dv[0]["Value2"].ToString());
                 AddlCharge = StandardCharge + ( OneShipment * NumDrops );
             }
             conn.Close();
@@ -84,7 +84,7 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( "
-                +  "  QUOTE_NUM,    Category,  Sequence, Param1,           Param2,       Param3,     Value1,           Value2,       Value3    )"
+                +  "  QUOTE_NUM,    Category,  Sequence, Param1,           Param2,       Param3,     Value1,           Value3,       Value2    )"
                 +  " VALUES ( "
                 + $" '{QuoteNum}', 'Shipping', 12,      'StandardCharge', 'AddlCharge', 'NumDrops', {StandardCharge}, {AddlCharge}, {NumDrops} )";
 

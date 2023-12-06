@@ -376,9 +376,9 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {CalculatedPressCharge}, "
-                + $"     Converting         = {CalculatedConvCharge},  "
-                + $"     Finishing          = {CalculatedFinishCharge} "
+                + $"     Press              = {PressSetup},       "
+                + $"     Converting         = {CollatorSetup},    "
+                + $"     Finishing          = {BinderySetup}      "
                 + $" WHERE Quote_Num = '{QuoteNum}' "
                 + "   AND CATEGORY   = 'Converting'";
 

@@ -28,21 +28,7 @@ namespace ProDocEstimate.Views
         private int button3; public int  Button3 { get { return button3; } set { button3 = value; OnPropertyChanged(); } }
         private int button4; public int  Button4 { get { return button4; } set { button4 = value; OnPropertyChanged(); } }
 
-        // TODO: Add the name of the property whose value should be decremented when BACKER changes...
-
         private string prevBacker; public string PrevBacker { get { return prevBacker; } set { prevBacker = value; } }
-
-        // Test data that I added:
-        //UPDATE FEATURES
-        //   SET
-        //    PRESS_SETUP_TIME = 5,
-        //    COLLATOR_SETUP = 10,
-        //    BINDERY_SETUP = 15,
-        //    PRESS_SLOWDOWN = 20,
-        //    COLLATOR_SLOWDOWN = 25,
-        //    BINDERY_SLOWDOWN = 30
-        // WHERE CATEGORY = 'INK'
-        //   AND PRESS_SIZE = '11'
 
         private float makeReadyInkCost; public float MakeReadyInkCost { get { return makeReadyInkCost; } set { makeReadyInkCost = value; OnPropertyChanged(); } }
 
@@ -461,9 +447,9 @@ namespace ProDocEstimate.Views
             CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct   / 100.00F);
             CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct    / 100.00F);
             CalculatedPlateCharge  = BasePlateCharge  * (1 + PlateChargePct  / 100.00F);
-            CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100.00F);
+            CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100.00F);    // Bindery
             CalculatedPressCharge  = BasePressCharge  * (1 + PressChargePct  / 100.00F);
-            CalculatedConvCharge   = BaseConvCharge   * (1 + ConvChargePct   / 100.00F);
+            CalculatedConvCharge   = BaseConvCharge   * (1 + ConvChargePct   / 100.00F);    // Collator
 
             FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
@@ -547,9 +533,9 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
-                + $"     Press              = {CalculatedPressCharge}, "
-                + $"     Converting         = {CalculatedConvCharge},  "
-                + $"     Finishing          = {CalculatedFinishCharge} "
+                + $"     Press              = {PressSetup}, "
+                + $"     Converting         = {CollatorSetup},  "
+                + $"     Finishing          = {BinderySetup} "
                 + $" WHERE Quote_Num = '{QuoteNum}' "
                 + "   AND CATEGORY  = 'Ink Color'";
 
