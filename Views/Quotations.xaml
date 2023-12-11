@@ -47,6 +47,12 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
+        <Style TargetType="{x:Type ToolTip}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Purple" />
+        </Style>
+
     </Window.Resources>
 
     <Viewbox Stretch="UniformToFill" StretchDirection="Both" VerticalAlignment="Top" MaxWidth="1500">
@@ -162,7 +168,7 @@
 						        Padding="10,2"
 						        HorizontalAlignment="Left"
                                 Click="btnAssignNewQuoteNum_Click"
-						        Content="Make a copy of a previous quote" Grid.ColumnSpan="4" />
+						        Content="Copy a previous quote" Grid.ColumnSpan="4" />
 
                         <Label Grid.Row="1" HorizontalAlignment="Left" Content="Quote #" Grid.Column="1" Margin="28,0,0,0" />
 
@@ -188,7 +194,7 @@
 						          Foreground="Black"
 						          Text="{Binding ProjectType}" Grid.ColumnSpan="2" />
 
-                        <StackPanel Grid.Row="2" Visibility="Collapsed" >
+                        <!--<StackPanel Grid.Row="2" Visibility="Collapsed" >
 
                             <Label Grid.Row="2"
 						       Grid.Column="1"
@@ -393,7 +399,7 @@
 						       VerticalContentAlignment="center"
 						       Background="ivory" Grid.RowSpan="3" />
 
-                        </StackPanel>
+                        </StackPanel>-->
 
                         <Label Grid.Row="3"
 						       Grid.Column="7"
@@ -452,7 +458,7 @@
 						          Margin="4,0,0,0"
 						          Text="{Binding Path=ROLLWIDTH}" />
 
-                        <Label Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" FontSize="11" Grid.ColumnSpan="2" Margin="26,0,0,0">S/B equal to FinalSize (or next size up)</Label>
+                        <Label Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" FontSize="11" Grid.ColumnSpan="2" Margin="15,0,0,0">S/B equal to FinalSize (or next size up)</Label>
 
                         <Label Grid.Row="7" HorizontalAlignment="Left" Content="Press Size:" Grid.Column="1" Margin="14,0,0,0" />
 
@@ -523,13 +529,14 @@
 						        Click="btnLoadGrid_Click" >
                         </Button>
 
-                        <Label Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Content="Customer:" FontSize="16" FontWeight="bold" Foreground="blue" Margin="9,0,0,0" />
+                        <Label Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Content="Customer:" FontSize="16" 
+                               FontWeight="bold" Foreground="blue" Margin="9,25,0,0" />
 
                         <Button x:Name="btnNew"
 						        Grid.Row="11"
 						        Grid.Column="2"
 						        Height="24"
-						        Margin="4,0,0,0"
+						        Margin="4,25,0,0"
 						        Padding="8,0"
 						        HorizontalAlignment="Left"
 						        Click="btnNew_Click"
@@ -539,7 +546,7 @@
 						        Grid.Row="11"
 						        Grid.Column="2"
 						        Height="24"
-						        Margin="61,0,0,0"
+						        Margin="61,25,0,0"
 						        Padding="10,0"
 						        HorizontalAlignment="Left"
 						        Click="btnLookup_Click"
@@ -1477,13 +1484,14 @@
 
                         <Label Content="Paper:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,125,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
 
-                        <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="90" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                        <DataGrid x:Name="PaperGrid" Grid.Row="1" Width="800" Height="90" VerticalAlignment="Top" 
+                                  Grid.ColumnSpan="3" FontSize="11" FontWeight="Bold" Foreground="Black" >
 
                             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
                             <DataGrid.Columns>
 
-                                <DataGridTextColumn Header="Description" Width="250" Binding="{Binding Description}" >
+                                <DataGridTextColumn Header="Description" Width="150" Binding="{Binding Description}" >
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"              Value="11" />
@@ -1565,8 +1573,12 @@
                         </DataGrid>
 
                         <Label Content="Features:" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" Padding="0" Height="21" Width="123" FontWeight="Bold" />
+                        <Label Content="-------------------------- Material Costs --------------------------" 
+                               HorizontalAlignment="Left" FontSize="11"
+                               Grid.Row="2" Margin="185 6 0 0" Grid.ColumnSpan="3" VerticalAlignment="Top" Width="400" Height="16" Padding="0" />
 
-                        <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="163" Margin="0,22,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontWeight="Bold" FontSize="11">
+                        <DataGrid x:Name="dgFeatures" Grid.Row="2" Width="800" Height="163" Margin="0,22,0,0" FontFamily="Courier New" FontWeight="Bold" 
+                                  VerticalAlignment="Top" Grid.ColumnSpan="3" Foreground="Black" FontSize="11">
 
                             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" />
 
@@ -1596,7 +1608,6 @@
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Right"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1614,7 +1625,6 @@
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Right"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1632,7 +1642,6 @@
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Right"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1650,7 +1659,6 @@
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Right"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1668,7 +1676,6 @@
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Right"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1686,7 +1693,6 @@
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"     />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Left"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1699,12 +1705,11 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Header="  Converting &#x0a;    Slowdown"  Width="90" Binding="{Binding ConvertingSlowdown, StringFormat={}{0:#0.00'%'}}" >
+                                <DataGridTextColumn Header=" Converting&#x0a;   Slowdown"  Width="90" Binding="{Binding ConvertingSlowdown, StringFormat={}{0:#0.00'%'}}" >
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Left"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1717,12 +1722,11 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Header="   Finishing &#x0a;    Slowdown"  Width="90" Binding="{Binding FinishingSlowdown,  StringFormat={}{0:#0.00'%'}}" >
+                                <DataGridTextColumn Header="      Finishing &#x0a;    Slowdown"  Width="90" Binding="{Binding FinishingSlowdown,  StringFormat={}{0:#0.00'%'}}" >
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontSize"                 Value="11"      />
                                             <Setter Property="Foreground"               Value="Blue"  />
-                                            <Setter Property="FontWeight"               Value="Bold"   />
                                             <Setter Property="HorizontalAlignment"      Value="Left"   />
                                             <Setter Property="VerticalContentAlignment" Value="Bottom" />
                                             <Setter Property="Height"                   Value="44"     />
@@ -1887,10 +1891,6 @@
                                      FontSize="12" />
                             </Grid>
 
-                            <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
-                                <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
-                                <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
-                            </StackPanel>
                         </StackPanel>
 
                         <Grid Grid.Row="3" Grid.ColumnSpan="3">
@@ -1954,128 +1954,133 @@
                             <TextBlock Text="  OE"       Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="6" Width="60" Foreground="Blue" />
                             <TextBlock Text="  Shipping" Padding="10 0 0 0" HorizontalAlignment="Left" FontSize="12" Grid.Row="7" Width="65" Foreground="Blue" />
 
-                            <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressSetupTime, StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="1" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="PressSetupTime" />
+                            <TextBox Text="{Binding PressSetupCost, StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="2" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="PressSetupCost" />
 
-                            <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="3" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="PressRunTime"/>
+                            <TextBox Text="{Binding PressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="4" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="PressRunCost"/>
 
-                            <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="1" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="CollSetupTime"/>
+                            <TextBox Text="{Binding CollSetupCost,  StringFormat=C}"  Margin="0,2,0,0" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="2" Width="60" 
-                                         FontSize="12" Height="17" VerticalAlignment="Top" />
-                            <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" Height="17" VerticalAlignment="Top"  ToolTip="CollSetupCost"/>
+                            <TextBox Text="{Binding CollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="3" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12"  ToolTip="CollRunTime"/>
+                            <TextBox Text="{Binding CollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="4" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12"  ToolTip="CollRunTime"/>
 
-                            <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BindSetupTime,  StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="1" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12"  ToolTip="BindSetupTime"/>
+                            <TextBox Text="{Binding BindSetupCost,  StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="2" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="BindSetupCost"/>
 
-                            <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="3" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="BindRunTime"/>
+                            <TextBox Text="{Binding BindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="4" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="BindRunCost"/>
 
-                            <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PreRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="3" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="PreRunTime"/>
+                            <TextBox Text="{Binding PreRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="4" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="PreRunCost"/>
 
-                            <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding OERunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="3" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="OERunTime"/>
+                            <TextBox Text="{Binding OERunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="4" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="OERunCost"/>
 
-                            <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding ShipTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="7" Grid.Column="3" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="ShipTime"/>
+                            <TextBox Text="{Binding ShipCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="7" Grid.Column="4" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="ShipCost" />
 
-                            <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="5" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="PressMaterialCost" />
 
-                            <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding CollatorMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="5" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="CollatorMaterialCost" />
 
-                            <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"   Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding BinderyMaterialCost, StringFormat=C}"   Margin="20 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="5" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12"  ToolTip="BinderyMaterialCost"/>
 
-                            <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding PrePressMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="5" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="PrePressMaterialCost" />
 
-                            <TextBox Text="{Binding OEMaterialCost,       StringFormat=C}"        Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding OEMaterialCost,       StringFormat=C}"        Margin="20 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="5" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="OEMaterialCost" />
 
-                            <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding ShippingMaterialCost, StringFormat=C}"  Margin="20 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Left" HorizontalContentAlignment="Right" Grid.Row="7" Grid.Column="5" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="ShippingMaterialCost" />
 
                             <TextBox Text="{Binding PressSlowdown,        StringFormat={}{0:#0.00'%'}}"  
-                                     IsEnabled="False" FontWeight="Bold"
+                                     IsReadOnly="True" FontWeight="Bold"
                                      HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="6" Width="60" 
-                                     FontSize="12" />
+                                     FontSize="12" ToolTip="PressSlowdown" />
 
                             <TextBox Text="{Binding CollatorSlowdown,     StringFormat={}{0:#0.00'%'}}"  
-                                     IsEnabled="False" FontWeight="Bold"
+                                     IsReadOnly="True" FontWeight="Bold"
                                      HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="6" Width="60" 
-                                     FontSize="12" />
+                                     FontSize="12" ToolTip="CollatorSlowdown" />
 
                             <TextBox Text="{Binding BinderySlowdown,      StringFormat={}{0:#0.00'%'}}"  
-                                     IsEnabled="False" FontWeight="Bold"
+                                     IsReadOnly="True" FontWeight="Bold"
                                      HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="6" Width="60" 
-                                     FontSize="12" />
+                                     FontSize="12" ToolTip="BinderySlowdown" />
 
-                            <TextBox Text="{Binding AdjPressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding AdjPressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="7" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding AdjPressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="AdjPressRunTime" />
+                            <TextBox Text="{Binding AdjPressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="8" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="PressRunCost"/>
 
-                            <TextBox Text="{Binding AdjCollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding AdjCollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="7" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding AdjCollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="AdjCollRunTime"/>
+                            <TextBox Text="{Binding AdjCollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="8" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="AdjCollRunCost"/>
 
-                            <TextBox Text="{Binding AdjBindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                            <TextBox Text="{Binding AdjBindRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="7" Width="60" 
-                                         FontSize="12" />
-                            <TextBox Text="{Binding AdjBindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsEnabled="False" FontWeight="Bold"
+                                         FontSize="12" ToolTip="AdjBindRunTime"/>
+                            <TextBox Text="{Binding AdjBindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="8" Width="60" 
-                                         FontSize="12" />
+                                         FontSize="12" ToolTip="AdjBindRunCost"/>
                         </Grid>
+
+                        <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >
+                            <Button x:Name="btnSaveQuote"   Margin="5 5 0 0" Width="80" Height="22" Click="btnSaveQuote_Click"   >Save Quote</Button>
+                            <Button x:Name="btnCancelQuote" Margin="5 5 5 0" Width="80" Height="22" Click="btnCancelQuote_Click" >Don't Save</Button>
+                        </StackPanel>
 
                     </Grid>
 

@@ -1,5 +1,4 @@
-﻿using ProDocEstimate.Editors;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -7,7 +6,6 @@ using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ProDocEstimate.Views
 {
@@ -18,29 +16,6 @@ namespace ProDocEstimate.Views
         { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
 
         #region Properties
-
-        // Data loaded for testing:
-        //update features set
-        //  flat_charge = 60.00,
-        //  run_charge  = 10.00,
-        //  plate_matl  = 20.00,
-        //  finish_matl = 30.00,
-        //  press_matl  = 40.00,
-        //  conv_matl   = 60.00,
-        // where category   = 'COMBO'
-        //   and Press_SIZE = '11';
-
-        //TestData:
-        //UPDATE[ESTIMATING].[dbo].[FEATURES]
-        // SET
-        //   PRESS_SETUP_TIME  = 10,
-        //   COLLATOR_SETUP    = 20,
-        //   BINDERY_SETUP     = 30,
-        //   PRESS_SLOWDOWN    = 40,
-        //   COLLATOR_SLOWDOWN = 50,
-        //   SLOWDOWN_PER_PART = 60
-        //  WHERE CATEGORY     = 'COMBO'
-        //    AND PRESS_SIZE   = '11'
 
         public bool Starting;
 
@@ -382,6 +357,7 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     PrePress           = {CalculatedPlateCharge},"
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "

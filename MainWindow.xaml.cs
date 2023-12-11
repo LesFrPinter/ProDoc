@@ -23,7 +23,6 @@ namespace ProDocEstimate
             { if (e.Key == Key.Escape)
                 Application.Current.Shutdown();
                 return;
-            //  Close();
             };
         }
 
@@ -35,9 +34,9 @@ namespace ProDocEstimate
             FeatureZoom = 0.0F;
             if (ScreenWidth < 1200) { FeatureZoom = 0.1F; }
             else
-            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.8F; }
+            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.4F; }
             else
-            { FeatureZoom = 0.3F; }
+            { FeatureZoom = 0.25F; }
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);

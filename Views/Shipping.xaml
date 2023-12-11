@@ -26,11 +26,13 @@
         </Style>
     </Window.Resources>
 
-    <Grid VerticalAlignment="Top">
+    <Viewbox>
+    
+    <Grid VerticalAlignment="Top" Width="600" Height="300" >
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="300"  />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="200"  />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         
@@ -55,6 +57,7 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*"  />
             </Grid.RowDefinitions>
 
@@ -64,11 +67,11 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label   Grid.Row="0"  Content="Base charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
+                <Label   Grid.Row="0"  Content="Base charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" VerticalAlignment="Center" />
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StandardCharge, StringFormat=C}" Margin="10 0" Width="60" IsEnabled="False"
                      VerticalAlignment="Center" HorizontalContentAlignment="Right" />
 
-            <Label   Grid.Row="1" Content="Additional shipments" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
+                <Label   Grid.Row="1" Content="Additional shipments" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" VerticalAlignment="Center" />
             <telerik:RadNumericUpDown 
                      x:Name="updownShipments"
                      Grid.Row="1" Grid.Column="1" 
@@ -78,8 +81,11 @@
                      Width="60" Minimum="0"
                      HorizontalContentAlignment="Right" />
 
-            <Label   Grid.Row="2" Content="Total additional charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" />
+                <Label   Grid.Row="2" Content="Total additional charge" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" VerticalAlignment="Center" />
             <TextBox x:Name="txtAddlCharge" Grid.Row="2" Grid.Column ="1" Text="{Binding AddlCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
+
+                <Label   Grid.Row="3" Content="Freight charge:" HorizontalAlignment="Right" Width="170" HorizontalContentAlignment="Right" VerticalAlignment="Center" />
+            <TextBox x:Name="txtFreightCharge" Grid.Row="3" Grid.Column ="1" Text="{Binding FreightCharge, StringFormat=C}" Margin="10 0" VerticalAlignment="Center" Width="60" HorizontalContentAlignment="Right" />
 
         </Grid>
 
@@ -89,5 +95,7 @@
         </StackPanel>
 
     </Grid>
+
+    </Viewbox>
 
 </Window>

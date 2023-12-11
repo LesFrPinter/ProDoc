@@ -305,7 +305,7 @@ namespace ProDocEstimate.Views
            CalculatedFinishCharge  = BaseFinishCharge  * ( 1 + FinishChargePct / 100);
            CalculatedPressCharge   = BasePressCharge   * ( 1 + PressChargePct  / 100); 
            CalculatedConvCharge    = BaseConvCharge    * ( 1 + ConvChargePct   / 100);
-           FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
+           FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;  //TODO: Is this right?
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -376,8 +376,9 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     PrePress           = {CalculatedPlateCharge},"
                 + $"     Press              = {PressSetup},       "
-                + $"     Converting         = {CollatorSetup},    "
+                + $"     Converting         = {CalculatedConvCharge}, "
                 + $"     Finishing          = {BinderySetup}      "
                 + $" WHERE Quote_Num = '{QuoteNum}' "
                 + "   AND CATEGORY   = 'Converting'";

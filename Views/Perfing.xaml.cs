@@ -17,18 +17,6 @@ namespace ProDocEstimate.Views
 
         #region Properties
 
-        //DATA ADDED FOR TESTING (REMOVE IN PRODUCTION)
-        //UPDATE FEATURES
-        //   SET
-        //     PRESS_SETUP_TIME = '10',
-        //     COLLATOR_SETUP = '20',
-        //     BINDERY_SETUP = '30',
-        //     PRESS_SLOWDOWN = '5',
-        //     COLLATOR_SLOWDOWN = '15',
-        //     BINDERY_SLOWDOWN = '25'
-        // WHERE CATEGORY = 'Perfing'
-        //   AND PRESS_SIZE = '11'
-
         public string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public SqlConnection? conn;
         public SqlDataAdapter? da;
@@ -243,27 +231,16 @@ namespace ProDocEstimate.Views
 
         private void CalcTotal()
         {
-            CalculatedFlatCharge = BaseFlatCharge * (1 + FlatChargePct / 100);
-            CalculatedRunCharge = BaseRunCharge * (1 + RunChargePct / 100);
-            CalculatedPlateCharge = BasePlateCharge * (1 + PlateChargePct / 100);
+            CalculatedFlatCharge   = BaseFlatCharge   * (1 + FlatChargePct / 100);
+            CalculatedRunCharge    = BaseRunCharge    * (1 + RunChargePct / 100);
+            CalculatedPlateCharge  = BasePlateCharge  * (1 + PlateChargePct / 100);
             CalculatedFinishCharge = BaseFinishCharge * (1 + FinishChargePct / 100);
-            CalculatedPressCharge = BasePressCharge * (1 + PressChargePct / 100);
-            CalculatedConvCharge = BaseConvCharge * (1 + ConvChargePct / 100);
+            CalculatedPressCharge  = BasePressCharge  * (1 + PressChargePct / 100);
+            CalculatedConvCharge   = BaseConvCharge   * (1 + ConvChargePct / 100);
 
             FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;
 
-            //PressSetup = BasePressSetup + LabPS;
-            //BinderySetup = BaseBinderySetup + LabBS;
-            //CollatorSetup = BaseCollatorSetup + LabCS;
-            //PressSlowdown = BasePressSlowdown + LabPSL;
-            //CollatorSlowdown = BaseBinderySlowdown + LabCSL;
-            //BinderySlowdown = BaseBinderySlowdown + LabBSL;
-
-            //SetupTotal = LabCS + LabBS + LabCS;
-            //SlowdownTotal = LabPSL + LabBSL + LabCSL;
-
             CalculateLabor();
-
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -310,7 +287,7 @@ namespace ProDocEstimate.Views
                 + $" 'Part Cross',   'Cross',           'Part Run',      'Running',         '{PartCross}',       '{Cross}',          '{PartRun}',       '{Running}', "
                 + $"'{FlatCharge}', '{FlatChargePct}', '{RunChargePct}','{PlateChargePct}', '{FinishChargePct}', '{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', '{CalculatedRunCharge}',"
                 + $" {LabPS},        {LabCS},           {LabBS},         {LabPSL},           {LabCSL},            {LabBSL}, "
-                + $" {PressSetup},  {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
+                + $" {PressSetup},   {PressSlowdown},   {CollatorSetup}, {CollatorSlowdown}, {BinderySetup},      {BinderySlowdown} )";
 
             scmd.CommandText = cmd;
             conn.Open();

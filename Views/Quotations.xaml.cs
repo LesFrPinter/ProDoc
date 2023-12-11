@@ -6,7 +6,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -42,26 +41,26 @@ namespace ProDocEstimate
         private float collatorSlowdown; public float CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
         private float binderySlowdown;  public float BinderySlowdown  { get { return binderySlowdown;  } set { binderySlowdown  = value; OnPropertyChanged(); } }
 
-        private float adjPressRunTime;  public float AdjPressRunTime  { get { return adjPressRunTime;  } set { adjPressRunTime = value; OnPropertyChanged(); } }
-        private float adjPressRunCost;  public float AdjPressRunCost  { get { return adjPressRunCost;  } set { adjPressRunCost = value; OnPropertyChanged(); } }
-        private float adjCollRunTime;   public float AdjCollRunTime   { get { return adjCollRunTime;   } set { adjCollRunTime  = value; OnPropertyChanged(); } }
-        private float adjCollRunCost;   public float AdjCollRunCost   { get { return adjCollRunCost;   } set { adjCollRunCost  = value; OnPropertyChanged(); } }
-        private float adjBindRunTime;   public float AdjBindRunTime   { get { return adjBindRunTime;   } set { adjBindRunTime  = value; OnPropertyChanged(); } }
-        private float adjBindRunCost;   public float AdjBindRunCost   { get { return adjBindRunCost;   } set { adjBindRunCost  = value; OnPropertyChanged(); } }
-         
-        private string noChgMsg;        public string NoChgMsg        { get { return noChgMsg;         } set { noChgMsg        = value; OnPropertyChanged(); } }
+        private float adjPressRunTime;  public float AdjPressRunTime  { get { return adjPressRunTime;  } set { adjPressRunTime  = value; OnPropertyChanged(); } }
+        private float adjPressRunCost;  public float AdjPressRunCost  { get { return adjPressRunCost;  } set { adjPressRunCost  = value; OnPropertyChanged(); } }
+        private float adjCollRunTime;   public float AdjCollRunTime   { get { return adjCollRunTime;   } set { adjCollRunTime   = value; OnPropertyChanged(); } }
+        private float adjCollRunCost;   public float AdjCollRunCost   { get { return adjCollRunCost;   } set { adjCollRunCost   = value; OnPropertyChanged(); } }
+        private float adjBindRunTime;   public float AdjBindRunTime   { get { return adjBindRunTime;   } set { adjBindRunTime   = value; OnPropertyChanged(); } }
+        private float adjBindRunCost;   public float AdjBindRunCost   { get { return adjBindRunCost;   } set { adjBindRunCost   = value; OnPropertyChanged(); } }
 
-        private string numWidePress = "1";      public string NumWidePress      { get { return numWidePress;          } set { numWidePress         = value; OnPropertyChanged(); } }
-        private string numWideConverter = "1";  public string NumWideConverter  { get { return numWideConverter;      } set { numWideConverter     = value; OnPropertyChanged(); } }
+        private string noChgMsg; public string NoChgMsg { get { return noChgMsg; } set { noChgMsg = value; OnPropertyChanged(); } }
 
-        private float finishMaterial;       public float FinishMaterial         { get { return finishMaterial;        } set { finishMaterial       = value; OnPropertyChanged(); } }
-        private float prePressPerMilChg;    public float PrePressPerMilChg      { get { return prePressPerMilChg;     } set { prePressPerMilChg    = value; OnPropertyChanged(); } }
-        private float pressMaterialCost;    public float PressMaterialCost      { get { return pressMaterialCost;     } set { pressMaterialCost    = value; OnPropertyChanged(); } }
-        private float collatorMaterialCost; public float CollatorMaterialCost   { get { return collatorMaterialCost;  } set { collatorMaterialCost = value; OnPropertyChanged(); } }
-        private float binderyMaterialCost;  public float BinderyMaterialCost    { get { return binderyMaterialCost;   } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
-        private float prePressMaterialCost; public float PrePressMaterialCost   { get { return prePressMaterialCost;  } set { prePressMaterialCost = value; OnPropertyChanged(); } }
-        private float oeMaterialCost;       public float OEMaterialCost         { get { return oeMaterialCost;        } set { oeMaterialCost       = value; OnPropertyChanged(); } }
-        private float shippingMaterialCost; public float ShippingMaterialCost   { get { return shippingMaterialCost;  } set { shippingMaterialCost = value; OnPropertyChanged(); } }
+        private string numWidePress = "1"; public string NumWidePress { get { return numWidePress; } set { numWidePress = value; OnPropertyChanged(); } }
+        private string numWideConverter = "1"; public string NumWideConverter { get { return numWideConverter; } set { numWideConverter = value; OnPropertyChanged(); } }
+
+        private float finishMaterial; public float FinishMaterial { get { return finishMaterial; } set { finishMaterial = value; OnPropertyChanged(); } }
+        private float prePressPerMilChg; public float PrePressPerMilChg { get { return prePressPerMilChg; } set { prePressPerMilChg = value; OnPropertyChanged(); } }
+        private float pressMaterialCost; public float PressMaterialCost { get { return pressMaterialCost; } set { pressMaterialCost = value; OnPropertyChanged(); } }
+        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
+        private float binderyMaterialCost; public float BinderyMaterialCost { get { return binderyMaterialCost; } set { binderyMaterialCost = value; OnPropertyChanged(); } }
+        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost; } set { prePressMaterialCost = value; OnPropertyChanged(); } }
+        private float oeMaterialCost; public float OEMaterialCost { get { return oeMaterialCost; } set { oeMaterialCost = value; OnPropertyChanged(); } }
+        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost; } set { shippingMaterialCost = value; OnPropertyChanged(); } }
 
         private bool already; public bool Already { get { return already; } set { already = value; OnPropertyChanged(); } } // to exit infinite loop
         private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
@@ -197,7 +196,7 @@ namespace ProDocEstimate
 
         // Used in PressCalc (around line 1107)
         private int? wastePct = 5; public int? WastePct { get { return wastePct; } set { wastePct = value; OnPropertyChanged(); } }
-        
+
         private string? itemType; public string? ItemType { get { return itemType; } set { itemType = value; OnPropertyChanged(); } }     // LoadPage2Combos();
         private int? numUpp; public int? NumUpp { get { return numUpp; } set { numUpp = value; OnPropertyChanged(); } }
         private int selectedQty; public int SelectedQty { get { return selectedQty; } set { selectedQty = value; OnPropertyChanged(); } }
@@ -270,13 +269,8 @@ namespace ProDocEstimate
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            //this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
-            //this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
-
-            // See if this looks good on Sylvia's screen:
-
-            this.Height = this.Height *= 1.2F;
-            this.Width = this.Width *= 1.2F;
+            this.Height = this.Height *= (1.0F + MainWindow.FeatureZoom);
+            this.Width = this.Width *= (1.0F + MainWindow.FeatureZoom);
             Top = 15;
         }
 
@@ -379,14 +373,15 @@ namespace ProDocEstimate
             scmd.ExecuteNonQuery();
             conn.Close();
 
-            cmd = $"INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
-                +  "        (   QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
-                + $" VALUES ( '{QUOTE_NUM}', '8',      'Shipping', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )";
+            // Should I add a Shipping record?
+            //cmd = $"INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] "
+            //    + "        (   QUOTE_NUM,    SEQUENCE, CATEGORY,   Param1,       Param2,     Param3,     Value1, Value2, Value3 )"
+            //    + $" VALUES ( '{QUOTE_NUM}', '8',      'Shipping', 'OrderEntry', 'PlateChg', 'PrePress', 'New',   '0',   'New'   )";
 
-            conn.Open();
-            scmd = new SqlCommand(cmd, conn);
-            scmd.ExecuteNonQuery();
-            conn.Close();
+            //conn.Open();
+            //scmd = new SqlCommand(cmd, conn);
+            //scmd.ExecuteNonQuery();
+            //conn.Close();
 
             LoadDetails();
 
@@ -414,11 +409,6 @@ namespace ProDocEstimate
                 CUST_NUMB = dt.Rows[0]["CUST_NUM"].ToString();
 
                 ProjectType = dt.Rows[0]["PROJECTTYPE"].ToString();
-                // These columns need to be added:
-                //FSINT1 = dt.Rows[0]["FSINT1"].ToString();  // dr3[6];
-                //FSFRAC1 = dt.Rows[0]["FSFRAC1"].ToString();  // dr3[7];
-                //FSINT2 = dt.Rows[0]["FSINT2"].ToString();  // dr3[8];
-                //FSFRAC2 = dt.Rows[0]["FSFRAC2"].ToString();  // dr3[9];
                 PARTS = int.Parse(dt.Rows[0]["PARTS"].ToString());
                 PAPERTYPE = dt.Rows[0]["PAPERTYPE"].ToString();  // dr3[9];
                 ROLLWIDTH = dt.Rows[0]["ROLLWIDTH"].ToString().TrimEnd();  // dr3[9];
@@ -436,11 +426,11 @@ namespace ProDocEstimate
         {
             switch (Tabs.SelectedIndex)
             {
-                case 0: ActivePage = "Base";     lblPageName.Content = "Base";      OnPropertyChanged("ActivePage"); break;
-                case 1: ActivePage = "Details";  lblPageName.Content = "Details";   OnPropertyChanged("ActivePage"); break;
-                case 2: ActivePage = "Features"; lblPageName.Content = "Features";  OnPropertyChanged("ActivePage"); break;
-                case 3: ActivePage = "Pricing";  lblPageName.Content = "Pricing";   OnPropertyChanged("ActivePage"); break;
-                case 4: ActivePage = "Details";  lblPageName.Content = "Summary";   OnPropertyChanged("ActivePage"); break;
+                case 0: ActivePage = "Base"; lblPageName.Content = "Base"; OnPropertyChanged("ActivePage"); break;
+                case 1: ActivePage = "Details"; lblPageName.Content = "Details"; OnPropertyChanged("ActivePage"); break;
+                case 2: ActivePage = "Features"; lblPageName.Content = "Features"; OnPropertyChanged("ActivePage"); break;
+                case 3: ActivePage = "Pricing"; lblPageName.Content = "Pricing"; OnPropertyChanged("ActivePage"); break;
+                case 4: ActivePage = "Details"; lblPageName.Content = "Summary"; OnPropertyChanged("ActivePage"); break;
             }
         }
 
@@ -468,8 +458,7 @@ namespace ProDocEstimate
         private void LoadColors()
         {
             string str = $"SELECT DISTINCT Color FROM [ProVisionDev].[dbo].MasterInventory WHERE ReportType = '{PAPERTYPE.TrimEnd()}'";
-            if (ItemType != null)
-            { str += $" AND ItemType = '{ItemType.TrimEnd()}'"; }
+            if (ItemType != null) { str += $" AND ItemType = '{ItemType.TrimEnd()}'"; }
             str += " ORDER BY Color";
 
             SqlConnection cn = new(ConnectionString);
@@ -491,7 +480,7 @@ namespace ProDocEstimate
         private void LoadSubWT()
         {
             if (PAPERTYPE is null) return;
-            if (ItemType is null)  return;
+            if (ItemType is null) return;
             string str =
                   "SELECT DISTINCT CONVERT(float, SubWT) AS SubWT FROM[ProVisionDev].[dbo].MasterInventory"
                 + $" WHERE ReportType = '{PAPERTYPE}'"
@@ -550,41 +539,41 @@ namespace ProDocEstimate
             cmbPressSize.Items.Clear(); for (int r = 0; r < dt.Rows.Count; r++) { cmbPressSize.Items.Add(dt.Rows[r][0].ToString()); }
         }
 
-        private void cmbFinalSizeFrac1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string? controlname = (sender as ComboBox)?.Name;
+        //private void cmbFinalSizeFrac1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    string? controlname = (sender as ComboBox)?.Name;
 
-            int Int1 = 0; int Int2 = 0;
-            float Frac1 = 0.00F; float Frac2 = 0.00F;
+        //    int Int1 = 0; int Int2 = 0;
+        //    float Frac1 = 0.00F; float Frac2 = 0.00F;
 
-            if ((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null)
-            {
-                string? Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem)?.Content.ToString();
-                Int1 = int.Parse(Str1);
-            }
+        //    if ((cmbFinalSizeInches1.SelectedItem as ComboBoxItem) != null)
+        //    {
+        //        string? Str1 = (cmbFinalSizeInches1.SelectedItem as ComboBoxItem)?.Content.ToString();
+        //        Int1 = int.Parse(Str1);
+        //    }
 
-            if ((cmbFinalSizeFrac1.SelectedItem as ComboBoxItem) != null)
-            {
-                string? x = (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem)?.Content.ToString();
-                Frac1 = CalcFraction(x);
-            }
+        //    if ((cmbFinalSizeFrac1.SelectedItem as ComboBoxItem) != null)
+        //    {
+        //        string? x = (cmbFinalSizeFrac1.SelectedItem as ComboBoxItem)?.Content.ToString();
+        //        Frac1 = CalcFraction(x);
+        //    }
 
-            if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null)
-            {
-                string? Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem)?.Content.ToString();
-                Int2 = int.Parse(Str2);
-            }
+        //    if ((cmbFinalSizeInches2.SelectedItem as ComboBoxItem) != null)
+        //    {
+        //        string? Str2 = (cmbFinalSizeInches2.SelectedItem as ComboBoxItem)?.Content.ToString();
+        //        Int2 = int.Parse(Str2);
+        //    }
 
-            if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null)
-            {
-                string? x = (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem)?.Content.ToString();
-                Frac2 = CalcFraction(x);
-            }
+        //    if ((cmbFinalSizeFrac2.SelectedItem as ComboBoxItem) != null)
+        //    {
+        //        string? x = (cmbFinalSizeFrac2.SelectedItem as ComboBoxItem)?.Content.ToString();
+        //        Frac2 = CalcFraction(x);
+        //    }
 
-            if (controlname?.Substring(controlname.Length - 1) == "1")
-            { Decimal1.Content = Frac1 + Int1; }
-            else { Decimal2.Content = Frac2 + Int2; }
-        }
+        //    if (controlname?.Substring(controlname.Length - 1) == "1")
+        //    { Decimal1.Content = Frac1 + Int1; }
+        //    else { Decimal2.Content = Frac2 + Int2; }
+        //}
 
         private void txtCustomerNum_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -734,10 +723,10 @@ namespace ProDocEstimate
         {
             string ErrorMessages = "";
             if (ProjectType.ToString().TrimEnd().Length == 0) { ErrorMessages += "Project type is required;\n"; }
-            if (PARTS.ToString().TrimEnd().Length == 0) { ErrorMessages += "# Parts is required;\n"; }
-            if (PAPERTYPE.ToString().TrimEnd().Length == 0) { ErrorMessages += "Paper type is required;\n"; }
-            if (ROLLWIDTH.ToString().TrimEnd().Length == 0) { ErrorMessages += "Roll width is required;\n"; }
-            if (PRESSSIZE.ToString().TrimEnd().Length == 0) { ErrorMessages += "Press size is required;\n"; }
+            if (PARTS.ToString().TrimEnd().Length == 0)       { ErrorMessages += "# Parts is required;\n"; }
+            if (PAPERTYPE.ToString().TrimEnd().Length == 0)   { ErrorMessages += "Paper type is required;\n"; }
+            if (ROLLWIDTH.ToString().TrimEnd().Length == 0)   { ErrorMessages += "Roll width is required;\n"; }
+            if (PRESSSIZE.ToString().TrimEnd().Length == 0)   { ErrorMessages += "Press size is required;\n"; }
             if (COLLATORCUT.ToString().TrimEnd().Length == 0) { ErrorMessages += "Collator cut size is required;\n"; }
 
             if (ErrorMessages.Length > 0) { MessageBox.Show(ErrorMessages); return; }
@@ -843,8 +832,8 @@ namespace ProDocEstimate
             Page3.IsEnabled = true;
             Page5.IsEnabled = true;
 
-            if(txtItemType.Items.Count == 0) 
-              { LoadItemTypes(); }
+            if (txtItemType.Items.Count == 0)
+            { LoadItemTypes(); }
 
             Page2.Focus();
 
@@ -1340,9 +1329,6 @@ namespace ProDocEstimate
             da = new SqlDataAdapter(cmd, conn); da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-
-                //                this.Title = dt.Rows[i]["Category"].ToString();
-
                 string V1 = dt.Rows[i]["Value1"].ToString();
                 string V2 = dt.Rows[i]["Value2"].ToString();
                 string V3 = dt.Rows[i]["Value3"].ToString();
@@ -1352,7 +1338,7 @@ namespace ProDocEstimate
                 string V7 = dt.Rows[i]["Value7"].ToString();
                 string V8 = dt.Rows[i]["Value8"].ToString();
                 string V9 = dt.Rows[i]["Value9"].ToString();
-                string V10 = dt.Rows[i]["Value10"].ToString();
+                string V10= dt.Rows[i]["Value10"].ToString();
 
                 Int32 I1 = 0;
                 Int32 I2 = 0;
@@ -1387,10 +1373,10 @@ namespace ProDocEstimate
 
                 string? CheckCategory = dt.Rows[i]["Category"].ToString();
 
-                if (CheckCategory.ToUpper().Contains("BASE")) { RowTotal = 1; }
-                if (CheckCategory.ToUpper().Contains("BACKER")) { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("BASE"))     { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("BACKER"))   { RowTotal = 1; }
                 if (CheckCategory.ToUpper().Contains("SECURITY")) { RowTotal = 1; }
-                if (CheckCategory.ToUpper().Contains("CARBON")) { RowTotal = 1; }
+                if (CheckCategory.ToUpper().Contains("CARBON"))   { RowTotal = 1; }
 
                 if (B1 == true) { RowTotal += I1; }
                 if (B2 == true) { RowTotal += I2; }
@@ -1401,9 +1387,9 @@ namespace ProDocEstimate
                 if (B7 == true) { RowTotal += I7; }
                 if (B8 == true) { RowTotal += I8; }
                 if (B9 == true) { RowTotal += I9; }
-                if (B10 == true) { RowTotal += I10; }
+                if (B10 == true){ RowTotal += I10; }
 
-                //                string suffix = (RowTotal>0) ? " " + ((char)0x221A).ToString() : string.Empty;
+              //string suffix = (RowTotal > 0) ? " " + ((char)0x221A).ToString() : string.Empty;
                 string suffix = (RowTotal > 0) ? " " + "🗹" : string.Empty;
 
                 if (i <= lstSelected.Items.Count)
@@ -1436,7 +1422,7 @@ namespace ProDocEstimate
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 string s = dt.Rows[i]["CATEGORY"].ToString();
-                if (s == "PressNum") { s = "Press Numbering"; }  // Is this Kludge still needed?
+                if (s == "PressNum") { s = "Press Numbering"; }  // Is this kludge still needed?
                 bool found = false;
                 if (lstSelected.Items.Count > 0)
                 { for (int j = 0; j < lstSelected.Items.Count; j++) { if (lstSelected.Items[j].ToString().Contains(s)) { found = true; } } }
@@ -1446,7 +1432,7 @@ namespace ProDocEstimate
             conn.Close();
             Adding = false;
 
-            CheckRows();        // Add a checkmark at the end for items that have been selected
+            CheckRows();  // Add a checkmark at the end for items with parameters that have been selected
 
         }
 
@@ -1493,7 +1479,7 @@ namespace ProDocEstimate
             if (QUOTE_NUM == null || QUOTE_NUM.Length == 0) return;
 
             GetQuote();
-//            NewQuote();
+            //            NewQuote();
 
             txtQuoteNum.Focus();
             txtQuoteNum.Background = Brushes.Red;
@@ -1556,43 +1542,43 @@ namespace ProDocEstimate
 
         private void DoPage4()
         {
-            string cmd = "";
-
-            float Amount = 0.0F;
-            float Make_Ready_Ink = 0.0F;
-
             SqlConnection conn = new SqlConnection(ConnectionString);
-            cmd = $"SELECT Amount, Make_Ready_Ink FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Ink Color'";
-            SqlDataAdapter da51 = new SqlDataAdapter(cmd, conn);
-            DataTable dt51 = new DataTable("Features");
-            da51.Fill(dt51);
-            if (dt51.Rows.Count > 0) { Amount = float.Parse(dt51.Rows[0]["Amount"].ToString()); Make_Ready_Ink = float.Parse(dt51.Rows[0]["Make_Ready_Ink"].ToString()); }
 
-            float PressSetupLaborPerfing = 0.0F; float PressSetupMin = 0.0F;
+            //----------------------------------------------------
+            // Create the DVFeat table displayed on Page 4
+            // The bottom of the page is populated in Labor_Calc()
+            //----------------------------------------------------
 
-            cmd = $"SELECT TotalFlatChg, PressSetupMin FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Perfing'";
-            SqlDataAdapter da52 = new SqlDataAdapter(cmd, conn);
-            DataTable dt52 = new DataTable("Perf");
-            da52.Fill(dt52);
-            if (dt52.Rows.Count > 0) 
-               { PressSetupLaborPerfing = float.Parse(dt52.Rows[0]["TotalFlatChg"] .ToString());
-                 PressSetupMin          = float.Parse(dt52.Rows[0]["PressSetupMin"].ToString());    // convert to fraction of an hour before adding
-               }
+            string cmd = "";
+            DataTable dt = new DataTable("Feat");
+            SqlDataAdapter da = new SqlDataAdapter();
 
-            cmd = "SELECT Category, "
-                + "Category, "
-                + "Cost, "
-                + "PrePress, "
-                + "Press, "
-                + "Converting, "
-                + "Finishing, "
-                + "PressSlowdown, "
-                + "ConvertingSlowdown, "
-                + "FinishingSlowdown "
-                + $" FROM[ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' ORDER BY SEQUENCE";
+            // ---------------------------------------------------------------------------------------------
+            // Recently added:
+            // Add rows for categories not previously added
+            // ---------------------------------------------------------------------------------------------
 
-            da = new SqlDataAdapter(cmd, conn);
-            dt = new DataTable("Features");
+            float Freight = 0;
+            SqlDataAdapter daf = new SqlDataAdapter("SELECT Value4 from [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE Category = 'Shipping'", conn);
+            DataTable dt71 = new DataTable(); daf.Fill(dt71);
+            if(dt71.Rows.Count > 0) { Freight = float.Parse(dt71.Rows[0]["Value4"].ToString()); }
+
+            cmd = "SELECT "
+                + " Category, "
+                + " CONVERT(Numeric(10, 2), 0.00) AS Cost, "
+                + " PrePress, "
+                + " CONVERT(Numeric(10, 2), 0.00) AS Press, "
+                + " Converting, "
+                + " CONVERT(Numeric(10, 2), 0.00) AS Finishing, "
+                + " PressSlowdown, "
+                + " ConvertingSlowdown, "
+                + " FinishingSlowdown "
+                + " FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] "
+                + $" WHERE QUOTE_NUM = '{QUOTE_NUM}'"
+                + " ORDER BY SEQUENCE";
+
+            SqlCommand sc = new SqlCommand(cmd, conn);
+            da.SelectCommand = sc;
             da.Fill(dt);
 
             DVFeat = dt.DefaultView;
@@ -1600,52 +1586,93 @@ namespace ProDocEstimate
             dgFeatures.Items.Clear();
             dgFeatures.ItemsSource = DVFeat;
 
-            // Sum the columns' values into the cells at the bottom of page 4
+            DVFeat.RowFilter = "Category = 'Converting'";
+            if(DVFeat.Count > 0) { float conv = float.Parse(DVFeat[0]["Converting"].ToString()); DVFeat[0]["Converting"] = SelectedQty * conv ; }
+
+            DVFeat.RowFilter = "Category = 'Shipping'";
+            if ((DVFeat.Count > 0) && (Freight > 0)) { DVFeat[0]["Cost"] = Freight; }
+
+            DVFeat.RowFilter = "";
+
+            // ------------------------------------------------------------------------
+            // Next, use feature parameters entered so far to populate the DVFeat table
+            // Retrieve some values from the Ink Color feature
+            // ------------------------------------------------------------------------
+
+            float Amount = 0.0F; float Make_Ready_Ink = 0.0F;
+
+            cmd = $"SELECT Amount, Make_Ready_Ink FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Ink Color'";
+            SqlDataAdapter da51 = new SqlDataAdapter(cmd, conn);
+            DataTable dt51 = new DataTable("Features");
+            da51.Fill(dt51);
+            if (dt51.Rows.Count > 0)
+            {
+                Amount = float.Parse(dt51.Rows[0]["Amount"].ToString());
+                Make_Ready_Ink = float.Parse(dt51.Rows[0]["Make_Ready_Ink"].ToString());
+            }
+
+            // -----------------------------------------------
+            // Retrieve some values from the Perfing feature
+            // -----------------------------------------------
+
+            float PressSetupLaborPerfing = 0.0F; float PressSetupMin = 0.0F;
+
+            cmd = $"SELECT TotalFlatChg, PressSetupMin FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Perfing'";
+            SqlDataAdapter da52 = new SqlDataAdapter(cmd, conn);
+            DataTable dt52 = new DataTable("Perf");
+            da52.Fill(dt52);
+            if (dt52.Rows.Count > 0)
+            {
+                PressSetupLaborPerfing = float.Parse(dt52.Rows[0]["TotalFlatChg"].ToString());
+                PressSetupMin = float.Parse(dt52.Rows[0]["PressSetupMin"].ToString());    // convert to fraction of an hour before adding
+            }
+
+            // Sum the SLOWDOWN columns' values into the cells at the bottom of page 4
             PressSlowdown = 0;
             CollatorSlowdown = 0;
             BinderySlowdown = 0;
 
-            for (int i = 0; i < DVFeat.Count; i++)
+            for (int i = 0; i < DVFeat.Count; i++)      // Sum all 3 slowdown percentages
             {
-                PressSlowdown    += float.Parse(DVFeat[i]["PressSlowdown"].ToString());
+                PressSlowdown += float.Parse(DVFeat[i]["PressSlowdown"].ToString());
                 CollatorSlowdown += float.Parse(DVFeat[i]["ConvertingSlowdown"].ToString());
-                BinderySlowdown  += float.Parse(DVFeat[i]["FinishingSlowdown"].ToString());
+                BinderySlowdown += float.Parse(DVFeat[i]["FinishingSlowdown"].ToString());
 
-                // Probably better to prevent inserting a value into the "Converting" column in the "Converting" screen
-                if (DVFeat[i]["Category"].ToString() == "Converting") { DVFeat[i]["Converting"] = 0.0F; }
-                if (DVFeat[i]["Category"].ToString() == "Ink Color")  { DVFeat[i]["Press"] = (SelectedQty * Amount) + Make_Ready_Ink; }
-                if (DVFeat[i]["Category"].ToString() == "Perfing")    { DVFeat[i]["Press"] = PressSetupLaborPerfing; }
+                // If these columns are initially loaded as zeros, this isn't needed:
+                // if (DVFeat[i]["Category"].ToString() == "Converting") { DVFeat[i]["Converting"] = 0.0F; }
+
+                // Probably better not to insert values into the other columns when creating the DVFeat DataView
+                if (DVFeat[i]["Category"].ToString() == "Ink Color") { DVFeat[i]["Press"] = (SelectedQty * Amount) + Make_Ready_Ink; }
+                if (DVFeat[i]["Category"].ToString() == "Perfing") { DVFeat[i]["Press"] = PressSetupLaborPerfing; }  // from the TotalFlatCharge column in the "Perfing" row of Quote_Details
             }
 
             // TODO: Apply sums of adjustments to calculated totals
-            AdjPressRunTime = PressRunTime * (1.0F + (PressSlowdown    / 100.0F));
-            AdjPressRunCost = PressRunCost * (1.0F + (PressSlowdown    / 100.0F));
+            AdjPressRunTime = PressRunTime * (1.0F + (PressSlowdown / 100.0F));
+            AdjPressRunCost = PressRunCost * (1.0F + (PressSlowdown / 100.0F));
 
-            AdjCollRunTime  = CollRunTime  * (1.0F + (CollatorSlowdown / 100.0F));
-            AdjCollRunCost  = CollRunCost  * (1.0F + (CollatorSlowdown / 100.0F));
+            AdjCollRunTime = CollRunTime * (1.0F + (CollatorSlowdown / 100.0F));
+            AdjCollRunCost = CollRunCost * (1.0F + (CollatorSlowdown / 100.0F));
 
-            AdjBindRunTime  = BindRunTime  * (1.0F + (BinderySlowdown  / 100.0F));
-            AdjBindRunCost  = BindRunCost  * (1.0F + (BinderySlowdown  / 100.0F));
+            AdjBindRunTime = BindRunTime * (1.0F + (BinderySlowdown / 100.0F));
+            AdjBindRunCost = BindRunCost * (1.0F + (BinderySlowdown / 100.0F));
 
             //-----------------------------------------------------
             // Finishing
             //-----------------------------------------------------
-
-            cmd =  "SELECT CONVERT(integer,Value1) AS Books, CONVERT(integer,Value2) AS Cellos, Value6 AS LinearInchCostCello, Value7 AS LinearInchCostBooks "
-                + $"  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
+            cmd = "SELECT CONVERT(integer,Value1) AS Books,  " +
+                         " CONVERT(integer,Value2) AS Cellos, " +
+                         " Value6 AS LinearInchCostCello,     " +
+                         " Value7 AS LinearInchCostBooks      " +
+                   "  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] " +
+                  $" WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
             SqlDataAdapter da8 = new SqlDataAdapter(cmd, conn);
-            DataTable dt11 = new DataTable("BookCello"); da8.Fill(dt11);
-            DataView dvx = dt11.DefaultView;
+            DataTable dt11 = new DataTable("BookCello"); da8.Fill(dt11); DataView dvx = dt11.DefaultView;
 
-            int BookSet = 0;
-            int CelloSet = 0;
-            float LinearInchCostCello = 0.0F;
-            float LinearInchCostBooks = 0.0F;
-            float TotalBookCost = 0.0F;
-            float TotalCelloCost = 0.0F;
+            int BookSet = 0; int CelloSet = 0;
+            float LinearInchCostCello = 0.0F; float LinearInchCostBooks = 0.0F; float TotalBookCost = 0.0F; float TotalCelloCost = 0.0F;
 
-            if (dvx.Count > 0)  // Only if there was a "Finishing" feature row...
+            if (dvx.Count > 0)  // Only if there WAS a "Finishing" feature row:
             {
                 BookSet = int.Parse(dvx[0]["Books"].ToString());
                 CelloSet = int.Parse(dvx[0]["Cellos"].ToString());
@@ -1658,7 +1685,7 @@ namespace ProDocEstimate
                     StringToNumber sTOn2 = new StringToNumber();
                     float collCuts2 = sTOn2.Convert(COLLATORCUT);
                     float linearInches = (float)NumBooks * collCuts2;
-                    TotalBookCost = linearInches * LinearInchCostBooks; // TODO LinearInchCostBooks is FinishMaterialCost for Books
+                    TotalBookCost = linearInches * LinearInchCostBooks;
                 }
 
                 if (CelloSet > 0)
@@ -1667,9 +1694,8 @@ namespace ProDocEstimate
                     StringToNumber sTOn3 = new StringToNumber();
                     float collCuts3 = sTOn3.Convert(COLLATORCUT);
                     float linearInches = (float)NumCellos * collCuts3;
-                    TotalCelloCost = linearInches * LinearInchCostCello; // TODO LinearInchCostCello is FinishMaterialCost for Cello
+                    TotalCelloCost = linearInches * LinearInchCostCello;
                 }
-
                 BinderyMaterialCost = TotalBookCost + TotalCelloCost;           // Which I'm told will "almost never" happen...
 
                 //TODO: Copy this to the Finishing column of the Finishing row of DVFeat, then set it to zero
@@ -1679,19 +1705,14 @@ namespace ProDocEstimate
                 DVFeat.RowFilter = "";  // Turn the filter off
             }
 
-            // ******************
-            // Collator Materials
-            // ******************
+            //-----------------------------------------------------
+            // Collator 
+            //-----------------------------------------------------
 
             //TODO: Calculate three types of "Converting material" and store it in Quote_Details in three new columns 
 
-            //ALTER TABLE QUOTE_DETAILS ADD CONV_INK  FLOAT NOT NULL DEFAULT 0
-            //ALTER TABLE QUOTE_DETAILS ADD CONV_GLUE FLOAT NOT NULL DEFAULT 0
-            //ALTER TABLE QUOTE_DETAILS ADD CONV_TAPE FLOAT NOT NULL DEFAULT 0
-
+            // Use the parameters passed from the QUOTE_DETAIL record to calculate CollatorMaterialCost:
             CollatorMaterialCost = 0;
-            // TODO: Use the parameters passed from the QUOTE_DETAIL record to calulate CollatorMaterialCost
-
             cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'CONVERTING'";
             SqlDataAdapter da21 = new SqlDataAdapter(cmd, conn);
             DataTable dt21 = new DataTable("conv"); da21.Fill(dt21);
@@ -1701,9 +1722,7 @@ namespace ProDocEstimate
                 SqlDataAdapter da12 = new SqlDataAdapter(cmd, conn);
                 DataTable dt12 = new DataTable("conv"); da12.Fill(dt12);
                 DataView dvy = dt12.DefaultView;
-                float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());  // 0.0240 where F_TYPE = 'TRANSFER TAPE'
-
-                // THIS IS FOR TRANSFER TAPE:
+                float convmatl = float.Parse(dvy[0]["CONV_MATL"].ToString());
                 StringToNumber sTOn = new StringToNumber();
                 float collCuts = sTOn.Convert(COLLATORCUT);
                 float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
@@ -1713,6 +1732,7 @@ namespace ProDocEstimate
             }
 
         }
+// Currently 220 lines of code.
 
         private void InkCalc()
         {
@@ -1980,6 +2000,11 @@ namespace ProDocEstimate
 
         private void Labor_Calc()
         {
+
+            // See if DVFeat has already been created and is accessible
+
+            if (DVFeat is null) return;
+
             string rw = ROLLWIDTH;
 
             float FeetPerPart = (float.Parse(SelectedQty.ToString()) * DecimalCollatorCut) / 12.0F;
@@ -2031,18 +2056,20 @@ namespace ProDocEstimate
             PressRunCost = DollarsPerHr;
 
             float SetupHrs = ((float)SumSetupMin + (float)SetupMins) / 60.0F;
-            PressSetupTime = SetupHrs; // make sure this is a FLOAT
+            PressSetupTime = SetupHrs;
 
-            float PressSetupMin = 0.0F;
-
-            //TODO: Perfing adjustment
-            cmd = $"SELECT PressSetupMin FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Perfing'";
-            SqlDataAdapter da53 = new SqlDataAdapter(cmd, conn);
-            DataTable dt53 = new DataTable("Perf");
-            da53.Fill(dt53);
-            if (dt53.Rows.Count > 0) { PressSetupMin = float.Parse(dt53.Rows[0]["PressSetupMin"].ToString()); }
-
-            PressSetupTime += (PressSetupMin / 60.0F);    // convert to fraction of an hour first...
+            //------------------------------------------------------------------------------------------------------------------------------
+            // 12/11 9:30am time was being addded twice:
+            // PressSetupTime for Perfing was already counted when we added up all PressSetupMin values for all QUOTE_DETAIL records
+            // Perfing adjustment:
+            //float PressSetupMin = 0.0F;
+            //cmd = $"SELECT PressSetupMin FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}' AND CATEGORY = 'Perfing'";
+            //SqlDataAdapter da53 = new SqlDataAdapter(cmd, conn);
+            //DataTable dt53 = new DataTable("Perf");
+            //da53.Fill(dt53);
+            //if (dt53.Rows.Count > 0) { PressSetupMin = float.Parse(dt53.Rows[0]["PressSetupMin"].ToString()); }
+            //PressSetupTime += (PressSetupMin / 60.0F);    // convert to fraction of an hour first...
+            //------------------------------------------------------------------------------------------------------------------------------
 
             float SetupDollars = float.Parse(dv1[0][7].ToString()) * SetupHrs;
             PressSetupCost = SetupDollars;
@@ -2064,29 +2091,21 @@ namespace ProDocEstimate
             // **************************************************
             // ** Calculate SetupRunTime and SetupRunCost here **
             // **************************************************
-
-            //  int NumberOfRollChanges = float.Parse(dv3[0]["MaxRollChgQty"].ToString()) / (float)SelectedQty;
+            // What was this for?
+            // int NumberOfRollChanges = float.Parse(dv3[0]["MaxRollChgQty"].ToString()) / (float)SelectedQty;
 
             cmd = $"SELECT SUM(CollSetupMin) AS SETUPMINUTES FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QUOTE_NUM}'";
 
             DataAdapter da4 = new SqlDataAdapter(cmd, ConnectionString);
-            DataSet ds = new DataSet();
-            DataTable dt4 = new DataTable();
-            da4.Fill(ds);
-            dt4 = ds.Tables[0];
-            DataView dv4 = dt4.DefaultView;
+            DataSet ds = new DataSet(); DataTable dt4 = new DataTable();
+            da4.Fill(ds); dt4 = ds.Tables[0]; DataView dv4 = dt4.DefaultView;
 
             if (dv4.Count > 0)
-            {
-                if ((dv4[0]["SETUPMINUTES"].ToString() != null)
-                  && (dv4[0]["SETUPMINUTES"].ToString().Length > 0))
-                {
-                    CollSetupTime = float.Parse(dv4[0]["SETUPMINUTES"].ToString()) + (float)SetupMin;
-                    CollSetupTime /= 60.0F;
-                }
+            { if ((dv4[0]["SETUPMINUTES"].ToString() != null) && (dv4[0]["SETUPMINUTES"].ToString().Length > 0))
+               { CollSetupTime = float.Parse(dv4[0]["SETUPMINUTES"].ToString()) + (float)SetupMin; CollSetupTime /= 60.0F; }
             }
 
-            if (dv3.Count > 0) { CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString()); }
+            if (dv3.Count > 0) { CollSetupCost = CollSetupTime * float.Parse(dv3[0]["DollarsPerHr"].ToString()); }  // from the Collator_Speeds table query, supra.
 
             // **************************************************
             // ** BINDERY                                      **
@@ -2108,7 +2127,6 @@ namespace ProDocEstimate
             // *******************************************************************
 
             if (dv5.Count > 0)
-
             {
                 int BindSetupMinutes = int.Parse(dv5[0]["BindSetupMin"].ToString());
                 int p1 = 0; int.TryParse(dv5[0]["Value1"].ToString(), out p1); int Books = p1;
@@ -2237,8 +2255,8 @@ namespace ProDocEstimate
 
             ShipCost = 0; if (dv8.Count > 0)
             {
-                ShipCost = float.Parse(dv8[0]["Value2"].ToString());
-                NumDrops = int.Parse(dv8[0]["Value2"].ToString());
+                ShipCost = float.Parse(dv8[0]["Value3"].ToString());
+                NumDrops =   int.Parse(dv8[0]["Value2"].ToString());
             }
 
             ShipTime = 15 + (NumDrops * 5); // minutes
@@ -2442,4 +2460,4 @@ namespace ProDocEstimate
         }
 
     }
-} 
+}

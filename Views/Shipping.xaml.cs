@@ -23,9 +23,10 @@ namespace ProDocEstimate.Views
         private string quoteNum; public string QuoteNum { get { return quoteNum; } set { quoteNum = value; } }
 
         private float standardCharge;   public float StandardCharge { get { return standardCharge;  } set { standardCharge  = value; OnPropertyChanged(); } }
-        private int   numDrops;         public int NumDrops         { get { return numDrops;        } set { numDrops        = value; OnPropertyChanged(); } }
+        private int   numDrops;         public int   NumDrops       { get { return numDrops;        } set { numDrops        = value; OnPropertyChanged(); } }
         private float oneShipment;      public float OneShipment    { get { return oneShipment;     } set { oneShipment     = value; OnPropertyChanged(); } }
         private float addlCharge;       public float AddlCharge     { get { return addlCharge;      } set { addlCharge      = value; OnPropertyChanged(); } }
+        private float freightCharge;    public float FreightCharge  { get { return freightCharge;   } set { freightCharge   = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -59,15 +60,16 @@ namespace ProDocEstimate.Views
             updownShipments.ToolTip = $"{tooltip}";
             txtAddlCharge.ToolTip = $"{tooltip}";
 
-            cmd = $"SELECT Value1, Value2, Value3 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Shipping'";
+            cmd = $"SELECT Value1, Value2, Value3, Value4 FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE QUOTE_NUM = '{QuoteNum}' AND Category = 'Shipping'";
             conn = new SqlConnection(ConnectionString); conn.Open();
             da = new SqlDataAdapter(cmd, conn); 
             DataTable dt = new DataTable("Details"); da.Fill(dt); DataView dv = dt.DefaultView;
 
             NumDrops = 0; AddlCharge = 0.0F;
             if (dv.Count > 0) { 
-                NumDrops   = int  .Parse(dv[0]["Value2"].ToString());
-                AddlCharge = StandardCharge + ( OneShipment * NumDrops );
+                NumDrops      = int  .Parse(dv[0]["Value2"].ToString());
+                AddlCharge    = StandardCharge + ( OneShipment * NumDrops );
+                FreightCharge = float.Parse(dv[0]["Value4"].ToString());
             }
             conn.Close();
         }
@@ -84,9 +86,9 @@ namespace ProDocEstimate.Views
             scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
 
             cmd =  "INSERT INTO [ESTIMATING].[dbo].[QUOTE_DETAILS] ( "
-                +  "  QUOTE_NUM,    Category,  Sequence, Param1,           Param2,       Param3,     Value1,           Value3,       Value2    )"
+                +  "  QUOTE_NUM,    Category,  Sequence, Param1,           Param2,     Param3,       Param4,          Value1,           Value2,     Value3,       Value4         )"
                 +  " VALUES ( "
-                + $" '{QuoteNum}', 'Shipping', 12,      'StandardCharge', 'AddlCharge', 'NumDrops', {StandardCharge}, {AddlCharge}, {NumDrops} )";
+                + $" '{QuoteNum}', 'Shipping', 12,      'StandardCharge', 'NumDrops', 'AddlCharge', 'FreightCharge', {StandardCharge}, {NumDrops}, {AddlCharge}, {FreightCharge} )";
 
             conn.Open();
             scmd.Connection = conn;

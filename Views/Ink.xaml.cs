@@ -510,18 +510,20 @@ namespace ProDocEstimate.Views
             catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
 
-            cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
-                + "  Quote_Num,        Category,       Sequence,            Param1,            Param2,             Param3,              Param4,             Param5,            Param6,            Param7,        Param8,       Param9,  Param10, "
-                + "                                                         Value1,            Value2,             Value3,              Value4,             Value5,            Value6,            Value7,        Value8,       Value9,  Value10, "
-                + "  Amount,            FlatCharge,      FlatChargePct,     RunChargePct,      PlateChargePct,     FinishChargePct,     PressChargePct,     ConvertChargePct,  TotalFlatChg,      PrePress,      PerThousandChg, "
-                + "  PRESS_ADDL_MIN,    COLL_ADDL_MIN,   BIND_ADDL_MIN,     PRESS_SLOW_PCT,    COLL_SLOW_PCT,      BIND_SLOW_PCT,       "
-                + "  PressSetupMin,     PressSlowPct,    CollSetupMin,      CollSlowPct,       BindSetupMin,       BindSlowPct,         MAKE_READY_INK) " 
-                + " VALUES ( "
-                + $" {QuoteNum},       'Ink Color',      2,                'Std',             'BlackStd',         'PMS',               'Desens',           'Split',           'Thermo',          'Watermark',   'FluorSel',       'FourColor',  'Backer',  "
-                + $"                                                      '{Std}',           '{BlackStd}',       '{PMS}',             '{Desens}',         '{Split}',         '{Thermo}',      '{WaterMark}',      '{FluorSel}',     '{FourColor}','{Backer}', "
-                + $"  {CalculatedPressCharge},            '{FlatCharge}',     '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}',  '   {FinishChargePct}','{PressChargePct}','{ConvChargePct}', '{FlatTotal}', {FlatTotal},  '{CalculatedRunCharge}', "
-                + $"  {LabPS},            {LabCS},         {LabBS},           {LabPSL},          {LabCSL},           {LabBSL}, "
-                + $"  {PressSetup},       {PressSlowdown}, {CollatorSetup},   {CollatorSlowdown},{BinderySetup},     {BinderySlowdown},   {MakeReadyInkCost} )";
+            cmd =  "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
+                +  "  Quote_Num,                Category,         Sequence,"
+                +  "  Param1,                   Param2,           Param3,            Param4,             Param5,             Param6,             Param7,             Param8,            Param9,       Param10, "
+                +  "  Value1,                   Value2,           Value3,            Value4,             Value5,             Value6,             Value7,             Value8,            Value9,       Value10, "
+                +  "  Amount,                   FlatCharge,       FlatChargePct,     RunChargePct,       PlateChargePct,     FinishChargePct,    PressChargePct,     ConvertChargePct,  TotalFlatChg, PrePress,      PerThousandChg,    "
+                +  "  PRESS_ADDL_MIN,           COLL_ADDL_MIN,    BIND_ADDL_MIN,     PRESS_SLOW_PCT,     COLL_SLOW_PCT,      BIND_SLOW_PCT,      "
+                +  "  PressSetupMin,            PressSlowPct,     CollSetupMin,      CollSlowPct,        BindSetupMin,       BindSlowPct,        MAKE_READY_INK) " 
+                +  "  VALUES ( "
+                + $" {QuoteNum},               'Ink Color',       2,"
+                +  " 'Std',                    'BlackStd',       'PMS',             'Desens',           'Split',            'Thermo',           'Watermark',        'FluorSel',        'FourColor',  'Backer',  "
+                + $"'{Std}',                  '{BlackStd}',     '{PMS}',           '{Desens}',         '{Split}',          '{Thermo}',         '{WaterMark}',      '{FluorSel}',      '{FourColor}','{Backer}', "
+                + $" {CalculatedPressCharge}, '{FlatCharge}',   '{FlatChargePct}', '{RunChargePct}',   '{PlateChargePct}', '{FinishChargePct}','{PressChargePct}', '{ConvChargePct}', '{FlatTotal}', {FlatTotal},  '{CalculatedRunCharge}', "
+                + $" {LabPS},                  {LabCS},          {LabBS},           {LabPSL},           {LabCSL},           {LabBSL}, "
+                + $" {PressSetup},             {PressSlowdown},  {CollatorSetup},   {CollatorSlowdown}, {BinderySetup},     {BinderySlowdown},  {MakeReadyInkCost} )";
 
             scmd.CommandText = cmd;
             conn.Open();
@@ -533,17 +535,12 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     PrePress           = {CalculatedPlateCharge},"
                 + $"     Press              = {PressSetup}, "
                 + $"     Converting         = {CollatorSetup},  "
                 + $"     Finishing          = {BinderySetup} "
                 + $" WHERE Quote_Num = '{QuoteNum}' "
                 + "   AND CATEGORY  = 'Ink Color'";
-
-            //NOTE: Why were the Press, Converting and Finishing updates not added previously?
-            // Removed:
-            //+ $"     Press              = {PressSetup},       "
-            //+ $"     Converting         = {CollatorSetup},    "
-            //+ $"     Finishing          = {BinderySetup}      "
 
             scmd.CommandText = cmd;
             conn.Open();

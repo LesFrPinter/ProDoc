@@ -290,6 +290,7 @@ namespace ProDocEstimate.Views
                 + $" SET PressSlowdown      = {PressSlowdown},    "
                 + $"     ConvertingSlowdown = {CollatorSlowdown}, "
                 + $"     FinishingSlowdown  = {BinderySlowdown},  "
+                + $"     PrePress           = {CalculatedPlateCharge},"
                 + $"     Press              = {PressSetup},       "
                 + $"     Converting         = {CollatorSetup},    "
                 + $"     Finishing          = {BinderySetup}      "
