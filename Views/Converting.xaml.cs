@@ -143,7 +143,7 @@ namespace ProDocEstimate.Views
         {
             InitializeComponent();
             this.DataContext = this;
-            Title = "Quote #: " + QUOTENUM;
+//            Title = "Quote #: " + QUOTENUM;
             QuoteNum = QUOTENUM;
             PressSize = PRESSSIZE;
 
@@ -179,14 +179,14 @@ namespace ProDocEstimate.Views
             try
             {
                 DataView dv = dt.DefaultView;
-                dv.RowFilter = "F_TYPE='2 CRASH NUMB'"; M1.Maximum = int.Parse(dv[0]["Max"].ToString());
-                dv.RowFilter = "F_TYPE='BLACK NUMB'"; M2.Maximum = int.Parse(dv[0]["Max"].ToString());
-                dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'"; M3.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='2 CRASH NUMB'";   M1.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='BLACK NUMB'";     M2.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='SNAP GLUE 2-4'";  M3.Maximum = int.Parse(dv[0]["Max"].ToString());
                 dv.RowFilter = "F_TYPE='SNAP GLUE 5-12'"; M4.Maximum = int.Parse(dv[0]["Max"].ToString());
-                dv.RowFilter = "F_TYPE='FOLDING'"; M5.Maximum = int.Parse(dv[0]["Max"].ToString());
-                dv.RowFilter = "F_TYPE='CONT GLUE 2-4'"; M6.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='FOLDING'";        M5.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='CONT GLUE 2-4'";  M6.Maximum = int.Parse(dv[0]["Max"].ToString());
                 dv.RowFilter = "F_TYPE='CONT GLUE 5-12'"; M7.Maximum = int.Parse(dv[0]["Max"].ToString());
-                dv.RowFilter = "F_TYPE='TRANSFER TAPE'"; M8.Maximum = int.Parse(dv[0]["Max"].ToString());
+                dv.RowFilter = "F_TYPE='TRANSFER TAPE'";  M8.Maximum = int.Parse(dv[0]["Max"].ToString());
                 dt.Clear();
             }
             catch (Exception Ex) { MessageBox.Show(Ex.Message.ToString() + Environment.NewLine + Ex.InnerException.Message.ToString()); }
@@ -278,19 +278,19 @@ namespace ProDocEstimate.Views
                 for (int i = 0; i < dv3.Count; i++)
                 {
                     t = 0.00F; float.TryParse(dv3[i]["FLAT_CHARGE"].ToString(), out t); BaseFlatCharge += t;
-                    t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(), out t); BaseRunCharge += t;
-                    t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(), out t); BasePlateCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["RUN_CHARGE"].ToString(),  out t); BaseRunCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["PLATE_MATL"].ToString(),  out t); BasePlateCharge += t;
                     t = 0.00F; float.TryParse(dv3[i]["FINISH_MATL"].ToString(), out t); BaseFinishCharge += t;
-                    t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(), out t); BasePressCharge += t;
-                    t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(), out t); BaseConvCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["PRESS_MATL"].ToString(),  out t); BasePressCharge += t;
+                    t = 0.00F; float.TryParse(dv3[i]["CONV_MATL"].ToString(),   out t); BaseConvCharge += t;
 
                     // Load labor costs
-                    u = 0; int.TryParse(dv3[i]["PRESS_SETUP_TIME"].ToString(), out u); BasePressSetup += u;
-                    u = 0; int.TryParse(dv3[i]["COLLATOR_SETUP"].ToString(), out u); BaseCollatorSetup += u;
-                    u = 0; int.TryParse(dv3[i]["BINDERY_SETUP"].ToString(), out u); BaseBinderySetup += u;
-                    u = 0; int.TryParse(dv3[i]["PRESS_SLOWDOWN"].ToString(), out u); BasePressSlowdown += u;
+                    u = 0; int.TryParse(dv3[i]["PRESS_SETUP_TIME"].ToString(),  out u); BasePressSetup += u;
+                    u = 0; int.TryParse(dv3[i]["COLLATOR_SETUP"].ToString(),    out u); BaseCollatorSetup += u;
+                    u = 0; int.TryParse(dv3[i]["BINDERY_SETUP"].ToString(),     out u); BaseBinderySetup += u;
+                    u = 0; int.TryParse(dv3[i]["PRESS_SLOWDOWN"].ToString(),    out u); BasePressSlowdown += u;
                     u = 0; int.TryParse(dv3[i]["COLLATOR_SLOWDOWN"].ToString(), out u); BaseCollatorSlowdown += u;
-                    u = 0; int.TryParse(dv3[i]["BINDERY_SLOWDOWN"].ToString(), out u); BaseBinderySlowdown += u;
+                    u = 0; int.TryParse(dv3[i]["BINDERY_SLOWDOWN"].ToString(),  out u); BaseBinderySlowdown += u;
                 }
             }
             catch (Exception Ex) { MessageBox.Show(Ex.Message.ToString() + Environment.NewLine + Ex.InnerException.Message.ToString(), WhereWasI); }
@@ -305,12 +305,13 @@ namespace ProDocEstimate.Views
            CalculatedFinishCharge  = BaseFinishCharge  * ( 1 + FinishChargePct / 100);
            CalculatedPressCharge   = BasePressCharge   * ( 1 + PressChargePct  / 100); 
            CalculatedConvCharge    = BaseConvCharge    * ( 1 + ConvChargePct   / 100);
-           FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;  //TODO: Is this right?
+           FlatTotal = CalculatedFlatCharge + CalculatedPlateCharge + CalculatedFinishCharge + CalculatedPressCharge + CalculatedConvCharge;  // This is stored in TotalFlatChg
         }
 
         private void CalcLabor(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
         {
             CalculateLabor();
+            FlatTotal = 0;
         }
 
         private void CalculateLabor()
@@ -325,7 +326,7 @@ namespace ProDocEstimate.Views
             CollatorSlowdown = BaseCollatorSlowdown + LabCSL;
             BinderySlowdown = BaseBinderySlowdown + LabBSL;
             SlowdownTotal = PressSlowdown + CollatorSlowdown + BinderySlowdown;
-
+            FlatTotal = 0;
         }
 
         private void Pct_Changed(object sender, Telerik.Windows.Controls.RadRangeBaseValueChangedEventArgs e)
@@ -348,6 +349,8 @@ namespace ProDocEstimate.Views
             try { scmd.ExecuteNonQuery(); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }
+
+            FlatTotal = 0;
 
             cmd = "INSERT INTO [ESTIMATING].[dbo].[Quote_Details] ("
                 + "    Quote_Num,       Category,                Sequence,"

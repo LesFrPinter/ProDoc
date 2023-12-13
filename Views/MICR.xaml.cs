@@ -141,7 +141,7 @@ namespace ProDocEstimate.Views
             InitializeComponent();
 
             DataContext = this;
-            Title = "Quote #: " + _QUOTENUM;
+//            Title = "Quote #: " + _QUOTENUM;
             FType = "DIGITAL";
 
             LoadMaxima();       // Set the upper limits on the value of NUMBER for each F_TYPE

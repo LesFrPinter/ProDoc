@@ -1131,6 +1131,7 @@
                                         IsEnabled="False"
                                         IsTabStop="False"
 									    HorizontalAlignment="Center"
+                                        HorizontalContentAlignment="Right"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty1, StringFormat=N0}" />
@@ -1148,10 +1149,13 @@
 
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
 
-                                    <ComboBox x:Name="MarkupBasis1" SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" Height="18" FontSize="10" HorizontalAlignment="Left" Margin="5 0 0 0" Width="36" SelectionChanged="MarkupBasis1_SelectionChanged" >
+                                    <ComboBox x:Name="MarkupBasis1" 
+                                              SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" 
+                                              Height="18" FontSize="10" HorizontalAlignment="Left" Margin="5 0 0 0" 
+                                              Width="36" SelectionChanged="MarkupBasis1_SelectionChanged" >
                                         <ComboBoxItem Content=" " />
-                                        <ComboBoxItem Content="$" />
                                         <ComboBoxItem Content="%" />
+                                        <ComboBoxItem Content="$" />
                                     </ComboBox>
 
                                     <TextBox 
@@ -1189,10 +1193,10 @@
 									         Text="{Binding Path=MatPct1, StringFormat=N0}" />
 
                                     <TextBox 
-									         Width="55" Height="18" Margin="100 0 0 0"
+									         Width="75" Height="18" Margin="80 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
-									         FontSize="10"
+									         FontSize="10" Foreground="Purple" FontWeight="Bold"
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice1, StringFormat=C}" />
 
@@ -1207,6 +1211,7 @@
                                         IsEnabled="False"
                                         IsTabStop="False"
 									    HorizontalAlignment="Center"
+                                        HorizontalContentAlignment="Right"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty2, StringFormat=N0}" />
@@ -1267,10 +1272,10 @@
 									         Text="{Binding Path=MatPct2, StringFormat=N0}" />
 
                                     <TextBox 
-									         Width="55" Height="18" Margin="100 0 0 0"
+									         Width="75" Height="18" Margin="80 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
-									         FontSize="10"
+									         FontSize="10" Foreground="Purple" FontWeight="Bold"
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice2, StringFormat=C}" />
 
@@ -1285,6 +1290,7 @@
                                         IsEnabled="False"
                                         IsTabStop="False"
 									    HorizontalAlignment="Center"
+                                        HorizontalContentAlignment="Right"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
 									    Text="{Binding Path=Qty3, StringFormat=N0}"/>
@@ -1345,10 +1351,10 @@
 									         Text="{Binding Path=MatPct3, StringFormat=N0}" />
 
                                     <TextBox 
-									         Width="55" Height="18" Margin="100 0 0 0"
+									         Width="75" Height="18" Margin="80 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
-									         FontSize="10"
+									         FontSize="10" Foreground="Purple" FontWeight="Bold"
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice3, StringFormat=C}" />
 
@@ -1363,9 +1369,10 @@
                                         IsEnabled="False"
                                         IsTabStop="False"
 									    HorizontalAlignment="Center"
+                                        HorizontalContentAlignment="Right"
 									    VerticalContentAlignment="Center"
 									    FontSize="14"
-									    Text="{Binding Path=Qty4}" />
+									    Text="{Binding Path=Qty4, StringFormat=N0}" />
 
                                 <TextBox 
                                         x:Name="CPM4"
@@ -1423,10 +1430,10 @@
 									         Text="{Binding Path=MatPct4, StringFormat=N0}" />
 
                                     <TextBox 
-									         Width="55" Height="18" Margin="100 0 0 0"
+									         Width="75" Height="18" Margin="80 0 0 0"
 									         HorizontalAlignment="Left"
 									         HorizontalContentAlignment="Right"
-									         FontSize="10"
+									         FontSize="10" Foreground="Purple" FontWeight="Bold"
 									         IsEnabled="False"
 									         Text="{Binding Path=SellPrice4, StringFormat=C}" />
 
@@ -2058,14 +2065,14 @@
                             <TextBox Text="{Binding AdjPressRunTime,   StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="7" Width="60" 
                                          FontSize="12" ToolTip="AdjPressRunTime" />
-                            <TextBox Text="{Binding AdjPressRunCost,   StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
+                            <TextBox Text="{Binding AdjPressRunCost,   StringFormat=C}"  Margin="0,2,0,2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="8" Width="60" 
                                          FontSize="12" ToolTip="PressRunCost"/>
 
                             <TextBox Text="{Binding AdjCollRunTime,    StringFormat=N2}" Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="7" Width="60" 
                                          FontSize="12" ToolTip="AdjCollRunTime"/>
-                            <TextBox Text="{Binding AdjCollRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
+                            <TextBox Text="{Binding AdjCollRunCost,    StringFormat=C}"  Margin="0,2,0,2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="8" Width="60" 
                                          FontSize="12" ToolTip="AdjCollRunCost"/>
 
@@ -2075,6 +2082,27 @@
                             <TextBox Text="{Binding AdjBindRunCost,    StringFormat=C}"  Margin="0 2 0 2" IsReadOnly="True" FontWeight="Bold"
                                          HorizontalAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="8" Width="60" 
                                          FontSize="12" ToolTip="AdjBindRunCost"/>
+
+                            <Label Grid.Row="5" Grid.Column="7" Content="Total Materials: " HorizontalAlignment="Right" Foreground="Purple" 
+                                   VerticalAlignment="Center"   Padding="0" FontSize="12"   HorizontalContentAlignment="Right" />
+                            <Label Grid.Row="6" Grid.Column="7" Content="Total Labor: "     HorizontalAlignment="Right" Foreground="Purple" 
+                                   VerticalAlignment="Center"   Padding="0" FontSize="12"   HorizontalContentAlignment="Right" />
+                            <Label Grid.Row="7" Grid.Column="7" Content="Total: "           HorizontalAlignment="Right" Foreground="Purple" 
+                                   VerticalAlignment="Center"   Padding="0" FontSize="12"   HorizontalContentAlignment="Right" />
+
+                            <TextBox  Grid.Row="5" Grid.Column="7" Text="{Binding TotalMaterials, StringFormat=C}" 
+                                      Width="70" Background="White" Foreground="Purple" Height="18" Padding="1"
+                                      VerticalAlignment="Bottom" Grid.ColumnSpan="2"
+                                      FontSize="11" HorizontalContentAlignment="Right" FontWeight="Bold" Margin="85 0 0 2" />
+                            <TextBox  Grid.Row="6" Grid.Column="7" Text="{Binding TotalLabor,     StringFormat=C}" 
+                                      Width="70" Background="White" Foreground="Purple" Height="18" Padding="1" 
+                                      VerticalAlignment="Bottom" Grid.ColumnSpan="2"
+                                      FontSize="11" HorizontalContentAlignment="Right" FontWeight="Bold" Margin="85 0 0 2" />
+                            <TextBox  Grid.Row="7" Grid.Column="7" Text="{Binding TotalTotal,     StringFormat=C}" 
+                                      Width="70" Background="White" Foreground="Purple" Height="18" Padding="1" 
+                                      VerticalAlignment="Bottom" Grid.ColumnSpan="2"
+                                      FontSize="11" HorizontalContentAlignment="Right" FontWeight="Bold" Margin="85 0 0 2" />
+
                         </Grid>
 
                         <StackPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" Margin="360,0,0,0" Grid.Column="2" >

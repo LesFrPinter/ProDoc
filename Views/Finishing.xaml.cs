@@ -112,7 +112,7 @@ namespace ProDocEstimate.Views
             InitializeComponent();
             this.DataContext = this;
 
-            Title = "Quote #: " + QUOTENUM;
+//            Title = "Quote #: " + QUOTENUM;
 
             // Local properties (variables)
             QuoteNum = QUOTENUM;

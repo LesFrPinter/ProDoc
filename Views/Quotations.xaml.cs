@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Telerik.Windows.Controls;
 
 namespace ProDocEstimate
 {
@@ -37,30 +38,34 @@ namespace ProDocEstimate
         //private float convertingCost;     public float ConvertingCost       { get { return convertingCost;      } set { convertingCost     = value; OnPropertyChanged(); } }
         //private float finishingCost;      public float FinishingCost        { get { return finishingCost;       } set { finishingCost      = value; OnPropertyChanged(); } }
 
-        private float pressSlowdown;    public float PressSlowdown    { get { return pressSlowdown;    } set { pressSlowdown    = value; OnPropertyChanged(); } }
-        private float collatorSlowdown; public float CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
-        private float binderySlowdown;  public float BinderySlowdown  { get { return binderySlowdown;  } set { binderySlowdown  = value; OnPropertyChanged(); } }
+        private float totalMaterials;       public float TotalMaterials       { get { return totalMaterials;      } set { totalMaterials     = value; OnPropertyChanged(); } }
+        private float totalLabor;           public float TotalLabor           { get { return totalLabor;          } set { totalLabor         = value; OnPropertyChanged(); } }
+        private float totalTotal;           public float TotalTotal           { get { return totalTotal;          } set { totalTotal         = value; OnPropertyChanged(); } }
 
-        private float adjPressRunTime;  public float AdjPressRunTime  { get { return adjPressRunTime;  } set { adjPressRunTime  = value; OnPropertyChanged(); } }
-        private float adjPressRunCost;  public float AdjPressRunCost  { get { return adjPressRunCost;  } set { adjPressRunCost  = value; OnPropertyChanged(); } }
-        private float adjCollRunTime;   public float AdjCollRunTime   { get { return adjCollRunTime;   } set { adjCollRunTime   = value; OnPropertyChanged(); } }
-        private float adjCollRunCost;   public float AdjCollRunCost   { get { return adjCollRunCost;   } set { adjCollRunCost   = value; OnPropertyChanged(); } }
-        private float adjBindRunTime;   public float AdjBindRunTime   { get { return adjBindRunTime;   } set { adjBindRunTime   = value; OnPropertyChanged(); } }
-        private float adjBindRunCost;   public float AdjBindRunCost   { get { return adjBindRunCost;   } set { adjBindRunCost   = value; OnPropertyChanged(); } }
+        private float pressSlowdown;        public float PressSlowdown    { get { return pressSlowdown;    } set { pressSlowdown    = value; OnPropertyChanged(); } }
+        private float collatorSlowdown;     public float CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
+        private float binderySlowdown;      public float BinderySlowdown  { get { return binderySlowdown;  } set { binderySlowdown  = value; OnPropertyChanged(); } }
 
-        private string noChgMsg; public string NoChgMsg { get { return noChgMsg; } set { noChgMsg = value; OnPropertyChanged(); } }
+        private float adjPressRunTime;      public float AdjPressRunTime  { get { return adjPressRunTime;  } set { adjPressRunTime  = value; OnPropertyChanged(); } }
+        private float adjPressRunCost;      public float AdjPressRunCost  { get { return adjPressRunCost;  } set { adjPressRunCost  = value; OnPropertyChanged(); } }
+        private float adjCollRunTime;       public float AdjCollRunTime   { get { return adjCollRunTime;   } set { adjCollRunTime   = value; OnPropertyChanged(); } }
+        private float adjCollRunCost;       public float AdjCollRunCost   { get { return adjCollRunCost;   } set { adjCollRunCost   = value; OnPropertyChanged(); } }
+        private float adjBindRunTime;       public float AdjBindRunTime   { get { return adjBindRunTime;   } set { adjBindRunTime   = value; OnPropertyChanged(); } }
+        private float adjBindRunCost;       public float AdjBindRunCost   { get { return adjBindRunCost;   } set { adjBindRunCost   = value; OnPropertyChanged(); } }
 
-        private string numWidePress = "1"; public string NumWidePress { get { return numWidePress; } set { numWidePress = value; OnPropertyChanged(); } }
+        private string noChgMsg;            public string NoChgMsg { get { return noChgMsg; } set { noChgMsg = value; OnPropertyChanged(); } }
+
+        private string numWidePress = "1";  public string NumWidePress { get { return numWidePress; } set { numWidePress = value; OnPropertyChanged(); } }
         private string numWideConverter = "1"; public string NumWideConverter { get { return numWideConverter; } set { numWideConverter = value; OnPropertyChanged(); } }
 
-        private float finishMaterial; public float FinishMaterial { get { return finishMaterial; } set { finishMaterial = value; OnPropertyChanged(); } }
-        private float prePressPerMilChg; public float PrePressPerMilChg { get { return prePressPerMilChg; } set { prePressPerMilChg = value; OnPropertyChanged(); } }
-        private float pressMaterialCost; public float PressMaterialCost { get { return pressMaterialCost; } set { pressMaterialCost = value; OnPropertyChanged(); } }
-        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost; } set { collatorMaterialCost = value; OnPropertyChanged(); } }
-        private float binderyMaterialCost; public float BinderyMaterialCost { get { return binderyMaterialCost; } set { binderyMaterialCost = value; OnPropertyChanged(); } }
-        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost; } set { prePressMaterialCost = value; OnPropertyChanged(); } }
-        private float oeMaterialCost; public float OEMaterialCost { get { return oeMaterialCost; } set { oeMaterialCost = value; OnPropertyChanged(); } }
-        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost; } set { shippingMaterialCost = value; OnPropertyChanged(); } }
+        private float finishMaterial;       public float FinishMaterial       { get { return finishMaterial;        } set { finishMaterial       = value; OnPropertyChanged(); } }
+        private float prePressPerMilChg;    public float PrePressPerMilChg    { get { return prePressPerMilChg;     } set { prePressPerMilChg    = value; OnPropertyChanged(); } }
+        private float pressMaterialCost;    public float PressMaterialCost    { get { return pressMaterialCost;     } set { pressMaterialCost    = value; OnPropertyChanged(); } }
+        private float collatorMaterialCost; public float CollatorMaterialCost { get { return collatorMaterialCost;  } set { collatorMaterialCost = value; OnPropertyChanged(); } }
+        private float binderyMaterialCost;  public float BinderyMaterialCost  { get { return binderyMaterialCost;   } set { binderyMaterialCost  = value; OnPropertyChanged(); } }
+        private float prePressMaterialCost; public float PrePressMaterialCost { get { return prePressMaterialCost;  } set { prePressMaterialCost = value; OnPropertyChanged(); } }
+        private float oeMaterialCost;       public float OEMaterialCost       { get { return oeMaterialCost;        } set { oeMaterialCost       = value; OnPropertyChanged(); } }
+        private float shippingMaterialCost; public float ShippingMaterialCost { get { return shippingMaterialCost;  } set { shippingMaterialCost = value; OnPropertyChanged(); } }
 
         private bool already; public bool Already { get { return already; } set { already = value; OnPropertyChanged(); } } // to exit infinite loop
         private string costMsg; public string CostMsg { get { return costMsg; } set { costMsg = value; OnPropertyChanged(); } }
@@ -117,14 +122,14 @@ namespace ProDocEstimate
         private string selectedQuantity; public string SelectedQuantity { get { return selectedQuantity; } set { selectedQuantity = value; OnPropertyChanged(); CalcNow(); } }
         private string displayQuantity = "None selected"; public string DisplayQuantity { get { return displayQuantity; } set { displayQuantity = value; OnPropertyChanged(); } }
 
-        private int mkuppct1; public int MkUpPct1 { get { return mkuppct1; } set { mkuppct1 = value; OnPropertyChanged(); } }
-        private int mkupamt1; public int MkUpAmt1 { get { return mkupamt1; } set { mkupamt1 = value; OnPropertyChanged(); } }
-        private int mkuppct2; public int MkUpPct2 { get { return mkuppct2; } set { mkuppct2 = value; OnPropertyChanged(); } }
-        private int mkupamt2; public int MkUpAmt2 { get { return mkupamt2; } set { mkupamt2 = value; OnPropertyChanged(); } }
-        private int mkuppct3; public int MkUpPct3 { get { return mkuppct3; } set { mkuppct3 = value; OnPropertyChanged(); } }
-        private int mkupamt3; public int MkUpAmt3 { get { return mkupamt3; } set { mkupamt3 = value; OnPropertyChanged(); } }
-        private int mkuppct4; public int MkUpPct4 { get { return mkuppct4; } set { mkuppct4 = value; OnPropertyChanged(); } }
-        private int mkupamt4; public int MkUpAmt4 { get { return mkupamt4; } set { mkupamt4 = value; OnPropertyChanged(); } }
+        private int mkuppct1; public int MkUpPct1 { get { return mkuppct1; } set { mkuppct1 = value; MarkupCalc(1); OnPropertyChanged(); } }
+        private int mkupamt1; public int MkUpAmt1 { get { return mkupamt1; } set { mkupamt1 = value; MarkupCalc(1); OnPropertyChanged(); } }
+        private int mkuppct2; public int MkUpPct2 { get { return mkuppct2; } set { mkuppct2 = value; MarkupCalc(2); OnPropertyChanged(); } }
+        private int mkupamt2; public int MkUpAmt2 { get { return mkupamt2; } set { mkupamt2 = value; MarkupCalc(2); OnPropertyChanged(); } }
+        private int mkuppct3; public int MkUpPct3 { get { return mkuppct3; } set { mkuppct3 = value; MarkupCalc(3); OnPropertyChanged(); } }
+        private int mkupamt3; public int MkUpAmt3 { get { return mkupamt3; } set { mkupamt3 = value; MarkupCalc(3); OnPropertyChanged(); } }
+        private int mkuppct4; public int MkUpPct4 { get { return mkuppct4; } set { mkuppct4 = value; MarkupCalc(4); OnPropertyChanged(); } }
+        private int mkupamt4; public int MkUpAmt4 { get { return mkupamt4; } set { mkupamt4 = value; MarkupCalc(4); OnPropertyChanged(); } }
 
         private DataView dvPaper; public DataView DVPaper { get { return dvPaper; } set { dvPaper = value; OnPropertyChanged(); } }
 
@@ -1542,6 +1547,10 @@ namespace ProDocEstimate
 
         private void DoPage4()
         {
+            // IF NOT DEBUGGING, DON'T SHOW TOOLTIPS ON TEXTBOXES:
+
+            // if(DEBUG) { foreach (Control x in this.Page4.ChildrenOfType<TextBox>) { if (x is TextBox) { ((TextBox)x).ToolTip = String.Empty; } } }
+
             SqlConnection conn = new SqlConnection(ConnectionString);
 
             //----------------------------------------------------
@@ -1553,15 +1562,21 @@ namespace ProDocEstimate
             DataTable dt = new DataTable("Feat");
             SqlDataAdapter da = new SqlDataAdapter();
 
-            // ---------------------------------------------------------------------------------------------
-            // Recently added:
-            // Add rows for categories not previously added
-            // ---------------------------------------------------------------------------------------------
+            // --------------------------------------------------------------------
+            // Recently (12/12/2023) added:
+            //  Retrieve Freight from QUOTE_DETAILS and store in DVFeat[0]["Cost"]
+            //  Retrieve Press   from QUOTE_DETAILS and store in DVFeat[0]["Press"]
+            // --------------------------------------------------------------------
 
             float Freight = 0;
             SqlDataAdapter daf = new SqlDataAdapter("SELECT Value4 from [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE Category = 'Shipping'", conn);
             DataTable dt71 = new DataTable(); daf.Fill(dt71);
             if(dt71.Rows.Count > 0) { Freight = float.Parse(dt71.Rows[0]["Value4"].ToString()); }
+
+            float PunchCost = 0;
+            SqlDataAdapter dag = new SqlDataAdapter("SELECT Value1 from [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE Category = 'Punching'", conn);
+            DataTable dt72 = new DataTable(); dag.Fill(dt72);
+            if (dt72.Rows.Count > 0) {PunchCost = float.Parse(dt72.Rows[0]["Value1"].ToString()); }
 
             cmd = "SELECT "
                 + " Category, "
@@ -1587,10 +1602,14 @@ namespace ProDocEstimate
             dgFeatures.ItemsSource = DVFeat;
 
             DVFeat.RowFilter = "Category = 'Converting'";
-            if(DVFeat.Count > 0) { float conv = float.Parse(DVFeat[0]["Converting"].ToString()); DVFeat[0]["Converting"] = SelectedQty * conv ; }
+//            if (DVFeat.Count > 0) { float conv = float.Parse(DVFeat[0]["Converting"].ToString()); DVFeat[0]["Converting"] = SelectedQty * conv; }
+            if (DVFeat.Count > 0) { DVFeat[0]["Converting"] = CollatorMaterialCost; }
 
             DVFeat.RowFilter = "Category = 'Shipping'";
             if ((DVFeat.Count > 0) && (Freight > 0)) { DVFeat[0]["Cost"] = Freight; }
+
+            DVFeat.RowFilter = "Category = 'Punching'";
+            if ((DVFeat.Count > 0) && (PunchCost > 0)) { DVFeat[0]["Press"] = PunchCost; }
 
             DVFeat.RowFilter = "";
 
@@ -1696,6 +1715,7 @@ namespace ProDocEstimate
                     float linearInches = (float)NumCellos * collCuts3;
                     TotalCelloCost = linearInches * LinearInchCostCello;
                 }
+
                 BinderyMaterialCost = TotalBookCost + TotalCelloCost;           // Which I'm told will "almost never" happen...
 
                 //TODO: Copy this to the Finishing column of the Finishing row of DVFeat, then set it to zero
@@ -1709,16 +1729,15 @@ namespace ProDocEstimate
             // Collator 
             //-----------------------------------------------------
 
-            //TODO: Calculate three types of "Converting material" and store it in Quote_Details in three new columns 
+            // Can I just move the next 15 lines of code down below the calculation of the MATERIALS column and add to CollatorMaterialCost?
 
             // Use the parameters passed from the QUOTE_DETAIL record to calculate CollatorMaterialCost:
             CollatorMaterialCost = 0;
-            cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'CONVERTING'";
+            cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'CONVERTING' AND Value8 > 0";        // add "and transfer tape was selected"
             SqlDataAdapter da21 = new SqlDataAdapter(cmd, conn);
             DataTable dt21 = new DataTable("conv"); da21.Fill(dt21);
             if (dt21.Rows.Count > 0)
-            {
-                cmd = $"SELECT CONV_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'CONVERTING' AND F_TYPE = 'TRANSFER TAPE'";
+              { cmd = $"SELECT CONV_MATL FROM [ESTIMATING].[dbo].[FEATURES] WHERE CATEGORY = 'CONVERTING' AND F_TYPE = 'TRANSFER TAPE'";
                 SqlDataAdapter da12 = new SqlDataAdapter(cmd, conn);
                 DataTable dt12 = new DataTable("conv"); da12.Fill(dt12);
                 DataView dvy = dt12.DefaultView;
@@ -1726,13 +1745,91 @@ namespace ProDocEstimate
                 StringToNumber sTOn = new StringToNumber();
                 float collCuts = sTOn.Convert(COLLATORCUT);
                 float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
-                CollatorMaterialCost = convmatl * LinearInches;
+                CollatorMaterialCost = convmatl * LinearInches;                                     // <======
 
                 InkCalc();
+              }
+
+            // Sum the column values for DVFeat and display under MATERIALS at the bottom of Page 4
+
+            PressMaterialCost    = 0.0F;
+//          CollatorMaterialCost = 0.0F;                                                          // <====== Should I not zero this out, since it might have been calculated immediately above?
+            BinderyMaterialCost  = 0.0F;
+            PrePressMaterialCost = 0.0F;
+//          OEMaterialCost       = 0.0F;
+            ShippingMaterialCost = 0.0F;
+
+            for (int i = 0; i < DVFeat.Count; i++) 
+            {
+                PressMaterialCost += float.Parse(DVFeat[i]["Press"].ToString());
+//              CollatorMaterialCost += float.Parse(DVFeat[i]["Converting"].ToString());             // <======  This shouldn't be 24...
+                BinderyMaterialCost += float.Parse(DVFeat[i]["Finishing"].ToString());
+                PrePressMaterialCost += float.Parse(DVFeat[i]["PrePress"].ToString());
+//              OEMaterialCost += float.Parse(DVFeat[i]["????"].ToString());
+                ShippingMaterialCost += float.Parse(DVFeat[i]["Cost"].ToString());
             }
 
+            TotalLabor
+            = PressSetupCost
+            + CollSetupCost
+            + BindSetupCost
+            + PreRunCost
+            + OERunCost
+            + ShipCost
+            + AdjPressRunCost
+            + AdjCollRunCost
+            + AdjBindRunCost;
+
+            TotalMaterials
+            = PressMaterialCost
+            + CollatorMaterialCost
+            + BinderyMaterialCost
+            + PrePressMaterialCost
+            + OEMaterialCost
+            + ShippingMaterialCost;
+
+            // Add paper costs:
+            for (int i = 0; i < dvPaper.Count; i++) { TotalMaterials += float.Parse(dvPaper[i]["PaperCost"].ToString()); }
+
+            TotalTotal = TotalLabor + TotalMaterials;
+
+            if (SelectedQty == Qty1) { CPM1a = TotalTotal / (Qty1 / 1000); }
+            if (SelectedQty == Qty2) { CPM2a = TotalTotal / (Qty2 / 1000); }
+            if (SelectedQty == Qty3) { CPM3a = TotalTotal / (Qty3 / 1000); }
+            if (SelectedQty == Qty4) { CPM4a = TotalTotal / (Qty4 / 1000); }
+
         }
-// Currently 220 lines of code.
+        // Currently 250 lines of code.
+
+        private void MarkupCalc(int selnum)
+        {
+            switch(selnum)
+            {
+                case 1:
+                    SellPrice1 = TotalTotal;
+                    if (MkUpPct1 > 0) { SellPrice1 = TotalTotal * ( 1 + MkUpPct1 / 100.0F ); }
+                    if (MkUpAmt1 > 0) { SellPrice1 = TotalTotal + MkUpAmt1; }
+                    break;
+
+                case 2:
+                    SellPrice2 = TotalTotal;
+                    if (MkUpPct2 > 0) { SellPrice2 = TotalTotal * (1 + MkUpPct2 / 100.0F); }
+                    if (MkUpAmt1 > 0) { SellPrice2 = TotalTotal + MkUpAmt2; }
+                    break;
+
+                case 3:
+                    SellPrice3 = TotalTotal;
+                    if (MkUpPct3 > 0) { SellPrice3 = TotalTotal * (1 + MkUpPct3 / 100.0F); }
+                    if (MkUpAmt1 > 0) { SellPrice3 = TotalTotal + MkUpAmt2; }
+                    break;
+
+                case 4:
+                    SellPrice4 = TotalTotal;
+                    if (MkUpPct4 > 0) { SellPrice4 = TotalTotal * (1 + MkUpPct4 / 100.0F); }
+                    if (MkUpAmt1 > 0) { SellPrice4 = TotalTotal + MkUpAmt4; }
+                    break;
+            }
+        }
 
         private void InkCalc()
         {
@@ -1933,10 +2030,11 @@ namespace ProDocEstimate
                 DisplayQuantity = "(using " + Qty1.ToString() + ")";
                 Already = true;
                 Q1();
-                SellPrice1 = ((float)Qty1 / 1000.0F) * float.Parse(CPM1a.ToString());
-                if (MkUpPct1 > 0.0F) { SellPrice1 *= (100.0F + MkUpPct1) / 100.0F; }
-                if (MkUpAmt1 > 0.0F) { SellPrice1 += MkUpAmt1; }
+                //SellPrice1 = ((float)Qty1 / 1000.0F) * float.Parse(CPM1a.ToString());
+                //if (MkUpPct1 > 0.0F) { SellPrice1 *= (100.0F + MkUpPct1) / 100.0F; }
+                //if (MkUpAmt1 > 0.0F) { SellPrice1 += MkUpAmt1; }
                 DoPage4();
+                MarkupCalc(1);
             }
         }
 
@@ -1948,10 +2046,11 @@ namespace ProDocEstimate
                 DisplayQuantity = "(using " + Qty2.ToString() + ")";
                 Already = true;
                 Q2();
-                SellPrice2 = ((float)Qty2 / 1000.0F) * float.Parse(CPM2a.ToString());
-                if (MkUpPct2 > 0.0F) { SellPrice2 *= (100.0F + MkUpPct2) / 100.0F; }
-                if (MkUpAmt2 > 0.0F) { SellPrice2 += MkUpAmt2; }
+                //SellPrice2 = ((float)Qty2 / 1000.0F) * float.Parse(CPM2a.ToString());
+                //if (MkUpPct2 > 0.0F) { SellPrice2 *= (100.0F + MkUpPct2) / 100.0F; }
+                //if (MkUpAmt2 > 0.0F) { SellPrice2 += MkUpAmt2; }
                 DoPage4();
+                MarkupCalc(2);
             }
         }
 
@@ -1963,10 +2062,11 @@ namespace ProDocEstimate
                 DisplayQuantity = "(using " + Qty3.ToString() + ")";
                 Already = true;
                 Q3();
-                SellPrice3 = ((float)Qty3 / 1000.0F) * float.Parse(CPM3a.ToString());
-                if (MkUpPct3 > 0.0F) { SellPrice3 *= (100.0F + MkUpPct3) / 100.0F; }
-                if (MkUpAmt3 > 0.0F) { SellPrice3 += MkUpAmt3; }
+                //SellPrice3 = ((float)Qty3 / 1000.0F) * float.Parse(CPM3a.ToString());
+                //if (MkUpPct3 > 0.0F) { SellPrice3 *= (100.0F + MkUpPct3) / 100.0F; }
+                //if (MkUpAmt3 > 0.0F) { SellPrice3 += MkUpAmt3; }
                 DoPage4();
+                MarkupCalc(3);
             }
         }
 
@@ -1978,10 +2078,11 @@ namespace ProDocEstimate
                 DisplayQuantity = "(using " + Qty4.ToString() + ")";
                 Already = true;
                 Q4();
-                SellPrice4 = ((float)Qty4 / 1000.0F) * float.Parse(CPM4a.ToString());
-                if (MkUpPct4 > 0.0F) { SellPrice4 *= (100.0F + MkUpPct4) / 100.0F; }
-                if (MkUpAmt4 > 0.0F) { SellPrice4 += MkUpAmt4; }
+                //SellPrice4 = ((float)Qty4 / 1000.0F) * float.Parse(CPM4a.ToString());
+                //if (MkUpPct4 > 0.0F) { SellPrice4 *= (100.0F + MkUpPct4) / 100.0F; }
+                //if (MkUpAmt4 > 0.0F) { SellPrice4 += MkUpAmt4; }
                 DoPage4();
+                MarkupCalc(4);
             }
         }
 
@@ -2408,7 +2509,7 @@ namespace ProDocEstimate
         private void txtItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //            ItemType = ItemType.TrimEnd();
-            Title = "ItemType: |" + ItemType + "|";
+//            Title = "ItemType: |" + ItemType + "|";
             NoChgMsg = "";
             LoadSubWT();
             LoadColors();

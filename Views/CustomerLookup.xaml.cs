@@ -91,7 +91,7 @@ namespace ProDocEstimate.Views
             DataSet ds = new DataSet();
             da.Fill(ds);
             dgCustomers.ItemsSource = ds.Tables[0].DefaultView; dgCustomers.SelectedIndex = 0;
-            this.Title = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
+//            this.Title = ds.Tables[0].Rows.Count.ToString() + " rows matched.";
         }
 
         private void dgCustomers_MouseDoubleClick(object sender, MouseButtonEventArgs e)

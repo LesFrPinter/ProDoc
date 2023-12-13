@@ -119,7 +119,7 @@ namespace ProDocEstimate.Views
             DataContext = this;
 
             PressSize   = PSize;
-            Title       = Title = "Quote #: " + QUOTENUM + "  PressSize: " + PressSize;  // passed in when the form is instantiated in Quotations.xaml.cs.
+//            Title       = Title = "Quote #: " + QUOTENUM + "  PressSize: " + PressSize;  // passed in when the form is instantiated in Quotations.xaml.cs.
             Total       = -1.00F;   // Used to prevent premature calculation
             QuoteNo     = QUOTENUM; // Parameters passed in from Quotations form
             Parts = 1;   // Don't multiply by # parts

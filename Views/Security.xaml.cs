@@ -140,7 +140,7 @@ namespace ProDocEstimate.Views
 
             this.DataContext = this;
 
-            Title = QUOTENUM;
+//            Title = QUOTENUM;
             QuoteNum = QUOTENUM.ToString();
             PressSize = PRESSSIZE.ToString();
 
