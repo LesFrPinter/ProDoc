@@ -1602,7 +1602,6 @@ namespace ProDocEstimate
             dgFeatures.ItemsSource = DVFeat;
 
             DVFeat.RowFilter = "Category = 'Converting'";
-//            if (DVFeat.Count > 0) { float conv = float.Parse(DVFeat[0]["Converting"].ToString()); DVFeat[0]["Converting"] = SelectedQty * conv; }
             if (DVFeat.Count > 0) { DVFeat[0]["Converting"] = CollatorMaterialCost; }
 
             DVFeat.RowFilter = "Category = 'Shipping'";
@@ -1615,6 +1614,8 @@ namespace ProDocEstimate
 
             // ------------------------------------------------------------------------
             // Next, use feature parameters entered so far to populate the DVFeat table
+
+            // ------------------------------------------------------------------------
             // Retrieve some values from the Ink Color feature
             // ------------------------------------------------------------------------
 
@@ -1678,10 +1679,11 @@ namespace ProDocEstimate
             //-----------------------------------------------------
             // Finishing
             //-----------------------------------------------------
+
             cmd = "SELECT CONVERT(integer,Value1) AS Books,  " +
-                         " CONVERT(integer,Value2) AS Cellos, " +
-                         " Value6 AS LinearInchCostCello,     " +
-                         " Value7 AS LinearInchCostBooks      " +
+                        " CONVERT(integer,Value2) AS Cellos, " +
+                        " Value6 AS LinearInchCostCello,     " +
+                        " Value7 AS LinearInchCostBooks      " +
                    "  FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] " +
                   $" WHERE QUOTE_NUM = '{QUOTE_NUM}' AND Category = 'Finishing'";
 
@@ -1722,14 +1724,13 @@ namespace ProDocEstimate
                 DVFeat.RowFilter = "Category = 'Finishing'";
                 DVFeat[0]["Finishing"] = BinderyMaterialCost;
                 BinderyMaterialCost = 0.00F;
+
                 DVFeat.RowFilter = "";  // Turn the filter off
             }
 
             //-----------------------------------------------------
             // Collator 
             //-----------------------------------------------------
-
-            // Can I just move the next 15 lines of code down below the calculation of the MATERIALS column and add to CollatorMaterialCost?
 
             // Use the parameters passed from the QUOTE_DETAIL record to calculate CollatorMaterialCost:
             CollatorMaterialCost = 0;
@@ -1814,19 +1815,19 @@ namespace ProDocEstimate
                 case 2:
                     SellPrice2 = TotalTotal;
                     if (MkUpPct2 > 0) { SellPrice2 = TotalTotal * (1 + MkUpPct2 / 100.0F); }
-                    if (MkUpAmt1 > 0) { SellPrice2 = TotalTotal + MkUpAmt2; }
+                    if (MkUpAmt2 > 0) { SellPrice2 = TotalTotal + MkUpAmt2; }
                     break;
 
                 case 3:
                     SellPrice3 = TotalTotal;
                     if (MkUpPct3 > 0) { SellPrice3 = TotalTotal * (1 + MkUpPct3 / 100.0F); }
-                    if (MkUpAmt1 > 0) { SellPrice3 = TotalTotal + MkUpAmt2; }
+                    if (MkUpAmt3 > 0) { SellPrice3 = TotalTotal + MkUpAmt3; }
                     break;
 
                 case 4:
                     SellPrice4 = TotalTotal;
                     if (MkUpPct4 > 0) { SellPrice4 = TotalTotal * (1 + MkUpPct4 / 100.0F); }
-                    if (MkUpAmt1 > 0) { SellPrice4 = TotalTotal + MkUpAmt4; }
+                    if (MkUpAmt4 > 0) { SellPrice4 = TotalTotal + MkUpAmt4; }
                     break;
             }
         }
@@ -1982,7 +1983,6 @@ namespace ProDocEstimate
             CheckFourth();
         }
 
-        // To add weight and selected cost in the PAPER grid on page 4, add those two columns here and load the values around line 1567
         public class Paper
         {
             public string Description { get; set; }
