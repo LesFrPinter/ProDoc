@@ -36,6 +36,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
 
@@ -74,8 +75,8 @@
                 <TextBox BorderThickness="0"
                     Text="Job Cost Estimator" 
                     TextWrapping="Wrap" 
-                    Padding="30 20" 
-                    Background="AntiqueWhite"
+                    Padding="30 20" Foreground="Navy" FontFamily="Lucida Handwriting Italic"
+                    Background="Transparent"
                     FontSize="64"
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Center" Margin="0,69,0,0" >
@@ -88,6 +89,29 @@
                 </TextBox>
             </Border>
 
+            <!--<TextBox Grid.Row="2" FontSize="32"
+                 Background="Transparent"
+                 BorderBrush="Transparent"
+                 BorderThickness="0"
+                 TextWrapping="Wrap">
+                <TextBox.Effect>
+                    <DropShadowEffect ShadowDepth="4"
+                          Direction="330"
+                          Color="Black"
+                          Opacity="0.5"
+                          BlurRadius="4" />
+                </TextBox.Effect>
+                <TextBox.FocusVisualStyle>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBox.FocusVisualStyle>
+                Hello
+            </TextBox>-->
 
         </Grid>
 

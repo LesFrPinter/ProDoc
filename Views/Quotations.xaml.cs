@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Telerik.Windows.Controls;
 
 namespace ProDocEstimate
 {
@@ -31,16 +30,12 @@ namespace ProDocEstimate
 
         private DataView dvFeatr; public DataView DVFeat { get { return dvFeatr; } set { dvFeatr = value; OnPropertyChanged(); } }
 
-        // new properties for the table on page 4
-        //private float featureCost;        public float FeatureCost          { get { return featureCost;         } set { featureCost        = value; OnPropertyChanged(); } }
-        //private float prePressCost;       public float PrePressCost         { get { return prePressCost;        } set { prePressCost       = value; OnPropertyChanged(); } }
-        //private float pressCost;          public float PressCost            { get { return pressCost;           } set { pressCost          = value; OnPropertyChanged(); } }
-        //private float convertingCost;     public float ConvertingCost       { get { return convertingCost;      } set { convertingCost     = value; OnPropertyChanged(); } }
-        //private float finishingCost;      public float FinishingCost        { get { return finishingCost;       } set { finishingCost      = value; OnPropertyChanged(); } }
+        private bool isChecked;             public bool  IsChecked        { get { return isChecked;         } set { isChecked          = value; OnPropertyChanged(); } }
+        private bool selected;              public bool  Selected         { get { return selected;          } set { selected           = value; OnPropertyChanged(); } }
 
-        private float totalMaterials;       public float TotalMaterials       { get { return totalMaterials;      } set { totalMaterials     = value; OnPropertyChanged(); } }
-        private float totalLabor;           public float TotalLabor           { get { return totalLabor;          } set { totalLabor         = value; OnPropertyChanged(); } }
-        private float totalTotal;           public float TotalTotal           { get { return totalTotal;          } set { totalTotal         = value; OnPropertyChanged(); } }
+        private float totalMaterials;       public float TotalMaterials   { get { return totalMaterials;    } set { totalMaterials     = value; OnPropertyChanged(); } }
+        private float totalLabor;           public float TotalLabor       { get { return totalLabor;        } set { totalLabor         = value; OnPropertyChanged(); } }
+        private float totalTotal;           public float TotalTotal       { get { return totalTotal;        } set { totalTotal         = value; OnPropertyChanged(); } }
 
         private float pressSlowdown;        public float PressSlowdown    { get { return pressSlowdown;    } set { pressSlowdown    = value; OnPropertyChanged(); } }
         private float collatorSlowdown;     public float CollatorSlowdown { get { return collatorSlowdown; } set { collatorSlowdown = value; OnPropertyChanged(); } }
@@ -431,11 +426,11 @@ namespace ProDocEstimate
         {
             switch (Tabs.SelectedIndex)
             {
-                case 0: ActivePage = "Base"; lblPageName.Content = "Base"; OnPropertyChanged("ActivePage"); break;
-                case 1: ActivePage = "Details"; lblPageName.Content = "Details"; OnPropertyChanged("ActivePage"); break;
+                case 0: ActivePage = "Base";     lblPageName.Content = "Base";     OnPropertyChanged("ActivePage"); break;
+                case 1: ActivePage = "Details";  lblPageName.Content = "Paper";    OnPropertyChanged("ActivePage"); break;
                 case 2: ActivePage = "Features"; lblPageName.Content = "Features"; OnPropertyChanged("ActivePage"); break;
-                case 3: ActivePage = "Pricing"; lblPageName.Content = "Pricing"; OnPropertyChanged("ActivePage"); break;
-                case 4: ActivePage = "Details"; lblPageName.Content = "Summary"; OnPropertyChanged("ActivePage"); break;
+                case 3: ActivePage = "Pricing";  lblPageName.Content = "Pricing";  OnPropertyChanged("ActivePage"); break;
+                case 4: ActivePage = "Details";  lblPageName.Content = "Summary";  OnPropertyChanged("ActivePage"); break;
             }
         }
 
@@ -1800,7 +1795,7 @@ namespace ProDocEstimate
             if (SelectedQty == Qty4) { CPM4a = TotalTotal / (Qty4 / 1000); }
 
         }
-        // Currently 250 lines of code.
+        // Currently 255 lines of code.
 
         private void MarkupCalc(int selnum)
         {
@@ -2004,10 +1999,29 @@ namespace ProDocEstimate
         public class Labor
         {
             public string Department { get; set; }
-            public float SetupTime { get; set; }
-            public float SetupCost { get; set; }
-            public float RunTime { get; set; }
-            public float RunCost { get; set; }
+            public float  SetupTime  { get; set; }
+            public float  SetupCost  { get; set; }
+            public float  RunTime    { get; set; }
+            public float  RunCost    { get; set; }
+        }
+
+        public class Report
+        {
+            public bool  Selected { get; set; }
+            public int   SelQty   { get; set; }
+            public float Cost     { get; set; }
+        }
+
+        private void AddReports()
+        {
+            List<Report> RptList = new List<Report>();
+
+            if (Qty1 > 0) RptList.Add(new Report() { Selected = true, SelQty = Qty1, Cost = SellPrice1 });
+            if (Qty2 > 0) RptList.Add(new Report() { Selected = true, SelQty = Qty2, Cost = SellPrice2 });
+            if (Qty3 > 0) RptList.Add(new Report() { Selected = true, SelQty = Qty3, Cost = SellPrice3 });
+            if (Qty4 > 0) RptList.Add(new Report() { Selected = true, SelQty = Qty4, Cost = SellPrice4 });
+
+            MyListView.ItemsSource = RptList;
         }
 
         private List<Labor> LoadLaborCosts()
@@ -2027,7 +2041,8 @@ namespace ProDocEstimate
             QBO1.Focus();
             if (Qty1 > 0)
             {
-                DisplayQuantity = "(using " + Qty1.ToString() + ")";
+                DisplayQuantity = Qty1.ToString();
+                QtyDisplay.Visibility = Visibility.Visible;
                 Already = true;
                 Q1();
                 //SellPrice1 = ((float)Qty1 / 1000.0F) * float.Parse(CPM1a.ToString());
@@ -2043,7 +2058,8 @@ namespace ProDocEstimate
             QBO2.Focus();
             if (Qty2 > 0)
             {
-                DisplayQuantity = "(using " + Qty2.ToString() + ")";
+                DisplayQuantity = Qty2.ToString();
+                QtyDisplay.Visibility = Visibility.Visible;
                 Already = true;
                 Q2();
                 //SellPrice2 = ((float)Qty2 / 1000.0F) * float.Parse(CPM2a.ToString());
@@ -2059,7 +2075,8 @@ namespace ProDocEstimate
             QBO3.Focus();
             if (Qty3 > 0)
             {
-                DisplayQuantity = "(using " + Qty3.ToString() + ")";
+                DisplayQuantity = Qty3.ToString();
+                QtyDisplay.Visibility = Visibility.Visible;
                 Already = true;
                 Q3();
                 //SellPrice3 = ((float)Qty3 / 1000.0F) * float.Parse(CPM3a.ToString());
@@ -2075,7 +2092,8 @@ namespace ProDocEstimate
             QBO4.Focus();
             if (Qty4 > 0)
             {
-                DisplayQuantity = "(using " + Qty4.ToString() + ")";
+                DisplayQuantity = Qty4.ToString();
+                QtyDisplay.Visibility = Visibility.Visible;
                 Already = true;
                 Q4();
                 //SellPrice4 = ((float)Qty4 / 1000.0F) * float.Parse(CPM4a.ToString());
@@ -2558,6 +2576,16 @@ namespace ProDocEstimate
                     scmd = new SqlCommand(cmd, conn); scmd.ExecuteNonQuery(); conn.Close();
                 }
             }
+        }
+
+        private void Page5_GotFocus(object sender, RoutedEventArgs e)
+        {
+            AddReports();
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not yet implemented");
         }
 
     }

@@ -11,8 +11,8 @@ namespace ProDocEstimate.Views
 
         public void OnLoad(object sender, RoutedEventArgs e)
         {
-            this.Left = this.Owner.Left + 50;
-            this.Top  = this.Owner.Top + 262;
+            this.Left = this.Owner.Left + 25;
+            this.Top  = this.Owner.Top  + 280;
         }
 
     }
