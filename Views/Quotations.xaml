@@ -1160,7 +1160,7 @@
                                               SelectedValue="{Binding ComboSel1, UpdateSourceTrigger=PropertyChanged}" 
                                               Height="18" FontSize="10" HorizontalAlignment="Left" Margin="5 0 0 0" 
                                               Width="36" SelectionChanged="MarkupBasis1_SelectionChanged" >
-                                        <ComboBoxItem Content=" " />
+                                        <ComboBoxItem Content=" " /> <!--TODO: Disable input cells if blank is chosen-->
                                         <ComboBoxItem Content="%" />
                                         <ComboBoxItem Content="$" />
                                     </ComboBox>

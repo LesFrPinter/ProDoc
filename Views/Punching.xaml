@@ -212,7 +212,7 @@
                 <Label                                  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Target="{Binding ElementName=S1}" VerticalAlignment="Center" >
                     <AccessText>_Press setup:</AccessText>
                 </Label>
-                <TextBox IsEnabled="False" Width="60"   Grid.Row="2" Grid.Column="1" Text="{Binding PressSetup,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="5,0,0,0" HorizontalAlignment="Left" Height="18" />
+                <TextBox IsEnabled="False" Width="60"   Grid.Row="2" Grid.Column="1" Text="{Binding PressSetup,  StringFormat='N0'}" HorizontalContentAlignment="Right" Margin="5,5,0,5" HorizontalAlignment="Left" Height="18" />
                 <telerik:RadNumericUpDown               Grid.Row="2" Grid.Column="2" Value="{Binding LabPS,UpdateSourceTrigger=PropertyChanged}"   ValueChanged="CalcLabor"  x:Name="S1" HorizontalAlignment="Left" Width="60" Height="22"/>
 
                 <Label Content="Press slowdown:"        Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" />

@@ -203,7 +203,19 @@ namespace ProDocEstimate.Views
             FlatTotal = 0;
 
 //            int t1, t2, t3, t4, t5, t6 = 0;
-            int l1, l2, l3, l4, l5, l6 = 0;
+            int l1 = 0;
+            int l2 = 0;
+            int l3 = 0;
+            int l4 = 0;
+            int l5 = 0;
+            int l6 = 0;
+
+            BasePressSetup = 0;
+            BaseCollatorSetup = 0;
+            BaseBinderySetup = 0;
+            BasePressSlowdown = 0;
+            BaseCollatorSlowdown = 0;
+            BaseBinderySlowdown = 0;
 
             for (int i = 0; i < dv.Count; i++)
             {
