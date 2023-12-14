@@ -14,6 +14,8 @@ namespace ProDocEstimate
         private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
         private static double featureZoom; public static double FeatureZoom { get { return featureZoom; } set { featureZoom = value; } }
 
+        public object ApplicationDeployment { get; private set; }
+
         #endregion
 
         public MainWindow() { 
@@ -32,21 +34,24 @@ namespace ProDocEstimate
             double ScreenHeight = SystemParameters.VirtualScreenHeight;
 
             FeatureZoom = 0.0F;
-            if (ScreenWidth < 1200) { FeatureZoom = 0.1F; }
+            if (ScreenWidth < 1200)                        { FeatureZoom = 0.1F; }
             else
-            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.4F; }
+            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.3F; }
             else
-            { FeatureZoom = 0.25F; }
+                                                           { FeatureZoom = 0.2F; }
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);
             this.Top = 10;
 
-            Title =   " Screen (" + ScreenWidth.ToString() + ", "                      + ScreenHeight.ToString()
-                  + ")  Window ( " + this.Width.ToString("N0").Replace(",", "") + ", " + this.Height.ToString("N0").Replace(",", "") + ") "
-                  + "   Zoom = " + FeatureZoom.ToString("N1");
+            string appVersion = System.Reflection.Assembly.GetExecutingAssembly().FullName;
+            string[] parts = appVersion.Split(".");
+            Title = Title + " " + parts[0] + "." + parts[1] + "." + parts[2];
 
-            Title = Title + "   Version 1.0.22";
+            Title += "   Screen ( " + ScreenWidth.ToString() + ", " + ScreenHeight.ToString()
+                  + " )  Window ( " + this.Width.ToString("N0").Replace(",", "") + ", " + this.Height.ToString("N0").Replace(",", "") + " ) "
+                  + "  Zoom = " + FeatureZoom.ToString("N1");
+
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)

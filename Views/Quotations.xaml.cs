@@ -28,7 +28,10 @@ namespace ProDocEstimate
         public DataTable? dt;
         public SqlCommand? scmd;
 
-        private DataView dvFeatr; public DataView DVFeat { get { return dvFeatr; } set { dvFeatr = value; OnPropertyChanged(); } }
+        private DataView dvFeatr;           public DataView DVFeat        { get { return dvFeatr;           } set { dvFeatr            = value; OnPropertyChanged(); } }
+
+        private float lPct;                 public float LPct             { get { return lPct;              } set { lPct               = value; OnPropertyChanged(); } }
+        private float mPct;                 public float MPct             { get { return mPct;              } set { mPct               = value; OnPropertyChanged(); } }
 
         private bool isChecked;             public bool  IsChecked        { get { return isChecked;         } set { isChecked          = value; OnPropertyChanged(); } }
         private bool selected;              public bool  Selected         { get { return selected;          } set { selected           = value; OnPropertyChanged(); } }
@@ -1728,6 +1731,7 @@ namespace ProDocEstimate
             //-----------------------------------------------------
 
             // Use the parameters passed from the QUOTE_DETAIL record to calculate CollatorMaterialCost:
+            // Store it in the "Converting" column of DVFeat for DVFeat[i]["Categtory"] == "Converting" 
             CollatorMaterialCost = 0;
             cmd = $"SELECT * FROM [ESTIMATING].[dbo].[QUOTE_DETAILS] WHERE CATEGORY = 'CONVERTING' AND Value8 > 0";        // add "and transfer tape was selected"
             SqlDataAdapter da21 = new SqlDataAdapter(cmd, conn);
@@ -1741,15 +1745,17 @@ namespace ProDocEstimate
                 StringToNumber sTOn = new StringToNumber();
                 float collCuts = sTOn.Convert(COLLATORCUT);
                 float LinearInches = ((float)SelectedQty * collCuts) / 12.0F;
-                CollatorMaterialCost = convmatl * LinearInches;                                     // <======
+                CollatorMaterialCost = convmatl * LinearInches;
+                // Insert the calculated material cost for Collating into the corresponding DVFeat array row
+                DVFeat.RowFilter = "Category = 'Converting'"; if (DVFeat.Count > 0) DVFeat[0]["Converting"] = CollatorMaterialCost; DVFeat.RowFilter = "";
 
                 InkCalc();
               }
 
-            // Sum the column values for DVFeat and display under MATERIALS at the bottom of Page 4
+// Sum the column values for DVFeat and display under MATERIALS at the bottom of Page 4
 
             PressMaterialCost    = 0.0F;
-//          CollatorMaterialCost = 0.0F;                                                          // <====== Should I not zero this out, since it might have been calculated immediately above?
+            CollatorMaterialCost = 0.0F;                                                          // <======
             BinderyMaterialCost  = 0.0F;
             PrePressMaterialCost = 0.0F;
 //          OEMaterialCost       = 0.0F;
@@ -1758,7 +1764,7 @@ namespace ProDocEstimate
             for (int i = 0; i < DVFeat.Count; i++) 
             {
                 PressMaterialCost += float.Parse(DVFeat[i]["Press"].ToString());
-//              CollatorMaterialCost += float.Parse(DVFeat[i]["Converting"].ToString());             // <======  This shouldn't be 24...
+                CollatorMaterialCost += float.Parse(DVFeat[i]["Converting"].ToString());           // <======
                 BinderyMaterialCost += float.Parse(DVFeat[i]["Finishing"].ToString());
                 PrePressMaterialCost += float.Parse(DVFeat[i]["PrePress"].ToString());
 //              OEMaterialCost += float.Parse(DVFeat[i]["????"].ToString());
@@ -1795,34 +1801,57 @@ namespace ProDocEstimate
             if (SelectedQty == Qty4) { CPM4a = TotalTotal / (Qty4 / 1000); }
 
         }
-        // Currently 255 lines of code.
+        // Currently 260 lines of code.
 
         private void MarkupCalc(int selnum)
         {
-            switch(selnum)
+            // Calculate the relative percentages of Labor and Materials at the bottom of the page
+            LPct = TotalLabor / TotalTotal;
+            MPct = 1 - LPct;
+
+            float lp = 0.0F;
+            float mp = 0.0F;
+
+            switch (selnum)
             {
                 case 1:
                     SellPrice1 = TotalTotal;
                     if (MkUpPct1 > 0) { SellPrice1 = TotalTotal * ( 1 + MkUpPct1 / 100.0F ); }
                     if (MkUpAmt1 > 0) { SellPrice1 = TotalTotal + MkUpAmt1; }
+                    lp = (TotalLabor     / SellPrice1) * 100;
+                    mp = (TotalMaterials / SellPrice1) * 100;
+                    LabPct1 = (int)Math.Round(lp);
+                    MatPct1 = (int)Math.Round(mp);
                     break;
 
                 case 2:
                     SellPrice2 = TotalTotal;
                     if (MkUpPct2 > 0) { SellPrice2 = TotalTotal * (1 + MkUpPct2 / 100.0F); }
                     if (MkUpAmt2 > 0) { SellPrice2 = TotalTotal + MkUpAmt2; }
+                    lp = (TotalLabor     / SellPrice2) * 100;
+                    mp = (TotalMaterials / SellPrice2) * 100;
+                    LabPct2 = (int)Math.Round(lp);
+                    MatPct2 = (int)Math.Round(mp);
                     break;
 
                 case 3:
                     SellPrice3 = TotalTotal;
                     if (MkUpPct3 > 0) { SellPrice3 = TotalTotal * (1 + MkUpPct3 / 100.0F); }
                     if (MkUpAmt3 > 0) { SellPrice3 = TotalTotal + MkUpAmt3; }
+                    lp = (TotalLabor     / SellPrice3) * 100;
+                    mp = (TotalMaterials / SellPrice3) * 100;
+                    LabPct3 = (int)Math.Round(lp);
+                    MatPct3 = (int)Math.Round(mp);
                     break;
 
                 case 4:
                     SellPrice4 = TotalTotal;
                     if (MkUpPct4 > 0) { SellPrice4 = TotalTotal * (1 + MkUpPct4 / 100.0F); }
                     if (MkUpAmt4 > 0) { SellPrice4 = TotalTotal + MkUpAmt4; }
+                    lp = (TotalLabor     / SellPrice4) * 100;
+                    mp = (TotalMaterials / SellPrice4) * 100;
+                    LabPct4 = (int)Math.Round(lp);
+                    MatPct4 = (int)Math.Round(mp);
                     break;
             }
         }

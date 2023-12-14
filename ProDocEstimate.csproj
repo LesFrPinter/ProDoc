@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <PackageIcon>PDSLogo.ico</PackageIcon>
+    <Description>Estimating App</Description>
+    <AssemblyVersion>1.0.31</AssemblyVersion>
+    <FileVersion>1.0.31</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
