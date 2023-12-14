@@ -121,13 +121,14 @@ namespace ProDocEstimate
         private string displayQuantity = "None selected"; public string DisplayQuantity { get { return displayQuantity; } set { displayQuantity = value; OnPropertyChanged(); } }
 
         private int mkuppct1; public int MkUpPct1 { get { return mkuppct1; } set { mkuppct1 = value; MarkupCalc(1); OnPropertyChanged(); } }
-        private int mkupamt1; public int MkUpAmt1 { get { return mkupamt1; } set { mkupamt1 = value; MarkupCalc(1); OnPropertyChanged(); } }
         private int mkuppct2; public int MkUpPct2 { get { return mkuppct2; } set { mkuppct2 = value; MarkupCalc(2); OnPropertyChanged(); } }
-        private int mkupamt2; public int MkUpAmt2 { get { return mkupamt2; } set { mkupamt2 = value; MarkupCalc(2); OnPropertyChanged(); } }
         private int mkuppct3; public int MkUpPct3 { get { return mkuppct3; } set { mkuppct3 = value; MarkupCalc(3); OnPropertyChanged(); } }
-        private int mkupamt3; public int MkUpAmt3 { get { return mkupamt3; } set { mkupamt3 = value; MarkupCalc(3); OnPropertyChanged(); } }
         private int mkuppct4; public int MkUpPct4 { get { return mkuppct4; } set { mkuppct4 = value; MarkupCalc(4); OnPropertyChanged(); } }
-        private int mkupamt4; public int MkUpAmt4 { get { return mkupamt4; } set { mkupamt4 = value; MarkupCalc(4); OnPropertyChanged(); } }
+
+        private float mkupamt1; public float MkUpAmt1 { get { return mkupamt1; } set { mkupamt1 = value; MarkupCalc(1); OnPropertyChanged(); } }
+        private float mkupamt2; public float MkUpAmt2 { get { return mkupamt2; } set { mkupamt2 = value; MarkupCalc(2); OnPropertyChanged(); } }
+        private float mkupamt3; public float MkUpAmt3 { get { return mkupamt3; } set { mkupamt3 = value; MarkupCalc(3); OnPropertyChanged(); } }
+        private float mkupamt4; public float MkUpAmt4 { get { return mkupamt4; } set { mkupamt4 = value; MarkupCalc(4); OnPropertyChanged(); } }
 
         private DataView dvPaper; public DataView DVPaper { get { return dvPaper; } set { dvPaper = value; OnPropertyChanged(); } }
 
@@ -1947,42 +1948,42 @@ namespace ProDocEstimate
 
         private void CheckFirst()
         {
-            if (ComboSel1.Length == 0) { Ext1.IsEnabled = false; Ext1c.IsEnabled = false; return; }
+            // ComboSel1 is the string currently selected in ComboBox1 
+            string lastChar = ComboSel1.Substring(ComboSel1.Length - 1);
+            if (lastChar.TrimEnd().Length == 0) { Ext1.IsEnabled = false; Ext1c.IsEnabled = false; MkUpPct1 = 0; MkUpAmt1 = 0.0F; return; }
             MkUpAmt1 = 0; MkUpPct1 = 0;
-            if (ComboSel1.Substring(ComboSel1.Length - 1, 1) == "%")
-            { Ext1.IsEnabled = true; Ext1c.IsEnabled = false; Ext1.Focus(); }
-            else
-            { Ext1.IsEnabled = false; Ext1c.IsEnabled = true; Ext1c.Focus(); }
+            if (lastChar == "%") { Ext1.IsEnabled = true;  Ext1c.IsEnabled = false; Ext1.Focus(); }
+            else                 { Ext1.IsEnabled = false; Ext1c.IsEnabled = true; Ext1c.Focus(); }
         }
 
         private void CheckSecond()
         {
-            if (ComboSel2.Length == 0) { Ext2.IsEnabled = false; Ext2c.IsEnabled = false; return; }
+            // ComboSel2 is the string currently selected in ComboBox1 
+            string lastChar = ComboSel2.Substring(ComboSel2.Length - 1);
+            if (lastChar.TrimEnd().Length == 0) { Ext2.IsEnabled = false; Ext2c.IsEnabled = false; MkUpPct2 = 0; MkUpAmt2 = 0.0F; return; }
             MkUpAmt2 = 0; MkUpPct2 = 0;
-            if (ComboSel2.Substring(ComboSel2.Length - 1, 1) == "%")
-            { Ext2.IsEnabled = true; Ext2c.IsEnabled = false; Ext2.Focus(); }
-            else
-            { Ext2.IsEnabled = false; Ext2c.IsEnabled = true; Ext2c.Focus(); }
+            if (lastChar == "%") { Ext2.IsEnabled = true;  Ext2c.IsEnabled = false; Ext2.Focus();  }
+            else                 { Ext2.IsEnabled = false; Ext2c.IsEnabled = true;  Ext2c.Focus(); }
         }
 
         private void CheckThird()
         {
-            if (ComboSel3.Length == 0) { Ext3.IsEnabled = false; Ext3c.IsEnabled = false; return; }
+            // ComboSel3 is the string currently selected in ComboBox1 
+            string lastChar = ComboSel3.Substring(ComboSel3.Length - 1);
+            if (lastChar.TrimEnd().Length == 0) { Ext3.IsEnabled = false; Ext3c.IsEnabled = false; MkUpPct3 = 0; MkUpAmt3 = 0.0F; return; }
             MkUpAmt3 = 0; MkUpPct3 = 0;
-            if (ComboSel3.Substring(ComboSel3.Length - 1, 1) == "%")
-            { Ext3.IsEnabled = true; Ext3c.IsEnabled = false; Ext3.Focus(); }
-            else
-            { Ext3.IsEnabled = false; Ext3c.IsEnabled = true; Ext3c.Focus(); }
+            if (lastChar == "%") { Ext3.IsEnabled = true; Ext3c.IsEnabled = false; Ext3.Focus(); }
+            else { Ext3.IsEnabled = false; Ext3c.IsEnabled = true; Ext3c.Focus(); }
         }
 
         private void CheckFourth()
         {
-            if (ComboSel4.Length == 0) { Ext4.IsEnabled = false; Ext4c.IsEnabled = false; return; }
+            // ComboSel4 is the string currently selected in ComboBox1 
+            string lastChar = ComboSel4.Substring(ComboSel4.Length - 1);
+            if (lastChar.TrimEnd().Length == 0) { Ext4.IsEnabled = false; Ext4c.IsEnabled = false; MkUpPct4 = 0; MkUpAmt4 = 0.0F; return; }
             MkUpAmt4 = 0; MkUpPct4 = 0;
-            if (ComboSel4.Substring(ComboSel4.Length - 1, 1) == "%")
-            { Ext4.IsEnabled = true; Ext4c.IsEnabled = false; Ext4.Focus(); }
-            else
-            { Ext4.IsEnabled = false; Ext4c.IsEnabled = true; Ext4c.Focus(); }
+            if (lastChar == "%") { Ext4.IsEnabled = true; Ext4c.IsEnabled = false; Ext4.Focus(); }
+            else { Ext4.IsEnabled = false; Ext4c.IsEnabled = true; Ext4c.Focus(); }
         }
 
         private void MarkupBasis1_SelectionChanged(object sender, SelectionChangedEventArgs e)
