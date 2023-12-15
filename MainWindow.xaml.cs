@@ -34,18 +34,17 @@ namespace ProDocEstimate
             double ScreenHeight = SystemParameters.VirtualScreenHeight;
 
             FeatureZoom = 0.0F;
-            if (ScreenWidth < 1200)                        { FeatureZoom = 0.1F; }
-            else
-            if (ScreenWidth >= 2400 && ScreenWidth < 3441) { FeatureZoom = 0.3F; }
-            else
-                                                           { FeatureZoom = 0.2F; }
+            if      (ScreenWidth <  1200)                       { FeatureZoom = 0.1F; }
+            else if (ScreenWidth >= 1200 && ScreenWidth < 3440) { FeatureZoom = 0.2F; }
+            else if (ScreenWidth >= 3441 && ScreenWidth < 3800) { FeatureZoom = 0.3F; }
+            else                                                { FeatureZoom = 0.4F; }
 
             this.Height = this.Height *= ( 1.0F + FeatureZoom);
             this.Width  = this.Width  *= ( 1.0F + FeatureZoom);
             this.Top = 10;
 
             string appVersion = System.Reflection.Assembly.GetExecutingAssembly().FullName;
-            string[] parts = appVersion.Split(".");
+            string[] parts    = appVersion.Split(".");
             Title = Title + " " + parts[0] + "." + parts[1] + "." + parts[2];
 
             Title += "   Screen ( " + ScreenWidth.ToString() + ", " + ScreenHeight.ToString()

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ProDocEstimate.Views"
         Loaded="OnLoad"
         mc:Ignorable="d"
+        WindowStyle="None"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
         Title="Cases" Height="450" Width="800">

@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        WindowStyle="None"
         Loaded="OnLoad"
         Title="Combo" Height="520" Width="800">
 

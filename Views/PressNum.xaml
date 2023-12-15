@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
+        WindowStyle="None"
         Title="Press Numbering" Height="455" Width="800">
 
     <Window.Resources>

@@ -10,6 +10,7 @@
         Title="Quotations" Width="1000" Height="955"
         WindowStartupLocation="CenterScreen"
         Loaded="OnLoad"
+        WindowStyle="None"
         Unloaded="SaveCheck"
         mc:Ignorable="d">
 
@@ -22,18 +23,20 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
         <Style TargetType="{x:Type DataGridCell}">
             <Setter Property="Padding" Value="2" />
+            <Setter Property="FontWeight" Value="Bold" />
             <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="pink" />
-                    <Setter Property="FontWeight" Value="Bold" />
+                <Trigger Property="IsSelected" Value="False">
+                    <Setter Property="Foreground" Value="black" />
+                    <Setter Property="Background" Value="white" />
                 </Trigger>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="Blue" />
-                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Foreground" Value="white" />
+                    <Setter Property="Background" Value="blue" />
                 </Trigger>
             </Style.Triggers>
             <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="dtgTest_PreviewMouseDown"/>-->
@@ -79,7 +82,8 @@
 				       Foreground="White" />
             </Border>
 
-            <Label FontSize="18" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
+            <Label FontSize="18" Foreground="Red" HorizontalAlignment="Center" x:Name="SaveMsg" 
+                   Width="200" Height="32" Margin="0,0,0,11" VerticalAlignment="Bottom" />
 
             <Border Grid.RowSpan="2"
 			        Grid.Column="0"
@@ -104,7 +108,8 @@
 				       Foreground="White" />
             </Border>
 
-            <TabControl x:Name="Tabs" Grid.Row="1" Background="LightGray" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged" >
+            <TabControl x:Name="Tabs" Grid.Row="1" Background="LightGray" 
+                        SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged" >
 
                 <TabItem x:Name="Page1" VerticalAlignment="Top"
                          FontSize="16" Header="    Page _1    " >

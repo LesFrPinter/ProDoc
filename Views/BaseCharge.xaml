@@ -8,6 +8,7 @@
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
         Loaded="OnLoad"
+        WindowStyle="None"
         Title="Base Charge" Height="210" Width="800">
 
     <Viewbox>

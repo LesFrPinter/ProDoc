@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        WindowStyle="None"
         Loaded="OnLoad"
         Title="PrePress" Height="450" Width="800">
 
@@ -23,16 +24,18 @@
             <Setter Property="IsEnabled" Value="False" />
         </Style>
         <Style TargetType="telerik:RadNumericUpDown">
-            <Setter Property="FontSize" Value="11" />
-            <Setter Property="Margin"   Value="4" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Margin"   Value="4 0 0 0" />
             <Setter Property="Height"   Value="20" />
             <Setter Property="Width"    Value="60" />
             <Setter Property="Grid.Row" Value="2" />
             <Setter Property="NumberDecimalDigits" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="Minimum"   Value="0" />
             <Setter Property="IsTabStop" Value="True" />
             <Setter Property="IsInteger" Value="True" />
+            <Setter Property="ValueFormat" Value="Numeric" />
         </Style>
     </Window.Resources>
 

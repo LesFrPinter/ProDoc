@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
+        WindowStyle="None"
         Title="Perfing" Height="465" Width="800">
 
     <Window.Resources>

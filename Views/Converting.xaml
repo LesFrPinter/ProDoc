@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
         Loaded="OnLoad"
+        WindowStyle="None"
         Title="Converting" Height="480" Width="800">
 
     <Window.Resources>

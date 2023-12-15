@@ -9,6 +9,7 @@
         Title="Finishing"
         WindowStartupLocation="CenterScreen"
         Background="LightGray"
+        WindowStyle="None"
         Loaded="OnLoad"
         Height="400" Width="800">
 

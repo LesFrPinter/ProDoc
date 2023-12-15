@@ -12,6 +12,7 @@
         KeyboardNavigation.ControlTabNavigation="Local"
         KeyboardNavigation.DirectionalNavigation="Local"
         Background="LightGray"
+        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Title="Backer" Height="460" Width="800">
 
