@@ -834,6 +834,7 @@ namespace ProDocEstimate
 
             Page2.IsEnabled = true;
             Page3.IsEnabled = true;
+            Page4.IsEnabled = true;
             Page5.IsEnabled = true;
 
             if (txtItemType.Items.Count == 0)
@@ -2618,5 +2619,9 @@ namespace ProDocEstimate
             MessageBox.Show("Not yet implemented");
         }
 
+        private void btnCloseQuote_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
