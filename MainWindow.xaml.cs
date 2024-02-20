@@ -13,6 +13,7 @@ namespace ProDocEstimate
         private string? custName; public string? CustName { get { return custName; } set { custName = value; } }
         private string? custCode; public string? CustCode { get { return custCode; } set { custCode = value; } }
         private static double featureZoom; public static double FeatureZoom { get { return featureZoom; } set { featureZoom = value; } }
+        private static double selValue;    public static double SelValue    { get { return selValue;    } set { selValue    = value; MessageBox.Show(SelValue.ToString()); } }
 
         public object ApplicationDeployment { get; private set; }
 
@@ -176,5 +177,18 @@ namespace ProDocEstimate
             Editors.ShippingTableEditor shipping = new Editors.ShippingTableEditor(); shipping.ShowDialog();
         }
 
+        private void Zoom_Selected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Zoom_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            string sel  = sender.ToString();
+            string x1   = (sender as System.Windows.Controls.ComboBox).SelectedValue.ToString();
+            string x2   = x1.Substring(x1.Length - 2);
+            float Zoomy = float.Parse(x2);
+            FeatureZoom = Zoomy;
+            Title = Title.Substring(0, Title.Length - 3) + "0" + x2;
+        }
     }
 }

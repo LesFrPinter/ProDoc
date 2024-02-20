@@ -89,6 +89,15 @@
                 </TextBox>
             </Border>
 
+            <Label Grid.Row="2" HorizontalAlignment="Right" Margin="0 0 90 0" Padding="1" Height="24" Content="Zoom factor: " />
+
+            <ComboBox Grid.Row="2" HorizontalAlignment="Right" Margin="0 0 20 0" Padding="1" Width="70" Height="28" x:Name="Zoom" SelectionChanged="Zoom_SelectionChanged" >
+                <ComboBoxItem Content=".1" />
+                <ComboBoxItem Content=".2" />
+                <ComboBoxItem Content=".3" />
+                <ComboBoxItem Content=".4" />
+            </ComboBox>
+            
             <!--<TextBox Grid.Row="2" FontSize="32"
                  Background="Transparent"
                  BorderBrush="Transparent"
